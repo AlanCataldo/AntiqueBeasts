@@ -48,7 +48,7 @@ public class CyclopsSocializeGoal extends Goal {
                 return true;
             }
         }
-        // No mate found
+        // No mate found.
         return false;
     }
 
