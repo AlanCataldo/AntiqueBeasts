@@ -1,0 +1,35 @@
+package net.mebahel.antiquebeasts.entity;
+
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.mebahel.antiquebeasts.AntiqueBeasts;
+import net.mebahel.antiquebeasts.entity.custom.CyclopsEntity;
+import net.mebahel.antiquebeasts.entity.custom.FrostCyclopsEntity;
+import net.mebahel.antiquebeasts.entity.projectiles.ThrowingRockEntity;
+import net.mebahel.antiquebeasts.entity.projectiles.ThrowingSnowRockEntity;
+import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
+import software.bernie.example.entity.RocketProjectile;
+
+import static software.bernie.example.registry.EntityRegistry.buildEntity;
+
+
+public class ModEntities {
+    public static final EntityType<CyclopsEntity> CYCLOPS = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "cyclops"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, CyclopsEntity::new)
+                    .dimensions(EntityDimensions.fixed(1.5f, 5f)).build());
+
+    public static final EntityType<FrostCyclopsEntity> FROST_CYCLOPS = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "frost-cyclops"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, FrostCyclopsEntity::new)
+                    .dimensions(EntityDimensions.fixed(1.5f, 5f)).build());
+
+    public static EntityType<ThrowingRockEntity> THROWINGROCK = buildEntity(ThrowingRockEntity::new, ThrowingRockEntity.class, 2F,
+            2F, SpawnGroup.MISC);
+
+    public static EntityType<ThrowingSnowRockEntity> THROWINGSNOWROCK = buildEntity(ThrowingSnowRockEntity::new, ThrowingSnowRockEntity.class, 2F,
+            2F, SpawnGroup.MISC);
+}

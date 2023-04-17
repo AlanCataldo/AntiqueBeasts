@@ -1,0 +1,32 @@
+{
+  "structures": [
+    {
+      "structure": "antiquebeasts:ext_cyclops_cave",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 31321488,
+    "exclusion_zone": [
+      {
+      "other_set":"minecraft:villages",
+      "chunk_count": 5
+      },
+      {
+        "other_set":"minecraft:woodland_mansions",
+        "chunk_count": 5
+      },
+      {
+        "other_set":"minecraft:ruined_portals",
+        "chunk_count": 5
+      },
+      {
+        "other_set":"minecraft:pillager_outposts",
+        "chunk_count": 5
+      }
+    ],
+    "spacing": 28,
+    "separation": 12
+  }
+}

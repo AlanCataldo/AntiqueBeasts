@@ -1,0 +1,50 @@
+{
+  "cyclops_walk": {
+    "subtitle": "antiquebeasts.cyclops_walk",
+    "sounds": [
+      "antiquebeasts:cyclops_step1"
+    ]
+  },
+  "cyclops_hurt1": {
+    "subtitle": "antiquebeasts.cyclops_walk",
+    "sounds": [
+      "antiquebeasts:cyclops_hurt1"
+    ]
+  },
+  "cyclops_hurt2": {
+    "subtitle": "antiquebeasts.cyclops_walk",
+    "sounds": [
+      "antiquebeasts:cyclops_hurt2"
+    ]
+  },
+  "cyclops_hit1": {
+    "subtitle": "antiquebeasts.cyclops_walk",
+    "sounds": [
+      "antiquebeasts:cyclops_hit1"
+    ]
+  },
+  "cyclops_death1": {
+    "subtitle": "antiquebeasts.cyclops_walk",
+    "sounds": [
+      "antiquebeasts:cyclops_death1"
+    ]
+  },
+  "cyclops_death2": {
+    "subtitle": "antiquebeasts.cyclops_walk",
+    "sounds": [
+      "antiquebeasts:cyclops_death2"
+    ]
+  },
+  "cyclops_fleshcrush3": {
+    "subtitle": "antiquebeasts.cyclops_walk",
+    "sounds": [
+      "antiquebeasts:cyclops_fleshcrush3"
+    ]
+  },
+  "cyclops_rockcrush1": {
+    "subtitle": "antiquebeasts.cyclops_walk",
+    "sounds": [
+      "antiquebeasts:cyclops_rockcrush1"
+    ]
+  }
+}
