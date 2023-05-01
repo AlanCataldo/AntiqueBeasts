@@ -69,7 +69,7 @@ public class ThrowingSnowRockEntity extends ThrownItemEntity implements IAnimata
     }
 
     protected Item getDefaultItem() {
-        return ModItems.ITEM_THROWINGROCK;
+        return ModItems.THROWINGROCK;
     }
 
     public void handleStatus(byte status) {

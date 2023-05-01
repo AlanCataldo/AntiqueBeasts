@@ -71,7 +71,7 @@ public class ThrowingRockEntity extends ThrownItemEntity implements IAnimatable 
     }
 
     protected Item getDefaultItem() {
-        return ModItems.ITEM_THROWINGROCK;
+        return ModItems.THROWINGROCK;
     }
 
     public void handleStatus(byte status) {

@@ -1,5 +1,9 @@
 {
   "item.antiquebeasts.cyclops_spawn_egg": "Cyclops Spawn Egg",
   "item.antiquebeasts.frost-cyclops_spawn_egg": "Frost Cyclops Spawn Egg",
-  "item.antiquebeasts.item_throwingrock": "Throwing Rock"
+  "item.antiquebeasts.throwingrock": "Throwing Rock",
+  "item.antiquebeasts.raw_cyclops_meat": "Raw Cyclops Meat",
+  "item.antiquebeasts.cooked_cyclops_meat": "Cooked Cyclops Meat",
+  "item.antiquebeasts.raw_frost-cyclops_meat": "Raw Frost Cyclops Meat",
+  "item.antiquebeasts.cooked_frost-cyclops_meat": "Cooked Frost Cyclops Meat"
 }

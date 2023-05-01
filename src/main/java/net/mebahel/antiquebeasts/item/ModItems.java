@@ -16,7 +16,19 @@ public class ModItems {
             new SpawnEggItem(ModEntities.FROST_CYCLOPS,6532039, 6821916,
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
-    public static final Item ITEM_THROWINGROCK = registerItem("item_throwingrock",
+    public static final Item RAW_CYCLOPS_MEAT = registerItem("raw_cyclops_meat",
+            new RawCyclopsMeat());
+
+    public static final Item COOKED_CYCLOPS_MEAT = registerItem("cooked_cyclops_meat",
+            new CookedCyclopsMeat());
+
+    public static final Item RAW_FROSTCYCLOPS_MEAT = registerItem("raw_frost-cyclops_meat",
+            new RawFrostCyclopsMeat());
+
+    public static final Item COOKED_FROSTCYCLOPS_MEAT = registerItem("cooked_frost-cyclops_meat",
+            new CookedFrostCyclopsMeat());
+
+    public static final Item THROWINGROCK = registerItem("throwingrock",
             new ThrowingRockItem(new FabricItemSettings().group(ItemGroup.MISC)));
 
 

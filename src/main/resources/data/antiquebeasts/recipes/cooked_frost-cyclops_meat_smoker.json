@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "cookingtime": 140,
+  "experience": 0.35,
+  "ingredient": {
+    "item" : "antiquebeasts:raw_frost-cyclops_meat"
+  },
+  "result": "antiquebeasts:cooked_frost-cyclops_meat"
+}

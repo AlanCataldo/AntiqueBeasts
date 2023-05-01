@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class CyclopsSocializeGoal extends Goal {
     private final CyclopsEntity cyclops;
-    private CyclopsEntity mate; // Current entity the cyclops is trying to socialize with
+    private CyclopsEntity mate; // Current entity the cyclops.json is trying to socialize with
     private final int MAX_SOCIALIZE_DISTANCE = 20; // Maximum distance to search for potential mates
     private int socializeTimer = 0; // Timer for how long the entities have been socializing
     private int cooldownTimer = 0; // Timer for how long the entities need to wait before socializing again
