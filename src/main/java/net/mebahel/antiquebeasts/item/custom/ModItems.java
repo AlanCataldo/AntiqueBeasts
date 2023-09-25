@@ -47,6 +47,9 @@ public class ModItems {
     public static final Item CYCLOPS_EYE = registerItem("cyclops_eye",
             new Item(new FabricItemSettings().group(ItemGroup.MISC)));
 
+    public static final Item IRON_PLATE = registerItem("iron_plate",
+            new Item(new FabricItemSettings().group(ItemGroup.MATERIALS)));
+
     public static final Item IRON_PLATE_HELMET = registerItem("iron_plate_helmet",
             new IronPlateArmorItem(ModArmorMaterials.IRON_PLATE, EquipmentSlot.HEAD, new FabricItemSettings().group(ItemGroup.COMBAT)));
     public static final Item IRON_PLATE_CHESTPLATE = registerItem("iron_plate_chestplate",

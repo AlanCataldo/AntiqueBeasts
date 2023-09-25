@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "# #",
+    "- -"
+  ],
+  "key" : {
+    "#": {
+      "item" : "antiquebeasts:iron_plate"
+    },
+    "-": {
+      "item" : "minecraft:blue_wool"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:iron_plate_boots"
+  }
+}
