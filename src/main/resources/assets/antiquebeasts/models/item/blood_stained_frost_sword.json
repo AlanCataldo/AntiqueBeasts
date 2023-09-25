@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "antiquebeasts:item/blood_stained_frost_sword"
+  }
+}

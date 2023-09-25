@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    " # ",
+    " - "
+  ],
+  "key" : {
+    "#": {
+      "item" : "antiquebeasts:frost_shard"
+    },
+    "-": {
+      "item" : "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:frost_sword"
+  }
+}

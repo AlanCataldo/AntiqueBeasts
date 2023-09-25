@@ -4,7 +4,6 @@ import net.mebahel.antiquebeasts.entity.custom.CyclopsEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.ThrowingRockEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.ThrowingSnowRockEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MovementType;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -52,7 +51,7 @@ public class CyclopsShootingGoal extends Goal {
         } else {
             Objects.requireNonNull(this.cyclops.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.72f);
         }
-        if (livingEntity != null && (this.cyclops.distanceTo(livingEntity) > 7 ||  this.cyclops.getCooldown() > 0)) {
+        if (livingEntity != null && (this.cyclops.distanceTo(livingEntity) > 7 || this.cyclops.getCooldown() > 0)) {
             if (this.cyclops.canSee(livingEntity)) {
                 World world = this.cyclops.world;
                 this.cyclops.setCooldown(this.cyclops.getCooldown() + 1);
@@ -66,12 +65,12 @@ public class CyclopsShootingGoal extends Goal {
                     Vec3d vec3d = this.cyclops.getRotationVec(1.0F);
 
                     if (vec3d.z > 0.20f || vec3d.z < -0.20f) {
-                        sideX = -2f;
+                        sideX = 2f;
                     } else if (vec3d.z > 0) {
                         sideX = -sideX;
                     }
                     if (vec3d.x > 0.20f || vec3d.x < -0.20f) {
-                        sideZ = -2f;
+                        sideZ = 2f;
                     } else if (vec3d.x > 0) {
                         sideZ = -sideZ;
                     }

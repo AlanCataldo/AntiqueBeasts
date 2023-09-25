@@ -102,6 +102,7 @@ public class CyclopsSocializeGoal extends Goal {
                 if (otherCyclops != this.cyclops && !otherCyclops.hasStatusEffect(this.potionEffect) && this.cyclops.canSee(otherCyclops)) {
                     this.mate = otherCyclops;
                     this.socializeTimer = 100;
+                    this.cyclops.getLookControl().lookAt(this.mate, 10.0F, 10.0F);
                     // If the selected mate is too far away, the CyclopsEntity moves towards it.
                     if (this.cyclops.squaredDistanceTo(this.mate) > SOCIALIZE_DISTANCE) {
                         this.cyclops.getLookControl().lookAt(this.mate, 10.0F, 10.0F);

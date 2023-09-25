@@ -1,0 +1,47 @@
+package net.mebahel.antiquebeasts.entity.client.custom;
+
+import com.google.common.collect.Maps;
+import net.mebahel.antiquebeasts.AntiqueBeasts;
+import net.mebahel.antiquebeasts.entity.custom.EliteHopliteEntity;
+import net.mebahel.antiquebeasts.entity.variant.ChampionHopliteVariant;
+import net.mebahel.antiquebeasts.entity.variant.EliteHopliteVariant;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+
+import java.util.Map;
+
+public class EliteHopliteRenderer extends GeoEntityRenderer<EliteHopliteEntity> {
+    public static final Map<EliteHopliteVariant, Identifier> LOCATION_BY_VARIANT =
+            Util.make(Maps.newEnumMap(EliteHopliteVariant.class), (map) -> {
+                map.put(EliteHopliteVariant.DEFAULT,
+                        new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/elite_hoplite_1.png"));
+                map.put(EliteHopliteVariant.CLOAK,
+                        new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/elite_hoplite_2.png"));
+            });
+    public EliteHopliteRenderer(EntityRendererFactory.Context renderManager) {
+        super(renderManager, new EliteHopliteModel());
+        this.shadowRadius = 0.5f;
+    }
+
+    @Override
+    public Identifier getTextureResource(EliteHopliteEntity animatable) {
+        return LOCATION_BY_VARIANT.get(animatable.getVariant());
+    }
+
+    @Override
+    public RenderLayer getRenderType(EliteHopliteEntity animatable, float partialTick, MatrixStack poseStack,
+                                     @Nullable VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer,
+                                     int packedLight, Identifier texture) {
+
+        poseStack.scale(1f, 1f, 1f);
+        return super.getRenderType(animatable, partialTick, poseStack, bufferSource, buffer, packedLight, texture);
+    }
+
+}

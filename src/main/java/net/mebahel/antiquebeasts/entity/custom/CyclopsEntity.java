@@ -1,13 +1,13 @@
 package net.mebahel.antiquebeasts.entity.custom;
 
-import net.mebahel.antiquebeasts.entity.ai.CyclopsLookAtTargetGoal;
+import net.mebahel.antiquebeasts.entity.ai.LookAtTargetGoal;
 import net.mebahel.antiquebeasts.entity.ai.CyclopsMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.CyclopsShootingGoal;
 import net.mebahel.antiquebeasts.entity.ai.CyclopsSocializeGoal;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -42,9 +42,7 @@ import static java.lang.Math.random;
 public class CyclopsEntity extends HostileEntity implements IAnimatable, IAnimationTickable {
     double rand;
     double last_step = 0;
-    private boolean swinging;
     private long lastSwing;
-    private boolean isSitting = false;
     public String animationProcedure = "empty";
     public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(CyclopsEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
@@ -53,9 +51,6 @@ public class CyclopsEntity extends HostileEntity implements IAnimatable, IAnimat
             TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(CyclopsEntity.class,
             TrackedDataHandlerRegistry.FLOAT);
-
-    public static final TrackedData<Boolean> SITTING = DataTracker.registerData(CyclopsEntity.class,
-            TrackedDataHandlerRegistry.BOOLEAN);
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -67,14 +62,36 @@ public class CyclopsEntity extends HostileEntity implements IAnimatable, IAnimat
     public int tickTimer() {
         return age;
     }
-
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(SHOOTING, false);
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(COOLDOWN, 0f);
-        this.dataTracker.startTracking(SITTING, false);
     }
+    public static DefaultAttributeContainer.Builder setAttributes() {
+        return HostileEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0D)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0f)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0f)
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 2.5f);
+    }
+    @Override
+    protected void initGoals() {
+        this.goalSelector.add(1, new SwimGoal(this));
+        if (this.getCooldown() < 17)
+            this.goalSelector.add(2, new CyclopsMeleeAttackGoal(this, 0.42f, false));
+        this.goalSelector.add(3, new CyclopsShootingGoal(this, ""));
+        this.goalSelector.add(3, new LookAtTargetGoal(this));
+        this.goalSelector.add(4, new CyclopsSocializeGoal(this, StatusEffects.STRENGTH));
+        this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
+        this.goalSelector.add(6, new LookAroundGoal(this));
+
+        this.targetSelector.add(1, new RevengeGoal(this));
+        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
+    }
+
+
 
     public float getCooldown() { return this.dataTracker.get(COOLDOWN);}
 
@@ -98,14 +115,13 @@ public class CyclopsEntity extends HostileEntity implements IAnimatable, IAnimat
         this.dataTracker.set(SHOOTING, shooting);
     }
 
-    public void setSitting(boolean sitting) {this.dataTracker.set(SITTING, sitting);}
 
     private <E extends IAnimatable> PlayState movementPredicate(AnimationEvent<E> event) {
         if (this.animationProcedure.equals("empty") && !this.isShooting()) {
             if (event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.attack_walk", ILoopType.EDefaultLoopTypes.LOOP));
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.walk", ILoopType.EDefaultLoopTypes.LOOP));
                 return PlayState.CONTINUE;
-            } else if (!this.swinging) {
+            } else if (!this.isSwinging()) {
                 event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.idle", ILoopType.EDefaultLoopTypes.LOOP));
                 return PlayState.CONTINUE;
             }
@@ -114,7 +130,7 @@ public class CyclopsEntity extends HostileEntity implements IAnimatable, IAnimat
     }
 
     private <E extends IAnimatable> PlayState shootingPredicate(AnimationEvent<E> event) {
-        if (this.isShooting() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped) && !this.swinging) {
+        if (this.isShooting() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped) && !this.isSwinging()) {
             event.getController().markNeedsReload();
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.ranged_attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
             return PlayState.CONTINUE;
@@ -123,17 +139,18 @@ public class CyclopsEntity extends HostileEntity implements IAnimatable, IAnimat
     }
 
     private <E extends IAnimatable> PlayState attackPredicate(AnimationEvent<E> event) {
+        //System.out.print(this.getCooldown() + "\n");
         if (this.animationProcedure.equals("empty")) {
             if (this.handSwingProgress > 0f && !this.isSwinging()) {
                 this.setSwinging(true);
                 this.lastSwing = age;
             }
-            if (this.isSwinging() && this.lastSwing + 17L <= age) {
+            if (this.isSwinging() && this.lastSwing + 21L <= age) {
                 this.setSwinging(false);
             }
             if (this.isSwinging() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
                 event.getController().markNeedsReload();
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.attack2", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
                 return PlayState.CONTINUE;
             }
             return PlayState.CONTINUE;
@@ -180,30 +197,6 @@ public class CyclopsEntity extends HostileEntity implements IAnimatable, IAnimat
             }
         }
     }
-
-    public static DefaultAttributeContainer.Builder setAttributes() {
-        return HostileEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0D)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 9.0f)
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 2.5f);
-    }
-
-
-    @Override
-    protected void initGoals() {
-        this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new CyclopsSocializeGoal(this, StatusEffects.STRENGTH));
-        if (this.getCooldown() < 17)
-            this.goalSelector.add(3, new CyclopsMeleeAttackGoal(this, 0.42f, false));
-        this.goalSelector.add(4, new CyclopsShootingGoal(this, ""));
-        this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 0.85f));
-        this.goalSelector.add(6, new LookAroundGoal(this));
-
-        this.targetSelector.add(1, new RevengeGoal(this));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
-    }
-
     @Override
     public AnimationFactory getFactory() {
         return factory;
@@ -251,6 +244,9 @@ public class CyclopsEntity extends HostileEntity implements IAnimatable, IAnimat
 
     @Override
     public boolean damage(DamageSource source, float amount) {
+        if (this.isSwinging()) {
+            return false;
+        }
         if (source.getSource() instanceof ArrowEntity arrow) {
             double heightRatio = (this.getY() - arrow.getY()) / 5.0;
             double isHitInFace = getHitInFace(arrow.getPos(), this.getPos(), this.getRotationVector());

@@ -2,10 +2,14 @@ package net.mebahel.antiquebeasts;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.mebahel.antiquebeasts.block.ModBlockEntities;
 import net.mebahel.antiquebeasts.entity.ModEntities;
-import net.mebahel.antiquebeasts.entity.custom.CyclopsEntity;
-import net.mebahel.antiquebeasts.item.ModItems;
+import net.mebahel.antiquebeasts.entity.custom.*;
+import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.particle.ModParticles;
+import net.mebahel.antiquebeasts.potion.ModPotions;
+import net.mebahel.antiquebeasts.recipe.ModRecipes;
+import net.mebahel.antiquebeasts.screen.ModScreenHandlers;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.world.gen.ModWorldGen;
 import org.slf4j.Logger;
@@ -20,10 +24,17 @@ public class AntiqueBeasts implements ModInitializer {
 	public void onInitialize() {
 		GeckoLib.initialize();
 		FabricDefaultAttributeRegistry.register(ModEntities.CYCLOPS, CyclopsEntity.setAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.FROST_CYCLOPS, CyclopsEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.FROST_CYCLOPS, FrostCyclopsEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.CHAMPION_HOPLITE, ChampionHopliteEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.ELITE_HOPLITE, EliteHopliteEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.HERO_HOPLITE, HeroHopliteEntity.setAttributes());
 		ModSounds.registerSounds();
 		ModWorldGen.generateWorldGen();
 		ModItems.registerModItems();
 		ModParticles.registerParticles();
+		ModBlockEntities.registerBlockEntities();
+		ModScreenHandlers.registerAllScreenHandlers();
+		ModRecipes.registerRecipes();
+		ModPotions.registerPotionRecipe();
 	}
 }

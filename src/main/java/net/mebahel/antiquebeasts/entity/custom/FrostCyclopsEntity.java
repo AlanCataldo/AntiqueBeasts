@@ -1,6 +1,5 @@
 package net.mebahel.antiquebeasts.entity.custom;
 
-import net.mebahel.antiquebeasts.entity.ai.CyclopsLookAtTargetGoal;
 import net.mebahel.antiquebeasts.entity.ai.CyclopsMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.CyclopsShootingGoal;
 import net.mebahel.antiquebeasts.entity.ai.CyclopsSocializeGoal;
@@ -15,6 +14,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -87,18 +87,30 @@ public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IA
     public void setShooting(boolean shooting) {
         this.dataTracker.set(SHOOTING, shooting);
     }
+    public static DefaultAttributeContainer.Builder setAttributes() {
+        return HostileEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0D)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 9.0f)
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 2.5f);
+    }
+    @Override
+    protected void initGoals() {
+        this.goalSelector.add(1, new SwimGoal(this));
+        if (this.getCooldown() < 17)
+            this.goalSelector.add(2, new CyclopsMeleeAttackGoal(this, 0.42f, false));
+        this.goalSelector.add(3, new CyclopsShootingGoal(this, "frost"));
+        this.goalSelector.add(4, new CyclopsSocializeGoal(this, StatusEffects.STRENGTH));
+        this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
+        this.goalSelector.add(6, new LookAroundGoal(this));
 
+        this.targetSelector.add(1, new RevengeGoal(this));
+        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
+    }
     private <E extends IAnimatable> PlayState movementPredicate(AnimationEvent<E> event) {
-        String walkAnimation;
-
-        if (isAttacking())
-            walkAnimation = "animation.cyclops.attack_walk";
-        else
-            walkAnimation = "animation.cyclops.walk";
-
         if (this.animationProcedure.equals("empty") && !this.isShooting()) {
             if (event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation(walkAnimation, ILoopType.EDefaultLoopTypes.LOOP));
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.attack_walk", ILoopType.EDefaultLoopTypes.LOOP));
                 return PlayState.CONTINUE;
             } else if (!this.swinging) {
                 event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.idle", ILoopType.EDefaultLoopTypes.LOOP));
@@ -177,31 +189,6 @@ public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IA
             }
         }
     }
-    public static DefaultAttributeContainer.Builder setAttributes() {
-        return HostileEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 80.0D)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 9.0f)
-                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 0.15f)
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 2.5f);
-    }
-
-    @Override
-    protected void initGoals() {
-        this.goalSelector.add(1, new SwimGoal(this));
-        if (this.getCooldown() < 17)
-            this.goalSelector.add(2, new CyclopsMeleeAttackGoal(this, 0.42f, false));
-        this.goalSelector.add(3, new CyclopsShootingGoal(this, "frost"));
-        this.goalSelector.add(3, new CyclopsLookAtTargetGoal(this));
-        this.goalSelector.add(4, new WanderAroundFarGoal(this, 0.35f, 1));
-        this.goalSelector.add(5, new LookAroundGoal(this));
-
-        this.targetSelector.add(1, new RevengeGoal(this));
-        this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
-    }
-
-
-
     @Override
     public AnimationFactory getFactory() {
         return factory;

@@ -10,9 +10,30 @@
             {
               "add": false,
               "count": {
+                "type": "minecraft:binomial",
+                "n": 1,
+                "p": 0.35
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "antiquebeasts:frost_shard"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
                 "type": "minecraft:uniform",
-                "max": 2.0,
-                "min": 1.0
+                "max": 3.0,
+                "min": 2.0
               },
               "function": "minecraft:set_count"
             },
@@ -39,7 +60,7 @@
               "function": "minecraft:looting_enchant"
             }
           ],
-          "name": "antiquebeasts:raw_frost-cyclops_meat"
+          "name": "antiquebeasts:raw_cyclops_meat"
         }
       ],
       "rolls": 1.0

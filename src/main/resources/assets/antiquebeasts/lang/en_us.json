@@ -1,9 +1,25 @@
 {
   "item.antiquebeasts.cyclops_spawn_egg": "Cyclops Spawn Egg",
   "item.antiquebeasts.frost-cyclops_spawn_egg": "Frost Cyclops Spawn Egg",
+  "item.antiquebeasts.champion_hoplite_spawn_egg": "Champion Hoplite Spawn Egg",
+  "item.antiquebeasts.elite_hoplite_spawn_egg": "Elite Hoplite Spawn Egg",
+  "item.antiquebeasts.hero_hoplite_spawn_egg": "Hero Hoplite Spawn Egg",
   "item.antiquebeasts.throwingrock": "Throwing Rock",
   "item.antiquebeasts.raw_cyclops_meat": "Raw Cyclops Meat",
   "item.antiquebeasts.cooked_cyclops_meat": "Cooked Cyclops Meat",
   "item.antiquebeasts.raw_frost-cyclops_meat": "Raw Frost Cyclops Meat",
-  "item.antiquebeasts.cooked_frost-cyclops_meat": "Cooked Frost Cyclops Meat"
+  "item.antiquebeasts.cooked_frost-cyclops_meat": "Cooked Frost Cyclops Meat",
+  "item.antiquebeasts.frost_sword": "Frost Sword",
+  "item.antiquebeasts.frost_shard": "Frost Shard",
+  "item.antiquebeasts.blood_stained_frost_sword": "Blood Stained Frost Sword",
+  "item.antiquebeasts.cyclops_blood": "Cyclops Blood",
+  "item.antiquebeasts.cyclops_eye": "Cyclops Eye",
+  "item.antiquebeasts.gold_plate_helmet": "Gold Plate Helmet",
+  "item.antiquebeasts.gold_plate_chestplate": "Gold Plate Chestplate",
+  "item.antiquebeasts.gold_plate_leggings": "Gold Plate Leggings",
+  "item.antiquebeasts.gold_plate_boots": "Gold Plate Boots",
+  "item.antiquebeasts.iron_plate_helmet": "Iron Plate Helmet",
+  "item.antiquebeasts.iron_plate_chestplate": "Iron Plate Chestplate",
+  "item.antiquebeasts.iron_plate_leggings": "Iron Plate Leggings",
+  "item.antiquebeasts.iron_plate_boots": "Iron Plate Boots"
 }

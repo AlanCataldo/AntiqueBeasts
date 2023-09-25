@@ -1,6 +1,6 @@
 package net.mebahel.antiquebeasts.entity.projectiles;
 
-import net.mebahel.antiquebeasts.item.ModItems;
+import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.block.BlockState;

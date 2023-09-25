@@ -46,5 +46,29 @@
     "sounds": [
       "antiquebeasts:cyclops_rockcrush1"
     ]
+  },
+  "hoplite_death1": {
+    "subtitle": "antiquebeasts:hoplite_death1",
+    "sounds": [
+      "antiquebeasts:hoplite_death1"
+    ]
+  },
+  "hoplite_death2": {
+    "subtitle": "antiquebeasts:hoplite_death2",
+    "sounds": [
+      "antiquebeasts:hoplite_death2"
+    ]
+  },
+  "hoplite_hurt1": {
+    "subtitle": "antiquebeasts:hoplite_hurt1",
+    "sounds": [
+      "antiquebeasts:hoplite_hurt1"
+    ]
+  },
+  "hoplite_hurt2": {
+    "subtitle": "antiquebeasts:hoplite_hurt2",
+    "sounds": [
+      "antiquebeasts:hoplite_hurt2"
+    ]
   }
 }

@@ -1,0 +1,11 @@
+{
+  "type": "antiquebeasts:blood_infusing",
+  "ingredients": [
+    {
+      "item": "antiquebeasts:raw_cyclops_meat"
+    }
+  ],
+  "output": {
+    "item": "antiquebeasts:cyclops_blood"
+  }
+}
