@@ -24,7 +24,7 @@ public class CyclopsMeleeAttackGoal extends Goal {
         this.speed = speed;
         this.pauseWhenMobIdle = pauseWhenMobIdle;
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
-        this.cooldown = MAX_COOLDOWN;
+        this.cooldown = MAX_COOLDOWN + 3;
     }
 
     public boolean canStart() {

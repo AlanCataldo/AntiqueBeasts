@@ -117,7 +117,7 @@ public class EliteHopliteEntity extends HopliteEntity implements IAnimatable, IA
                 this.setSwinging(true);
                 this.lastSwing = age;
             }
-            if (this.isSwinging() && this.lastSwing + 17L <= age) {
+            if (this.isSwinging() && this.lastSwing + 22L <= age) {
                 this.setSwinging(false);
             }
             if (this.isSwinging() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {

@@ -113,7 +113,7 @@ public class HopliteMeleeAttackGoal extends Goal {
 
         if (squaredDistance <= d && this.cooldown <= 0) {
             this.cooldown = MAX_COOLDOWN;
-        } else if (squaredDistance <= d && this.cooldown == 20) {
+        } else if (squaredDistance <= d && this.cooldown == 22) {
             if (Objects.equals(this.mob.getAttackName(), "attack")
                     && Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).getValue() == 1f)
                 Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(4f);
@@ -121,7 +121,7 @@ public class HopliteMeleeAttackGoal extends Goal {
                     && Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).getValue() == 4f)
                 Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(1f);
             this.mob.swingHand(Hand.MAIN_HAND);
-        } else if (squaredDistance <= d && this.cooldown <= 15 && this.cooldown >= 13) {
+        } else if (squaredDistance <= d && this.cooldown <= 15 && this.cooldown >= 14) {
             this.mob.tryAttack(target);
         }
     }
