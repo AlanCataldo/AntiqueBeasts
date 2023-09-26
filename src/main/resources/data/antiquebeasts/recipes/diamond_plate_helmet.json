@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#-#",
+    "# #",
+    "   "
+  ],
+  "key" : {
+    "#": {
+      "item" : "antiquebeasts:diamond_plate"
+    },
+    "-": {
+      "item" : "minecraft:white_wool"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:diamond_plate_helmet"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#-#",
+    "# #",
+    "   "
+  ],
+  "key" : {
+    "#": {
+      "item" : "antiquebeasts:gold_plate"
+    },
+    "-": {
+      "item" : "minecraft:red_wool"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:gold_plate_helmet"
+  }
+}
