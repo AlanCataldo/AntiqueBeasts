@@ -1,12 +1,12 @@
 {
   "type": "minecraft:smithing",
   "addition": {
-    "item": "minecraft:iron_ingot"
+    "item": "minecraft:gold_ingot"
   },
   "base": {
     "item": "minecraft:chain"
   },
   "result": {
-    "item": "antiquebeasts:iron_plate"
+    "item": "antiquebeasts:gold_plate"
   }
 }
