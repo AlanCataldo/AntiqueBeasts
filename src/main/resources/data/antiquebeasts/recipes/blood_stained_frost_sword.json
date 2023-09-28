@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "antiquebeasts:frost_sword"
+  },
+  "addition": {
+  "item": "antiquebeasts:concentrated_cyclops_blood"
+},
+  "result": {
+    "item": "antiquebeasts:blood_stained_frost_sword"
+  }
+}

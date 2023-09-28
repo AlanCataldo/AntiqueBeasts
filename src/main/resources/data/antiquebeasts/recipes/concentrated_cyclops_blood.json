@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key" : {
+    "#": {
+      "item" : "antiquebeasts:cyclops_blood"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:concentrated_cyclops_blood"
+  }
+}
