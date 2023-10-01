@@ -90,6 +90,8 @@ public class CyclopsMeleeAttackGoal extends Goal {
             double d = this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
             this.updateCountdownTicks = Math.max(this.updateCountdownTicks - 1, 0);
             this.attack(livingEntity, d);
+        } else {
+            this.cooldown = MAX_COOLDOWN;
         }
     }
 

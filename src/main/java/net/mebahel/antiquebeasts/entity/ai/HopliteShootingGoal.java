@@ -48,7 +48,7 @@ public class HopliteShootingGoal extends Goal {
         } else {
             Objects.requireNonNull(this.hoplite.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.72f);
         }
-        if (livingEntity != null && (this.hoplite.distanceTo(livingEntity) > 5 ||  this.hoplite.getCooldown() > 0)) {
+        if (livingEntity != null && (this.hoplite.distanceTo(livingEntity) > 6 ||  this.hoplite.getCooldown() > 0)) {
             if (this.hoplite.canSee(livingEntity)) {
                 World world = this.hoplite.world;
                 this.hoplite.setCooldown(this.hoplite.getCooldown() + 1);
@@ -56,8 +56,6 @@ public class HopliteShootingGoal extends Goal {
                     hopliteSpearEntity = new HopliteSpearEntity(world, this.hoplite);
 
                     Vec3d vec3d = this.hoplite.getRotationVec(1.0F);
-
-
 
                     double d = Objects.requireNonNull(this.hoplite.getTarget()).getEyeY() - 1.100000023841858;
                     double e = this.hoplite.getTarget().getX() - this.hoplite.getX();

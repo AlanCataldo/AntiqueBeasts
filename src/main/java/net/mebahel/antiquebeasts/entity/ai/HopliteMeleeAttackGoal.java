@@ -98,6 +98,8 @@ public class HopliteMeleeAttackGoal extends Goal {
             double d = this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
             this.updateCountdownTicks = Math.max(this.updateCountdownTicks - 1, 0);
             this.attack(livingEntity, d);
+        } else {
+            this.cooldown = MAX_COOLDOWN;
         }
     }
 
@@ -116,9 +118,9 @@ public class HopliteMeleeAttackGoal extends Goal {
         } else if (squaredDistance <= d && this.cooldown == 22) {
             if (Objects.equals(this.mob.getAttackName(), "attack")
                     && Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).getValue() == 1f)
-                Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(4f);
+                Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(3f);
             else if (Objects.equals(this.mob.getAttackName(), "attack2")
-                    && Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).getValue() == 4f)
+                    && Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).getValue() == 3f)
                 Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(1f);
             this.mob.swingHand(Hand.MAIN_HAND);
         } else if (squaredDistance <= d && this.cooldown <= 15 && this.cooldown >= 14) {

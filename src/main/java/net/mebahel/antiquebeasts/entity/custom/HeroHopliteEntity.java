@@ -144,7 +144,7 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
                 this.setSwinging(true);
                 this.lastSwing = age;
             }
-            if (this.isSwinging() && this.lastSwing + 17L <= age) {
+            if (this.isSwinging() && this.lastSwing + 22L <= age) {
                 this.setSwinging(false);
             }
             if (this.isSwinging() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {

@@ -115,7 +115,7 @@ public class ChampionHopliteEntity extends HopliteEntity implements IAnimatable,
                 this.setSwinging(true);
                 this.lastSwing = age;
             }
-            if (this.isSwinging() && this.lastSwing + 20L <= age) {
+            if (this.isSwinging() && this.lastSwing + 22L <= age) {
                 this.setSwinging(false);
             }
             if (this.isSwinging() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {

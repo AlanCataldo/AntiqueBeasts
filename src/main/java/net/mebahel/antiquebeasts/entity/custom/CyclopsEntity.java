@@ -72,7 +72,6 @@ public class CyclopsEntity extends HostileEntity implements IAnimatable, IAnimat
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0f)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0f)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 2.5f);
     }
     @Override
@@ -172,8 +171,8 @@ public class CyclopsEntity extends HostileEntity implements IAnimatable, IAnimat
     public void registerControllers(AnimationData data) {
         AnimationController<CyclopsEntity> controller = new AnimationController<>(this, "controller", 4,
                 this::movementPredicate);
-        AnimationController<CyclopsEntity> controller1 = new AnimationController<>(this, "attacking", 0, this::attackPredicate);
-        AnimationController<CyclopsEntity> controller3 = new AnimationController<>(this, "shooting", 0, this::shootingPredicate);
+        AnimationController<CyclopsEntity> controller1 = new AnimationController<>(this, "attacking", 4, this::attackPredicate);
+        AnimationController<CyclopsEntity> controller3 = new AnimationController<>(this, "shooting", 4, this::shootingPredicate);
         AnimationController<CyclopsEntity> controller2 = new AnimationController<>(this, "procedure", 4, this::procedurePredicate);
         controller1.registerSoundListener(this::soundListener);
         controller3.registerSoundListener(this::soundListener);
@@ -219,11 +218,11 @@ public class CyclopsEntity extends HostileEntity implements IAnimatable, IAnimat
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
         if (last_step == 0) {
-            this.playSound(ModSounds.CYCLOPS_STEP1, 0.45f, 1.0f);
+            this.playSound(ModSounds.CYCLOPS_STEP1, 0.75f, 1.0f);
             last_step = tickTimer();
         }
-        if (last_step + 13 <= tickTimer()) {
-            this.playSound(ModSounds.CYCLOPS_STEP1, 0.45f, 1.0f);
+        if (last_step + 14 <= tickTimer()) {
+            this.playSound(ModSounds.CYCLOPS_STEP1, 0.75f, 1.0f);
             last_step = tickTimer();
         }
     }

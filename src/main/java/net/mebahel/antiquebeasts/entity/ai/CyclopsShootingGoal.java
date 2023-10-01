@@ -51,7 +51,7 @@ public class CyclopsShootingGoal extends Goal {
         } else {
             Objects.requireNonNull(this.cyclops.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.72f);
         }
-        if (livingEntity != null && (this.cyclops.distanceTo(livingEntity) > 7 || this.cyclops.getCooldown() > 0)) {
+        if (livingEntity != null && (this.cyclops.distanceTo(livingEntity) > 8 || this.cyclops.getCooldown() > 0)) {
             if (this.cyclops.canSee(livingEntity)) {
                 World world = this.cyclops.world;
                 this.cyclops.setCooldown(this.cyclops.getCooldown() + 1);
@@ -63,17 +63,6 @@ public class CyclopsShootingGoal extends Goal {
                     }
 
                     Vec3d vec3d = this.cyclops.getRotationVec(1.0F);
-
-                    if (vec3d.z > 0.20f || vec3d.z < -0.20f) {
-                        sideX = 2f;
-                    } else if (vec3d.z > 0) {
-                        sideX = -sideX;
-                    }
-                    if (vec3d.x > 0.20f || vec3d.x < -0.20f) {
-                        sideZ = 2f;
-                    } else if (vec3d.x > 0) {
-                        sideZ = -sideZ;
-                    }
 
                     double d = Objects.requireNonNull(this.cyclops.getTarget()).getEyeY() - 1.100000023841858;
                     double e = this.cyclops.getTarget().getX() - this.cyclops.getX();

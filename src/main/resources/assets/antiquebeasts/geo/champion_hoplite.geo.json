@@ -48,14 +48,6 @@
 					]
 				},
 				{
-					"name": "cape",
-					"parent": "body",
-					"pivot": [0, 23.5, 2],
-					"cubes": [
-						{"origin": [-5, 8, 3], "size": [10, 16, 0], "pivot": [0, 19.5, 3], "rotation": [5, 0, 0], "uv": [102, 2]}
-					]
-				},
-				{
 					"name": "leftarm",
 					"parent": "torso",
 					"pivot": [5, 22, 0],
