@@ -36,7 +36,12 @@ public class ModItems {
 
     public static final Item BLOOD_STAINED_FROST_SWORD = registerItem("blood_stained_frost_sword",
             new BloodStainedFrostSword(ModToolMaterial.FROST_WEAPON,6, -2.8f,
-                    new FabricItemSettings().group(ItemGroup.COMBAT)));
+                    new FabricItemSettings().group(ItemGroup.COMBAT)) {
+                @Override
+                public boolean hasGlint(ItemStack stack) {
+                    return true;
+                }
+            });
 
     public static final Item FROST_SHARD = registerItem("frost_shard",
             new Item(new FabricItemSettings().group(ItemGroup.MISC)));
