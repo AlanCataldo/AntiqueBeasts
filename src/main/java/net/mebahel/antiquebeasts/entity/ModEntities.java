@@ -30,17 +30,17 @@ public class ModEntities {
     public static final EntityType<ChampionHopliteEntity> CHAMPION_HOPLITE = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "champion_hoplite"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, ChampionHopliteEntity::new)
-                    .dimensions(EntityDimensions.fixed(1.15f, 2f)).build());
+                    .dimensions(EntityDimensions.fixed(0.85f, 2f)).build());
 
     public static final EntityType<EliteHopliteEntity> ELITE_HOPLITE = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "elite_hoplite"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, EliteHopliteEntity::new)
-                    .dimensions(EntityDimensions.fixed(1.15f, 2f)).build());
+                    .dimensions(EntityDimensions.fixed(0.85f, 2f)).build());
 
     public static final EntityType<HeroHopliteEntity> HERO_HOPLITE = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "hero_hoplite"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, HeroHopliteEntity::new)
-                    .dimensions(EntityDimensions.fixed(1.15f, 2f)).build());
+                    .dimensions(EntityDimensions.fixed(0.85f, 2f)).build());
 
     public static EntityType<ThrowingRockEntity> THROWINGROCK = buildEntity(ThrowingRockEntity::new, ThrowingRockEntity.class, 2F,
             2F, SpawnGroup.MISC);

@@ -59,17 +59,7 @@ public class HopliteMeleeAttackGoal extends Goal {
 
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();
-        if (livingEntity == null) {
-            return false;
-        } else if (!livingEntity.isAlive()) {
-            return false;
-        } else if (!this.pauseWhenMobIdle) {
-            return !this.mob.getNavigation().isIdle();
-        } else if (!this.mob.isInWalkTargetRange(livingEntity.getBlockPos())) {
-            return false;
-        } else {
-            return !(livingEntity instanceof PlayerEntity) || !livingEntity.isSpectator() && !((PlayerEntity) livingEntity).isCreative();
-        }
+        return livingEntity != null;
     }
 
     public void start() {
@@ -98,6 +88,7 @@ public class HopliteMeleeAttackGoal extends Goal {
             double d = this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
             this.updateCountdownTicks = Math.max(this.updateCountdownTicks - 1, 0);
             this.attack(livingEntity, d);
+            this.mob.getNavigation().startMovingTo(livingEntity, this.speed);
         } else {
             this.cooldown = MAX_COOLDOWN;
         }
@@ -117,18 +108,19 @@ public class HopliteMeleeAttackGoal extends Goal {
             this.cooldown = MAX_COOLDOWN;
         } else if (squaredDistance <= d && this.cooldown == 22) {
             if (Objects.equals(this.mob.getAttackName(), "attack")
-                    && Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).getValue() == 1f)
-                Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(3f);
+                    && Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).getValue() == 1.5f)
+                Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(2.5f);
             else if (Objects.equals(this.mob.getAttackName(), "attack2")
-                    && Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).getValue() == 3f)
-                Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(1f);
+                    && Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).getValue() == 2.5f)
+                Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(1.5f);
             this.mob.swingHand(Hand.MAIN_HAND);
-        } else if (squaredDistance <= d && this.cooldown <= 15 && this.cooldown >= 14) {
+        } else if (squaredDistance <= d && this.cooldown == 12) {
             this.mob.tryAttack(target);
         }
     }
 
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return 12f + entity.getWidth();
+        return 10f + entity.getWidth();
+
     }
 }

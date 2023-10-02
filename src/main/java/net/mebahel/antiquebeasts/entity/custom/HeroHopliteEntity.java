@@ -110,7 +110,7 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 25.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.15f)
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 2f);
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 1.5f);
     }
     @Override
     protected void initGoals() {
