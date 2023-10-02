@@ -140,10 +140,10 @@ public class ChampionHopliteEntity extends HopliteEntity implements IAnimatable,
     }
     @Override
     public void registerControllers(AnimationData data) {
-        AnimationController<ChampionHopliteEntity> controller = new AnimationController<>(this, "controller", 4,
+        AnimationController<ChampionHopliteEntity> controller = new AnimationController<>(this, "controller", 0,
                 this::movementPredicate);
         AnimationController<ChampionHopliteEntity> controller1 = new AnimationController<>(this, "attacking", 0, this::attackPredicate);
-        AnimationController<ChampionHopliteEntity> controller2 = new AnimationController<>(this, "procedure", 4, this::procedurePredicate);
+        AnimationController<ChampionHopliteEntity> controller2 = new AnimationController<>(this, "procedure", 0, this::procedurePredicate);
         data.addAnimationController(controller);
         data.addAnimationController(controller1);
         data.addAnimationController(controller2);

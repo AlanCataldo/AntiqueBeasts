@@ -1453,7 +1453,7 @@
 		},
 		"animation.cyclops.attack2": {
 			"loop": true,
-			"animation_length": 1.125,
+			"animation_length": 1,
 			"bones": {
 				"torso": {
 					"rotation": {

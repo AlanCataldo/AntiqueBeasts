@@ -135,10 +135,7 @@ public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IA
                 this.setSwinging(true);
                 this.lastSwing = age;
             }
-            if (this.lastSwing + 10f == age) {
-                this.playSound(ModSounds.CYCLOPS_HIT1, 6f, 1.0f);
-            }
-            if (this.isSwinging() && this.lastSwing + 15L <= age) {
+            if (this.isSwinging() && this.lastSwing + 20L <= age) {
                 this.setSwinging(false);
             }
             if (this.isSwinging() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {

@@ -15,7 +15,7 @@ public class CyclopsMeleeAttackGoal extends Goal {
     private final boolean pauseWhenMobIdle;
     private Path path;
     private int updateCountdownTicks;
-    private static final int MAX_COOLDOWN = 23;
+    private static final int MAX_COOLDOWN = 21;
     private int cooldown;
     private long lastUpdateTime;
 
@@ -24,12 +24,12 @@ public class CyclopsMeleeAttackGoal extends Goal {
         this.speed = speed;
         this.pauseWhenMobIdle = pauseWhenMobIdle;
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
-        this.cooldown = MAX_COOLDOWN + 3;
+        this.cooldown = MAX_COOLDOWN;
     }
 
     public boolean canStart() {
         long l = this.mob.world.getTime();
-        if (l - this.lastUpdateTime < 23) {
+        if (l - this.lastUpdateTime < MAX_COOLDOWN) {
             return false;
         } else {
             this.lastUpdateTime = l;
@@ -51,17 +51,7 @@ public class CyclopsMeleeAttackGoal extends Goal {
 
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();
-        if (livingEntity == null) {
-            return false;
-        } else if (!livingEntity.isAlive()) {
-            return false;
-        } else if (!this.pauseWhenMobIdle) {
-            return !this.mob.getNavigation().isIdle();
-        } else if (!this.mob.isInWalkTargetRange(livingEntity.getBlockPos())) {
-            return false;
-        } else {
-            return !(livingEntity instanceof PlayerEntity) || !livingEntity.isSpectator() && !((PlayerEntity) livingEntity).isCreative();
-        }
+        return livingEntity != null;
     }
 
     public void start() {
@@ -90,6 +80,7 @@ public class CyclopsMeleeAttackGoal extends Goal {
             double d = this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
             this.updateCountdownTicks = Math.max(this.updateCountdownTicks - 1, 0);
             this.attack(livingEntity, d);
+            this.mob.getNavigation().startMovingTo(livingEntity, this.speed);
         } else {
             this.cooldown = MAX_COOLDOWN;
         }
@@ -99,9 +90,9 @@ public class CyclopsMeleeAttackGoal extends Goal {
         double d = this.getSquaredMaxAttackDistance(target);
         if (squaredDistance <= d && this.cooldown <= 0) {
             this.cooldown = MAX_COOLDOWN;
-        } else if (squaredDistance <= d && this.cooldown == 22) {
+        } else if (squaredDistance <= d && this.cooldown == 20) {
             this.mob.swingHand(Hand.MAIN_HAND);
-        } else if (squaredDistance <= d && this.cooldown <= 15 && this.cooldown >= 14) {
+        } else if (squaredDistance <= d && this.cooldown == 10) {
             this.mob.tryAttack(target);
         }
     }

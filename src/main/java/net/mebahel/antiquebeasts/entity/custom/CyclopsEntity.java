@@ -138,13 +138,12 @@ public class CyclopsEntity extends HostileEntity implements IAnimatable, IAnimat
     }
 
     private <E extends IAnimatable> PlayState attackPredicate(AnimationEvent<E> event) {
-        //System.out.print(this.getCooldown() + "\n");
         if (this.animationProcedure.equals("empty")) {
             if (this.handSwingProgress > 0f && !this.isSwinging()) {
                 this.setSwinging(true);
                 this.lastSwing = age;
             }
-            if (this.isSwinging() && this.lastSwing + 21L <= age) {
+            if (this.isSwinging() && this.lastSwing + 20L <= age) {
                 this.setSwinging(false);
             }
             if (this.isSwinging() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
@@ -169,11 +168,11 @@ public class CyclopsEntity extends HostileEntity implements IAnimatable, IAnimat
     }
     @Override
     public void registerControllers(AnimationData data) {
-        AnimationController<CyclopsEntity> controller = new AnimationController<>(this, "controller", 4,
+        AnimationController<CyclopsEntity> controller = new AnimationController<>(this, "controller", 0,
                 this::movementPredicate);
-        AnimationController<CyclopsEntity> controller1 = new AnimationController<>(this, "attacking", 4, this::attackPredicate);
-        AnimationController<CyclopsEntity> controller3 = new AnimationController<>(this, "shooting", 4, this::shootingPredicate);
-        AnimationController<CyclopsEntity> controller2 = new AnimationController<>(this, "procedure", 4, this::procedurePredicate);
+        AnimationController<CyclopsEntity> controller1 = new AnimationController<>(this, "attacking", 0, this::attackPredicate);
+        AnimationController<CyclopsEntity> controller3 = new AnimationController<>(this, "shooting", 0, this::shootingPredicate);
+        AnimationController<CyclopsEntity> controller2 = new AnimationController<>(this, "procedure", 0, this::procedurePredicate);
         controller1.registerSoundListener(this::soundListener);
         controller3.registerSoundListener(this::soundListener);
         data.addAnimationController(controller);
