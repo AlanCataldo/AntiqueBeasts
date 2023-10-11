@@ -3,14 +3,15 @@ package net.mebahel.antiquebeasts.entity.ai;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.EnumSet;
 
 public class LookAtTargetGoal extends Goal {
-    private final HostileEntity cyclops;
+    private final AnimalEntity cyclops;
 
-    public LookAtTargetGoal(HostileEntity cyclops) {
+    public LookAtTargetGoal(AnimalEntity cyclops) {
         this.cyclops = cyclops;
         this.setControls(EnumSet.of(Control.LOOK));
     }

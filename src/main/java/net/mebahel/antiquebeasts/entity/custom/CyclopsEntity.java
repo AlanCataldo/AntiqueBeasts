@@ -19,13 +19,17 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ZombieEntity;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.IAnimationTickable;
 import software.bernie.geckolib3.core.PlayState;
@@ -39,7 +43,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 import static java.lang.Math.random;
 
-public class CyclopsEntity extends HostileEntity implements IAnimatable, IAnimationTickable {
+public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimationTickable {
     double rand;
     double last_step = 0;
     private long lastSwing;
@@ -54,7 +58,7 @@ public class CyclopsEntity extends HostileEntity implements IAnimatable, IAnimat
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
-    public CyclopsEntity(EntityType<? extends HostileEntity> entityType, World world) {
+    public CyclopsEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -62,6 +66,13 @@ public class CyclopsEntity extends HostileEntity implements IAnimatable, IAnimat
     public int tickTimer() {
         return age;
     }
+
+    @Nullable
+    @Override
+    public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
+        return null;
+    }
+
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(SHOOTING, false);
@@ -80,7 +91,7 @@ public class CyclopsEntity extends HostileEntity implements IAnimatable, IAnimat
         if (this.getCooldown() < 17)
             this.goalSelector.add(2, new CyclopsMeleeAttackGoal(this, 0.42f, false));
         this.goalSelector.add(3, new CyclopsShootingGoal(this, ""));
-        this.goalSelector.add(3, new LookAtTargetGoal(this));
+        //this.goalSelector.add(3, new LookAtTargetGoal(this));
         this.goalSelector.add(4, new CyclopsSocializeGoal(this, StatusEffects.STRENGTH));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));

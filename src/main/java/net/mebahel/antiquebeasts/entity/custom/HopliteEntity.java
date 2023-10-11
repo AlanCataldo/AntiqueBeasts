@@ -5,7 +5,11 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.IAnimationTickable;
 import software.bernie.geckolib3.core.manager.AnimationData;
@@ -13,7 +17,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 
-public class HopliteEntity extends HostileEntity implements IAnimatable, IAnimationTickable {
+public class HopliteEntity extends AnimalEntity implements IAnimatable, IAnimationTickable {
     public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(ChampionHopliteEntity.class,
             TrackedDataHandlerRegistry.STRING);
 
@@ -24,10 +28,25 @@ public class HopliteEntity extends HostileEntity implements IAnimatable, IAnimat
     public String getAttackName() {
         return this.dataTracker.get(ATTACK_NAME);
     }
-    protected HopliteEntity(EntityType<? extends HostileEntity> entityType, World world) {
+    protected HopliteEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
     }
 
+    public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(EliteHopliteEntity.class,
+            TrackedDataHandlerRegistry.BOOLEAN);
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(SWINGING, false);
+    }
+
+    public int attackAnimationTimeout = 20;
+    public void setSwinging(boolean swinging) {
+        this.dataTracker.set(SWINGING, swinging);
+    }
+
+    public boolean isSwinging() {
+        return this.dataTracker.get(SWINGING);
+    }
     @Override
     public void registerControllers(AnimationData animationData) {
 
@@ -41,5 +60,11 @@ public class HopliteEntity extends HostileEntity implements IAnimatable, IAnimat
     @Override
     public int tickTimer() {
         return 0;
+    }
+
+    @Nullable
+    @Override
+    public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
+        return null;
     }
 }

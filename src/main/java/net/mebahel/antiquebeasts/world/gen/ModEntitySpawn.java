@@ -20,40 +20,40 @@ public class ModEntitySpawn {
                         BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST,
                         BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
                         BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.SAVANNA, BiomeKeys.MEADOW),
-                SpawnGroup.MONSTER, ModEntities.CYCLOPS, 30, 1, 1);
+                SpawnGroup.CREATURE, ModEntities.CYCLOPS, 4, 1, 1);
         SpawnRestriction.register(ModEntities.CYCLOPS, SpawnRestriction.Location.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HostileEntity::canSpawnInDark);
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canMobSpawn);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                         BiomeKeys.ICE_SPIKES, BiomeKeys.SNOWY_PLAINS, BiomeKeys.SNOWY_TAIGA, BiomeKeys.SNOWY_BEACH, BiomeKeys.SNOWY_SLOPES,
                         BiomeKeys.GROVE, BiomeKeys.JAGGED_PEAKS, BiomeKeys.FROZEN_PEAKS, BiomeKeys.FROZEN_OCEAN,
                         BiomeKeys.FROZEN_RIVER),
-                SpawnGroup.MONSTER, ModEntities.FROST_CYCLOPS, 30, 1, 1);
+                SpawnGroup.CREATURE, ModEntities.FROST_CYCLOPS, 4, 1, 1);
         SpawnRestriction.register(ModEntities.FROST_CYCLOPS, SpawnRestriction.Location.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HostileEntity::canSpawnInDark);
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canMobSpawn);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                         BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST,
                         BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
                         BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.SAVANNA, BiomeKeys.MEADOW),
-                SpawnGroup.MONSTER, ModEntities.HERO_HOPLITE, 30, 1, 1);
+                SpawnGroup.CREATURE, ModEntities.HERO_HOPLITE, 4, 1, 1);
         SpawnRestriction.register(ModEntities.HERO_HOPLITE, SpawnRestriction.Location.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HostileEntity::canSpawnInDark);
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canMobSpawn);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                         BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST,
                         BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
                         BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.SAVANNA, BiomeKeys.MEADOW),
-                SpawnGroup.MONSTER, ModEntities.CHAMPION_HOPLITE, 55, 1, 2);
+                SpawnGroup.CREATURE, ModEntities.CHAMPION_HOPLITE, 6, 1, 2);
         SpawnRestriction.register(ModEntities.CHAMPION_HOPLITE, SpawnRestriction.Location.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HostileEntity::canSpawnInDark);
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canMobSpawn);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                         BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST,
                         BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
                         BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.SAVANNA, BiomeKeys.MEADOW),
-                SpawnGroup.MONSTER, ModEntities.ELITE_HOPLITE, 70, 2, 3);
+                SpawnGroup.CREATURE, ModEntities.ELITE_HOPLITE, 8, 2, 3);
         SpawnRestriction.register(ModEntities.ELITE_HOPLITE, SpawnRestriction.Location.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HostileEntity::canSpawnInDark);
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canMobSpawn);
     }
 }

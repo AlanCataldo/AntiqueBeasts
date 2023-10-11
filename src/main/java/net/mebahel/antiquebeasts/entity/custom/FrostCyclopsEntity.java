@@ -17,6 +17,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ZombieEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.sound.SoundCategory;
@@ -52,7 +53,7 @@ public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IA
     public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(CyclopsEntity.class,
             TrackedDataHandlerRegistry.FLOAT);
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-    public FrostCyclopsEntity(EntityType<? extends HostileEntity> entityType, World world) {
+    public FrostCyclopsEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
     }
     @Override

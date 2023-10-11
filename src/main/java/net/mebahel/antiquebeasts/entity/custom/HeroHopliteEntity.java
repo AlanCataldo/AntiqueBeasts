@@ -18,6 +18,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ZombieEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
@@ -69,7 +70,7 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
     }
 
 
-    public HeroHopliteEntity(EntityType<? extends HostileEntity> entityType, World world) {
+    public HeroHopliteEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
     }
 

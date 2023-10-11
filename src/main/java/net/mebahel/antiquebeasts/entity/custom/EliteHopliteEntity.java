@@ -16,6 +16,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ZombieEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
@@ -33,6 +34,8 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
+
+import java.util.Objects;
 
 import static java.lang.Math.random;
 
@@ -55,10 +58,11 @@ public class EliteHopliteEntity extends HopliteEntity implements IAnimatable, IA
     }
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
-    public EliteHopliteEntity(EntityType<? extends HostileEntity> entityType, World world) {
+    public EliteHopliteEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
     }
 
+    public int attackAnimationTimeout = 20;
     @Override
     public int tickTimer() {
         return age;
@@ -112,15 +116,8 @@ public class EliteHopliteEntity extends HopliteEntity implements IAnimatable, IA
     }
 
     private <E extends IAnimatable> PlayState attackPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty")) {
-            if (this.handSwingProgress > 0f && !this.isSwinging()) {
-                this.setSwinging(true);
-                this.lastSwing = age;
-            }
-            if (this.isSwinging() && this.lastSwing + 22L <= age) {
-                this.setSwinging(false);
-            }
-            if (this.isSwinging() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
+        if (this.animationProcedure.equals("empty") && this.isSwinging()) {
+            if (event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
                 event.getController().markNeedsReload();
                 event.getController().setAnimation(new AnimationBuilder().addAnimation("attack2", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
                 return PlayState.CONTINUE;
@@ -190,9 +187,6 @@ public class EliteHopliteEntity extends HopliteEntity implements IAnimatable, IA
 
     @Override
     public boolean damage(DamageSource source, float amount) {
-        if (this.isSwinging()) {
-            return false;
-        }
         return super.damage(source, amount);
     }
 
