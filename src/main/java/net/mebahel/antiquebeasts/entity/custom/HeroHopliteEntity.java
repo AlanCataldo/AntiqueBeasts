@@ -43,7 +43,6 @@ import static java.lang.Math.random;
 
 public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAnimationTickable {
     double rand;
-    private long lastSwing;
     public String animationProcedure = "empty";
     public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(HeroHopliteEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
@@ -140,14 +139,7 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
         return PlayState.STOP;
     }
     private <E extends IAnimatable> PlayState attackPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty")) {
-            if (this.handSwingProgress > 0f && !this.isSwinging()) {
-                this.setSwinging(true);
-                this.lastSwing = age;
-            }
-            if (this.isSwinging() && this.lastSwing + 22L <= age) {
-                this.setSwinging(false);
-            }
+        if (this.animationProcedure.equals("empty") && this.isSwinging()) {
             if (this.isSwinging() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
                 event.getController().markNeedsReload();
                 event.getController().setAnimation(new AnimationBuilder().addAnimation(this.getAttackName(), ILoopType.EDefaultLoopTypes.PLAY_ONCE));

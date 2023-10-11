@@ -36,7 +36,6 @@ public class HopliteEntity extends AnimalEntity implements IAnimatable, IAnimati
             TrackedDataHandlerRegistry.BOOLEAN);
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(SWINGING, false);
     }
 
     public int attackAnimationTimeout = 20;

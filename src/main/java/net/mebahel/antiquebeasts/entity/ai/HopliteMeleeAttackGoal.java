@@ -24,6 +24,8 @@ public class HopliteMeleeAttackGoal extends Goal {
     public int cooldown;
     private long lastUpdateTime;
 
+    double rand;
+
     public HopliteMeleeAttackGoal(HopliteEntity mob, double speed, boolean pauseWhenMobIdle) {
         this.mob = mob;
         this.speed = speed;
@@ -76,7 +78,6 @@ public class HopliteMeleeAttackGoal extends Goal {
     public void tick() {
         LivingEntity livingEntity = this.mob.getTarget();
         if (livingEntity != null) {
-            System.out.print(this.cooldown + "LE COOLDOWN DANS LE TICK\n");
             this.mob.getLookControl().lookAt(livingEntity, 15.0F, 0F);
             double d = this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
             this.attack(livingEntity, d);
@@ -88,15 +89,24 @@ public class HopliteMeleeAttackGoal extends Goal {
     }
 
     protected void attack(LivingEntity target, double squaredDistance) {
+        rand = random();
+        if (rand < 0.5)
+            this.mob.setAttackName("attack");
+        else
+            this.mob.setAttackName("attack2");
+
         double d = this.getSquaredMaxAttackDistance(target);
-        System.out.print(this.cooldown + " : COOLDOWN\n");
         if (squaredDistance <= d && this.cooldown == 0) {
             this.cooldown = MAX_COOLDOWN;
         } else if (squaredDistance <= d && this.cooldown == 20) {
-            System.out.print("JE SWING\n");
+            if (Objects.equals(this.mob.getAttackName(), "attack")
+                    && Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).getValue() == 1.5f)
+                Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(2.5f);
+            else if (Objects.equals(this.mob.getAttackName(), "attack2")
+                    && Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).getValue() == 2.5f)
+                Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(1.5f);
             this.mob.setSwinging(true);
         } else if (squaredDistance <= d && this.cooldown == 10) {
-            System.out.print("JE TAPE\n");
             this.mob.tryAttack(target);
         } if (squaredDistance > d) {
             this.mob.setSwinging(false);
