@@ -108,7 +108,8 @@ public class HopliteMeleeAttackGoal extends Goal {
             this.mob.setSwinging(true);
         } else if (squaredDistance <= d && this.cooldown == 10) {
             this.mob.tryAttack(target);
-        } if (squaredDistance > d) {
+        }
+        if (squaredDistance > d) {
             this.mob.setSwinging(false);
         }
     }

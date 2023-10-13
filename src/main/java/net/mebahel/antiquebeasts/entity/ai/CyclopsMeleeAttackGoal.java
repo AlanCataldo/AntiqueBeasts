@@ -1,5 +1,6 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
+import net.mebahel.antiquebeasts.entity.custom.CyclopsEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
@@ -10,21 +11,17 @@ import net.minecraft.util.Hand;
 import java.util.EnumSet;
 
 public class CyclopsMeleeAttackGoal extends Goal {
-    protected final PathAwareEntity mob;
+    protected final CyclopsEntity mob;
     private final double speed;
-    private final boolean pauseWhenMobIdle;
     private Path path;
-    private int updateCountdownTicks;
     private static final int MAX_COOLDOWN = 21;
     private int cooldown;
     private long lastUpdateTime;
 
-    public CyclopsMeleeAttackGoal(PathAwareEntity mob, double speed, boolean pauseWhenMobIdle) {
+    public CyclopsMeleeAttackGoal(CyclopsEntity mob, double speed, boolean pauseWhenMobIdle) {
         this.mob = mob;
         this.speed = speed;
-        this.pauseWhenMobIdle = pauseWhenMobIdle;
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
-        this.cooldown = MAX_COOLDOWN;
     }
 
     public boolean canStart() {
@@ -57,14 +54,12 @@ public class CyclopsMeleeAttackGoal extends Goal {
     public void start() {
         this.mob.getNavigation().startMovingAlong(this.path, this.speed);
         this.mob.setAttacking(true);
+        this.cooldown = MAX_COOLDOWN;
     }
 
     public void stop() {
-        LivingEntity livingEntity = this.mob.getTarget();
-        if (!EntityPredicates.EXCEPT_CREATIVE_OR_SPECTATOR.test(livingEntity)) {
-            this.mob.setTarget(null);
-        }
         this.mob.setAttacking(false);
+        this.mob.setSwinging(false);
         this.mob.getNavigation().stop();
     }
 
@@ -74,13 +69,12 @@ public class CyclopsMeleeAttackGoal extends Goal {
 
     public void tick() {
         LivingEntity livingEntity = this.mob.getTarget();
-        this.cooldown = this.cooldown - 1;
         if (livingEntity != null) {
             this.mob.getLookControl().lookAt(livingEntity, 15.0F, 0F);
             double d = this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
-            this.updateCountdownTicks = Math.max(this.updateCountdownTicks - 1, 0);
             this.attack(livingEntity, d);
             this.mob.getNavigation().startMovingTo(livingEntity, this.speed);
+            this.cooldown = Math.max(this.cooldown - 1, 0);
         } else {
             this.cooldown = MAX_COOLDOWN;
         }
@@ -91,10 +85,13 @@ public class CyclopsMeleeAttackGoal extends Goal {
         if (squaredDistance <= d && this.cooldown <= 0) {
             this.cooldown = MAX_COOLDOWN;
         } else if (squaredDistance <= d && this.cooldown == 20) {
-            this.mob.swingHand(Hand.MAIN_HAND);
+            this.mob.setSwinging(true);
         } else if (squaredDistance <= d && this.cooldown == 10) {
             this.mob.tryAttack(target);
+        } if (squaredDistance > d) {
+            this.mob.setSwinging(false);
         }
+
     }
 
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {

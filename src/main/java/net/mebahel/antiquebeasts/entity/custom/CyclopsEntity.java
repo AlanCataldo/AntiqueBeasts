@@ -46,7 +46,6 @@ import static java.lang.Math.random;
 public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimationTickable {
     double rand;
     double last_step = 0;
-    private long lastSwing;
     public String animationProcedure = "empty";
     public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(CyclopsEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
@@ -88,8 +87,7 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        if (this.getCooldown() < 17)
-            this.goalSelector.add(2, new CyclopsMeleeAttackGoal(this, 0.42f, false));
+        this.goalSelector.add(2, new CyclopsMeleeAttackGoal(this, 0.42f, false));
         this.goalSelector.add(3, new CyclopsShootingGoal(this, ""));
         //this.goalSelector.add(3, new LookAtTargetGoal(this));
         this.goalSelector.add(4, new CyclopsSocializeGoal(this, StatusEffects.STRENGTH));
@@ -149,15 +147,8 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
     }
 
     private <E extends IAnimatable> PlayState attackPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty")) {
-            if (this.handSwingProgress > 0f && !this.isSwinging()) {
-                this.setSwinging(true);
-                this.lastSwing = age;
-            }
-            if (this.isSwinging() && this.lastSwing + 20L <= age) {
-                this.setSwinging(false);
-            }
-            if (this.isSwinging() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
+        if (this.animationProcedure.equals("empty") && this.isSwinging()) {
+            if (event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
                 event.getController().markNeedsReload();
                 event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
                 return PlayState.CONTINUE;
@@ -253,16 +244,13 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
 
     @Override
     public boolean damage(DamageSource source, float amount) {
-        if (this.isSwinging()) {
-            return false;
-        }
         if (source.getSource() instanceof ArrowEntity arrow) {
             double heightRatio = (this.getY() - arrow.getY()) / 5.0;
             double isHitInFace = getHitInFace(arrow.getPos(), this.getPos(), this.getRotationVector());
 
             if (isHitInFace > 0.0 && (heightRatio > 0.8 || heightRatio < -0.8)) {
                 System.out.println("DOUBLE DAMAGE");
-                amount *= 1.5;
+                amount *= 1.75;
             } else {
                 System.out.println("ARROW HIT THE BACK");
                 amount *= 0.5;
