@@ -28,7 +28,7 @@ public class ModEntitySpawn {
                         BiomeKeys.ICE_SPIKES, BiomeKeys.SNOWY_PLAINS, BiomeKeys.SNOWY_TAIGA, BiomeKeys.SNOWY_BEACH, BiomeKeys.SNOWY_SLOPES,
                         BiomeKeys.GROVE, BiomeKeys.JAGGED_PEAKS, BiomeKeys.FROZEN_PEAKS, BiomeKeys.FROZEN_OCEAN,
                         BiomeKeys.FROZEN_RIVER),
-                SpawnGroup.CREATURE, ModEntities.FROST_CYCLOPS, 4, 1, 1);
+                SpawnGroup.CREATURE, ModEntities.FROST_CYCLOPS, 2, 1, 1);
         SpawnRestriction.register(ModEntities.FROST_CYCLOPS, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canMobSpawn);
 

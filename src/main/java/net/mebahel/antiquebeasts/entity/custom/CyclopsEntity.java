@@ -89,7 +89,6 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new CyclopsMeleeAttackGoal(this, 0.42f, false));
         this.goalSelector.add(3, new CyclopsShootingGoal(this, ""));
-        //this.goalSelector.add(3, new LookAtTargetGoal(this));
         this.goalSelector.add(4, new CyclopsSocializeGoal(this, StatusEffects.STRENGTH));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
@@ -98,8 +97,6 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
     }
-
-
 
     public float getCooldown() { return this.dataTracker.get(COOLDOWN);}
 
@@ -222,7 +219,7 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
             this.playSound(ModSounds.CYCLOPS_STEP1, 0.75f, 1.0f);
             last_step = tickTimer();
         }
-        if (last_step + 14 <= tickTimer()) {
+        if (last_step + 12 <= tickTimer()) {
             this.playSound(ModSounds.CYCLOPS_STEP1, 0.75f, 1.0f);
             last_step = tickTimer();
         }
@@ -249,10 +246,8 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
             double isHitInFace = getHitInFace(arrow.getPos(), this.getPos(), this.getRotationVector());
 
             if (isHitInFace > 0.0 && (heightRatio > 0.8 || heightRatio < -0.8)) {
-                System.out.println("DOUBLE DAMAGE");
                 amount *= 1.75;
             } else {
-                System.out.println("ARROW HIT THE BACK");
                 amount *= 0.5;
             }
         }

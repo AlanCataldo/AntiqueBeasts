@@ -76,11 +76,9 @@ public class CyclopsSocializeGoal extends Goal {
             this.cyclops.getNavigation().startMovingTo(targetX, targetY, targetZ, 0.72f);
 
             if (this.cyclops.squaredDistanceTo(this.mate) > 20) {
-                System.out.print(this.cyclops.squaredDistanceTo(this.mate) + "\n");
                 this.socializeTimer = 85;
             } else {
                 this.socializeTimer--;
-                System.out.print(this.socializeTimer + "\n");
                 if (this.socializeTimer == 0) {
                     this.cyclops.addStatusEffect(new StatusEffectInstance(this.potionEffect, 2400, 1));
                     this.mate.addStatusEffect(new StatusEffectInstance(this.potionEffect, 2400, 1));

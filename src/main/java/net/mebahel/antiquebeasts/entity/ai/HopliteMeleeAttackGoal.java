@@ -78,7 +78,7 @@ public class HopliteMeleeAttackGoal extends Goal {
     public void tick() {
         LivingEntity livingEntity = this.mob.getTarget();
         if (livingEntity != null) {
-            this.mob.getLookControl().lookAt(livingEntity, 15.0F, 0F);
+            this.mob.getLookControl().lookAt(livingEntity, 15.0F, 7.5F);
             double d = this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
             this.attack(livingEntity, d);
             this.mob.getNavigation().startMovingTo(livingEntity, this.speed);
