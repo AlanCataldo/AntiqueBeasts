@@ -18,8 +18,10 @@ public class ModSounds {
     public static SoundEvent HOPLITE_DEATH1 = registerSoundEvent("hoplite_death1");
     public static SoundEvent HOPLITE_DEATH2 = registerSoundEvent("hoplite_death2");
     public static SoundEvent HOPLITE_HURT1 = registerSoundEvent("hoplite_hurt1");
-
     public static SoundEvent HOPLITE_HURT2 = registerSoundEvent("hoplite_hurt2");
+    public static SoundEvent HOPLITE_AMBIENT1 = registerSoundEvent("hoplite_ambient1");
+    public static SoundEvent HOPLITE_AMBIENT2 = registerSoundEvent("hoplite_ambient2");
+    public static SoundEvent HOPLITE_AMBIENT3 = registerSoundEvent("hoplite_ambient3");
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registry.SOUND_EVENT, id, new SoundEvent(id));

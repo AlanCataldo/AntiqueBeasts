@@ -2,7 +2,6 @@ package net.mebahel.antiquebeasts.entity.custom;
 
 import net.mebahel.antiquebeasts.entity.ai.HopliteMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.variant.EliteHopliteVariant;
-import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -19,7 +18,6 @@ import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Util;
 import net.minecraft.world.*;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -32,16 +30,10 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
-
 import javax.annotation.Nullable;
 
-import java.util.Objects;
-
-import static java.lang.Math.random;
 
 public class EliteHopliteEntity extends HopliteEntity implements IAnimatable, IAnimationTickable {
-    double rand;
-    private long lastSwing;
     public String animationProcedure = "empty";
     public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(EliteHopliteEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
@@ -62,7 +54,6 @@ public class EliteHopliteEntity extends HopliteEntity implements IAnimatable, IA
         super(entityType, world);
     }
 
-    public int attackAnimationTimeout = 20;
     @Override
     public int tickTimer() {
         return age;
@@ -151,24 +142,6 @@ public class EliteHopliteEntity extends HopliteEntity implements IAnimatable, IA
     @Override
     public AnimationFactory getFactory() {
         return factory;
-    }
-
-    @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-        rand = random();
-        if (rand < 0.5)
-            return ModSounds.HOPLITE_HURT1;
-        else
-            return ModSounds.HOPLITE_HURT2;
-    }
-
-    @Override
-    protected SoundEvent getDeathSound() {
-        rand = random();
-        if (rand < 0.5)
-            return ModSounds.HOPLITE_DEATH1;
-        else
-            return ModSounds.HOPLITE_DEATH2;
     }
 
     protected EntityNavigation createNavigation(World world) {

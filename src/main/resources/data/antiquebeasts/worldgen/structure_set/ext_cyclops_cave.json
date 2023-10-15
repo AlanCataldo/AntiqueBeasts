@@ -10,20 +10,20 @@
     "salt": 31321488,
     "exclusion_zone": [
       {
-      "other_set":"minecraft:villages",
-      "chunk_count": 5
+      "other_set":"minecraft:village",
+      "chunk_count": 3
       },
       {
-        "other_set":"minecraft:woodland_mansions",
-        "chunk_count": 5
+        "other_set":"minecraft:mansion",
+        "chunk_count": 3
       },
       {
-        "other_set":"minecraft:ruined_portals",
-        "chunk_count": 5
+        "other_set":"minecraft:ruined_portal",
+        "chunk_count": 3
       },
       {
-        "other_set":"minecraft:pillager_outposts",
-        "chunk_count": 5
+        "other_set":"minecraft:pillager_outpost",
+        "chunk_count": 3
       }
     ],
     "spacing": 28,

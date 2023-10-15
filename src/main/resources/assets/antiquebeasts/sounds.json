@@ -70,5 +70,23 @@
     "sounds": [
       "antiquebeasts:hoplite_hurt2"
     ]
+  },
+  "hoplite_ambient1": {
+    "subtitle": "antiquebeasts:hoplite_ambient1",
+    "sounds": [
+      "antiquebeasts:hoplite_ambient1"
+    ]
+  },
+  "hoplite_ambient2": {
+    "subtitle": "antiquebeasts:hoplite_ambient2",
+    "sounds": [
+      "antiquebeasts:hoplite_ambient2"
+    ]
+  },
+  "hoplite_ambient3": {
+    "subtitle": "antiquebeasts:hoplite_ambient3",
+    "sounds": [
+      "antiquebeasts:hoplite_ambient3"
+    ]
   }
 }

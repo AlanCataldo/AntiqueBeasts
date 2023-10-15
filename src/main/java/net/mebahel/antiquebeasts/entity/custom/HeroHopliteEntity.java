@@ -1,10 +1,8 @@
 package net.mebahel.antiquebeasts.entity.custom;
 
-import net.mebahel.antiquebeasts.entity.ai.LookAtTargetGoal;
 import net.mebahel.antiquebeasts.entity.ai.HopliteMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.HopliteShootingGoal;
 import net.mebahel.antiquebeasts.entity.variant.HeroHopliteVariant;
-import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -21,7 +19,6 @@ import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Util;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -36,13 +33,10 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
-
 import javax.annotation.Nullable;
 
-import static java.lang.Math.random;
 
 public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAnimationTickable {
-    double rand;
     public String animationProcedure = "empty";
     public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(HeroHopliteEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
@@ -118,7 +112,6 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
         if (this.getCooldown() < 17)
             this.goalSelector.add(2, new HopliteMeleeAttackGoal(this, 0.42f,false));
         this.goalSelector.add(3, new HopliteShootingGoal(this));
-        this.goalSelector.add(3, new LookAtTargetGoal(this));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
 
@@ -186,24 +179,6 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
         return factory;
     }
 
-    @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-        rand = random();
-        if (rand < 0.5)
-            return ModSounds.HOPLITE_HURT1;
-        else
-            return ModSounds.HOPLITE_HURT2;
-    }
-
-    @Override
-    protected SoundEvent getDeathSound() {
-        rand = random();
-        if (rand < 0.5)
-            return ModSounds.HOPLITE_DEATH1;
-        else
-            return ModSounds.HOPLITE_DEATH2;
-    }
-
     protected EntityNavigation createNavigation(World world) {
         return new MobNavigation(this, world) {
             protected PathNodeNavigator createPathNodeNavigator(int range) {
@@ -220,9 +195,6 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
 
     @Override
     public boolean damage(DamageSource source, float amount) {
-        if (this.isSwinging()) {
-            return false;
-        }
         return super.damage(source, amount);
     }
     /* VARIANTS */
