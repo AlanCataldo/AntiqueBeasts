@@ -954,6 +954,11 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"0.375": {
+					"effect": "cyclops_hit1"
+				}
 			}
 		},
 		"animation.cyclops.ranged_attack": {

@@ -182,13 +182,13 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
         if (event.sound.matches("cyclops_hit1")) {
             if (this.world.isClient) {
                 this.getEntityWorld().playSound(this.getX(), this.getY(), this.getZ(), ModSounds.CYCLOPS_HIT1,
-                        SoundCategory.HOSTILE, 0.65F, 1.0F, true);
+                        SoundCategory.HOSTILE, 1F, 1.0F, true);
             }
         }
         if (event.sound.matches("cyclops_hurt2")) {
             if (this.world.isClient) {
                 this.getEntityWorld().playSound(this.getX(), this.getY(), this.getZ(), ModSounds.CYCLOPS_HURT2,
-                        SoundCategory.HOSTILE, 0.85F, 1.0F, true);
+                        SoundCategory.HOSTILE, 0.75F, 1.0F, true);
             }
         }
     }
