@@ -85,7 +85,7 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new CyclopsMeleeAttackGoal(this, 0.42f, false));
+        this.goalSelector.add(2, new CyclopsMeleeAttackGoal(this, 0.42f, ""));
         this.goalSelector.add(3, new CyclopsShootingGoal(this, ""));
         this.goalSelector.add(4, new CyclopsSocializeGoal(this, StatusEffects.STRENGTH));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
@@ -124,7 +124,7 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
             if (event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
                 event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.walk", ILoopType.EDefaultLoopTypes.LOOP));
                 return PlayState.CONTINUE;
-            } else if (!this.isSwinging()) {
+            } else if (!this.isSwinging() && !this.isShooting()) {
                 event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.idle", ILoopType.EDefaultLoopTypes.LOOP));
                 return PlayState.CONTINUE;
             }
@@ -199,7 +199,10 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
+        rand = random();
+        if (rand < 0.5)
             return ModSounds.CYCLOPS_HURT1;
+        return ModSounds.CYCLOPS_HURT2;
     }
 
     @Override
@@ -207,8 +210,7 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
         rand = random();
         if (rand < 0.5)
             return ModSounds.CYCLOPS_DEATH1;
-        else
-            return ModSounds.CYCLOPS_DEATH2;
+        return ModSounds.CYCLOPS_DEATH2;
     }
 
     @Override
@@ -217,7 +219,7 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
             this.playSound(ModSounds.CYCLOPS_STEP1, 0.75f, 1.0f);
             last_step = tickTimer();
         }
-        if (last_step + 12 <= tickTimer()) {
+        if (last_step + 14 <= tickTimer()) {
             this.playSound(ModSounds.CYCLOPS_STEP1, 0.75f, 1.0f);
             last_step = tickTimer();
         }

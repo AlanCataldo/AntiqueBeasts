@@ -9,18 +9,21 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.util.Hand;
 import java.util.EnumSet;
+import java.util.Objects;
 
 public class CyclopsMeleeAttackGoal extends Goal {
     protected final CyclopsEntity mob;
     private final double speed;
+    String weapon = "";
     private Path path;
     private static final int MAX_COOLDOWN = 21;
     private int cooldown;
     private long lastUpdateTime;
 
-    public CyclopsMeleeAttackGoal(CyclopsEntity mob, double speed, boolean pauseWhenMobIdle) {
+    public CyclopsMeleeAttackGoal(CyclopsEntity mob, double speed, String weapon) {
         this.mob = mob;
         this.speed = speed;
+        this.weapon= weapon;
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
     }
 
@@ -87,11 +90,11 @@ public class CyclopsMeleeAttackGoal extends Goal {
         } else if (squaredDistance <= d && this.cooldown == 20) {
             this.mob.setSwinging(true);
         } else if (squaredDistance <= d && this.cooldown == 10) {
-            this.mob.tryAttack(target);
-        } if (squaredDistance > d) {
+            if (this.mob.tryAttack(target) && Objects.equals(this.weapon, "frost"))
+                target.setFrozenTicks(260);
+        } else if (squaredDistance > d) {
             this.mob.setSwinging(false);
         }
-
     }
 
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {

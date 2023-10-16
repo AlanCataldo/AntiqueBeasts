@@ -1,4 +1,9 @@
 {
+  "entity.antiquebeasts.elite_hoplite": "Hoplite Elite",
+  "entity.antiquebeasts.champion_hoplite": "Hoplite Champion",
+  "entity.antiquebeasts.hero_hoplite": "Hoplite Héro",
+  "entity.antiquebeasts.cyclops": "Cyclope",
+  "entity.antiquebeasts.frost_cyclops": "Cyclope de glace",
   "item.antiquebeasts.cyclops_spawn_egg": "Oeuf d'apparition de Cyclope",
   "item.antiquebeasts.frost-cyclops_spawn_egg": "Oeuf d'apparition de Cyclope de glace",
   "item.antiquebeasts.champion_hoplite_spawn_egg": "Oeuf d'apparition de Hoplite champion",

@@ -18,13 +18,16 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.IAnimationTickable;
 import software.bernie.geckolib3.core.PlayState;
@@ -42,8 +45,6 @@ import static java.lang.Math.random;
 public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IAnimationTickable {
     double rand;
     double last_step = 0;
-    private boolean swinging;
-    private long lastSwing;
     public String animationProcedure = "empty";
     public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(CyclopsEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
@@ -52,13 +53,22 @@ public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IA
             TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(CyclopsEntity.class,
             TrackedDataHandlerRegistry.FLOAT);
+
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-    public FrostCyclopsEntity(EntityType<? extends AnimalEntity> entityType, World world) {
+
+    public FrostCyclopsEntity(EntityType<? extends CyclopsEntity> entityType, World world) {
         super(entityType, world);
     }
+
     @Override
     public int tickTimer() {
         return age;
+    }
+
+    @Nullable
+    @Override
+    public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
+        return null;
     }
 
     protected void initDataTracker() {
@@ -67,12 +77,32 @@ public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IA
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(COOLDOWN, 0f);
     }
+    public static DefaultAttributeContainer.Builder setAttributes() {
+        return HostileEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0D)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0f)
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 2.5f);
+    }
+    @Override
+    protected void initGoals() {
+        this.goalSelector.add(1, new SwimGoal(this));
+        this.goalSelector.add(2, new CyclopsMeleeAttackGoal(this, 0.42f, "frost"));
+        this.goalSelector.add(3, new CyclopsShootingGoal(this, "frost"));
+        this.goalSelector.add(4, new CyclopsSocializeGoal(this, StatusEffects.STRENGTH));
+        this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
+        this.goalSelector.add(6, new LookAroundGoal(this));
+
+        this.targetSelector.add(1, new RevengeGoal(this));
+        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
+    }
 
     public float getCooldown() { return this.dataTracker.get(COOLDOWN);}
 
     public void setCooldown(float cooldown) {
         this.dataTracker.set(COOLDOWN, cooldown);
     }
+
     public boolean isShooting() {
         return this.dataTracker.get(SHOOTING);
     }
@@ -88,32 +118,14 @@ public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IA
     public void setShooting(boolean shooting) {
         this.dataTracker.set(SHOOTING, shooting);
     }
-    public static DefaultAttributeContainer.Builder setAttributes() {
-        return HostileEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0D)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 9.0f)
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 2.5f);
-    }
-    @Override
-    protected void initGoals() {
-        this.goalSelector.add(1, new SwimGoal(this));
-        if (this.getCooldown() < 17)
-            this.goalSelector.add(2, new CyclopsMeleeAttackGoal(this, 0.42f, false));
-        this.goalSelector.add(3, new CyclopsShootingGoal(this, "frost"));
-        this.goalSelector.add(4, new CyclopsSocializeGoal(this, StatusEffects.STRENGTH));
-        this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
-        this.goalSelector.add(6, new LookAroundGoal(this));
 
-        this.targetSelector.add(1, new RevengeGoal(this));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
-    }
+
     private <E extends IAnimatable> PlayState movementPredicate(AnimationEvent<E> event) {
         if (this.animationProcedure.equals("empty") && !this.isShooting()) {
             if (event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.attack_walk", ILoopType.EDefaultLoopTypes.LOOP));
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.walk", ILoopType.EDefaultLoopTypes.LOOP));
                 return PlayState.CONTINUE;
-            } else if (!this.swinging) {
+            } else if (!this.isSwinging() && !this.isShooting()) {
                 event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.idle", ILoopType.EDefaultLoopTypes.LOOP));
                 return PlayState.CONTINUE;
             }
@@ -122,7 +134,7 @@ public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IA
     }
 
     private <E extends IAnimatable> PlayState shootingPredicate(AnimationEvent<E> event) {
-        if (this.isShooting() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped) && !this.swinging) {
+        if (this.isShooting() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped) && !this.isSwinging()) {
             event.getController().markNeedsReload();
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.ranged_attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
             return PlayState.CONTINUE;
@@ -131,17 +143,10 @@ public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IA
     }
 
     private <E extends IAnimatable> PlayState attackPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty")) {
-            if (this.handSwingProgress > 0f && !this.isSwinging()) {
-                this.setSwinging(true);
-                this.lastSwing = age;
-            }
-            if (this.isSwinging() && this.lastSwing + 20L <= age) {
-                this.setSwinging(false);
-            }
-            if (this.isSwinging() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
+        if (this.animationProcedure.equals("empty") && this.isSwinging()) {
+            if (event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
                 event.getController().markNeedsReload();
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.attack2", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
                 return PlayState.CONTINUE;
             }
             return PlayState.CONTINUE;
@@ -161,11 +166,11 @@ public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IA
     }
     @Override
     public void registerControllers(AnimationData data) {
-        AnimationController<FrostCyclopsEntity> controller = new AnimationController<>(this, "controller", 4,
+        AnimationController<CyclopsEntity> controller = new AnimationController<>(this, "controller", 0,
                 this::movementPredicate);
-        AnimationController<FrostCyclopsEntity> controller1 = new AnimationController<>(this, "attacking", 0, this::attackPredicate);
-        AnimationController<FrostCyclopsEntity> controller3 = new AnimationController<>(this, "shooting", 0, this::shootingPredicate);
-        AnimationController<FrostCyclopsEntity> controller2 = new AnimationController<>(this, "procedure", 4, this::procedurePredicate);
+        AnimationController<CyclopsEntity> controller1 = new AnimationController<>(this, "attacking", 0, this::attackPredicate);
+        AnimationController<CyclopsEntity> controller3 = new AnimationController<>(this, "shooting", 0, this::shootingPredicate);
+        AnimationController<CyclopsEntity> controller2 = new AnimationController<>(this, "procedure", 0, this::procedurePredicate);
         controller1.registerSoundListener(this::soundListener);
         controller3.registerSoundListener(this::soundListener);
         data.addAnimationController(controller);
@@ -173,6 +178,7 @@ public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IA
         data.addAnimationController(controller3);
         data.addAnimationController(controller2);
     }
+
     private <ENTITY extends IAnimatable> void soundListener(SoundKeyframeEvent<ENTITY> event) {
         if (event.sound.matches("cyclops_hit1")) {
             if (this.world.isClient) {
@@ -180,42 +186,10 @@ public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IA
                         SoundCategory.HOSTILE, 0.65F, 1.0F, true);
             }
         }
-        if (event.sound.matches("cyclops_hurt2")) {
-            if (this.world.isClient) {
-                this.getEntityWorld().playSound(this.getX(), this.getY(), this.getZ(), ModSounds.CYCLOPS_HURT2,
-                        SoundCategory.HOSTILE, 0.85F, 1.0F, true);
-            }
-        }
     }
     @Override
     public AnimationFactory getFactory() {
         return factory;
-    }
-
-    @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return ModSounds.CYCLOPS_HURT1;
-    }
-
-    @Override
-    protected SoundEvent getDeathSound() {
-        rand = random();
-        if (rand < 0.5)
-            return ModSounds.CYCLOPS_DEATH1;
-        else
-            return ModSounds.CYCLOPS_DEATH2;
-    }
-
-    @Override
-    protected void playStepSound(BlockPos pos, BlockState state) {
-        if (last_step == 0) {
-            this.playSound(ModSounds.CYCLOPS_STEP1, 0.45f, 1.0f);
-            last_step = tickTimer();
-        }
-        if (last_step + 13 <= tickTimer()) {
-            this.playSound(ModSounds.CYCLOPS_STEP1, 0.45f, 1.0f);
-            last_step = tickTimer();
-        }
     }
 
     protected EntityNavigation createNavigation(World world) {
@@ -230,27 +204,5 @@ public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IA
                 };
             }
         };
-    }
-
-    @Override
-    public boolean damage(DamageSource source, float amount) {
-        if (source.getSource() instanceof ArrowEntity arrow) {
-            double heightRatio = (this.getY() - arrow.getY()) / 5.0;
-            double isHitInFace = getHitInFace(arrow.getPos(), this.getPos(), this.getRotationVector());
-
-            if (isHitInFace > 0.0 && (heightRatio > 0.8 || heightRatio < -0.8)) {
-                System.out.println("DOUBLE DAMAGE");
-                amount *= 1.5;
-            } else {
-                System.out.println("ARROW HIT THE BACK");
-                amount *= 0.5;
-            }
-        }
-        return super.damage(source, amount);
-    }
-
-    private double getHitInFace(Vec3d arrowPos, Vec3d entityPos, Vec3d entityLook) {
-        Vec3d toArrow = arrowPos.subtract(entityPos);
-        return toArrow.normalize().dotProduct(entityLook);
     }
 }

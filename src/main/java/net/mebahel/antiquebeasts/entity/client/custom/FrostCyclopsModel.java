@@ -27,7 +27,7 @@ public class FrostCyclopsModel extends AnimatedGeoModel<FrostCyclopsEntity> {
 
     @Override
     public Identifier getAnimationResource(FrostCyclopsEntity animatable) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "animations/frost-cyclops.animation.json");
+        return new Identifier(AntiqueBeasts.MOD_ID, "animations/cyclops.animation.json");
     }
 
     public void setCustomAnimations(FrostCyclopsEntity animatable, int instanceId, AnimationEvent animationEvent) {

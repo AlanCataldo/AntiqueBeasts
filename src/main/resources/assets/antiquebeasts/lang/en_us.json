@@ -1,4 +1,9 @@
 {
+  "entity.antiquebeasts.elite_hoplite": "Elite Hoplite",
+  "entity.antiquebeasts.champion_hoplite": "Champion Hoplite",
+  "entity.antiquebeasts.hero_hoplite": "Hero Hoplite",
+  "entity.antiquebeasts.cyclops": "Cyclops",
+  "entity.antiquebeasts.frost_cyclops": "Frost Cyclops",
   "item.antiquebeasts.cyclops_spawn_egg": "Cyclops Spawn Egg",
   "item.antiquebeasts.frost-cyclops_spawn_egg": "Frost Cyclops Spawn Egg",
   "item.antiquebeasts.champion_hoplite_spawn_egg": "Champion Hoplite Spawn Egg",
