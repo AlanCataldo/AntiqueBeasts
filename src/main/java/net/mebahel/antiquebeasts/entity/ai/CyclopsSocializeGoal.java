@@ -13,9 +13,7 @@ public class CyclopsSocializeGoal extends Goal {
     private CyclopsEntity mate;
     private int socializeTimer = 0;
     private final double SOCIALIZE_DISTANCE = 2.8;
-
     private final StatusEffect potionEffect;
-
     public CyclopsSocializeGoal(CyclopsEntity cyclops, StatusEffect effect) {
         this.cyclops = cyclops;
         this.potionEffect = effect;
@@ -50,7 +48,7 @@ public class CyclopsSocializeGoal extends Goal {
     }
 
     public boolean shouldContinue() {
-        return this.socializeTimer > 0 || (this.mate != null && this.cyclops.squaredDistanceTo(this.mate) > SOCIALIZE_DISTANCE);
+        return this.socializeTimer > 0 && this.mate != null && this.cyclops.squaredDistanceTo(this.mate) > SOCIALIZE_DISTANCE;
     }
 
     public void tick() {

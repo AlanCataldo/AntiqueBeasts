@@ -66,9 +66,9 @@ public class CyclopsShootingGoal extends Goal {
                     if (this.cyclops.distanceTo(livingEntity) > 25) {
                         distance = 2.5f;
                         speed = 0.85f;
-                    } else  if (this.cyclops.distanceTo(livingEntity) >= 12 && this.cyclops.distanceTo(livingEntity) <= 17){
-                        distance = 0.50f;
-                        speed = 0.85f;
+                    } else if (this.cyclops.distanceTo(livingEntity) >= 12 && this.cyclops.distanceTo(livingEntity) <= 17) {
+                        distance = 0.65f;
+                        speed = 0.90f;
                     } else {
                         distance = 0.40f;
                         speed = 0.80f;
@@ -83,6 +83,9 @@ public class CyclopsShootingGoal extends Goal {
                 } else if (this.cyclops.getCooldown() <= 100 && this.cyclops.getCooldown() > 25) {
                     this.cyclops.setShooting(false);
                 }
+            } else {
+                this.cyclops.setShooting(false);
+                this.cyclops.setCooldown(101);
             }
         }
     }

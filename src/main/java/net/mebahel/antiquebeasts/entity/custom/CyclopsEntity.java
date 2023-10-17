@@ -47,11 +47,13 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
     public String animationProcedure = "empty";
     public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(CyclopsEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
-
     public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(CyclopsEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(CyclopsEntity.class,
             TrackedDataHandlerRegistry.FLOAT);
+
+    public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(CyclopsEntity.class,
+            TrackedDataHandlerRegistry.STRING);
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -69,33 +71,6 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
         return null;
     }
-
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(SHOOTING, false);
-        this.dataTracker.startTracking(SWINGING, false);
-        this.dataTracker.startTracking(COOLDOWN, 0f);
-    }
-    public static DefaultAttributeContainer.Builder setAttributes() {
-        return HostileEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0D)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0f)
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 2.5f);
-    }
-    @Override
-    protected void initGoals() {
-        this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new CyclopsMeleeAttackGoal(this, 0.42f, ""));
-        this.goalSelector.add(3, new CyclopsShootingGoal(this, ""));
-        this.goalSelector.add(4, new CyclopsSocializeGoal(this, StatusEffects.STRENGTH));
-        this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
-        this.goalSelector.add(6, new LookAroundGoal(this));
-
-        this.targetSelector.add(1, new RevengeGoal(this));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
-    }
-
     public float getCooldown() { return this.dataTracker.get(COOLDOWN);}
 
     public void setCooldown(float cooldown) {
@@ -118,6 +93,40 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
         this.dataTracker.set(SHOOTING, shooting);
     }
 
+    public void setAttackName(String attackName) {
+        this.dataTracker.set(ATTACK_NAME, attackName);
+    }
+
+    public String getAttackName() {
+        return this.dataTracker.get(ATTACK_NAME);
+    }
+
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(SHOOTING, false);
+        this.dataTracker.startTracking(SWINGING, false);
+        this.dataTracker.startTracking(COOLDOWN, 0f);
+        this.dataTracker.startTracking(ATTACK_NAME, "animation.cyclops.attack");
+    }
+    public static DefaultAttributeContainer.Builder setAttributes() {
+        return HostileEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0D)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6f)
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 3f);
+    }
+    @Override
+    protected void initGoals() {
+        this.goalSelector.add(1, new SwimGoal(this));
+        this.goalSelector.add(2, new CyclopsMeleeAttackGoal(this, 0.42f, ""));
+        this.goalSelector.add(3, new CyclopsShootingGoal(this, ""));
+        this.goalSelector.add(4, new CyclopsSocializeGoal(this, StatusEffects.STRENGTH));
+        this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
+        this.goalSelector.add(6, new LookAroundGoal(this));
+
+        this.targetSelector.add(1, new RevengeGoal(this));
+        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
+    }
 
     private <E extends IAnimatable> PlayState movementPredicate(AnimationEvent<E> event) {
         if (this.animationProcedure.equals("empty") && !this.isShooting()) {
@@ -135,7 +144,8 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
     private <E extends IAnimatable> PlayState shootingPredicate(AnimationEvent<E> event) {
         if (this.isShooting() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped) && !this.isSwinging()) {
             event.getController().markNeedsReload();
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.ranged_attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.ranged_attack",
+                    ILoopType.EDefaultLoopTypes.PLAY_ONCE));
             return PlayState.CONTINUE;
         }
         return PlayState.CONTINUE;
@@ -145,7 +155,8 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
         if (this.animationProcedure.equals("empty") && this.isSwinging()) {
             if (event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
                 event.getController().markNeedsReload();
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+                event.getController().setAnimation(new AnimationBuilder().addAnimation(this.getAttackName()
+                        , ILoopType.EDefaultLoopTypes.PLAY_ONCE));
                 return PlayState.CONTINUE;
             }
             return PlayState.CONTINUE;

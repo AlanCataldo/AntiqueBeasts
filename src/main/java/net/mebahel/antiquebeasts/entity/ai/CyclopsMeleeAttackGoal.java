@@ -4,12 +4,15 @@ import net.mebahel.antiquebeasts.entity.custom.CyclopsEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.util.Hand;
 import java.util.EnumSet;
 import java.util.Objects;
+
+import static java.lang.Math.random;
 
 public class CyclopsMeleeAttackGoal extends Goal {
     protected final CyclopsEntity mob;
@@ -55,7 +58,6 @@ public class CyclopsMeleeAttackGoal extends Goal {
     }
 
     public void start() {
-        this.mob.getNavigation().startMovingAlong(this.path, this.speed);
         this.mob.setAttacking(true);
         this.cooldown = MAX_COOLDOWN;
     }
@@ -76,7 +78,6 @@ public class CyclopsMeleeAttackGoal extends Goal {
             this.mob.getLookControl().lookAt(livingEntity, 15.0F, 12.5F);
             double d = this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
             this.attack(livingEntity, d);
-            this.mob.getNavigation().startMovingTo(livingEntity, this.speed);
             this.cooldown = Math.max(this.cooldown - 1, 0);
         } else {
             this.cooldown = MAX_COOLDOWN;
@@ -84,10 +85,26 @@ public class CyclopsMeleeAttackGoal extends Goal {
     }
 
     protected void attack(LivingEntity target, double squaredDistance) {
+        double rand = random();
+        if (rand < 0.5)
+            this.mob.setAttackName("animation.cyclops.attack");
+        else
+            this.mob.setAttackName("animation.cyclops.attack2");
         double d = this.getSquaredMaxAttackDistance(target);
+        if (!this.mob.isSwinging())
+            this.mob.getNavigation().startMovingTo(target, this.speed);
+        else
+            this.mob.getNavigation().stop();
         if (squaredDistance <= d && this.cooldown <= 0) {
             this.cooldown = MAX_COOLDOWN;
         } else if (squaredDistance <= d && this.cooldown == 20) {
+            if (Objects.equals(this.mob.getAttackName(), "animation.cyclops.attack")) {
+                Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(3f);
+                Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(6f);
+            } else if (Objects.equals(this.mob.getAttackName(), "animation.cyclops.attack2")) {
+                Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(6f);
+                Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(8f);
+            }
             this.mob.setSwinging(true);
         } else if (squaredDistance <= d && this.cooldown == 10) {
             if (this.mob.tryAttack(target) && Objects.equals(this.weapon, "frost"))
@@ -98,6 +115,6 @@ public class CyclopsMeleeAttackGoal extends Goal {
     }
 
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return 18f + entity.getWidth();
+        return 22f + entity.getWidth();
     }
 }

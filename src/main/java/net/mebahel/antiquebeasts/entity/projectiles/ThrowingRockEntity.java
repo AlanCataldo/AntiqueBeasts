@@ -40,9 +40,6 @@ import java.util.Iterator;
 import static net.mebahel.antiquebeasts.entity.ModEntities.THROWINGROCK;
 
 public class ThrowingRockEntity extends ThrownItemEntity implements IAnimatable {
-
-    private LivingEntity shooter;
-
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
@@ -100,12 +97,10 @@ public class ThrowingRockEntity extends ThrownItemEntity implements IAnimatable 
         Entity entity = this.getEffectCause();
 
         ArrayList<StatusEffectInstance> effectList = new ArrayList<>();
-        effectList.add(new StatusEffectInstance(StatusEffects.NAUSEA, 100, 2));
-        effectList.add(new StatusEffectInstance(StatusEffects.SLOWNESS, 160, 2));
+        effectList.add(new StatusEffectInstance(StatusEffects.NAUSEA, 140, 2));
+        effectList.add(new StatusEffectInstance(StatusEffects.SLOWNESS, 140, 2));
 
         Iterator<StatusEffectInstance> effectIterator = effectList.iterator();
-        //target.setFrozenTicks(400);
-
         StatusEffectInstance statusEffectInstance;
         while(effectIterator.hasNext()) {
             statusEffectInstance = effectIterator.next();
