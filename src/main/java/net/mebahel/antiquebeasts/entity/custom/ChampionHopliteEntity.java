@@ -76,6 +76,7 @@ public class ChampionHopliteEntity extends HopliteEntity implements IAnimatable,
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.72f)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 25.0D)
+                .add(EntityAttributes.GENERIC_ARMOR, 5f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.15f)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 1.5f);
