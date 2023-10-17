@@ -47,7 +47,7 @@ public class ModItems {
             new Item(new FabricItemSettings().group(ItemGroup.MISC)));
 
     public static final Item CYCLOPS_BLOOD = registerItem("cyclops_blood",
-            new Item(new FabricItemSettings().group(ItemGroup.MISC)));
+            new CyclopsBloodItem(new FabricItemSettings().group(ItemGroup.FOOD)));
 
     public static final Item CONCENTRATED_CYCLOPS_BLOOD = registerItem("concentrated_cyclops_blood",
             new Item(new FabricItemSettings().group(ItemGroup.MISC)) {
