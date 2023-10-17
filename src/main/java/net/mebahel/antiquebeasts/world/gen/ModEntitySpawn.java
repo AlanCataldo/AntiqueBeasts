@@ -4,14 +4,17 @@ import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.custom.ChampionHopliteEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.SpawnRestriction;
+import net.mebahel.antiquebeasts.entity.custom.HeroHopliteEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.tag.BiomeTags;
 import net.minecraft.tag.TagKey;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.Heightmap;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.BiomeKeys;
 
 public class ModEntitySpawn {
@@ -22,7 +25,12 @@ public class ModEntitySpawn {
                         BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.SAVANNA, BiomeKeys.MEADOW),
                 SpawnGroup.CREATURE, ModEntities.CYCLOPS, 4, 1, 1);
         SpawnRestriction.register(ModEntities.CYCLOPS, SpawnRestriction.Location.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canMobSpawn);
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return HeroHopliteEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                });
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                         BiomeKeys.ICE_SPIKES, BiomeKeys.SNOWY_PLAINS, BiomeKeys.SNOWY_TAIGA, BiomeKeys.SNOWY_BEACH, BiomeKeys.SNOWY_SLOPES,
@@ -30,7 +38,12 @@ public class ModEntitySpawn {
                         BiomeKeys.FROZEN_RIVER),
                 SpawnGroup.CREATURE, ModEntities.FROST_CYCLOPS, 2, 1, 1);
         SpawnRestriction.register(ModEntities.FROST_CYCLOPS, SpawnRestriction.Location.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canMobSpawn);
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return HeroHopliteEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                });
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                         BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST,
@@ -38,7 +51,12 @@ public class ModEntitySpawn {
                         BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.SAVANNA, BiomeKeys.MEADOW),
                 SpawnGroup.CREATURE, ModEntities.HERO_HOPLITE, 4, 1, 1);
         SpawnRestriction.register(ModEntities.HERO_HOPLITE, SpawnRestriction.Location.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canMobSpawn);
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return HeroHopliteEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                });
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                         BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST,
@@ -46,7 +64,12 @@ public class ModEntitySpawn {
                         BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.SAVANNA, BiomeKeys.MEADOW),
                 SpawnGroup.CREATURE, ModEntities.CHAMPION_HOPLITE, 6, 1, 2);
         SpawnRestriction.register(ModEntities.CHAMPION_HOPLITE, SpawnRestriction.Location.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canMobSpawn);
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return HeroHopliteEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                });
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                         BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST,
@@ -54,6 +77,11 @@ public class ModEntitySpawn {
                         BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.SAVANNA, BiomeKeys.MEADOW),
                 SpawnGroup.CREATURE, ModEntities.ELITE_HOPLITE, 8, 2, 3);
         SpawnRestriction.register(ModEntities.ELITE_HOPLITE, SpawnRestriction.Location.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canMobSpawn);
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return HeroHopliteEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                });
     }
 }

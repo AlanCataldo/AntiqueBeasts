@@ -1,6 +1,7 @@
 package net.mebahel.antiquebeasts.entity.custom;
 
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -11,6 +12,7 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -62,6 +64,16 @@ public class HopliteEntity extends AnimalEntity implements IAnimatable, IAnimati
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
         return null;
+    }
+    private boolean shouldDespawnInPeaceful() {
+        return world.getDifficulty() == Difficulty.PEACEFUL;
+    }
+    @Override
+    public void tick() {
+        super.tick();
+        if (shouldDespawnInPeaceful()) {
+            remove(Entity.RemovalReason.DISCARDED);
+        }
     }
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {

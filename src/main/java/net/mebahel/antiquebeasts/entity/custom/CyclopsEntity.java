@@ -5,6 +5,7 @@ import net.mebahel.antiquebeasts.entity.ai.CyclopsShootingGoal;
 import net.mebahel.antiquebeasts.entity.ai.CyclopsSocializeGoal;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.*;
@@ -26,6 +27,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -99,6 +101,16 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
 
     public String getAttackName() {
         return this.dataTracker.get(ATTACK_NAME);
+    }
+    private boolean shouldDespawnInPeaceful() {
+        return world.getDifficulty() == Difficulty.PEACEFUL;
+    }
+    @Override
+    public void tick() {
+        super.tick();
+        if (shouldDespawnInPeaceful()) {
+            remove(Entity.RemovalReason.DISCARDED);
+        }
     }
 
     protected void initDataTracker() {

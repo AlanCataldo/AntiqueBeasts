@@ -16,22 +16,18 @@ import java.util.Objects;
 import static java.lang.Math.random;
 
 public class HopliteMeleeAttackGoal extends Goal {
-
     protected final HopliteEntity mob;
     private final double speed;
     private Path path;
     private static final int MAX_COOLDOWN = 21;
     public int cooldown;
     private long lastUpdateTime;
-
     double rand;
-
     public HopliteMeleeAttackGoal(HopliteEntity mob, double speed, boolean pauseWhenMobIdle) {
         this.mob = mob;
         this.speed = speed;
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
     }
-
     public boolean canStart() {
         long l = this.mob.world.getTime();
         if (l - this.lastUpdateTime < MAX_COOLDOWN) {
@@ -53,27 +49,22 @@ public class HopliteMeleeAttackGoal extends Goal {
             }
         }
     }
-
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();
         return livingEntity != null;
     }
-
     public void start() {
         this.mob.setAttacking(true);
         this.cooldown = MAX_COOLDOWN;
     }
-
     public void stop() {
         this.mob.setAttacking(false);
         this.mob.setSwinging(false);
         this.mob.getNavigation().stop();
     }
-
     public boolean shouldRunEveryTick() {
         return true;
     }
-
     public void tick() {
         LivingEntity livingEntity = this.mob.getTarget();
         if (livingEntity != null) {
@@ -85,7 +76,6 @@ public class HopliteMeleeAttackGoal extends Goal {
             this.cooldown = MAX_COOLDOWN;
         }
     }
-
     protected void attack(LivingEntity target, double squaredDistance) {
         rand = random();
         if (rand < 0.5)
@@ -114,7 +104,6 @@ public class HopliteMeleeAttackGoal extends Goal {
             this.mob.setSwinging(false);
         }
     }
-
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
         return 10f + entity.getWidth();
     }
