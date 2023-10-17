@@ -60,7 +60,6 @@ public class HopliteMeleeAttackGoal extends Goal {
     }
 
     public void start() {
-        this.mob.getNavigation().startMovingAlong(this.path, this.speed);
         this.mob.setAttacking(true);
         this.cooldown = MAX_COOLDOWN;
     }
@@ -81,7 +80,6 @@ public class HopliteMeleeAttackGoal extends Goal {
             this.mob.getLookControl().lookAt(livingEntity, 15.0F, 7.5F);
             double d = this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
             this.attack(livingEntity, d);
-            this.mob.getNavigation().startMovingTo(livingEntity, this.speed);
             this.cooldown = Math.max(this.cooldown - 1, 0);
         } else {
             this.cooldown = MAX_COOLDOWN;
@@ -94,7 +92,10 @@ public class HopliteMeleeAttackGoal extends Goal {
             this.mob.setAttackName("attack");
         else
             this.mob.setAttackName("attack2");
-
+        if (!this.mob.isSwinging())
+            this.mob.getNavigation().startMovingTo(target, this.speed);
+        else
+            this.mob.getNavigation().stop();
         double d = this.getSquaredMaxAttackDistance(target);
         if (squaredDistance <= d && this.cooldown == 0) {
             this.cooldown = MAX_COOLDOWN;
