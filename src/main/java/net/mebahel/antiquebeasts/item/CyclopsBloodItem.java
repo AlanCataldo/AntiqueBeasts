@@ -30,10 +30,19 @@ public class CyclopsBloodItem extends Item {
             serverPlayerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
         }
         if (!world.isClient) {
-            StatusEffectInstance regenEffect = new StatusEffectInstance(StatusEffects.REGENERATION, 5 * 20);
+            StatusEffectInstance regenEffect = new StatusEffectInstance(StatusEffects.STRENGTH, 30 * 20);
             user.addStatusEffect(regenEffect);
         }
-        return ItemStack.EMPTY;
+        if (!stack.isEmpty()) {
+            ItemStack stackCopy = stack.copy();
+            stackCopy.decrement(1);
+            if (!stackCopy.isEmpty()) {
+                user.setStackInHand(Hand.MAIN_HAND, stackCopy);
+            } else {
+                user.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
+            }
+        }
+        return stack;
     }
 
     public int getMaxUseTime(ItemStack stack) {

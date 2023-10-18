@@ -14,10 +14,10 @@ public class RawCyclopsMeat extends Item {
         super(new Item.Settings()
                 .group(ItemGroup.FOOD)
                 .food(new FoodComponent.Builder()
-                        .hunger(3)
-                        .saturationModifier(2f)
+                        .hunger(4)
+                        .saturationModifier(4f)
                         .meat()
-                        .statusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 200, 0), 1)
+                        //.statusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 200, 0), 1)
                         .build())
         );
     }

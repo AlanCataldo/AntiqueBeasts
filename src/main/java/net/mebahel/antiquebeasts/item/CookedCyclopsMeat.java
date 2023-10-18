@@ -12,10 +12,10 @@ public class CookedCyclopsMeat extends Item {
         super(new Settings()
                 .group(ItemGroup.FOOD)
                 .food(new FoodComponent.Builder()
-                        .hunger(10)
-                        .saturationModifier(6)
+                        .hunger(8)
+                        .saturationModifier(8)
                         .meat()
-                        .statusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 600, 0), 1)
+                        //.statusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 600, 0), 1)
                         .build())
         );
     }
