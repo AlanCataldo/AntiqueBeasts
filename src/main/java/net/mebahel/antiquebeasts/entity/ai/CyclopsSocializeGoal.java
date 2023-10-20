@@ -70,7 +70,7 @@ public class CyclopsSocializeGoal extends Goal {
             double targetY = this.mate.getY() - dy * SOCIALIZE_DISTANCE;
             double targetZ = this.mate.getZ() - dz * SOCIALIZE_DISTANCE;
 
-            this.cyclops.getLookControl().lookAt(targetX, targetY + 3.5f, targetZ);
+            this.cyclops.getLookControl().lookAt(targetX, targetY, targetZ);
             this.cyclops.getNavigation().startMovingTo(targetX, targetY, targetZ, 0.72f);
 
             if (this.cyclops.squaredDistanceTo(this.mate) > 20) {

@@ -99,10 +99,10 @@ public class CyclopsMeleeAttackGoal extends Goal {
             this.cooldown = MAX_COOLDOWN;
         } else if (squaredDistance <= d && this.cooldown == 20) {
             if (Objects.equals(this.mob.getAttackName(), "animation.cyclops.attack")) {
-                Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(3f);
+                Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(1.5f);
                 Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(6f);
             } else if (Objects.equals(this.mob.getAttackName(), "animation.cyclops.attack2")) {
-                Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(6f);
+                Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(3f);
                 Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(8f);
             }
             this.mob.setSwinging(true);

@@ -124,7 +124,7 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6f)
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 3f);
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 1.5f);
     }
     @Override
     protected void initGoals() {
