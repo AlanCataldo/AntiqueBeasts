@@ -55,7 +55,7 @@ public class HopliteMeleeAttackGoal extends Goal {
     }
     public void start() {
         this.mob.setAttacking(true);
-        this.cooldown = MAX_COOLDOWN;
+        this.cooldown = MAX_COOLDOWN + 4;
     }
     public void stop() {
         this.mob.setAttacking(false);

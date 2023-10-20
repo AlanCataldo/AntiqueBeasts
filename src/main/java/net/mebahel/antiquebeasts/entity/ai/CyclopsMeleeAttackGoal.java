@@ -59,7 +59,7 @@ public class CyclopsMeleeAttackGoal extends Goal {
 
     public void start() {
         this.mob.setAttacking(true);
-        this.cooldown = MAX_COOLDOWN;
+        this.cooldown = MAX_COOLDOWN + 4;
     }
 
     public void stop() {
@@ -115,6 +115,6 @@ public class CyclopsMeleeAttackGoal extends Goal {
     }
 
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return 18f + entity.getWidth();
+        return 20f + entity.getWidth();
     }
 }

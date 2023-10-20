@@ -28,7 +28,6 @@ public class TerralithBiomeKeys {
     public static final RegistryKey<Biome> CLOUD_FOREST = register("terralith:cloud_forest");
     public static final RegistryKey<Biome> YOSEMITE_LOWLANDS = register("terralith:yosemite_lowlands");
     public static final RegistryKey<Biome> SIBERIAN_GROVE = register("terralith:siberian_grove");
-    public static final RegistryKey<Biome> BIRCH_TAIGA = register("terralith:birch_taiga");
     public static final RegistryKey<Biome> SKYLANDS_WINTER = register("terralith:skylands_winter");
     public static final RegistryKey<Biome> WINDSWEPT_SPIRES = register("terralith:windswept_spires");
     public static final RegistryKey<Biome> COLD_SHRUBLAND = register("terralith:cold_shrubland");
@@ -81,6 +80,7 @@ public class TerralithBiomeKeys {
     public static final RegistryKey<Biome> SKYLANDS_SPRING = register("terralith:skylands_spring");
     public static final RegistryKey<Biome> SKYLANDS_SUMMER = register("terralith:skylands_summer");
     public static final RegistryKey<Biome> WARM_RIVER = register("terralith:warm_river");
+    public static final RegistryKey<Biome> BIRCH_TAIGA = register("terralith:birch_taiga");
 
     // HOT BIOMES
     public static final RegistryKey<Biome> ANCIENT_SANDS = register("terralith:ancient_sands");

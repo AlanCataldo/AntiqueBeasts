@@ -31,8 +31,8 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SAKURA_GROVE, TerralithBiomeKeys.SAKURA_VALLEY, TerralithBiomeKeys.BLOOMING_PLATEAU,
                         TerralithBiomeKeys.SKYLANDS, TerralithBiomeKeys. SKYLANDS_AUTUMN, TerralithBiomeKeys.SKYLANDS_SPRING,
                         TerralithBiomeKeys.SKYLANDS_SUMMER, TerralithBiomeKeys.WARM_RIVER, TerralithBiomeKeys.VOLCANIC_PEAKS,
-                        TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS),
-                SpawnGroup.CREATURE, ModEntities.CYCLOPS, 3, 4, 4);
+                        TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS, TerralithBiomeKeys.BIRCH_TAIGA),
+                SpawnGroup.CREATURE, ModEntities.CYCLOPS, 3, 1, 1);
         SpawnRestriction.register(ModEntities.CYCLOPS, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
@@ -48,7 +48,7 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.ALPHA_ISLANDS_WINTERS, TerralithBiomeKeys.ALPINE_HIGHLANDS,
                         TerralithBiomeKeys.GRANITE_CLIFFS, TerralithBiomeKeys.HIGHLANDS,
                         TerralithBiomeKeys.SHIELD_CLEARING, TerralithBiomeKeys.SHIELD,
-                        TerralithBiomeKeys.SIBERIAN_TAIGA, TerralithBiomeKeys.SIBERIAN_GROVE, TerralithBiomeKeys.BIRCH_TAIGA,
+                        TerralithBiomeKeys.SIBERIAN_TAIGA, TerralithBiomeKeys.SIBERIAN_GROVE,
                         TerralithBiomeKeys.ICE_MARSH, TerralithBiomeKeys.SNOWY_CHERRY_GROVE, TerralithBiomeKeys.SNOWY_MAPLE_FOREST,
                         TerralithBiomeKeys.SNOWY_SHIELD, TerralithBiomeKeys.ALPHA_ISLANDS_WINTER, TerralithBiomeKeys.FROZEN_CLIFFS,
                         TerralithBiomeKeys.GLACIAL_CHASM, TerralithBiomeKeys.SNOWY_BADLANDS, TerralithBiomeKeys.ALPINE_GROVE,
@@ -73,8 +73,7 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SAKURA_GROVE, TerralithBiomeKeys.SAKURA_VALLEY, TerralithBiomeKeys.BLOOMING_PLATEAU,
                         TerralithBiomeKeys.SKYLANDS, TerralithBiomeKeys. SKYLANDS_AUTUMN, TerralithBiomeKeys.SKYLANDS_SPRING,
                         TerralithBiomeKeys.SKYLANDS_SUMMER, TerralithBiomeKeys.WARM_RIVER, TerralithBiomeKeys.VOLCANIC_PEAKS,
-                        TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS
-                ),
+                        TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS, TerralithBiomeKeys.BIRCH_TAIGA),
                 SpawnGroup.CREATURE, ModEntities.HERO_HOPLITE, 4, 1, 1);
         SpawnRestriction.register(ModEntities.HERO_HOPLITE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
@@ -95,8 +94,7 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SAKURA_GROVE, TerralithBiomeKeys.SAKURA_VALLEY, TerralithBiomeKeys.BLOOMING_PLATEAU,
                         TerralithBiomeKeys.SKYLANDS, TerralithBiomeKeys. SKYLANDS_AUTUMN, TerralithBiomeKeys.SKYLANDS_SPRING,
                         TerralithBiomeKeys.SKYLANDS_SUMMER, TerralithBiomeKeys.WARM_RIVER, TerralithBiomeKeys.VOLCANIC_PEAKS,
-                        TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS
-                ),
+                        TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS, TerralithBiomeKeys.BIRCH_TAIGA),
                 SpawnGroup.CREATURE, ModEntities.CHAMPION_HOPLITE, 6, 1, 2);
         SpawnRestriction.register(ModEntities.CHAMPION_HOPLITE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
@@ -116,8 +114,7 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SAKURA_GROVE, TerralithBiomeKeys.SAKURA_VALLEY, TerralithBiomeKeys.BLOOMING_PLATEAU,
                         TerralithBiomeKeys.SKYLANDS, TerralithBiomeKeys. SKYLANDS_AUTUMN, TerralithBiomeKeys.SKYLANDS_SPRING,
                         TerralithBiomeKeys.SKYLANDS_SUMMER, TerralithBiomeKeys.WARM_RIVER, TerralithBiomeKeys.VOLCANIC_PEAKS,
-                        TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS
-                ),
+                        TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS, TerralithBiomeKeys.BIRCH_TAIGA),
                 SpawnGroup.CREATURE, ModEntities.ELITE_HOPLITE, 8, 2, 3);
         SpawnRestriction.register(ModEntities.ELITE_HOPLITE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {

@@ -44,6 +44,7 @@ public class CyclopsShootingGoal extends Goal {
         } else {
             Objects.requireNonNull(this.cyclops.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.72f);
         }
+        System.out.print(this.cyclops.getCooldown() + " COOLDOWN");
         if (this.cyclops.distanceTo(livingEntity) > 8) {
             if (this.cyclops.canSee(livingEntity)) {
                 World world = this.cyclops.world;

@@ -53,7 +53,6 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
             TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(CyclopsEntity.class,
             TrackedDataHandlerRegistry.FLOAT);
-
     public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(CyclopsEntity.class,
             TrackedDataHandlerRegistry.STRING);
 

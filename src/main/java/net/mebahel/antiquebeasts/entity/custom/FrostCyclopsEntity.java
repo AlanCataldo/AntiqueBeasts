@@ -43,16 +43,7 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 import static java.lang.Math.random;
 
 public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IAnimationTickable {
-    double rand;
-    double last_step = 0;
     public String animationProcedure = "empty";
-    public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(CyclopsEntity.class,
-            TrackedDataHandlerRegistry.BOOLEAN);
-
-    public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(CyclopsEntity.class,
-            TrackedDataHandlerRegistry.BOOLEAN);
-    public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(CyclopsEntity.class,
-            TrackedDataHandlerRegistry.FLOAT);
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -71,12 +62,6 @@ public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IA
         return null;
     }
 
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(SHOOTING, false);
-        this.dataTracker.startTracking(SWINGING, false);
-        this.dataTracker.startTracking(COOLDOWN, 0f);
-    }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0D)
@@ -96,29 +81,6 @@ public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IA
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
     }
-
-    public float getCooldown() { return this.dataTracker.get(COOLDOWN);}
-
-    public void setCooldown(float cooldown) {
-        this.dataTracker.set(COOLDOWN, cooldown);
-    }
-
-    public boolean isShooting() {
-        return this.dataTracker.get(SHOOTING);
-    }
-
-    public void setSwinging(boolean swinging) {
-        this.dataTracker.set(SWINGING, swinging);
-    }
-
-    public boolean isSwinging() {
-        return this.dataTracker.get(SWINGING);
-    }
-
-    public void setShooting(boolean shooting) {
-        this.dataTracker.set(SHOOTING, shooting);
-    }
-
 
     private <E extends IAnimatable> PlayState movementPredicate(AnimationEvent<E> event) {
         if (this.animationProcedure.equals("empty") && !this.isShooting()) {
@@ -146,7 +108,7 @@ public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IA
         if (this.animationProcedure.equals("empty") && this.isSwinging()) {
             if (event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
                 event.getController().markNeedsReload();
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+                event.getController().setAnimation(new AnimationBuilder().addAnimation(this.getAttackName(), ILoopType.EDefaultLoopTypes.PLAY_ONCE));
                 return PlayState.CONTINUE;
             }
             return PlayState.CONTINUE;
