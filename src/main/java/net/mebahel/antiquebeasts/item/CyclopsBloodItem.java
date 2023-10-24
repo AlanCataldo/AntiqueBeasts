@@ -5,10 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsage;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -20,22 +17,20 @@ import net.minecraft.world.World;
 
 public class CyclopsBloodItem extends Item {
     public CyclopsBloodItem(Item.Settings settings) {
-        super(settings);
+        super(settings.food(new FoodComponent.Builder()
+                .hunger(2)
+                .saturationModifier(2f)
+                .meat()
+                .build()));
     }
 
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         super.finishUsing(stack, world, user);
-        if (user instanceof ServerPlayerEntity serverPlayerEntity) {
-            Criteria.CONSUME_ITEM.trigger(serverPlayerEntity, stack);
-            serverPlayerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
-        }
         if (!world.isClient) {
-            StatusEffectInstance regenEffect = new StatusEffectInstance(StatusEffects.STRENGTH, 30 * 20);
-            user.addStatusEffect(regenEffect);
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 30 * 20));
         }
         if (!stack.isEmpty()) {
             ItemStack stackCopy = stack.copy();
-            stackCopy.decrement(1);
             if (!stackCopy.isEmpty()) {
                 user.setStackInHand(Hand.MAIN_HAND, stackCopy);
             } else {

@@ -7,6 +7,7 @@ import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -279,5 +280,36 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
     private double getHitInFace(Vec3d arrowPos, Vec3d entityPos, Vec3d entityLook) {
         Vec3d toArrow = arrowPos.subtract(entityPos);
         return toArrow.normalize().dotProduct(entityLook);
+    }
+
+    @Override
+    public int getMinAmbientSoundDelay() {
+        return 240;
+    }
+    @Override
+    protected SoundEvent getAmbientSound() {
+        LivingEntity target = this.getTarget();
+        rand = random();
+        if (target != null) {
+            if (rand < 0.5)
+                return ModSounds.CYCLOPS_ATTACKING1;
+            else
+                return ModSounds.CYCLOPS_ATTACKING2;
+        } else {
+            if (rand < 0.3)
+                return ModSounds.CYCLOPS_AMBIENT1;
+            else if (rand > 0.3 && rand < 0.6)
+                return ModSounds.CYCLOPS_AMBIENT2;
+            else
+                return ModSounds.CYCLOPS_AMBIENT3;
+        }
+
+    }
+    @Override
+    public void playAmbientSound() {
+        SoundEvent soundEvent = this.getAmbientSound();
+        if (soundEvent != null) {
+            this.playSound(soundEvent, 0.35f, 1f);
+        }
     }
 }

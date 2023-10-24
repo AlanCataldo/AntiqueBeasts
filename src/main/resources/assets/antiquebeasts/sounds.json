@@ -88,5 +88,35 @@
     "sounds": [
       "antiquebeasts:hoplite_ambient3"
     ]
+  },
+  "cyclops_ambient1": {
+    "subtitle": "antiquebeasts:cyclops_ambient1",
+    "sounds": [
+      "antiquebeasts:cyclops_ambient1"
+    ]
+  },
+  "cyclops_ambient2": {
+    "subtitle": "antiquebeasts:cyclops_ambient2",
+    "sounds": [
+      "antiquebeasts:cyclops_ambient2"
+    ]
+  },
+  "cyclops_ambient3": {
+    "subtitle": "antiquebeasts:cyclops_ambient3",
+    "sounds": [
+      "antiquebeasts:cyclops_ambient3"
+    ]
+  },
+  "cyclops_attacking1": {
+    "subtitle": "antiquebeasts:cyclops_attacking1",
+    "sounds": [
+      "antiquebeasts:cyclops_attacking1"
+    ]
+  },
+  "cyclops_attacking2": {
+    "subtitle": "antiquebeasts:cyclops_attacking2",
+    "sounds": [
+      "antiquebeasts:cyclops_attacking2"
+    ]
   }
 }

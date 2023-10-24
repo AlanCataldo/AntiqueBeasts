@@ -17,7 +17,6 @@ public class RawCyclopsMeat extends Item {
                         .hunger(4)
                         .saturationModifier(4f)
                         .meat()
-                        //.statusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 200, 0), 1)
                         .build())
         );
     }

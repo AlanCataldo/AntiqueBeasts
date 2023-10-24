@@ -22,6 +22,11 @@ public class ModSounds {
     public static SoundEvent HOPLITE_AMBIENT1 = registerSoundEvent("hoplite_ambient1");
     public static SoundEvent HOPLITE_AMBIENT2 = registerSoundEvent("hoplite_ambient2");
     public static SoundEvent HOPLITE_AMBIENT3 = registerSoundEvent("hoplite_ambient3");
+    public static SoundEvent CYCLOPS_AMBIENT1 = registerSoundEvent("cyclops_ambient1");
+    public static SoundEvent CYCLOPS_AMBIENT2 = registerSoundEvent("cyclops_ambient2");
+    public static SoundEvent CYCLOPS_AMBIENT3 = registerSoundEvent("cyclops_ambient3");
+    public static SoundEvent CYCLOPS_ATTACKING1 = registerSoundEvent("cyclops_attacking1");
+    public static SoundEvent CYCLOPS_ATTACKING2 = registerSoundEvent("cyclops_attacking2");
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registry.SOUND_EVENT, id, new SoundEvent(id));
