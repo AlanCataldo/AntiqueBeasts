@@ -1,5 +1,6 @@
 package net.mebahel.antiquebeasts.world.gen;
 
+import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
@@ -101,10 +102,21 @@ public class TerralithBiomeKeys {
     public static final RegistryKey<Biome> PAINTED_MOUNTAINS = register("terralith:painted_mountains");
     public static final RegistryKey<Biome> SAVANNA_BADLANDS = register("terralith:savanna_badlands");
     public static final RegistryKey<Biome> SAVANNA_SLOPES = register("terralith:savanna_slopes");
+
+    // CAVES
+    public static final RegistryKey<Biome> ANDESITE_CAVES = register("terralith:cave/andesite_caves");
+    public static final RegistryKey<Biome> DIORITE_CAVES = register("terralith:cave/diorite_caves");
+    public static final RegistryKey<Biome> GRANITE_CAVES = register("terralith:cave/granite_caves");
+    public static final RegistryKey<Biome> INFESTED_CAVES = register("terralith:cave/infested_caves");
+
     public TerralithBiomeKeys() {
     }
 
     private static RegistryKey<Biome> register(String name) {
         return RegistryKey.of(Registry.BIOME_KEY, new Identifier(name));
+    }
+
+    public static void registerTerralithBiomes() {
+        AntiqueBeasts.LOGGER.debug("Registering Biomes " + AntiqueBeasts.MOD_ID);
     }
 }

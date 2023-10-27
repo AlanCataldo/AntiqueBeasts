@@ -11,7 +11,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import software.bernie.example.entity.RocketProjectile;
 
 import static software.bernie.example.registry.EntityRegistry.buildEntity;
 
@@ -42,12 +41,18 @@ public class ModEntities {
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HeroHopliteEntity::new)
                     .dimensions(EntityDimensions.fixed(0.85f, 2f)).build());
 
-    public static EntityType<ThrowingRockEntity> THROWINGROCK = buildEntity(ThrowingRockEntity::new, ThrowingRockEntity.class, 2F,
-            2F, SpawnGroup.MISC);
+    public static final EntityType<ThrowingRockEntity> THROWINGROCK = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "throwingrock"),
+            FabricEntityTypeBuilder.<ThrowingRockEntity>create(SpawnGroup.MISC, ThrowingRockEntity::new)
+                    .dimensions(EntityDimensions.fixed(2f, 2f)).build());
 
-    public static EntityType<HopliteSpearEntity> HOPLITE_SPEAR = buildEntity(HopliteSpearEntity::new, HopliteSpearEntity.class, 12F,
-            2F, SpawnGroup.MISC);
+    public static final EntityType<ThrowingSnowRockEntity> THROWINGSNOWROCK = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "throwingsnowrock"),
+            FabricEntityTypeBuilder.<ThrowingSnowRockEntity>create(SpawnGroup.MISC, ThrowingSnowRockEntity::new)
+                    .dimensions(EntityDimensions.fixed(2f, 2f)).build());
 
-    public static EntityType<ThrowingSnowRockEntity> THROWINGSNOWROCK = buildEntity(ThrowingSnowRockEntity::new, ThrowingSnowRockEntity.class, 2F,
-            2F, SpawnGroup.MISC);
+    public static final EntityType<HopliteSpearEntity> HOPLITE_SPEAR = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "hoplite_spear"),
+            FabricEntityTypeBuilder.<HopliteSpearEntity>create(SpawnGroup.MISC, HopliteSpearEntity::new)
+                    .dimensions(EntityDimensions.fixed(12f, 2f)).build());
 }

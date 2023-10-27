@@ -41,6 +41,9 @@ import static net.mebahel.antiquebeasts.entity.ModEntities.THROWINGROCK;
 
 public class ThrowingRockEntity extends ThrownItemEntity implements IAnimatable {
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    public ThrowingRockEntity(EntityType<? extends ThrowingRockEntity> entityType, World world) {
+        super(entityType, world);
+    }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         event.getController().setAnimation(new AnimationBuilder().addAnimation("throwingrock.animation.idle", EDefaultLoopTypes.LOOP));
@@ -57,9 +60,6 @@ public class ThrowingRockEntity extends ThrownItemEntity implements IAnimatable 
         return this.factory;
     }
 
-    public ThrowingRockEntity(EntityType<? extends ThrowingRockEntity> entityType, World world) {
-        super(entityType, world);
-    }
 
     public ThrowingRockEntity(World world, LivingEntity owner) {
         super(THROWINGROCK, owner, world);
