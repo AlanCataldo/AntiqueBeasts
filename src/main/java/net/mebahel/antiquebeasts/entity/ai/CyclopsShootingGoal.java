@@ -44,7 +44,6 @@ public class CyclopsShootingGoal extends Goal {
         } else {
             Objects.requireNonNull(this.cyclops.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.72f);
         }
-        System.out.print(this.cyclops.getCooldown() + " COOLDOWN");
         if (this.cyclops.distanceTo(livingEntity) > 8) {
             if (this.cyclops.canSee(livingEntity)) {
                 World world = this.cyclops.world;
@@ -56,11 +55,20 @@ public class CyclopsShootingGoal extends Goal {
                     } else {
                         throwingRockEntity = new ThrowingRockEntity(world, this.cyclops);
                     }
-                    double d = Objects.requireNonNull(this.cyclops.getTarget()).getEyeY() - 1.100000023841858;
-                    double e = this.cyclops.getTarget().getX() - this.cyclops.getX();
 
+                    double offsetX = 1.45;
+                    double offsetZ = 1.45;
+                    double yaw = this.cyclops.getBodyYaw();
+                    double radians = Math.toRadians(yaw);
+
+                    double xProjectile = this.cyclops.getX() + Math.cos(radians) * offsetX;
+                    double zProjectile = this.cyclops.getZ() + Math.sin(radians) * offsetZ;
+
+                    double d = livingEntity.getEyeY() - 1.100000023841858;
+                    double e = livingEntity.getX() - xProjectile;
                     double f = d - throwingRockEntity.getY();
-                    double g = this.cyclops.getTarget().getZ() - this.cyclops.getZ();
+                    double g = livingEntity.getZ() - zProjectile;
+
                     double h = Math.sqrt(e * e + g * g) * 0.20000000298023224;
                     float distance;
                     float speed;
@@ -75,7 +83,7 @@ public class CyclopsShootingGoal extends Goal {
                         speed = 0.80f;
                     }
                     throwingRockEntity.setVelocity(e, f + h * distance, g, speed, 1.5F);
-                    throwingRockEntity.setPosition(this.cyclops.getX(), this.cyclops.getBodyY(1.1), throwingRockEntity.getZ());
+                    throwingRockEntity.setPosition(xProjectile, this.cyclops.getBodyY(1.1), zProjectile);
                     world.spawnEntity(throwingRockEntity);
                 } else if (this.cyclops.getCooldown() == 24) {
                     this.cyclops.setShooting(true);
@@ -91,4 +99,3 @@ public class CyclopsShootingGoal extends Goal {
         }
     }
 }
-

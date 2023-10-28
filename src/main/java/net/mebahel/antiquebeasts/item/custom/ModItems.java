@@ -35,7 +35,7 @@ public class ModItems {
                     new FabricItemSettings().group(ItemGroup.COMBAT)));
 
     public static final Item BLOOD_STAINED_FROST_SWORD = registerItem("blood_stained_frost_sword",
-            new BloodStainedFrostSword(ModToolMaterial.FROST_WEAPON,6, -2.8f,
+            new BloodStainedFrostSword(ModToolMaterial.FROST_WEAPON,7, -2.8f,
                     new FabricItemSettings().group(ItemGroup.COMBAT)) {
                 @Override
                 public boolean hasGlint(ItemStack stack) {
@@ -77,7 +77,6 @@ public class ModItems {
             new IronPlateArmorItem(ModArmorMaterials.IRON_PLATE, EquipmentSlot.LEGS, new FabricItemSettings().group(ItemGroup.COMBAT)));
     public static final Item IRON_PLATE_BOOTS = registerItem("iron_plate_boots",
             new IronPlateArmorItem(ModArmorMaterials.IRON_PLATE, EquipmentSlot.FEET, new FabricItemSettings().group(ItemGroup.COMBAT)));
-
     public static final Item GOLD_PLATE_HELMET = registerItem("gold_plate_helmet",
             new GoldPlateArmorItem(ModArmorMaterials.GOLD_PLATE, EquipmentSlot.HEAD, new FabricItemSettings().group(ItemGroup.COMBAT)));
     public static final Item GOLD_PLATE_CHESTPLATE = registerItem("gold_plate_chestplate",
@@ -86,7 +85,6 @@ public class ModItems {
             new GoldPlateArmorItem(ModArmorMaterials.GOLD_PLATE, EquipmentSlot.LEGS, new FabricItemSettings().group(ItemGroup.COMBAT)));
     public static final Item GOLD_PLATE_BOOTS = registerItem("gold_plate_boots",
             new GoldPlateArmorItem(ModArmorMaterials.GOLD_PLATE, EquipmentSlot.FEET, new FabricItemSettings().group(ItemGroup.COMBAT)));
-
 
     public static final Item DIAMOND_PLATE_HELMET = registerItem("diamond_plate_helmet",
             new DiamondPlateArmorItem(ModArmorMaterials.DIAMOND_PLATE, EquipmentSlot.HEAD, new FabricItemSettings().group(ItemGroup.COMBAT)));

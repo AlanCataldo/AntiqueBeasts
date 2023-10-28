@@ -33,13 +33,13 @@ public class BloodStainedFrostSword extends SwordItem {
 
     public BloodStainedFrostSword(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Item.Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
-        this.attackDamage = (float) attackDamage + toolMaterial.getAttackDamage();
+        this.attackDamage = attackDamage + toolMaterial.getAttackDamage();
         ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", (double) this.attackDamage,
+                new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", this.attackDamage,
                         EntityAttributeModifier.Operation.ADDITION));
         builder.put(EntityAttributes.GENERIC_ATTACK_SPEED,
-                new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", (double) attackSpeed,
+                new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", attackSpeed,
                         EntityAttributeModifier.Operation.ADDITION));
         this.attributeModifiers = builder.build();
 
@@ -64,28 +64,6 @@ public class BloodStainedFrostSword extends SwordItem {
             return material != Material.PLANT && material != Material.REPLACEABLE_PLANT
                     && !state.isIn(BlockTags.LEAVES) && material != Material.GOURD ? 1.0F : 1.5F;
         }
-    }
-
-    public boolean postHit(ItemStack stack, PlayerEntity target, PlayerEntity attacker) {
-        stack.damage(1, attacker, (e) -> {
-            e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
-        });
-
-        attacker.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, Integer.MAX_VALUE, 0, false, false));
-
-        if (target != null) {
-            target.setFrozenTicks(400);
-        }
-        return true;
-    }
-
-    public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, PlayerEntity miner) {
-        if (state.getHardness(world, pos) != 0.0F) {
-            stack.damage(2, miner, (e) -> {
-                e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
-            });
-        }
-        return true;
     }
 
     public boolean isSuitableFor(BlockState state) {
