@@ -50,12 +50,7 @@ public class ModItems {
             new CyclopsBloodItem(new FabricItemSettings().group(ItemGroup.FOOD)));
 
     public static final Item CONCENTRATED_CYCLOPS_BLOOD = registerItem("concentrated_cyclops_blood",
-            new Item(new FabricItemSettings().group(ItemGroup.MISC)) {
-                @Override
-                public boolean hasGlint(ItemStack stack) {
-                    return true;
-                }
-            });
+            new ConcentratedCyclopsBloodItem(new FabricItemSettings().group(ItemGroup.FOOD)));
 
     public static final Item CYCLOPS_EYE = registerItem("cyclops_eye",
             new Item(new FabricItemSettings().group(ItemGroup.MISC)));
