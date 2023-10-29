@@ -18,7 +18,7 @@ public class CyclopsSocializeGoal extends Goal {
     public CyclopsSocializeGoal(CyclopsEntity cyclops, StatusEffect effect) {
         this.cyclops = cyclops;
         this.potionEffect = effect;
-        this.socializeTimer = 160;
+        this.socializeTimer = 120;
     }
 
     public boolean canStart() {

@@ -8,10 +8,10 @@
   "start_height": {
     "type": "minecraft:uniform",
     "min_inclusive": {
-      "absolute": -65
+      "absolute": -68
     },
     "max_inclusive": {
-      "absolute": -55
+      "absolute": -60
     }
   },
   "project_start_to_heightmap": "OCEAN_FLOOR_WG",
