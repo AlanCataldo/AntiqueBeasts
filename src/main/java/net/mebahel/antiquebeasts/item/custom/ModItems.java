@@ -52,8 +52,8 @@ public class ModItems {
     public static final Item CONCENTRATED_CYCLOPS_BLOOD = registerItem("concentrated_cyclops_blood",
             new ConcentratedCyclopsBloodItem(new FabricItemSettings().group(ItemGroup.FOOD)));
 
-    public static final Item CYCLOPS_EYE = registerItem("cyclops_eye",
-            new Item(new FabricItemSettings().group(ItemGroup.MISC)));
+    /*public static final Item CYCLOPS_EYE = registerItem("cyclops_eye",
+            new Item(new FabricItemSettings().group(ItemGroup.MISC)));*/
 
     public static final Item IRON_PLATE = registerItem("iron_plate",
             new Item(new FabricItemSettings().group(ItemGroup.MATERIALS)));
@@ -90,16 +90,13 @@ public class ModItems {
     public static final Item DIAMOND_PLATE_BOOTS = registerItem("diamond_plate_boots",
             new DiamondPlateArmorItem(ModArmorMaterials.DIAMOND_PLATE, EquipmentSlot.FEET, new FabricItemSettings().group(ItemGroup.COMBAT)));
 
-
     public static final Item RAW_CYCLOPS_MEAT = registerItem("raw_cyclops_meat",
             new RawCyclopsMeat());
 
     public static final Item COOKED_CYCLOPS_MEAT = registerItem("cooked_cyclops_meat",
             new CookedCyclopsMeat());
-
-    public static final Item THROWINGROCK = registerItem("throwingrock",
-            new ThrowingRockItem(new FabricItemSettings().group(ItemGroup.MISC)));
-
+    /*public static final Item THROWINGROCK = registerItem("throwingrock",
+            new ThrowingRockItem(new FabricItemSettings().group(ItemGroup.MISC)));*/
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(AntiqueBeasts.MOD_ID, name), item);
