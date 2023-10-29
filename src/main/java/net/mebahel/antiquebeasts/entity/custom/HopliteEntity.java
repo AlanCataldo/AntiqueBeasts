@@ -3,6 +3,7 @@ package net.mebahel.antiquebeasts.entity.custom;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -24,7 +25,7 @@ import static java.lang.Math.random;
 
 public class HopliteEntity extends AnimalEntity implements IAnimatable, IAnimationTickable {
     double rand;
-    public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(ChampionHopliteEntity.class,
+    public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(HopliteEntity.class,
             TrackedDataHandlerRegistry.STRING);
     public void setAttackName(String attackName) {
         this.dataTracker.set(ATTACK_NAME, attackName);
@@ -35,7 +36,7 @@ public class HopliteEntity extends AnimalEntity implements IAnimatable, IAnimati
     protected HopliteEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
     }
-    public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(EliteHopliteEntity.class,
+    public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(HopliteEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
     protected void initDataTracker() {
         super.initDataTracker();
@@ -93,15 +94,24 @@ public class HopliteEntity extends AnimalEntity implements IAnimatable, IAnimati
     public int getMinAmbientSoundDelay() {
         return 240;
     }
+
     @Override
     protected SoundEvent getAmbientSound() {
+        LivingEntity target = this.getTarget();
         rand = random();
-        if (rand < 0.3)
-            return ModSounds.HOPLITE_AMBIENT1;
-        else if (rand > 0.3 && rand < 0.6)
-            return ModSounds.HOPLITE_AMBIENT2;
-        else
-            return ModSounds.HOPLITE_AMBIENT3;
+        if (target != null) {
+            if (rand < 0.5)
+                return ModSounds.HOPLITE_ATTACKING1;
+            else
+                return ModSounds.HOPLITE_ATTACKING2;
+        } else {
+            if (rand < 0.3)
+                return ModSounds.HOPLITE_AMBIENT1;
+            else if (rand > 0.3 && rand < 0.6)
+                return ModSounds.HOPLITE_AMBIENT2;
+            else
+                return ModSounds.HOPLITE_AMBIENT3;
+        }
     }
     @Override
     public void playAmbientSound() {

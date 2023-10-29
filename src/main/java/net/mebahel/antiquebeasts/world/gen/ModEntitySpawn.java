@@ -44,7 +44,7 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SNOWY_SHIELD, TerralithBiomeKeys.ALPHA_ISLANDS_WINTER, TerralithBiomeKeys.FROZEN_CLIFFS,
                         TerralithBiomeKeys.GLACIAL_CHASM, TerralithBiomeKeys.SNOWY_BADLANDS, TerralithBiomeKeys.ALPINE_GROVE,
                         TerralithBiomeKeys.WINTRY_FOREST,TerralithBiomeKeys.WINTRY_LOWLANDS),
-                SpawnGroup.CREATURE, ModEntities.FROST_CYCLOPS, 1, 1, 1);
+                SpawnGroup.CREATURE, ModEntities.FROST_CYCLOPS, 2, 1, 1);
         SpawnRestriction.register(ModEntities.FROST_CYCLOPS, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
@@ -86,7 +86,7 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SKYLANDS, TerralithBiomeKeys. SKYLANDS_AUTUMN, TerralithBiomeKeys.SKYLANDS_SPRING,
                         TerralithBiomeKeys.SKYLANDS_SUMMER, TerralithBiomeKeys.WARM_RIVER, TerralithBiomeKeys.VOLCANIC_PEAKS,
                         TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS, TerralithBiomeKeys.BIRCH_TAIGA),
-                SpawnGroup.CREATURE, ModEntities.CHAMPION_HOPLITE, 6, 1, 2);
+                SpawnGroup.CREATURE, ModEntities.CHAMPION_HOPLITE, 7, 1, 2);
         SpawnRestriction.register(ModEntities.CHAMPION_HOPLITE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
@@ -106,7 +106,7 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SKYLANDS, TerralithBiomeKeys. SKYLANDS_AUTUMN, TerralithBiomeKeys.SKYLANDS_SPRING,
                         TerralithBiomeKeys.SKYLANDS_SUMMER, TerralithBiomeKeys.WARM_RIVER, TerralithBiomeKeys.VOLCANIC_PEAKS,
                         TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS, TerralithBiomeKeys.BIRCH_TAIGA),
-                SpawnGroup.CREATURE, ModEntities.ELITE_HOPLITE, 8, 2, 3);
+                SpawnGroup.CREATURE, ModEntities.ELITE_HOPLITE, 8, 1, 3);
         SpawnRestriction.register(ModEntities.ELITE_HOPLITE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {

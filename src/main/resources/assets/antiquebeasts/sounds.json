@@ -118,5 +118,17 @@
     "sounds": [
       "antiquebeasts:cyclops_attacking2"
     ]
+  },
+  "hoplite_attacking1": {
+    "subtitle": "antiquebeasts:hoplite_attacking1",
+    "sounds": [
+      "antiquebeasts:hoplite_attacking1"
+    ]
+  },
+  "hoplite_attacking2": {
+    "subtitle": "antiquebeasts:hoplite_attacking2",
+    "sounds": [
+      "antiquebeasts:hoplite_attacking2"
+    ]
   }
 }

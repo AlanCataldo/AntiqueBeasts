@@ -305,7 +305,6 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
             else
                 return ModSounds.CYCLOPS_AMBIENT3;
         }
-
     }
     @Override
     public void playAmbientSound() {

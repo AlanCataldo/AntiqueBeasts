@@ -100,6 +100,6 @@ public class HopliteMeleeAttackGoal extends Goal {
         }
     }
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return 12f + entity.getWidth();
+        return 10f + entity.getWidth();
     }
 }
