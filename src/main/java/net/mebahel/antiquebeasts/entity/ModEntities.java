@@ -12,9 +12,6 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import static software.bernie.example.registry.EntityRegistry.buildEntity;
-
-
 public class ModEntities {
     public static final EntityType<CyclopsEntity> CYCLOPS = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "cyclops"),

@@ -1192,7 +1192,7 @@
 				},
 				{
 					"name": "neck",
-					"parent": "torso",
+					"parent": "head",
 					"pivot": [0, 70.5, 0],
 					"rotation": [0, 0, 2.5],
 					"cubes": [

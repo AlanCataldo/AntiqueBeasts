@@ -1,5 +1,5 @@
 {
-  "name": "antiquebeasts:ext_cyclops_cave",
+  "name": "antiquebeasts:ext_cyclops_cave/start_pool",
   "fallback": "minecraft:empty",
   "elements": [
     {
