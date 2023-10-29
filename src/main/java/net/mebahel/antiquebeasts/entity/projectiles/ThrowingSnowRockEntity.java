@@ -40,9 +40,6 @@ import java.util.Iterator;
 import static net.mebahel.antiquebeasts.entity.ModEntities.THROWINGSNOWROCK;
 
 public class ThrowingSnowRockEntity extends ThrownItemEntity implements IAnimatable {
-
-    private LivingEntity shooter;
-
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
@@ -69,7 +66,7 @@ public class ThrowingSnowRockEntity extends ThrownItemEntity implements IAnimata
     }
 
     protected Item getDefaultItem() {
-        return ModItems.THROWINGROCK;
+        return null;
     }
 
     public void handleStatus(byte status) {

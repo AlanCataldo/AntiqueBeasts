@@ -1,7 +1,6 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
 import net.mebahel.antiquebeasts.AntiqueBeasts;
-import net.mebahel.antiquebeasts.entity.custom.ChampionHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.HeroHopliteEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;

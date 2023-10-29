@@ -1,6 +1,5 @@
 package net.mebahel.antiquebeasts.item;
 
-import net.mebahel.antiquebeasts.entity.projectiles.ThrowingRockEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.ThrowingSnowRockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;

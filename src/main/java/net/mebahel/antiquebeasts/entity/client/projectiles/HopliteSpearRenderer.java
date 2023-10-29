@@ -1,7 +1,6 @@
 package net.mebahel.antiquebeasts.entity.client.projectiles;
 
 import net.mebahel.antiquebeasts.entity.projectiles.HopliteSpearEntity;
-import net.mebahel.antiquebeasts.entity.projectiles.ThrowingSnowRockEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;

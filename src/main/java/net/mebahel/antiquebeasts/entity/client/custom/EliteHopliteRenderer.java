@@ -3,7 +3,6 @@ package net.mebahel.antiquebeasts.entity.client.custom;
 import com.google.common.collect.Maps;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.entity.custom.EliteHopliteEntity;
-import net.mebahel.antiquebeasts.entity.variant.ChampionHopliteVariant;
 import net.mebahel.antiquebeasts.entity.variant.EliteHopliteVariant;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;

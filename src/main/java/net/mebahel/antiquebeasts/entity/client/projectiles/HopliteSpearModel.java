@@ -2,7 +2,6 @@ package net.mebahel.antiquebeasts.entity.client.projectiles;
 
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.entity.projectiles.HopliteSpearEntity;
-import net.mebahel.antiquebeasts.entity.projectiles.ThrowingRockEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 

@@ -45,7 +45,7 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
             TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(HeroHopliteEntity.class,
             TrackedDataHandlerRegistry.FLOAT);
-    public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(ChampionHopliteEntity.class,
+    public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(HeroHopliteEntity.class,
             TrackedDataHandlerRegistry.STRING);
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);

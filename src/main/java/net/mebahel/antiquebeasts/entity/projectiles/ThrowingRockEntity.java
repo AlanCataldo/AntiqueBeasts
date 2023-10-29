@@ -1,6 +1,5 @@
 package net.mebahel.antiquebeasts.entity.projectiles;
 
-import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.block.BlockState;
@@ -66,7 +65,7 @@ public class ThrowingRockEntity extends ThrownItemEntity implements IAnimatable 
     }
 
     protected Item getDefaultItem() {
-        return ModItems.THROWINGROCK;
+        return null;
     }
 
     public void handleStatus(byte status) {

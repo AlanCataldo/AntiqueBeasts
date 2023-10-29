@@ -1,19 +1,14 @@
 package net.mebahel.antiquebeasts.entity.projectiles;
 
-import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.particle.ModParticles;
-import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
@@ -35,15 +30,9 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import static net.mebahel.antiquebeasts.entity.ModEntities.HOPLITE_SPEAR;
-import static net.mebahel.antiquebeasts.entity.ModEntities.THROWINGSNOWROCK;
 
 public class HopliteSpearEntity extends ThrownItemEntity implements IAnimatable {
-
-    private LivingEntity shooter;
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -71,7 +60,7 @@ public class HopliteSpearEntity extends ThrownItemEntity implements IAnimatable 
     }
 
     protected Item getDefaultItem() {
-        return ModItems.THROWINGROCK;
+        return null;
     }
 
     public void handleStatus(byte status) {

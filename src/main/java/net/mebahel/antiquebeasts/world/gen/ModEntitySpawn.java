@@ -3,19 +3,10 @@ package net.mebahel.antiquebeasts.world.gen;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.mebahel.antiquebeasts.entity.ModEntities;
-import net.mebahel.antiquebeasts.entity.custom.ChampionHopliteEntity;
-import net.mebahel.antiquebeasts.entity.custom.HeroHopliteEntity;
+import net.mebahel.antiquebeasts.entity.custom.*;
 import net.minecraft.entity.*;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.tag.BiomeTags;
-import net.minecraft.tag.TagKey;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.BiomeKeys;
 
 public class ModEntitySpawn {
@@ -38,7 +29,7 @@ public class ModEntitySpawn {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
                     }
-                    return HeroHopliteEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                    return CyclopsEntity.canMobSpawn(type, world, spawnReason, pos, random);
                 });
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
@@ -53,13 +44,13 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SNOWY_SHIELD, TerralithBiomeKeys.ALPHA_ISLANDS_WINTER, TerralithBiomeKeys.FROZEN_CLIFFS,
                         TerralithBiomeKeys.GLACIAL_CHASM, TerralithBiomeKeys.SNOWY_BADLANDS, TerralithBiomeKeys.ALPINE_GROVE,
                         TerralithBiomeKeys.WINTRY_FOREST,TerralithBiomeKeys.WINTRY_LOWLANDS),
-                SpawnGroup.CREATURE, ModEntities.FROST_CYCLOPS, 2, 1, 1);
+                SpawnGroup.CREATURE, ModEntities.FROST_CYCLOPS, 1, 1, 1);
         SpawnRestriction.register(ModEntities.FROST_CYCLOPS, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
                     }
-                    return HeroHopliteEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                    return FrostCyclopsEntity.canMobSpawn(type, world, spawnReason, pos, random);
                 });
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
@@ -101,7 +92,7 @@ public class ModEntitySpawn {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
                     }
-                    return HeroHopliteEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                    return ChampionHopliteEntity.canMobSpawn(type, world, spawnReason, pos, random);
                 });
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                         BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST,
@@ -121,7 +112,7 @@ public class ModEntitySpawn {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
                     }
-                    return HeroHopliteEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                    return EliteHopliteEntity.canMobSpawn(type, world, spawnReason, pos, random);
                 });
     }
 }
