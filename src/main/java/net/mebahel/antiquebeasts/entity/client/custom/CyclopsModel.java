@@ -29,7 +29,7 @@ public class CyclopsModel extends AnimatedGeoModel<CyclopsEntity> {
     public Identifier getAnimationResource(CyclopsEntity animatable) {
         return new Identifier(AntiqueBeasts.MOD_ID, "animations/cyclops.animation.json");
     }
-
+    @Override
     public void setCustomAnimations(CyclopsEntity animatable, int instanceId, AnimationEvent animationEvent) {
         super.setCustomAnimations(animatable, instanceId, animationEvent);
         IBone head = this.getAnimationProcessor().getBone("head");
@@ -46,6 +46,12 @@ public class CyclopsModel extends AnimatedGeoModel<CyclopsEntity> {
         }
 
         head_y = head.getRotationZ() + (extraData.headPitch * ((float) Math.PI / 340F)) * unpausedMultiplier;
+
+        if (head_x > 1.3f) {
+            head_x = 1.3f;
+        } else if (head_x < -1.3f) {
+            head_x = -1.3f;
+        }
 
         head.setRotationY(head_x);
         head.setRotationZ(head_y);
