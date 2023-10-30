@@ -83,7 +83,8 @@ public class HopliteShootingGoal extends Goal {
                     this.hoplite.setShooting(true);
                 } else if (this.hoplite.getCooldown() == 0) {
                     this.hoplite.setCooldown(81);
-                } else if (this.hoplite.getCooldown() <= 80 && this.hoplite.getCooldown() > 20) {
+                    this.hoplite.setShooting(false);
+                } else if (this.hoplite.getCooldown() <= 80 && this.hoplite.getCooldown() > 21) {
                     this.hoplite.setShooting(false);
                 }
             } else {

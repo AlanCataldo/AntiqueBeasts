@@ -89,6 +89,7 @@ public class CyclopsShootingGoal extends Goal {
                     this.cyclops.setShooting(true);
                 } else if (this.cyclops.getCooldown() == 0) {
                     this.cyclops.setCooldown(101);
+                    this.cyclops.setShooting(false);
                 } else if (this.cyclops.getCooldown() <= 100 && this.cyclops.getCooldown() > 25) {
                     this.cyclops.setShooting(false);
                 }
