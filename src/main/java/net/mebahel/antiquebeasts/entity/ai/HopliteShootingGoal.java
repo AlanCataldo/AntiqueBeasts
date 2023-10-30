@@ -46,7 +46,7 @@ public class HopliteShootingGoal extends Goal {
             if (this.hoplite.canSee(livingEntity)) {
                 World world = this.hoplite.world;
                 this.hoplite.setCooldown(Math.max(this.hoplite.getCooldown() - 1, 0));
-                if (this.hoplite.getCooldown() == 10) {
+                if (this.hoplite.getCooldown() == 7) {
                     ProjectileEntity hopliteSpearEntity;
                     hopliteSpearEntity = new HopliteSpearEntity(world, this.hoplite);
 
@@ -84,7 +84,7 @@ public class HopliteShootingGoal extends Goal {
                 } else if (this.hoplite.getCooldown() == 0) {
                     this.hoplite.setCooldown(81);
                     this.hoplite.setShooting(false);
-                } else if (this.hoplite.getCooldown() <= 80 && this.hoplite.getCooldown() > 21) {
+                } else if (this.hoplite.getCooldown() <= 80 && this.hoplite.getCooldown() > 20) {
                     this.hoplite.setShooting(false);
                 }
             } else {
