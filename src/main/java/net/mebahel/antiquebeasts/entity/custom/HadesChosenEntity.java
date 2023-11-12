@@ -201,16 +201,19 @@ public class HadesChosenEntity extends HostileEntity implements IAnimatable, IAn
     public void onDeath(DamageSource cause) {
         super.onDeath(cause);
 
-        if (cause.getAttacker() instanceof PlayerEntity) {
-            World world = this.getEntityWorld();
-            double x = this.getX();
-            double y = this.getY();
-            double z = this.getZ();
+        rand = random();
+        if (rand < 0.45) {
+            if (cause.getAttacker() instanceof PlayerEntity) {
+                World world = this.getEntityWorld();
+                double x = this.getX();
+                double y = this.getY();
+                double z = this.getZ();
 
-            HadesShadeEntity hadesShade = new HadesShadeEntity(ModEntities.HADES_SHADE, this.world);
-            hadesShade.setPosition(x, y, z);
-            hadesShade.playSound(ModSounds.HADES_SHADE_SPAWN, 0.5f, 1);
-            world.spawnEntity(hadesShade);
+                HadesShadeEntity hadesShade = new HadesShadeEntity(ModEntities.HADES_SHADE, this.world);
+                hadesShade.setPosition(x, y, z);
+                hadesShade.playSound(ModSounds.HADES_SHADE_SPAWN, 0.5f, 1);
+                world.spawnEntity(hadesShade);
+            }
         }
     }
     @Override

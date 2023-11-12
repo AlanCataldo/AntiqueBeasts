@@ -31,7 +31,12 @@ public class ModItems {
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
     public static final Item HADES_SHADE_SPAWN_EGG = registerItem("hades_shade_spawn_egg",
-            new SpawnEggItem(ModEntities.HADES_SHADE,5109471, 1334867,
+            new SpawnEggItem(ModEntities.HADES_SHADE,3815994, 14342874,
+                    new FabricItemSettings().group(ItemGroup.MISC)));
+
+
+    public static final Item HADES_CHOSEN_SPAWN_EGG = registerItem("hades_chosen_spawn_egg",
+            new SpawnEggItem(ModEntities.HADES_CHOSEN,2563101, 13355979,
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
     public static final Item FROST_SWORD = registerItem("frost_sword",

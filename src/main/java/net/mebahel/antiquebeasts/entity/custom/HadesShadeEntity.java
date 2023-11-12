@@ -85,13 +85,13 @@ public class HadesShadeEntity extends FlyingEntity implements IAnimatable, IAnim
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 30.0D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 22.0D)
                 .add(EntityAttributes.GENERIC_ARMOR, 2f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.5f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.3f)
                 .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.6000000238418579)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.30000001192092896)
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5f);
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.3f);
     }
     @Override
     protected void initGoals() {
@@ -201,7 +201,7 @@ public class HadesShadeEntity extends FlyingEntity implements IAnimatable, IAnim
     public void playAmbientSound() {
         SoundEvent soundEvent = this.getAmbientSound();
         if (soundEvent != null) {
-            this.playSound(soundEvent, 0.45f, 1f);
+            this.playSound(soundEvent, 0.35f, 1f);
         }
     }
 }
