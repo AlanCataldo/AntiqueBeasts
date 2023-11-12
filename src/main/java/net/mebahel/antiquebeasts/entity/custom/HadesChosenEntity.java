@@ -1,11 +1,11 @@
 package net.mebahel.antiquebeasts.entity.custom;
 
-import net.mebahel.antiquebeasts.entity.ai.HopliteMeleeAttackGoal;
-import net.mebahel.antiquebeasts.entity.ai.HopliteShootingGoal;
-import net.mebahel.antiquebeasts.entity.variant.HeroHopliteVariant;
-import net.minecraft.entity.EntityData;
+import net.mebahel.antiquebeasts.entity.ModEntities;
+import net.mebahel.antiquebeasts.entity.ai.HadesChosenMeleeAttackGoal;
+import net.mebahel.antiquebeasts.entity.ai.HadesChosenShootingGoal;
+import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -15,13 +15,8 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.ZombieEntity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.Util;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.IAnimationTickable;
@@ -33,19 +28,21 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
-import javax.annotation.Nullable;
+
+import static java.lang.Math.random;
 
 
-public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAnimationTickable {
+public class HadesChosenEntity extends HostileEntity implements IAnimatable, IAnimationTickable {
     public String animationProcedure = "empty";
-    public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(HeroHopliteEntity.class,
+    double rand;
+    public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(HadesChosenEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
 
-    public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(HeroHopliteEntity.class,
+    public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(HadesChosenEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
-    public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(HeroHopliteEntity.class,
+    public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(HadesChosenEntity.class,
             TrackedDataHandlerRegistry.FLOAT);
-    public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(HeroHopliteEntity.class,
+    public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(HadesChosenEntity.class,
             TrackedDataHandlerRegistry.STRING);
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -63,7 +60,7 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
     }
 
 
-    public HeroHopliteEntity(EntityType<? extends AnimalEntity> entityType, World world) {
+    public HadesChosenEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
     }
@@ -77,7 +74,6 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
         this.dataTracker.startTracking(SHOOTING, false);
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(COOLDOWN, 0f);
-        this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
     }
 
@@ -102,23 +98,22 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.72f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 35.0D)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0f)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0D)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5.5f)
                 .add(EntityAttributes.GENERIC_ARMOR, 8f)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5f)
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.6f)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5f);
     }
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new HopliteMeleeAttackGoal(this, 0.42f,false));
-        this.goalSelector.add(3, new HopliteShootingGoal(this));
+        this.goalSelector.add(2, new HadesChosenMeleeAttackGoal(this, 0.42f));
+        this.goalSelector.add(3, new HadesChosenShootingGoal(this));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
 
         this.targetSelector.add(1, new RevengeGoal(this));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
     }
     private <E extends IAnimatable> PlayState movementPredicate(AnimationEvent<E> event) {
         if (this.animationProcedure.equals("empty") && !this.isShooting()) {
@@ -165,11 +160,11 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
     }
     @Override
     public void registerControllers(AnimationData data) {
-        AnimationController<HeroHopliteEntity> controller = new AnimationController<>(this, "controller", 0,
+        AnimationController<HadesChosenEntity> controller = new AnimationController<>(this, "controller", 0,
                 this::movementPredicate);
-        AnimationController<HeroHopliteEntity> controller1 = new AnimationController<>(this, "attacking", 0, this::attackPredicate);
-        AnimationController<HeroHopliteEntity> controller2 = new AnimationController<>(this, "procedure", 0, this::procedurePredicate);
-        AnimationController<HeroHopliteEntity> controller3 = new AnimationController<>(this, "shooting", 0, this::shootingPredicate);
+        AnimationController<HadesChosenEntity> controller1 = new AnimationController<>(this, "attacking", 0, this::attackPredicate);
+        AnimationController<HadesChosenEntity> controller2 = new AnimationController<>(this, "procedure", 0, this::procedurePredicate);
+        AnimationController<HadesChosenEntity> controller3 = new AnimationController<>(this, "shooting", 0, this::shootingPredicate);
         data.addAnimationController(controller);
         data.addAnimationController(controller1);
         data.addAnimationController(controller2);
@@ -196,41 +191,72 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
 
     @Override
     public boolean damage(DamageSource source, float amount) {
+        if (source.isFire()) {
+            return false;
+        }
         return super.damage(source, amount);
     }
-    /* VARIANTS */
-    @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Variant", this.getTypeVariant());
-    }
 
     @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        this.dataTracker.set(DATA_ID_TYPE_VARIANT, nbt.getInt("Variant"));
+    public void onDeath(DamageSource cause) {
+        super.onDeath(cause);
+
+        if (cause.getAttacker() instanceof PlayerEntity) {
+            World world = this.getEntityWorld();
+            double x = this.getX();
+            double y = this.getY();
+            double z = this.getZ();
+
+            HadesShadeEntity hadesShade = new HadesShadeEntity(ModEntities.HADES_SHADE, this.world);
+            hadesShade.setPosition(x, y, z);
+            hadesShade.playSound(ModSounds.HADES_SHADE_SPAWN, 0.5f, 1);
+            world.spawnEntity(hadesShade);
+        }
     }
-    private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
-            DataTracker.registerData(HeroHopliteEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        rand = random();
+        if (rand < 0.5)
+            return ModSounds.HOPLITE_HURT1;
+        else
+            return ModSounds.HOPLITE_HURT2;
+    }
+    @Override
+    protected SoundEvent getDeathSound() {
+        rand = random();
+        if (rand < 0.5)
+            return ModSounds.HOPLITE_DEATH1;
+        else
+            return ModSounds.HOPLITE_DEATH2;
+    }
+    @Override
+    public int getMinAmbientSoundDelay() {
+        return 240;
+    }
 
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
-                                 SpawnReason spawnReason, @Nullable EntityData entityData,
-                                 @Nullable NbtCompound entityNbt) {
-        HeroHopliteVariant variant = Util.getRandom(HeroHopliteVariant.values(), this.random);
-        setVariant(variant);
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+    protected SoundEvent getAmbientSound() {
+        LivingEntity target = this.getTarget();
+        rand = random();
+        if (target != null) {
+            if (rand < 0.5)
+                return ModSounds.HOPLITE_ATTACKING1;
+            else
+                return ModSounds.HOPLITE_ATTACKING2;
+        } else {
+            if (rand < 0.3)
+                return ModSounds.HOPLITE_AMBIENT1;
+            else if (rand > 0.3 && rand < 0.6)
+                return ModSounds.HOPLITE_AMBIENT2;
+            else
+                return ModSounds.HOPLITE_AMBIENT3;
+        }
     }
-
-    public HeroHopliteVariant getVariant() {
-        return HeroHopliteVariant.byId(this.getTypeVariant() & 255);
-    }
-
-    private int getTypeVariant() {
-        return this.dataTracker.get(DATA_ID_TYPE_VARIANT);
-    }
-
-    private void setVariant(HeroHopliteVariant variant) {
-        this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
+    @Override
+    public void playAmbientSound() {
+        SoundEvent soundEvent = this.getAmbientSound();
+        if (soundEvent != null) {
+            this.playSound(soundEvent, 0.35f, 0.93f);
+        }
     }
 }

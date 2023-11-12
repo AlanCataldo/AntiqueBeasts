@@ -61,6 +61,7 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
 
     public CyclopsEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
+        this.ambientSoundChance = -this.getMinAmbientSoundDelay();
     }
 
     @Override

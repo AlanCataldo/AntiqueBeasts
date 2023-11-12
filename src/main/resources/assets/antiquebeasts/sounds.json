@@ -130,5 +130,41 @@
     "sounds": [
       "antiquebeasts:hoplite_attacking2"
     ]
+  },
+  "hades_shade_hurt1": {
+    "subtitle": "antiquebeasts:hades_shade_hurt1",
+    "sounds": [
+      "antiquebeasts:hades_shade_hurt1"
+    ]
+  },
+  "hades_shade_hurt2": {
+    "subtitle": "antiquebeasts:hades_shade_hurt2",
+    "sounds": [
+      "antiquebeasts:hades_shade_hurt2"
+    ]
+  },
+  "hades_shade_ambient1": {
+    "subtitle": "antiquebeasts:hades_shade_ambient1",
+    "sounds": [
+      "antiquebeasts:hades_shade_ambient1"
+    ]
+  },
+  "hades_shade_ambient2": {
+    "subtitle": "antiquebeasts:hades_shade_ambient2",
+    "sounds": [
+      "antiquebeasts:hades_shade_ambient2"
+    ]
+  },
+  "hades_shade_death": {
+    "subtitle": "antiquebeasts:hades_shade_death",
+    "sounds": [
+      "antiquebeasts:hades_shade_death"
+    ]
+  },
+  "hades_shade_spawn": {
+    "subtitle": "antiquebeasts:hades_shade_spawn",
+    "sounds": [
+      "antiquebeasts:hades_shade_spawn"
+    ]
   }
 }

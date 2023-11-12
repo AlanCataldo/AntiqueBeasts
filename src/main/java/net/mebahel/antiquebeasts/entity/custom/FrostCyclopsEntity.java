@@ -37,6 +37,7 @@ public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IA
 
     public FrostCyclopsEntity(EntityType<? extends CyclopsEntity> entityType, World world) {
         super(entityType, world);
+        this.ambientSoundChance = -this.getMinAmbientSoundDelay();
     }
 
     @Override

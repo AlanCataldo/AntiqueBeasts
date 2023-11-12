@@ -27,27 +27,30 @@ public class HopliteEntity extends AnimalEntity implements IAnimatable, IAnimati
     double rand;
     public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(HopliteEntity.class,
             TrackedDataHandlerRegistry.STRING);
-    public void setAttackName(String attackName) {
-        this.dataTracker.set(ATTACK_NAME, attackName);
-    }
-    public String getAttackName() {
-        return this.dataTracker.get(ATTACK_NAME);
-    }
+    public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(HopliteEntity.class,
+            TrackedDataHandlerRegistry.BOOLEAN);
+    public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(HopliteEntity.class,
+            TrackedDataHandlerRegistry.FLOAT);
+
     protected HopliteEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
     }
     public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(HopliteEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
-    protected void initDataTracker() {
-        super.initDataTracker();
+    protected void initDataTracker() { super.initDataTracker(); }
+    public void setShooting(boolean shooting) {
+        this.dataTracker.set(SHOOTING, shooting);
     }
-    public int attackAnimationTimeout = 20;
-    public void setSwinging(boolean swinging) {
-        this.dataTracker.set(SWINGING, swinging);
+    public boolean isShooting() {
+        return this.dataTracker.get(SHOOTING);
     }
-
-    public boolean isSwinging() {
-        return this.dataTracker.get(SWINGING);
+    public void setSwinging(boolean swinging) { this.dataTracker.set(SWINGING, swinging); }
+    public boolean isSwinging() { return this.dataTracker.get(SWINGING); }
+    public void setAttackName(String attackName) { this.dataTracker.set(ATTACK_NAME, attackName); }
+    public String getAttackName() { return this.dataTracker.get(ATTACK_NAME); }
+    public float getCooldown() { return this.dataTracker.get(COOLDOWN);}
+    public void setCooldown(float cooldown) {
+        this.dataTracker.set(COOLDOWN, cooldown);
     }
     @Override
     public void registerControllers(AnimationData animationData) {}

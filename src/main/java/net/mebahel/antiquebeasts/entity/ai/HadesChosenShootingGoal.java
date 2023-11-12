@@ -1,7 +1,8 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
-import net.mebahel.antiquebeasts.entity.custom.HeroHopliteEntity;
+import net.mebahel.antiquebeasts.entity.custom.HadesChosenEntity;
 import net.mebahel.antiquebeasts.entity.custom.HopliteEntity;
+import net.mebahel.antiquebeasts.entity.projectiles.HadesChosenSpearEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.HopliteSpearEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
@@ -11,10 +12,10 @@ import net.minecraft.world.World;
 
 import java.util.Objects;
 
-public class HopliteShootingGoal extends Goal {
-    private final HopliteEntity hoplite;
+public class HadesChosenShootingGoal extends Goal {
+    private final HadesChosenEntity hoplite;
 
-    public HopliteShootingGoal(HopliteEntity hoplite) {
+    public HadesChosenShootingGoal(HadesChosenEntity hoplite) {
         this.hoplite = hoplite;
     }
 
@@ -49,7 +50,7 @@ public class HopliteShootingGoal extends Goal {
                 this.hoplite.setCooldown(Math.max(this.hoplite.getCooldown() - 1, 0));
                 if (this.hoplite.getCooldown() == 7) {
                     ProjectileEntity hopliteSpearEntity;
-                    hopliteSpearEntity = new HopliteSpearEntity(world, this.hoplite);
+                    hopliteSpearEntity = new HadesChosenSpearEntity(world, this.hoplite);
 
                     double offsetX = -0.7;
                     double offsetZ = -0.7;

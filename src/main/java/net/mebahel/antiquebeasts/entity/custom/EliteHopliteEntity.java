@@ -1,7 +1,9 @@
 package net.mebahel.antiquebeasts.entity.custom;
 
+import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.ai.HopliteMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.variant.EliteHopliteVariant;
+import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -52,6 +54,7 @@ public class EliteHopliteEntity extends HopliteEntity implements IAnimatable, IA
 
     public EliteHopliteEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
+        this.ambientSoundChance = -this.getMinAmbientSoundDelay();
     }
 
     @Override
@@ -139,7 +142,6 @@ public class EliteHopliteEntity extends HopliteEntity implements IAnimatable, IA
         data.addAnimationController(controller1);
         data.addAnimationController(controller2);
     }
-
     @Override
     public AnimationFactory getFactory() {
         return factory;

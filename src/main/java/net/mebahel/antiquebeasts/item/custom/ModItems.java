@@ -30,6 +30,10 @@ public class ModItems {
             new SpawnEggItem(ModEntities.HERO_HOPLITE,5109471, 1334867,
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
+    public static final Item HADES_SHADE_SPAWN_EGG = registerItem("hades_shade_spawn_egg",
+            new SpawnEggItem(ModEntities.HADES_SHADE,5109471, 1334867,
+                    new FabricItemSettings().group(ItemGroup.MISC)));
+
     public static final Item FROST_SWORD = registerItem("frost_sword",
             new FrostSword(ModToolMaterial.FROST_WEAPON,6, -2.4f,
                     new FabricItemSettings().group(ItemGroup.COMBAT)));

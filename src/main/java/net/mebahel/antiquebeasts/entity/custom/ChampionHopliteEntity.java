@@ -53,6 +53,7 @@ public class ChampionHopliteEntity extends HopliteEntity implements IAnimatable,
 
     public ChampionHopliteEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
+        this.ambientSoundChance = -this.getMinAmbientSoundDelay();
     }
     @Override
     public int tickTimer() {

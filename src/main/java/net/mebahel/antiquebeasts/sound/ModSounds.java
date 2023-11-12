@@ -29,6 +29,12 @@ public class ModSounds {
     public static SoundEvent CYCLOPS_ATTACKING2 = registerSoundEvent("cyclops_attacking2");
     public static SoundEvent HOPLITE_ATTACKING1 = registerSoundEvent("hoplite_attacking1");
     public static SoundEvent HOPLITE_ATTACKING2 = registerSoundEvent("hoplite_attacking2");
+    public static SoundEvent HADES_SHADE_HURT1 = registerSoundEvent("hades_shade_hurt1");
+    public static SoundEvent HADES_SHADE_HURT2 = registerSoundEvent("hades_shade_hurt2");
+    public static SoundEvent HADES_SHADE_AMBIENT1 = registerSoundEvent("hades_shade_ambient1");
+    public static SoundEvent HADES_SHADE_AMBIENT2 = registerSoundEvent("hades_shade_ambient2");
+    public static SoundEvent HADES_SHADE_DEATH = registerSoundEvent("hades_shade_death");
+    public static SoundEvent HADES_SHADE_SPAWN = registerSoundEvent("hades_shade_spawn");
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registry.SOUND_EVENT, id, new SoundEvent(id));

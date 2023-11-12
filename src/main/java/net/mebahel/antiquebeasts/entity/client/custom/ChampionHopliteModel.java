@@ -13,7 +13,7 @@ import software.bernie.geckolib3.model.provider.data.EntityModelData;
 public class ChampionHopliteModel extends AnimatedGeoModel<ChampionHopliteEntity> {
     float head_x;
     float head_y;
-    float max_rotation_x = 15;
+    float max_rotation_x = 35;
 
     @Override
     public Identifier getModelResource(ChampionHopliteEntity object) {
