@@ -35,7 +35,7 @@ public class ModEntitySpawn {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                         BiomeKeys.ICE_SPIKES, BiomeKeys.SNOWY_PLAINS, BiomeKeys.SNOWY_TAIGA,
                         BiomeKeys.SNOWY_BEACH, BiomeKeys.SNOWY_SLOPES, BiomeKeys.GROVE, BiomeKeys.JAGGED_PEAKS,
-                        BiomeKeys.FROZEN_PEAKS, BiomeKeys.FROZEN_OCEAN, BiomeKeys.FROZEN_RIVER,
+                        BiomeKeys.FROZEN_PEAKS, BiomeKeys.FROZEN_OCEAN, BiomeKeys.FROZEN_RIVER, BiomeKeys.TAIGA,
                         TerralithBiomeKeys.ALPHA_ISLANDS_WINTERS, TerralithBiomeKeys.ALPINE_HIGHLANDS,
                         TerralithBiomeKeys.GRANITE_CLIFFS, TerralithBiomeKeys.HIGHLANDS,
                         TerralithBiomeKeys.SHIELD_CLEARING, TerralithBiomeKeys.SHIELD,
@@ -43,8 +43,9 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.ICE_MARSH, TerralithBiomeKeys.SNOWY_CHERRY_GROVE, TerralithBiomeKeys.SNOWY_MAPLE_FOREST,
                         TerralithBiomeKeys.SNOWY_SHIELD, TerralithBiomeKeys.ALPHA_ISLANDS_WINTER, TerralithBiomeKeys.FROZEN_CLIFFS,
                         TerralithBiomeKeys.GLACIAL_CHASM, TerralithBiomeKeys.SNOWY_BADLANDS, TerralithBiomeKeys.ALPINE_GROVE,
-                        TerralithBiomeKeys.WINTRY_FOREST,TerralithBiomeKeys.WINTRY_LOWLANDS),
-                SpawnGroup.CREATURE, ModEntities.FROST_CYCLOPS, 2, 1, 1);
+                        TerralithBiomeKeys.WINTRY_FOREST,TerralithBiomeKeys.WINTRY_LOWLANDS, TerralithBiomeKeys.COLD_SHRUBLAND,
+                        TerralithBiomeKeys.GRAVEL_DESERT),
+                SpawnGroup.CREATURE, ModEntities.FROST_CYCLOPS, 3, 1, 1);
         SpawnRestriction.register(ModEntities.FROST_CYCLOPS, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
@@ -116,7 +117,9 @@ public class ModEntitySpawn {
                 });
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
-                BiomeKeys.BASALT_DELTAS, BiomeKeys.SOUL_SAND_VALLEY, BiomeKeys.NETHER_WASTES),
+                BiomeKeys.BASALT_DELTAS, BiomeKeys.SOUL_SAND_VALLEY, BiomeKeys.NETHER_WASTES,
+                        IncendiumBiomeKeys.ASH_BARRENS, IncendiumBiomeKeys.QUARTZ_FLATS, IncendiumBiomeKeys.WEEPING_VALLEY,
+                        IncendiumBiomeKeys.WITHERED_FOREST, IncendiumBiomeKeys.VOLCANIC_DELTAS),
                 SpawnGroup.MONSTER, ModEntities.HADES_SHADE, 15, 1, 1);
         SpawnRestriction.register(ModEntities.HADES_SHADE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
@@ -127,7 +130,9 @@ public class ModEntitySpawn {
             });
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
-                        BiomeKeys.BASALT_DELTAS, BiomeKeys.SOUL_SAND_VALLEY, BiomeKeys.NETHER_WASTES),
+                        BiomeKeys.SOUL_SAND_VALLEY, BiomeKeys.NETHER_WASTES,
+                        IncendiumBiomeKeys.ASH_BARRENS, IncendiumBiomeKeys.QUARTZ_FLATS, IncendiumBiomeKeys.WEEPING_VALLEY,
+                        IncendiumBiomeKeys.WITHERED_FOREST),
             SpawnGroup.MONSTER, ModEntities.HADES_CHOSEN, 3, 1, 1);
         SpawnRestriction.register(ModEntities.HADES_CHOSEN, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {

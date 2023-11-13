@@ -115,8 +115,4 @@ public class TerralithBiomeKeys {
     private static RegistryKey<Biome> register(String name) {
         return RegistryKey.of(Registry.BIOME_KEY, new Identifier(name));
     }
-
-    public static void registerTerralithBiomes() {
-        AntiqueBeasts.LOGGER.debug("Registering Biomes " + AntiqueBeasts.MOD_ID);
-    }
 }
