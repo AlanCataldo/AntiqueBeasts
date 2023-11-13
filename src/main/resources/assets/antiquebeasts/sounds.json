@@ -166,5 +166,11 @@
     "sounds": [
       "antiquebeasts:hades_shade_spawn"
     ]
+  },
+  "spear_hit": {
+    "subtitle": "antiquebeasts:spear_hit",
+    "sounds": [
+      "antiquebeasts:spear_hit"
+    ]
   }
 }

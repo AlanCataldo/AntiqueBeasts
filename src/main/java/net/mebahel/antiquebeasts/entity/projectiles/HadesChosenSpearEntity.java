@@ -1,6 +1,7 @@
 package net.mebahel.antiquebeasts.entity.projectiles;
 
 import net.mebahel.antiquebeasts.particle.ModParticles;
+import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -65,17 +66,6 @@ public class HadesChosenSpearEntity extends ThrownItemEntity implements IAnimata
         return null;
     }
 
-    public void handleStatus(byte status) {
-        if (status == 3) {
-            ParticleEffect particleEffect = ModParticles.SNOWROCKSPLASH_PARTICLE;
-
-            for(int i = 0; i < 8; ++i) {
-                this.world.addParticle(particleEffect, this.getX(), this.getY(), this.getZ(),
-                        0f, 0f, 0f);
-            }
-        }
-    }
-
     protected void onCollision(HitResult hitResult) {
         super.onCollision(hitResult);
         if (!this.world.isClient) {
@@ -94,6 +84,7 @@ public class HadesChosenSpearEntity extends ThrownItemEntity implements IAnimata
     }
     @Override
     protected void onBlockHit(BlockHitResult blockHitResult) {
+        this.playSound(ModSounds.SPEAR_HIT, 0.5f, 1.1f);
         BlockState blockState = this.world.getBlockState(blockHitResult.getBlockPos());
         blockState.onProjectileHit(this.world, blockState, blockHitResult, this);
     }
