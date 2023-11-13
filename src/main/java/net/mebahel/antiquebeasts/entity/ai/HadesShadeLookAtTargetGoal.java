@@ -36,7 +36,6 @@ public class HadesShadeLookAtTargetGoal extends Goal {
                 double f = livingEntity.getZ() - this.shade.getZ();
                 this.shade.setYaw(-((float)MathHelper.atan2(e, f)) * 57.295776F);
                 this.shade.bodyYaw = this.shade.getYaw();
-                System.out.println("JE TE REGARDE");
             }
         }
     }
