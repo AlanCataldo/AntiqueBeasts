@@ -1,0 +1,20 @@
+{
+  "structures": [
+    {
+      "structure": "antiquebeasts:hades_shrine",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1024489314,
+    "exclusion_zone": [
+      {
+      "other_set":"minecraft:fortress",
+      "chunk_count": 10
+      }
+    ],
+    "spacing": 48,
+    "separation": 24
+  }
+}

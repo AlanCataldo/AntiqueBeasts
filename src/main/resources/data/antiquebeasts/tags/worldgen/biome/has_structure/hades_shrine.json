@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:nether_wastes",
+    {"id": "incendium:withered_forest", "required": false},
+    {"id": "incendium:quartz_flats", "required": false},
+    {"id": "incendium:weeping_valley", "required": false}
+  ]
+}

@@ -37,7 +37,7 @@ public class ModEntitySpawn {
                         BiomeKeys.SNOWY_BEACH, BiomeKeys.SNOWY_SLOPES, BiomeKeys.GROVE, BiomeKeys.JAGGED_PEAKS,
                         BiomeKeys.FROZEN_PEAKS, BiomeKeys.FROZEN_OCEAN, BiomeKeys.FROZEN_RIVER, BiomeKeys.TAIGA,
                         TerralithBiomeKeys.ALPHA_ISLANDS_WINTERS, TerralithBiomeKeys.ALPINE_HIGHLANDS,
-                        TerralithBiomeKeys.GRANITE_CLIFFS, TerralithBiomeKeys.HIGHLANDS,
+                        TerralithBiomeKeys.HIGHLANDS,
                         TerralithBiomeKeys.SHIELD_CLEARING, TerralithBiomeKeys.SHIELD,
                         TerralithBiomeKeys.SIBERIAN_TAIGA, TerralithBiomeKeys.SIBERIAN_GROVE,
                         TerralithBiomeKeys.ICE_MARSH, TerralithBiomeKeys.SNOWY_CHERRY_GROVE, TerralithBiomeKeys.SNOWY_MAPLE_FOREST,
