@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "antiquebeasts:shield/diamond_plate_shield"
+  },
+  "addition": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "result": {
+    "item": "antiquebeasts:shield/netherite_plate_shield"
+  }
+}

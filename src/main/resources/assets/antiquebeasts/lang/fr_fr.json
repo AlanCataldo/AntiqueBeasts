@@ -36,5 +36,9 @@
   "item.antiquebeasts.diamond_plate_chestplate": "Torse en plaque de diamant",
   "item.antiquebeasts.diamond_plate_leggings": "Pantalon en plaque de diamant",
   "item.antiquebeasts.diamond_plate_boots": "Bottes en plaque de diamant",
-  "item.antiquebeasts.diamond_plate": "Plaque de diamant"
+  "item.antiquebeasts.diamond_plate": "Plaque de diamant",
+  "item.antiquebeasts.shield.iron_plate_shield": "Bouclier de plaque en fer",
+  "item.antiquebeasts.shield.gold_plate_shield": "Bouclier de plaque en or",
+  "item.antiquebeasts.shield.diamond_plate_shield": "Bouclier de plaque en diamant",
+  "item.antiquebeasts.shield.netherite_plate_shield": "Bouclier de plaque en netherite"
 }

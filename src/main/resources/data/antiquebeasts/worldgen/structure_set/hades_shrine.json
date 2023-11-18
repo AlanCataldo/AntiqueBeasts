@@ -12,6 +12,10 @@
       {
       "other_set":"minecraft:fortress",
       "chunk_count": 10
+      },
+      {
+        "other_set":"minecraft:bastion_remnant",
+        "chunk_count": 10
       }
     ],
     "spacing": 48,

@@ -1,5 +1,6 @@
 package net.mebahel.antiquebeasts.item.custom;
 
+import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.entity.ModEntities;
@@ -66,6 +67,16 @@ public class ModItems {
 
     public static final Item IRON_PLATE = registerItem("iron_plate",
             new Item(new FabricItemSettings().group(ItemGroup.MATERIALS)));
+
+    public static final Item IRON_PLATE_SHIELD = registerItem("shield/iron_plate_shield",
+            new FabricShieldItem(new FabricItemSettings().maxDamage(550).group(ItemGroup.COMBAT), 100, 13, ModItems.GOLD_PLATE));
+
+    public static final Item GOLD_PLATE_SHIELD = registerItem("shield/gold_plate_shield",
+            new FabricShieldItem(new FabricItemSettings().maxDamage(700).group(ItemGroup.COMBAT), 100, 14, ModItems.GOLD_PLATE));
+    public static final Item DIAMOND_PLATE_SHIELD = registerItem("shield/diamond_plate_shield",
+            new FabricShieldItem(new FabricItemSettings().maxDamage(850).group(ItemGroup.COMBAT), 90, 15, ModItems.GOLD_PLATE));
+    public static final Item NETHERITE_PLATE_SHIELD = registerItem("shield/netherite_plate_shield",
+            new FabricShieldItem(new FabricItemSettings().maxDamage(1000).group(ItemGroup.COMBAT), 80, 16, ModItems.GOLD_PLATE));
 
     public static final Item GOLD_PLATE = registerItem("gold_plate",
             new Item(new FabricItemSettings().group(ItemGroup.MATERIALS)));

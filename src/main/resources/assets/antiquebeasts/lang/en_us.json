@@ -36,5 +36,9 @@
   "item.antiquebeasts.diamond_plate_chestplate": "Diamond plate chestplate",
   "item.antiquebeasts.diamond_plate_leggings": "Diamond plate leggings",
   "item.antiquebeasts.diamond_plate_boots": "Diamond plate boots",
-  "item.antiquebeasts.diamond_plate": "Diamond plate"
+  "item.antiquebeasts.diamond_plate": "Diamond plate",
+  "item.antiquebeasts.shield.iron_plate_shield": "Iron plate shield",
+  "item.antiquebeasts.shield.gold_plate_shield": "Gold plate shield",
+  "item.antiquebeasts.shield.diamond_plate_shield": "Diamond plate shield",
+  "item.antiquebeasts.shield.netherite_plate_shield": "Netherite plate shield"
 }

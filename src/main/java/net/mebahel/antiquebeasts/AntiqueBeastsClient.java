@@ -12,7 +12,6 @@ import net.mebahel.antiquebeasts.entity.client.projectiles.HadesChosenSpearRende
 import net.mebahel.antiquebeasts.entity.client.projectiles.HopliteSpearRenderer;
 import net.mebahel.antiquebeasts.entity.client.projectiles.ThrowingRockRenderer;
 import net.mebahel.antiquebeasts.entity.client.projectiles.ThrowingSnowRockRenderer;
-import net.mebahel.antiquebeasts.entity.projectiles.HadesChosenSpearEntity;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.particle.custom.RockSplashParticle;

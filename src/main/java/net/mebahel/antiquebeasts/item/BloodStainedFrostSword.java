@@ -86,7 +86,7 @@ public class BloodStainedFrostSword extends SwordItem {
             for (PlayerEntity player : world.getPlayers()) {
                 ItemStack heldItem = player.getMainHandStack();
                 if (heldItem.getItem() instanceof BloodStainedFrostSword) {
-                    player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 10, 0, true, false));
+                    player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 20, 0, true, false));
                 }
             }
         }

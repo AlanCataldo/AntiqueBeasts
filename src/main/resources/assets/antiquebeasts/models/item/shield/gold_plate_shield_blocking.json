@@ -1,0 +1,33 @@
+{
+	"parent": "antiquebeasts:item/shield/gold_plate_shield",
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [-45, 9.19, -114.18],
+			"translation": [-0.75, -2.5, 1]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [-35, 7.17, 65.02],
+			"translation": [-0.5, -2.5, 1]
+		},
+		"firstperson_righthand": {
+			"rotation": [90, 0, 130],
+			"translation": [0, -0.5, 2.5]
+		},
+		"firstperson_lefthand": {
+			"rotation": [90, 0, -50],
+			"translation": [0, -0.5, 2.5]
+		},
+		"gui": {
+			"rotation": [9.43, 59.54, -10.9],
+			"translation": [0.5, -0.25, 0]
+		},
+		"head": {
+			"rotation": [0, 0, -90],
+			"translation": [0, 5.25, -1]
+		},
+		"fixed": {
+			"rotation": [0, -90, 0],
+			"translation": [0.5, 0, 0]
+		}
+	}
+}
