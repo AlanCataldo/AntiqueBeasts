@@ -36,6 +36,7 @@ public class ModSounds {
     public static SoundEvent HADES_SHADE_DEATH = registerSoundEvent("hades_shade_death");
     public static SoundEvent HADES_SHADE_SPAWN = registerSoundEvent("hades_shade_spawn");
     public static SoundEvent SPEAR_HIT = registerSoundEvent("spear_hit");
+    public static SoundEvent SHIELD_BLOCK = registerSoundEvent("shield_block");
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registry.SOUND_EVENT, id, new SoundEvent(id));

@@ -8,6 +8,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -43,8 +44,6 @@ public class BloodStainedFrostSword extends SwordItem {
                         EntityAttributeModifier.Operation.ADDITION));
         this.attributeModifiers = builder.build();
 
-        // Register the event listener for item use
-        UseItemCallback.EVENT.register(this::onItemUse);
         ServerTickEvents.END_SERVER_TICK.register(this::onServerTick);
     }
 
@@ -54,6 +53,16 @@ public class BloodStainedFrostSword extends SwordItem {
 
     public boolean canMine(BlockState state, World world, BlockPos pos, PlayerEntity miner) {
         return !miner.isCreative();
+    }
+
+    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        stack.damage(1, attacker, (e) -> {
+            e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
+        });
+        if (target != null) {
+            target.setFrozenTicks(400);
+        }
+        return true;
     }
 
     public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
@@ -73,20 +82,12 @@ public class BloodStainedFrostSword extends SwordItem {
     public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
         return slot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(slot);
     }
-
-    private TypedActionResult<ItemStack> onItemUse(PlayerEntity player, World world, Hand hand) {
-        ItemStack stack = player.getStackInHand(hand);
-        if (stack.getItem() instanceof BloodStainedFrostSword) {
-            player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, Integer.MAX_VALUE, 0, false, false));
-        }
-        return TypedActionResult.pass(stack);
-    }
     private void onServerTick(MinecraftServer server) {
         for (ServerWorld world : server.getWorlds()) {
             for (PlayerEntity player : world.getPlayers()) {
                 ItemStack heldItem = player.getMainHandStack();
                 if (heldItem.getItem() instanceof BloodStainedFrostSword) {
-                    player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 20, 0, true, false));
+                    player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 40, 0, true, false));
                 }
             }
         }

@@ -41,11 +41,11 @@ public class ModItems {
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
     public static final Item FROST_SWORD = registerItem("frost_sword",
-            new FrostSword(ModToolMaterial.FROST_WEAPON,6, -2.4f,
+            new FrostSword(ModToolMaterial.FROST_WEAPON,6, -2.8f,
                     new FabricItemSettings().group(ItemGroup.COMBAT)));
 
     public static final Item BLOOD_STAINED_FROST_SWORD = registerItem("blood_stained_frost_sword",
-            new BloodStainedFrostSword(ModToolMaterial.FROST_WEAPON,7, -2.8f,
+            new BloodStainedFrostSword(ModToolMaterial.FROST_WEAPON,7, -3f,
                     new FabricItemSettings().group(ItemGroup.COMBAT)) {
                 @Override
                 public boolean hasGlint(ItemStack stack) {
@@ -69,14 +69,14 @@ public class ModItems {
             new Item(new FabricItemSettings().group(ItemGroup.MATERIALS)));
 
     public static final Item IRON_PLATE_SHIELD = registerItem("shield/iron_plate_shield",
-            new FabricShieldItem(new FabricItemSettings().maxDamage(550).group(ItemGroup.COMBAT), 100, 13, ModItems.GOLD_PLATE));
+            new CustomShieldItem(new FabricItemSettings().maxDamage(550).group(ItemGroup.COMBAT), 100, 13, ModItems.IRON_PLATE));
 
     public static final Item GOLD_PLATE_SHIELD = registerItem("shield/gold_plate_shield",
-            new FabricShieldItem(new FabricItemSettings().maxDamage(700).group(ItemGroup.COMBAT), 100, 14, ModItems.GOLD_PLATE));
+            new CustomShieldItem(new FabricItemSettings().maxDamage(700).group(ItemGroup.COMBAT), 100, 14, ModItems.GOLD_PLATE));
     public static final Item DIAMOND_PLATE_SHIELD = registerItem("shield/diamond_plate_shield",
-            new FabricShieldItem(new FabricItemSettings().maxDamage(850).group(ItemGroup.COMBAT), 90, 15, ModItems.GOLD_PLATE));
+            new CustomShieldItem(new FabricItemSettings().maxDamage(850).group(ItemGroup.COMBAT), 90, 15, ModItems.DIAMOND_PLATE));
     public static final Item NETHERITE_PLATE_SHIELD = registerItem("shield/netherite_plate_shield",
-            new FabricShieldItem(new FabricItemSettings().maxDamage(1000).group(ItemGroup.COMBAT), 80, 16, ModItems.GOLD_PLATE));
+            new CustomShieldItem(new FabricItemSettings().maxDamage(1000).group(ItemGroup.COMBAT), 80, 16, Items.NETHERITE_INGOT));
 
     public static final Item GOLD_PLATE = registerItem("gold_plate",
             new Item(new FabricItemSettings().group(ItemGroup.MATERIALS)));

@@ -172,5 +172,11 @@
     "sounds": [
       "antiquebeasts:spear_hit"
     ]
+  },
+  "shield_block": {
+    "subtitle": "antiquebeasts:shield_block",
+    "sounds": [
+      "antiquebeasts:shield_block"
+    ]
   }
 }
