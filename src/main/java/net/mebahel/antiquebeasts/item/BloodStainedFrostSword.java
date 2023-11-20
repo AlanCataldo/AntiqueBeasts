@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -22,10 +23,15 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.tag.BlockTags;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 
 public class BloodStainedFrostSword extends SwordItem {
@@ -91,5 +97,11 @@ public class BloodStainedFrostSword extends SwordItem {
                 }
             }
         }
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        tooltip.add(Text.translatable("item.antiquebeasts.blood_stained_frost_sword.tooltip1").formatted(Formatting.GRAY, Formatting.ITALIC));
+        tooltip.add(Text.translatable("item.antiquebeasts.blood_stained_frost_sword.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
     }
 }

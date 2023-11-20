@@ -40,5 +40,11 @@
   "item.antiquebeasts.shield.iron_plate_shield": "Iron plate shield",
   "item.antiquebeasts.shield.gold_plate_shield": "Gold plate shield",
   "item.antiquebeasts.shield.diamond_plate_shield": "Diamond plate shield",
-  "item.antiquebeasts.shield.netherite_plate_shield": "Netherite plate shield"
+  "item.antiquebeasts.shield.netherite_plate_shield": "Netherite plate shield",
+  "item.antiquebeasts.diamond_plate_shield.tooltip": "Wielding this shield will reduce fire damage",
+  "item.antiquebeasts.netherite_plate_shield.tooltip": "Wielding this shield will reduce wither damage",
+  "item.antiquebeasts.frost_sword.tooltip1": "Wielding this weapon, you can freeze",
+  "item.antiquebeasts.frost_sword.tooltip2": "your enemies",
+  "item.antiquebeasts.blood_stained_frost_sword.tooltip1": "Wielding this weapon, you'll have the strength of",
+  "item.antiquebeasts.blood_stained_frost_sword.tooltip2": "a cyclops and be able to freeze your enemies."
 }

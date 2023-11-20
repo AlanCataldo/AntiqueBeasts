@@ -40,5 +40,11 @@
   "item.antiquebeasts.shield.iron_plate_shield": "Bouclier de plaque en fer",
   "item.antiquebeasts.shield.gold_plate_shield": "Bouclier de plaque en or",
   "item.antiquebeasts.shield.diamond_plate_shield": "Bouclier de plaque en diamant",
-  "item.antiquebeasts.shield.netherite_plate_shield": "Bouclier de plaque en netherite"
+  "item.antiquebeasts.shield.netherite_plate_shield": "Bouclier de plaque en netherite",
+  "item.antiquebeasts.diamond_plate_shield.tooltip": "Le port de ce bouclier réduit les dégâts de feu",
+  "item.antiquebeasts.netherite_plate_shield.tooltip": "Le port de ce bouclier réduit les dégâts de wither",
+  "item.antiquebeasts.frost_sword.tooltip1": "En maniant cette arme, vous pourrez geler",
+  "item.antiquebeasts.frost_sword.tooltip2": "vos ennemis",
+  "item.antiquebeasts.blood_stained_frost_sword.tooltip1": "En maniant cette arme, vous aurez la force",
+  "item.antiquebeasts.blood_stained_frost_sword.tooltip2": "d'un cyclope et vous pourrez geler vos ennemis"
 }

@@ -5,10 +5,18 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.item.*;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableTextContent;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ModItems {
     public static final Item CYCLOPS_SPAWN_EGG = registerItem("cyclops_spawn_egg",
@@ -74,9 +82,19 @@ public class ModItems {
     public static final Item GOLD_PLATE_SHIELD = registerItem("shield/gold_plate_shield",
             new CustomShieldItem(new FabricItemSettings().maxDamage(700).group(ItemGroup.COMBAT), 100, 14, ModItems.GOLD_PLATE));
     public static final Item DIAMOND_PLATE_SHIELD = registerItem("shield/diamond_plate_shield",
-            new CustomShieldItem(new FabricItemSettings().maxDamage(850).group(ItemGroup.COMBAT), 90, 15, ModItems.DIAMOND_PLATE));
+            new CustomShieldItem(new FabricItemSettings().maxDamage(850).group(ItemGroup.COMBAT), 90, 15, ModItems.DIAMOND_PLATE) {
+                @Override
+                public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+                    tooltip.add(Text.translatable("item.antiquebeasts.diamond_plate_shield.tooltip").formatted(Formatting.GRAY, Formatting.ITALIC));
+                }
+            });
     public static final Item NETHERITE_PLATE_SHIELD = registerItem("shield/netherite_plate_shield",
-            new CustomShieldItem(new FabricItemSettings().maxDamage(1000).group(ItemGroup.COMBAT), 80, 16, Items.NETHERITE_INGOT));
+            new CustomShieldItem(new FabricItemSettings().maxDamage(1000).group(ItemGroup.COMBAT), 80, 16, Items.NETHERITE_INGOT){
+                @Override
+                public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+                    tooltip.add(Text.translatable("item.antiquebeasts.netherite_plate_shield.tooltip").formatted(Formatting.GRAY, Formatting.ITALIC));
+                }
+            });
 
     public static final Item GOLD_PLATE = registerItem("gold_plate",
             new Item(new FabricItemSettings().group(ItemGroup.MATERIALS)));
