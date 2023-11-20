@@ -25,20 +25,16 @@ public class ShieldDurabilityMixin {
             if (amount >= 3.0F) {
                 int i = 1 + MathHelper.floor(amount);
                 Hand hand = player.getActiveHand();
-
                 activeItem.damage(i, (LivingEntity) player, ((playerEntity) -> player.sendToolBreakStatus(hand)));
-
                 if (activeItem.isEmpty()) {
                     if (hand == Hand.MAIN_HAND) {
                         player.equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
                     } else {
                         player.equipStack(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
                     }
-
                     player.playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + player.getWorld().random.nextFloat() * 0.4F);
                 }
             }
-
         }
     }
 }
