@@ -18,17 +18,9 @@ import net.mebahel.antiquebeasts.particle.custom.RockSplashParticle;
 import net.mebahel.antiquebeasts.particle.custom.SnowRockSplashParticle;
 import net.mebahel.antiquebeasts.screen.BloodInfusingStationScreen;
 import net.mebahel.antiquebeasts.screen.ModScreenHandlers;
+import net.mebahel.antiquebeasts.util.ShieldModelPredicate;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AntiqueBeastsClient implements ClientModInitializer {
     @Override
@@ -53,5 +45,6 @@ public class AntiqueBeastsClient implements ClientModInitializer {
                 ModItems.GOLD_PLATE_LEGGINGS, ModItems.GOLD_PLATE_CHESTPLATE, ModItems.GOLD_PLATE_HELMET);
         GeoArmorRenderer.registerArmorRenderer(new DiamondPlateArmorRenderer(), ModItems.DIAMOND_PLATE_BOOTS,
                 ModItems.DIAMOND_PLATE_LEGGINGS, ModItems.DIAMOND_PLATE_CHESTPLATE, ModItems.DIAMOND_PLATE_HELMET);
+        ShieldModelPredicate.registerShieldModels();
     }
 }
