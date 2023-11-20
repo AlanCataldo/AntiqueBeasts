@@ -42,7 +42,7 @@ public class EliteHopliteModel extends AnimatedGeoModel<EliteHopliteEntity> {
         } else if (head.getRotationY() < -max_rotation_x) {
             head_x = -max_rotation_x;
         } else {
-            head_x = head.getRotationY() + (extraData.netHeadYaw * ((float) Math.PI / 180F)) * unpausedMultiplier;
+            head_x = head.getRotationY() + (extraData.netHeadYaw * ((float) Math.PI / 340F)) * unpausedMultiplier;
         }
 
         head_y = head.getRotationZ() + (extraData.headPitch * ((float) Math.PI / 340F)) * unpausedMultiplier;
