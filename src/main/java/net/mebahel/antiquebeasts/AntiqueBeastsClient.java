@@ -19,7 +19,16 @@ import net.mebahel.antiquebeasts.particle.custom.SnowRockSplashParticle;
 import net.mebahel.antiquebeasts.screen.BloodInfusingStationScreen;
 import net.mebahel.antiquebeasts.screen.ModScreenHandlers;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import net.minecraft.client.item.TooltipContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AntiqueBeastsClient implements ClientModInitializer {
     @Override

@@ -5,13 +5,15 @@ import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ShieldItem;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-public class CustomShieldItem extends FabricShieldItem {
-    public CustomShieldItem(Settings settings, int cooldownTicks, int enchantability, Item... repairItems) {
-        super(settings, cooldownTicks, enchantability, repairItems);
+public class CustomShieldItem extends ShieldItem {
+
+    public CustomShieldItem(Settings settings) {
+        super(settings);
     }
 }
 

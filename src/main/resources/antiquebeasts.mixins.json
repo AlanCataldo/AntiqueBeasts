@@ -4,9 +4,6 @@
   "package": "net.mebahel.antiquebeasts.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "FireDamageMixin",
-    "ShieldSoundMixin",
-    "WitherDamageMixin"
   ],
   "client": [
     "BrewingRecipeRegistryMixin"

@@ -77,19 +77,19 @@ public class ModItems {
             new Item(new FabricItemSettings().group(ItemGroup.MATERIALS)));
 
     public static final Item IRON_PLATE_SHIELD = registerItem("shield/iron_plate_shield",
-            new CustomShieldItem(new FabricItemSettings().maxDamage(550).group(ItemGroup.COMBAT), 100, 13, ModItems.IRON_PLATE));
+            new CustomShieldItem(new FabricItemSettings().maxDamage(550).group(ItemGroup.COMBAT)));
 
     public static final Item GOLD_PLATE_SHIELD = registerItem("shield/gold_plate_shield",
-            new CustomShieldItem(new FabricItemSettings().maxDamage(700).group(ItemGroup.COMBAT), 100, 14, ModItems.GOLD_PLATE));
+            new CustomShieldItem(new FabricItemSettings().maxDamage(700).group(ItemGroup.COMBAT)));
     public static final Item DIAMOND_PLATE_SHIELD = registerItem("shield/diamond_plate_shield",
-            new CustomShieldItem(new FabricItemSettings().maxDamage(850).group(ItemGroup.COMBAT), 90, 15, ModItems.DIAMOND_PLATE) {
+            new CustomShieldItem(new FabricItemSettings().maxDamage(850).group(ItemGroup.COMBAT)) {
                 @Override
                 public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
                     tooltip.add(Text.translatable("item.antiquebeasts.diamond_plate_shield.tooltip").formatted(Formatting.GRAY, Formatting.ITALIC));
                 }
             });
     public static final Item NETHERITE_PLATE_SHIELD = registerItem("shield/netherite_plate_shield",
-            new CustomShieldItem(new FabricItemSettings().maxDamage(1000).group(ItemGroup.COMBAT), 80, 16, Items.NETHERITE_INGOT){
+            new CustomShieldItem(new FabricItemSettings().maxDamage(1000).group(ItemGroup.COMBAT)){
                 @Override
                 public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
                     tooltip.add(Text.translatable("item.antiquebeasts.netherite_plate_shield.tooltip").formatted(Formatting.GRAY, Formatting.ITALIC));
