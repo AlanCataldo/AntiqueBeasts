@@ -32,6 +32,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+import java.util.Objects;
+
 public class ThrowingHopliteSpearEntity extends PersistentProjectileEntity implements IAnimatable {
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -49,6 +51,7 @@ public class ThrowingHopliteSpearEntity extends PersistentProjectileEntity imple
     private ItemStack tridentStack;
     private boolean dealtDamage;
     public int returnTimer;
+    String type = "";
 
     public ThrowingHopliteSpearEntity(EntityType<? extends ThrowingHopliteSpearEntity> entityType, World world) {
         super(entityType, world);
@@ -57,6 +60,7 @@ public class ThrowingHopliteSpearEntity extends PersistentProjectileEntity imple
 
     public ThrowingHopliteSpearEntity(World world, LivingEntity owner, ItemStack stack, String type) {
         super(getModEntityByType(type), owner, world);
+        this.type = type;
         this.tridentStack = new ItemStack(getModItemByType(type));
         this.tridentStack = stack.copy();
         this.dataTracker.set(LOYALTY, (byte) EnchantmentHelper.getLoyalty(stack));
@@ -168,7 +172,8 @@ public class ThrowingHopliteSpearEntity extends PersistentProjectileEntity imple
                     EnchantmentHelper.onUserDamaged(livingEntity2, entity2);
                     EnchantmentHelper.onTargetDamaged((LivingEntity)entity2, livingEntity2);
                 }
-                livingEntity2.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 140, 0));
+                if (Objects.equals(this.type, "netherite"))
+                    livingEntity2.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 140, 0));
                 this.onHit(livingEntity2);
             }
         }

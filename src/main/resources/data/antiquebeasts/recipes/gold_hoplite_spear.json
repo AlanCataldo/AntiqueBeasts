@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  *",
+    " # ",
+    "#  "
+  ],
+  "key" : {
+    "#": {
+      "item" : "minecraft:stick"
+    },
+    "*": {
+      "item" : "minecraft:golden_sword"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:weapon/gold_hoplite_spear"
+  }
+}

@@ -2,18 +2,19 @@
 	"parent": "antiquebeasts:item/weapon/gold_hoplite_spear",
 	"display": {
 		"thirdperson_righthand": {
-			"rotation": [-180, 0, 0],
+			"rotation": [-180, 90, 0],
 			"translation": [-0.25, -5, 1.75]
 		},
 		"thirdperson_lefthand": {
-			"translation": [0.5, 4.75, 1.75]
+			"rotation": [-180, 90, 0],
+			"translation": [-0.25, 5, 1.75]
 		},
 		"firstperson_righthand": {
-			"rotation": [-43.75, 0, 0],
+			"rotation": [-20, 90, 0],
 			"translation": [0, -1, 2]
 		},
 		"firstperson_lefthand": {
-			"rotation": [-43.75, 0, 0],
+			"rotation": [-20, 90, 0],
 			"translation": [0, -1, 2]
 		},
 		"ground": {

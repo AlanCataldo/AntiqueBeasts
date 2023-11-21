@@ -34,7 +34,7 @@ public class AntiqueBeasts implements ModInitializer {
 		ModWorldGen.generateWorldGen();
 		ModItems.registerModItems();
 		ModParticles.registerParticles();
-		ModBlockEntities.registerBlockEntities();
+		//ModBlockEntities.registerBlockEntities();
 		ModScreenHandlers.registerAllScreenHandlers();
 		ModRecipes.registerRecipes();
 		ModPotions.registerPotionRecipe();
