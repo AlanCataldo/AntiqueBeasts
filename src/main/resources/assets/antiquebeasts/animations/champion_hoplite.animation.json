@@ -790,6 +790,9 @@
 					"rotation": {
 						"vector": [-180, 0, 0]
 					},
+					"position": {
+						"vector": [0, 0, 20]
+					},
 					"scale": {
 						"0.5833": {
 							"vector": [1, 1, 1]

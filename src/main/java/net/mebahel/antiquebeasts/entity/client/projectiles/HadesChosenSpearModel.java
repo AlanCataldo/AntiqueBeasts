@@ -14,7 +14,7 @@ public class HadesChosenSpearModel extends AnimatedGeoModel<HadesChosenSpearEnti
 
     @Override
     public Identifier getTextureResource(HadesChosenSpearEntity object) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/hades_chosen_texture.png");
+        return new Identifier(AntiqueBeasts.MOD_ID, "textures/item/weapon/netherite_hoplite_spear.png");
     }
 
     @Override
