@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "antiquebeasts:block/blood_infusing_station",
-		"particle": "antiquebeasts:block/blood_infusing_station"
+		"0": "antiquebeasts:item/weapon/iron_hoplite_spear",
+		"particle": "antiquebeasts:item/weapon/iron_hoplite_spear"
 	},
 	"elements": [
 		{

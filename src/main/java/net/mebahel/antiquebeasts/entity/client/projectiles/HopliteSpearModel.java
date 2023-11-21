@@ -13,7 +13,7 @@ public class HopliteSpearModel extends AnimatedGeoModel<HopliteSpearEntity> {
 
     @Override
     public Identifier getTextureResource(HopliteSpearEntity object) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/hero_hoplite_1.png");
+        return new Identifier(AntiqueBeasts.MOD_ID, "item/weapon/iron_hoplite_spear");
     }
 
     @Override

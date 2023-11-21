@@ -8,10 +8,7 @@ import net.mebahel.antiquebeasts.entity.armor.DiamondPlateArmorRenderer;
 import net.mebahel.antiquebeasts.entity.armor.GoldPlateArmorRenderer;
 import net.mebahel.antiquebeasts.entity.armor.IronPlateArmorRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.*;
-import net.mebahel.antiquebeasts.entity.client.projectiles.HadesChosenSpearRenderer;
-import net.mebahel.antiquebeasts.entity.client.projectiles.HopliteSpearRenderer;
-import net.mebahel.antiquebeasts.entity.client.projectiles.ThrowingRockRenderer;
-import net.mebahel.antiquebeasts.entity.client.projectiles.ThrowingSnowRockRenderer;
+import net.mebahel.antiquebeasts.entity.client.projectiles.*;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.particle.custom.RockSplashParticle;
@@ -19,7 +16,10 @@ import net.mebahel.antiquebeasts.particle.custom.SnowRockSplashParticle;
 import net.mebahel.antiquebeasts.screen.BloodInfusingStationScreen;
 import net.mebahel.antiquebeasts.screen.ModScreenHandlers;
 import net.mebahel.antiquebeasts.util.ShieldModelPredicate;
+import net.mebahel.antiquebeasts.util.SpearModelPredicate;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 public class AntiqueBeastsClient implements ClientModInitializer {
@@ -36,6 +36,10 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.HOPLITE_SPEAR, HopliteSpearRenderer::new);
         EntityRendererRegistry.register(ModEntities.HADES_CHOSEN_SPEAR, HadesChosenSpearRenderer::new);
         EntityRendererRegistry.register(ModEntities.THROWINGSNOWROCK, ThrowingSnowRockRenderer::new);
+        EntityRendererRegistry.register(ModEntities.IRON_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "iron"));
+        EntityRendererRegistry.register(ModEntities.DIAMOND_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "diamond"));
+        EntityRendererRegistry.register(ModEntities.GOLD_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "gold"));
+        EntityRendererRegistry.register(ModEntities.NETHERITE_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "netherite"));
         ParticleFactoryRegistry.getInstance().register(ModParticles.ROCKSPLASH_PARTICLE, RockSplashParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.SNOWROCKSPLASH_PARTICLE, SnowRockSplashParticle.Factory::new);
         HandledScreens.register(ModScreenHandlers.BLOOD_INFUSING_STATION_SCREEN_HANDLER, BloodInfusingStationScreen::new);
@@ -46,5 +50,6 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         GeoArmorRenderer.registerArmorRenderer(new DiamondPlateArmorRenderer(), ModItems.DIAMOND_PLATE_BOOTS,
                 ModItems.DIAMOND_PLATE_LEGGINGS, ModItems.DIAMOND_PLATE_CHESTPLATE, ModItems.DIAMOND_PLATE_HELMET);
         ShieldModelPredicate.registerShieldModels();
+        SpearModelPredicate.registerSpearModels();
     }
 }

@@ -46,5 +46,9 @@
   "item.antiquebeasts.frost_sword.tooltip1": "En maniant cette arme, vous pourrez geler",
   "item.antiquebeasts.frost_sword.tooltip2": "vos ennemis",
   "item.antiquebeasts.blood_stained_frost_sword.tooltip1": "En maniant cette arme, vous aurez la force",
-  "item.antiquebeasts.blood_stained_frost_sword.tooltip2": "d'un cyclope et vous pourrez geler vos ennemis"
+  "item.antiquebeasts.blood_stained_frost_sword.tooltip2": "d'un cyclope et vous pourrez geler vos ennemis",
+  "item.antiquebeasts.weapon.iron_hoplite_spear": "Lance de combat en fer",
+  "item.antiquebeasts.weapon.gold_hoplite_spear": "Lance de combat en or",
+  "item.antiquebeasts.weapon.diamond_hoplite_spear": "Lance de combat en diamant",
+  "item.antiquebeasts.weapon.netherite_hoplite_spear": "Lance de combat en netherite"
 }

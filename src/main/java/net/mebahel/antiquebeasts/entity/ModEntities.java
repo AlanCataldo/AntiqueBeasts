@@ -2,11 +2,9 @@ package net.mebahel.antiquebeasts.entity;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
+import net.mebahel.antiquebeasts.entity.client.projectiles.ThrowingHopliteSpearEntityRenderer;
 import net.mebahel.antiquebeasts.entity.custom.*;
-import net.mebahel.antiquebeasts.entity.projectiles.HadesChosenSpearEntity;
-import net.mebahel.antiquebeasts.entity.projectiles.HopliteSpearEntity;
-import net.mebahel.antiquebeasts.entity.projectiles.ThrowingRockEntity;
-import net.mebahel.antiquebeasts.entity.projectiles.ThrowingSnowRockEntity;
+import net.mebahel.antiquebeasts.entity.projectiles.*;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
@@ -68,4 +66,23 @@ public class ModEntities {
             Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "hades_chosen_spear"),
             FabricEntityTypeBuilder.<HadesChosenSpearEntity>create(SpawnGroup.MISC, HadesChosenSpearEntity::new)
                     .dimensions(EntityDimensions.fixed(12f, 2f)).build());
+
+    public static final EntityType<ThrowingHopliteSpearEntity> IRON_THROWING_HOPLITE_SPEAR = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "iron_throwing_hoplite_spear"),
+            FabricEntityTypeBuilder.<ThrowingHopliteSpearEntity>create(SpawnGroup.MISC, ThrowingHopliteSpearEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+
+    public static final EntityType<ThrowingHopliteSpearEntity> GOLD_THROWING_HOPLITE_SPEAR = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "gold_throwing_hoplite_spear"),
+            FabricEntityTypeBuilder.<ThrowingHopliteSpearEntity>create(SpawnGroup.MISC, ThrowingHopliteSpearEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+    public static final EntityType<ThrowingHopliteSpearEntity> DIAMOND_THROWING_HOPLITE_SPEAR = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "diamond_throwing_hoplite_spear"),
+            FabricEntityTypeBuilder.<ThrowingHopliteSpearEntity>create(SpawnGroup.MISC, ThrowingHopliteSpearEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+
+    public static final EntityType<ThrowingHopliteSpearEntity> NETHERITE_THROWING_HOPLITE_SPEAR = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "netherite_throwing_hoplite_spear"),
+            FabricEntityTypeBuilder.<ThrowingHopliteSpearEntity>create(SpawnGroup.MISC, ThrowingHopliteSpearEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
 }

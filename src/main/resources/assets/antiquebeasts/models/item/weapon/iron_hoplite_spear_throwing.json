@@ -1,0 +1,33 @@
+{
+	"parent": "antiquebeasts:item/weapon/iron_hoplite_spear",
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [-180, 0, 0],
+			"translation": [-0.25, -5, 1.75]
+		},
+		"thirdperson_lefthand": {
+			"translation": [0.5, 4.75, 1.75]
+		},
+		"firstperson_righthand": {
+			"rotation": [-43.75, 0, 0],
+			"translation": [0, -1, 2]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-43.75, 0, 0],
+			"translation": [0, -1, 2]
+		},
+		"ground": {
+			"rotation": [0, 0, 90]
+		},
+		"gui": {
+			"rotation": [0, 0, -45],
+			"translation": [-1, -0.5, 0],
+			"scale": [0.65, 0.65, 0.65]
+		},
+		"fixed": {
+			"rotation": [0, -1, 45],
+			"translation": [0.75, -1, 0],
+			"scale": [0.8, 0.8, 0.8]
+		}
+	}
+}

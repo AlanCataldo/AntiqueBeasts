@@ -46,5 +46,9 @@
   "item.antiquebeasts.frost_sword.tooltip1": "Wielding this weapon, you can freeze",
   "item.antiquebeasts.frost_sword.tooltip2": "your enemies",
   "item.antiquebeasts.blood_stained_frost_sword.tooltip1": "Wielding this weapon, you'll have the strength of",
-  "item.antiquebeasts.blood_stained_frost_sword.tooltip2": "a cyclops and be able to freeze your enemies."
+  "item.antiquebeasts.blood_stained_frost_sword.tooltip2": "a cyclops and be able to freeze your enemies.",
+  "item.antiquebeasts.weapon.iron_hoplite_spear": "Iron throwing spear",
+  "item.antiquebeasts.weapon.gold_hoplite_spear": "Gold throwing spear",
+  "item.antiquebeasts.weapon.diamond_hoplite_spear": "Diamond throwing spear",
+  "item.antiquebeasts.weapon.netherite_hoplite_spear": "Netherite throwing spear"
 }
