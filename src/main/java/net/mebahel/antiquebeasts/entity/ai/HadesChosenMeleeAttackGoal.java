@@ -97,7 +97,7 @@ public class HadesChosenMeleeAttackGoal extends Goal {
             this.mob.setSwinging(true);
         } else if (squaredDistance <= d && this.cooldown == 10) {
             if (this.mob.tryAttack(target))
-                target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 6 * 20, 0));
+                target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 7 * 20, 0));
         }
         if (squaredDistance > d) {
             this.mob.setSwinging(false);

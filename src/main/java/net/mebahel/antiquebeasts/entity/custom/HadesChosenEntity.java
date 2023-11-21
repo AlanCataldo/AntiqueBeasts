@@ -191,7 +191,7 @@ public class HadesChosenEntity extends HostileEntity implements IAnimatable, IAn
 
     @Override
     public boolean damage(DamageSource source, float amount) {
-        if (source.isFire()) {
+        if (source.isFire() || source == DamageSource.WITHER) {
             return false;
         }
         return super.damage(source, amount);

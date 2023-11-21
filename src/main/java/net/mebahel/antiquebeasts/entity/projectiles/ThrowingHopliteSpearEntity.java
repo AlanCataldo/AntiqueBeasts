@@ -11,6 +11,8 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.Item;
@@ -146,7 +148,7 @@ public class ThrowingHopliteSpearEntity extends PersistentProjectileEntity imple
 
     protected void onEntityHit(EntityHitResult entityHitResult) {
         Entity entity = entityHitResult.getEntity();
-        float f = 8.0F;
+        float f = 10.0F;
         if (entity instanceof LivingEntity livingEntity) {
             f += EnchantmentHelper.getAttackDamage(this.tridentStack, livingEntity.getGroup());
         }
@@ -154,6 +156,7 @@ public class ThrowingHopliteSpearEntity extends PersistentProjectileEntity imple
         Entity entity2 = this.getOwner();
         DamageSource damageSource = DamageSource.trident(this, entity2 == null ? this : entity2);
         this.dealtDamage = true;
+
         SoundEvent soundEvent = SoundEvents.ITEM_TRIDENT_HIT;
         if (entity.damage(damageSource, f)) {
             if (entity.getType() == EntityType.ENDERMAN) {
@@ -165,7 +168,7 @@ public class ThrowingHopliteSpearEntity extends PersistentProjectileEntity imple
                     EnchantmentHelper.onUserDamaged(livingEntity2, entity2);
                     EnchantmentHelper.onTargetDamaged((LivingEntity)entity2, livingEntity2);
                 }
-
+                livingEntity2.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 140, 0));
                 this.onHit(livingEntity2);
             }
         }
