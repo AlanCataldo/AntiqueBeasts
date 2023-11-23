@@ -2,8 +2,7 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"1": "antiquebeasts:item/shield/gold_plate_shield",
-		"particle": "antiquebeasts:item/shield/gold_plate_shield"
+		"1": "antiquebeasts:item/shield/iron_plate_shield"
 	},
 	"elements": [
 		{
@@ -204,12 +203,14 @@
 			"translation": [0.5, 0, 2.75]
 		}
 	},
-	"overrides": [
+	"groups": [
+		0,
 		{
-			"predicate": {
-				"minecraft:blocking": 1
-			},
-			"model": "antiquebeasts:item/shield/gold_plate_shield_blocking"
+			"name": "shield",
+			"origin": [-9.54092, 16.0722, 0],
+			"rotation": [45, 0, 0],
+			"color": 6,
+			"children": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 		}
 	]
 }

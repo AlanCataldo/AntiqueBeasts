@@ -8,9 +8,9 @@
 	"elements": [
 		{
 			"name": "leftarm",
-			"from": [5.35908, 5.4722, 7.99361],
-			"to": [10.55908, 10.6722, 10.19361],
-			"rotation": {"angle": 0, "axis": "x", "origin": [6.45908, 8.0722, 9]},
+			"from": [5.35908, 5.2222, 7.99361],
+			"to": [10.80908, 10.9222, 10.19361],
+			"rotation": {"angle": 0, "axis": "y", "origin": [6.45908, 8.0722, 9]},
 			"faces": {
 				"north": {"uv": [6.5, 2.5, 4, 0], "rotation": 180, "texture": "#1"},
 				"east": {"uv": [7.5, 6, 10, 7], "rotation": 90, "texture": "#1"},
@@ -178,10 +178,10 @@
 	"display": {
 		"thirdperson_righthand": {
 			"rotation": [0, 0, 180],
-			"translation": [0.25, -1.25, 2.75]
+			"translation": [0.25, -2, 2.75]
 		},
 		"thirdperson_lefthand": {
-			"translation": [0, -1.75, 2.75]
+			"translation": [0.25, -2.25, 2.75]
 		},
 		"firstperson_righthand": {
 			"rotation": [90, 0, 180],
@@ -201,7 +201,7 @@
 		},
 		"fixed": {
 			"rotation": [0, -90, 0],
-			"translation": [0.5, 0, 0]
+			"translation": [0.5, 0, 2.75]
 		}
 	},
 	"overrides": [
