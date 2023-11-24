@@ -51,5 +51,9 @@
   "item.antiquebeasts.weapon.gold_hoplite_spear": "Lance de combat en or",
   "item.antiquebeasts.weapon.diamond_hoplite_spear": "Lance de combat en diamant",
   "item.antiquebeasts.weapon.netherite_hoplite_spear": "Lance de combat en netherite",
-  "item.antiquebeasts.netherite_hoplite_spear.tooltip": "Cette lance inflige des dégâts de Wither"
+  "item.antiquebeasts.weapon.iron_hoplite_spear_2d": "Lance de combat en fer",
+  "item.antiquebeasts.weapon.gold_hoplite_spear_2d": "Lance de combat en or",
+  "item.antiquebeasts.weapon.diamond_hoplite_spear_2d": "Lance de combat en diamant",
+  "item.antiquebeasts.weapon.netherite_hoplite_spear_2d": "Lance de combat en netherite",
+  "item.antiquebeasts.netherite_hoplite_spear.tooltip": "Cette lance inflige Wither"
 }

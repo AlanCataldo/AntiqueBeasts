@@ -6,12 +6,14 @@
   "mixins": [
     "FireDamageMixin",
     "ShieldDurabilityMixin",
-    "ShieldDurabilityMixin",
     "ShieldSoundMixin",
     "WitherDamageMixin"
   ],
   "client": [
-    "BrewingRecipeRegistryMixin"
+    "BrewingRecipeRegistryMixin",
+    "ItemRendererAccessor",
+    "ItemRendererMixin",
+    "ModelLoaderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

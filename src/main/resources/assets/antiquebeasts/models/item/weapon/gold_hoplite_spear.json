@@ -2,14 +2,14 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "antiquebeasts:item/weapon/gold_hoplite_spear",
+		"0": "antiquebeasts:item/weapon/gol_hoplite_spear",
 		"particle": "antiquebeasts:item/weapon/gold_hoplite_spear"
 	},
 	"elements": [
 		{
 			"name": "spear",
 			"from": [7.90166, -6.75237, 7.25696],
-			"to": [8.90166, 13.74763, 8.75696],
+			"to": [8.90166, 14.24763, 8.75696],
 			"rotation": {"angle": 0, "axis": "y", "origin": [1.98902, -10.14781, 10]},
 			"faces": {
 				"north": {"uv": [0.5, 0.5, 1, 10.5], "texture": "#0"},
@@ -22,8 +22,8 @@
 		},
 		{
 			"name": "spear",
-			"from": [7.40166, 13.74763, 7.25696],
-			"to": [9.40166, 14.74763, 8.75696],
+			"from": [7.40166, 14.22263, 7.25696],
+			"to": [9.40166, 15.24763, 8.75696],
 			"rotation": {"angle": 0, "axis": "y", "origin": [1.98902, -10.14781, 10]},
 			"faces": {
 				"north": {"uv": [6, 3, 7, 3.5], "texture": "#0"},
@@ -36,8 +36,8 @@
 		},
 		{
 			"name": "spear",
-			"from": [8.90166, 14.74763, 7.25696],
-			"to": [9.65166, 15.74763, 8.75696],
+			"from": [8.90166, 15.24763, 7.25696],
+			"to": [9.65166, 16.24763, 8.75696],
 			"rotation": {"angle": 0, "axis": "y", "origin": [1.98902, -10.14781, 10]},
 			"faces": {
 				"north": {"uv": [7, 3, 7, 3], "texture": "#0"},
@@ -50,8 +50,8 @@
 		},
 		{
 			"name": "spear",
-			"from": [7.15166, 14.74763, 7.25696],
-			"to": [7.90166, 15.74763, 8.75696],
+			"from": [7.15166, 15.24763, 7.25696],
+			"to": [7.90166, 16.24763, 8.75696],
 			"rotation": {"angle": 0, "axis": "y", "origin": [1.98902, -10.14781, 10]},
 			"faces": {
 				"north": {"uv": [7, 3, 7, 3], "texture": "#0"},

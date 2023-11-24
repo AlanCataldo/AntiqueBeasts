@@ -134,13 +134,13 @@ public class ModItems {
     /*public static final Item THROWINGROCK = registerItem("throwingrock",
             new ThrowingRockItem(new FabricItemSettings().group(ItemGroup.MISC)));*/
 
-    public static final Item IRON_HOPLITE_SPEAR = registerItem("weapon/iron_hoplite_spear",
+    public static final Item IRON_HOPLITE_SPEAR = registerItem("weapon/iron_hoplite_spear_2d",
             new ThrowingHopliteSpear(new FabricItemSettings().group(ItemGroup.COMBAT).maxDamage(300), "iron"));
-    public static final Item GOLD_HOPLITE_SPEAR = registerItem("weapon/gold_hoplite_spear",
+    public static final Item GOLD_HOPLITE_SPEAR = registerItem("weapon/gold_hoplite_spear_2d",
             new ThrowingHopliteSpear(new FabricItemSettings().group(ItemGroup.COMBAT).maxDamage(450), "gold"));
-    public static final Item DIAMOND_HOPLITE_SPEAR = registerItem("weapon/diamond_hoplite_spear",
+    public static final Item DIAMOND_HOPLITE_SPEAR = registerItem("weapon/diamond_hoplite_spear_2d",
             new ThrowingHopliteSpear(new FabricItemSettings().group(ItemGroup.COMBAT).maxDamage(600), "diamond"));
-    public static final Item NETHERITE_HOPLITE_SPEAR = registerItem("weapon/netherite_hoplite_spear", new ThrowingHopliteSpear(new FabricItemSettings().group(ItemGroup.COMBAT).maxDamage(800), "netherite") {
+    public static final Item NETHERITE_HOPLITE_SPEAR = registerItem("weapon/netherite_hoplite_spear_2d", new ThrowingHopliteSpear(new FabricItemSettings().group(ItemGroup.COMBAT).maxDamage(800), "netherite") {
         @Override
         public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
             tooltip.add(Text.translatable("item.antiquebeasts.netherite_hoplite_spear.tooltip").formatted(Formatting.GRAY, Formatting.ITALIC));

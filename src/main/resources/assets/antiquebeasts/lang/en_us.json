@@ -51,5 +51,9 @@
   "item.antiquebeasts.weapon.gold_hoplite_spear": "Gold throwing spear",
   "item.antiquebeasts.weapon.diamond_hoplite_spear": "Diamond throwing spear",
   "item.antiquebeasts.weapon.netherite_hoplite_spear": "Netherite throwing spear",
-  "item.antiquebeasts.netherite_hoplite_spear.tooltip": "This spear inflicts Wither damage"
+  "item.antiquebeasts.netherite_hoplite_spear.tooltip": "This spear inflicts Wither",
+  "item.antiquebeasts.weapon.iron_hoplite_spear_2d": "Iron throwing spear",
+  "item.antiquebeasts.weapon.gold_hoplite_spear_2d": "Gold throwing spear",
+  "item.antiquebeasts.weapon.diamond_hoplite_spear_2d": "Diamond throwing spear",
+  "item.antiquebeasts.weapon.netherite_hoplite_spear_2d": "Netherite throwing spear"
 }
