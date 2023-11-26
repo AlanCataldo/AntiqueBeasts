@@ -81,8 +81,8 @@ public class ThrowingHopliteSpearEntity extends PersistentProjectileEntity imple
         return switch (type) {
             case "iron" -> ModItems.IRON_HOPLITE_SPEAR;
             case "gold" -> ModItems.GOLD_HOPLITE_SPEAR;
-            case "diamond" -> ModItems.NETHERITE_HOPLITE_SPEAR;
-            case "netherite" -> ModItems.DIAMOND_HOPLITE_SPEAR;
+            case "diamond" -> ModItems.DIAMOND_HOPLITE_SPEAR;
+            case "netherite" -> ModItems.NETHERITE_HOPLITE_SPEAR;
             default -> throw new IllegalArgumentException("Type non pris en charge : " + type);
         };
     }
