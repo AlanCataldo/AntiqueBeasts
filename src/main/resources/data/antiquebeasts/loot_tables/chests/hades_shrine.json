@@ -6,6 +6,46 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:diamond_plate_leggings",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:diamond_plate_boots",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:diamond_plate_helmet",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:diamond_plate_chestplate",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:golden_apple",
           "weight": 25
         },
@@ -21,58 +61,8 @@
               "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "minecraft:diamond_sword",
-          "weight": 7
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:enchant_randomly"
-            }
-          ],
-          "name": "minecraft:diamond_leggings",
-          "weight": 7
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:enchant_randomly"
-            }
-          ],
-          "name": "minecraft:diamond_boots",
-          "weight": 7
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:enchant_randomly"
-            }
-          ],
-          "name": "minecraft:diamond_helmet",
-          "weight": 7
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:enchant_randomly"
-            }
-          ],
-          "name": "minecraft:diamond_chestplate",
-          "weight": 7
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:enchant_randomly"
-            }
-          ],
           "name": "minecraft:book",
-          "weight": 27
+          "weight": 25
         },
         {
           "type": "minecraft:item",
@@ -81,8 +71,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 4.0,
-                "min": 1.0
+                "max": 8.0,
+                "min": 2.0
               },
               "function": "minecraft:set_count"
             }
@@ -97,8 +87,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 4.0,
-                "min": 1.0
+                "max": 8.0,
+                "min": 2.0
               },
               "function": "minecraft:set_count"
             }
@@ -113,8 +103,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 4.0,
-                "min": 1.0
+                "max": 8.0,
+                "min": 2.0
               },
               "function": "minecraft:set_count"
             }
@@ -129,7 +119,7 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2.0,
+                "max": 4.0,
                 "min": 1.0
               },
               "function": "minecraft:set_count"
@@ -145,8 +135,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 9.0,
-                "min": 5.0
+                "max": 24.0,
+                "min": 12.0
               },
               "function": "minecraft:set_count"
             }
@@ -172,6 +162,17 @@
         },
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
           "name": "minecraft:emerald",
           "weight": 15
         },
@@ -198,8 +199,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 4.0,
-                "min": 1.0
+                "max": 10.0,
+                "min": 4.0
               },
               "function": "minecraft:set_count"
             }
@@ -242,8 +243,134 @@
       ],
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 8.0,
-        "min": 8.0
+        "max": 6.0,
+        "min": 6.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "minecraft:diamond_sword",
+          "weight": 7
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:diamond_plate_leggings",
+          "weight": 7
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:diamond_plate_boots",
+          "weight": 7
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:diamond_plate_helmet",
+          "weight": 7
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:diamond_plate_chestplate",
+          "weight": 7
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "minecraft:book",
+          "weight": 10
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:weapon/diamond_hoplite_spear_2d",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:weapon/diamond_hoplite_spear_2d",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:shield/diamond_plate_shield",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 0.0,
+                "min": 0.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:bone",
+          "weight": 35
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
       }
     }
   ]
