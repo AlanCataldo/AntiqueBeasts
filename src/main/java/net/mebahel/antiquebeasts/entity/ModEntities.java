@@ -60,12 +60,12 @@ public class ModEntities {
     public static final EntityType<HopliteSpearEntity> HOPLITE_SPEAR = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "hoplite_spear"),
             FabricEntityTypeBuilder.<HopliteSpearEntity>create(SpawnGroup.MISC, HopliteSpearEntity::new)
-                    .dimensions(EntityDimensions.fixed(12f, 2f)).build());
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
 
     public static final EntityType<HadesChosenSpearEntity> HADES_CHOSEN_SPEAR = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "hades_chosen_spear"),
             FabricEntityTypeBuilder.<HadesChosenSpearEntity>create(SpawnGroup.MISC, HadesChosenSpearEntity::new)
-                    .dimensions(EntityDimensions.fixed(12f, 2f)).build());
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
 
     public static final EntityType<ThrowingHopliteSpearEntity> IRON_THROWING_HOPLITE_SPEAR = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "iron_throwing_hoplite_spear"),
