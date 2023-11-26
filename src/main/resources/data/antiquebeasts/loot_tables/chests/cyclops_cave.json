@@ -16,27 +16,52 @@
         },
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
           "name": "minecraft:iron_sword",
           "weight": 15
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:iron_leggings",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:iron_plate_leggings",
           "weight": 15
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:iron_boots",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:iron_plate_boots",
           "weight": 15
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:iron_helmet",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:iron_plate_helmet",
           "weight": 15
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:iron_chestplate",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:iron_plate_chestplate",
           "weight": 15
         },
         {
@@ -265,8 +290,54 @@
       ],
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 7.0,
+        "max": 6.0,
         "min": 6.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:weapon/iron_hoplite_spear_2d",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:weapon/gold_hoplite_spear_2d",
+          "weight": 7
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:shield/iron_plate_shield",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:shield/gold_plate_shield",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 0.0,
+                "min": 0.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:bone",
+          "weight": 25
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
       }
     }
   ]
