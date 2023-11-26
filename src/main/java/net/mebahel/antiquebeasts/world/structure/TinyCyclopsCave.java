@@ -25,8 +25,8 @@ public class TinyCyclopsCave extends StructureFeature<StructurePoolFeatureConfig
         if (!TinyCyclopsCave.isFeatureChunk(context)) {
             return Optional.empty();
         }
-        int minHeight = -50;
-        int maxHeight = -25;
+        int minHeight = -60;
+        int maxHeight = -35;
 
         ChunkPos chunkPos = context.chunkPos();
         Random random = new Random();
