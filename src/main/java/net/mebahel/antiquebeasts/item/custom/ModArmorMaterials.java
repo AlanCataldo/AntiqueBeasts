@@ -17,7 +17,7 @@ public enum ModArmorMaterials implements ArmorMaterial {
     GOLD_PLATE("gold_plate", 20, new int[]{2, 6, 6, 2}, 25, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0.0F, 0.0F, () -> {
         return Ingredient.ofItems(Items.GOLD_INGOT);
     }),
-    DIAMOND_PLATE("diamond_plate", 35, new int[]{3, 7, 8, 3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 0.1F, 0.1F, () -> {
+    DIAMOND_PLATE("diamond_plate", 35, new int[]{3, 7, 8, 3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2F, 0.1F, () -> {
         return Ingredient.ofItems(Items.DIAMOND);
     });
 
