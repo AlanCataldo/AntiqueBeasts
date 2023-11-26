@@ -12,6 +12,7 @@ import net.mebahel.antiquebeasts.recipe.ModRecipes;
 import net.mebahel.antiquebeasts.screen.ModScreenHandlers;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.world.gen.ModWorldGen;
+import net.mebahel.antiquebeasts.world.structure.ModStructures;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import software.bernie.geckolib3.GeckoLib;
@@ -38,5 +39,6 @@ public class AntiqueBeasts implements ModInitializer {
 		ModScreenHandlers.registerAllScreenHandlers();
 		ModRecipes.registerRecipes();
 		ModPotions.registerPotionRecipe();
+		ModStructures.registerStructureFeatures();
 	}
 }

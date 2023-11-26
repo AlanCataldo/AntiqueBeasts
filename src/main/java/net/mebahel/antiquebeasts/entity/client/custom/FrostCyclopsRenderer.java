@@ -19,7 +19,7 @@ public class FrostCyclopsRenderer extends GeoEntityRenderer<FrostCyclopsEntity> 
     }
 
     @Override
-    public Identifier getTextureResource(FrostCyclopsEntity animatable) {
+    public Identifier getTextureLocation(FrostCyclopsEntity animatable) {
         return new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/frost-cyclops_texture.png");
     }
 

@@ -17,15 +17,15 @@ public class HadesChosenModel extends AnimatedGeoModel<HadesChosenEntity> {
     float head_y;
     float max_rotation_x = 35;
     @Override
-    public Identifier getModelResource(HadesChosenEntity object) {
+    public Identifier getModelLocation(HadesChosenEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "geo/hades_chosen.geo.json");
     }
     @Override
-    public Identifier getTextureResource(HadesChosenEntity object) {
+    public Identifier getTextureLocation(HadesChosenEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/hades_chosen_texture.png");
     }
     @Override
-    public Identifier getAnimationResource(HadesChosenEntity animatable) {
+    public Identifier getAnimationFileLocation(HadesChosenEntity animatable) {
         return new Identifier(AntiqueBeasts.MOD_ID, "animations/champion_hoplite.animation.json");
     }
     @Override

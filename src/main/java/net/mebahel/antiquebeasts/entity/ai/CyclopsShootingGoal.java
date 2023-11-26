@@ -58,7 +58,7 @@ public class CyclopsShootingGoal extends Goal {
 
                     double offsetX = 1.45;
                     double offsetZ = 1.45;
-                    double yaw = this.cyclops.getBodyYaw();
+                    double yaw = this.cyclops.getYaw();
                     double radians = Math.toRadians(yaw);
 
                     double xProjectile = this.cyclops.getX() + Math.cos(radians) * offsetX;

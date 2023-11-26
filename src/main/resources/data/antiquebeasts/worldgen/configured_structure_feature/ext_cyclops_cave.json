@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:village",
+  "config": {
+    "start_pool": "antiquebeasts:ext_cyclops_cave/start_pool",
+    "size": 1
+  },
+  "adapt_noise": true,
+  "biomes": "#antiquebeasts:has_structure/ext_cyclops_cave",
+  "spawn_overrides": {}
+}

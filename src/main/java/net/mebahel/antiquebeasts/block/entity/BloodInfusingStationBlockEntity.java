@@ -60,7 +60,7 @@ public class BloodInfusingStationBlockEntity extends BlockEntity implements Name
 
     @Override
     public Text getDisplayName() {
-        return Text.literal("Blood Infusing Station");
+        return Text.of("Blood Infusing Station");
     }
 
     @Nullable

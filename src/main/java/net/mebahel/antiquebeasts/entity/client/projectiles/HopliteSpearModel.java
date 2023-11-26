@@ -7,17 +7,17 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class HopliteSpearModel extends AnimatedGeoModel<HopliteSpearEntity> {
     @Override
-    public Identifier getModelResource(HopliteSpearEntity object) {
+    public Identifier getModelLocation(HopliteSpearEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "geo/hoplite_spear.geo.json");
     }
 
     @Override
-    public Identifier getTextureResource(HopliteSpearEntity object) {
+    public Identifier getTextureLocation(HopliteSpearEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "textures/item/weapon/netherite_hoplite_spear.png");
     }
 
     @Override
-    public Identifier getAnimationResource(HopliteSpearEntity animatable) {
+    public Identifier getAnimationFileLocation(HopliteSpearEntity animatable) {
         return new Identifier(AntiqueBeasts.MOD_ID, "animations/champion_hoplite.animation.json");
     }
 

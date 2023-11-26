@@ -30,7 +30,7 @@ public class HeroHopliteRenderer extends GeoEntityRenderer<HeroHopliteEntity> {
     }
 
     @Override
-    public Identifier getTextureResource(HeroHopliteEntity animatable) {
+    public Identifier getTextureLocation(HeroHopliteEntity animatable) {
         return LOCATION_BY_VARIANT.get(animatable.getVariant());
     }
     @Override

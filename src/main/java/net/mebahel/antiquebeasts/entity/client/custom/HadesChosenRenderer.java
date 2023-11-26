@@ -24,7 +24,7 @@ public class HadesChosenRenderer extends GeoEntityRenderer<HadesChosenEntity> {
         this.shadowRadius = 0.25f;
     }
     @Override
-    public Identifier getTextureResource(HadesChosenEntity animatable) {
+    public Identifier getTextureLocation(HadesChosenEntity animatable) {
         return new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/hades_chosen_texture.png");
     }
     @Override

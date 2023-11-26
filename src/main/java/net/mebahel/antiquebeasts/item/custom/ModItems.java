@@ -8,6 +8,7 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -83,14 +84,14 @@ public class ModItems {
             new CustomShieldItem(new FabricItemSettings().maxDamage(850).group(ItemGroup.COMBAT)) {
                 @Override
                 public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-                    tooltip.add(Text.translatable("item.antiquebeasts.diamond_plate_shield.tooltip").formatted(Formatting.GRAY, Formatting.ITALIC));
+                    tooltip.add(new TranslatableText("item.antiquebeasts.diamond_plate_shield.tooltip").formatted(Formatting.GRAY, Formatting.ITALIC));
                 }
             });
     public static final Item NETHERITE_PLATE_SHIELD = registerItem("shield/netherite_plate_shield",
             new CustomShieldItem(new FabricItemSettings().maxDamage(1000).group(ItemGroup.COMBAT)){
                 @Override
                 public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-                    tooltip.add(Text.translatable("item.antiquebeasts.netherite_plate_shield.tooltip").formatted(Formatting.GRAY, Formatting.ITALIC));
+                    tooltip.add(new TranslatableText("item.antiquebeasts.netherite_plate_shield.tooltip").formatted(Formatting.GRAY, Formatting.ITALIC));
                 }
             });
 
@@ -143,7 +144,7 @@ public class ModItems {
     public static final Item NETHERITE_HOPLITE_SPEAR = registerItem("weapon/netherite_hoplite_spear_2d", new ThrowingHopliteSpear(new FabricItemSettings().group(ItemGroup.COMBAT).maxDamage(800), "netherite") {
         @Override
         public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-            tooltip.add(Text.translatable("item.antiquebeasts.netherite_hoplite_spear.tooltip").formatted(Formatting.GRAY, Formatting.ITALIC));
+            tooltip.add(new TranslatableText("item.antiquebeasts.netherite_hoplite_spear.tooltip").formatted(Formatting.GRAY, Formatting.ITALIC));
         }
     });
 

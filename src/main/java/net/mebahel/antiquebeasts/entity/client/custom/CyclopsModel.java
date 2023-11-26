@@ -16,17 +16,17 @@ public class CyclopsModel extends AnimatedGeoModel<CyclopsEntity> {
     float max_rotation_x = 35;
 
     @Override
-    public Identifier getModelResource(CyclopsEntity object) {
+    public Identifier getModelLocation(CyclopsEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "geo/cyclops.geo.json");
     }
 
     @Override
-    public Identifier getTextureResource(CyclopsEntity object) {
+    public Identifier getTextureLocation(CyclopsEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/cyclops_texture.png");
     }
 
     @Override
-    public Identifier getAnimationResource(CyclopsEntity animatable) {
+    public Identifier getAnimationFileLocation(CyclopsEntity animatable) {
         return new Identifier(AntiqueBeasts.MOD_ID, "animations/cyclops.animation.json");
     }
     @Override

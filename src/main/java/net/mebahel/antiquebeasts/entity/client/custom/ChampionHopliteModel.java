@@ -14,19 +14,18 @@ public class ChampionHopliteModel extends AnimatedGeoModel<ChampionHopliteEntity
     float head_x;
     float head_y;
     float max_rotation_x = 35;
-
     @Override
-    public Identifier getModelResource(ChampionHopliteEntity object) {
+    public Identifier getModelLocation(ChampionHopliteEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "geo/champion_hoplite.geo.json");
     }
 
     @Override
-    public Identifier getTextureResource(ChampionHopliteEntity object) {
+    public Identifier getTextureLocation(ChampionHopliteEntity object) {
         return ChampionHopliteRenderer.LOCATION_BY_VARIANT.get(object.getVariant());
     }
 
     @Override
-    public Identifier getAnimationResource(ChampionHopliteEntity animatable) {
+    public Identifier getAnimationFileLocation(ChampionHopliteEntity animatable) {
         return new Identifier(AntiqueBeasts.MOD_ID, "animations/champion_hoplite.animation.json");
     }
 

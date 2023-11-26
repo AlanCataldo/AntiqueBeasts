@@ -13,12 +13,12 @@ public class ThrowingHopliteSpearEntityModel extends AnimatedGeoModel<ThrowingHo
     }
 
     @Override
-    public Identifier getModelResource(ThrowingHopliteSpearEntity object) {
+    public Identifier getModelLocation(ThrowingHopliteSpearEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "geo/hoplite_spear.geo.json");
     }
 
     @Override
-    public Identifier getTextureResource(ThrowingHopliteSpearEntity object) {
+    public Identifier getTextureLocation(ThrowingHopliteSpearEntity object) {
         if (this.type == "iron") {
             return new Identifier(AntiqueBeasts.MOD_ID, "textures/item/weapon/iron_hoplite_spear.png");
         } else if (this.type == "gold") {
@@ -31,7 +31,7 @@ public class ThrowingHopliteSpearEntityModel extends AnimatedGeoModel<ThrowingHo
     }
 
     @Override
-    public Identifier getAnimationResource(ThrowingHopliteSpearEntity animatable) {
+    public Identifier getAnimationFileLocation(ThrowingHopliteSpearEntity animatable) {
         return new Identifier(AntiqueBeasts.MOD_ID, "animations/champion_hoplite.animation.json");
     }
 

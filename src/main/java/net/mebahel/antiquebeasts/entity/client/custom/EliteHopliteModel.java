@@ -16,17 +16,17 @@ public class EliteHopliteModel extends AnimatedGeoModel<EliteHopliteEntity> {
     float max_rotation_x = 35;
 
     @Override
-    public Identifier getModelResource(EliteHopliteEntity object) {
+    public Identifier getModelLocation(EliteHopliteEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "geo/elite_hoplite.geo.json");
     }
 
     @Override
-    public Identifier getTextureResource(EliteHopliteEntity object) {
+    public Identifier getTextureLocation(EliteHopliteEntity object) {
         return EliteHopliteRenderer.LOCATION_BY_VARIANT.get(object.getVariant());
     }
 
     @Override
-    public Identifier getAnimationResource(EliteHopliteEntity animatable) {
+    public Identifier getAnimationFileLocation(EliteHopliteEntity animatable) {
         return new Identifier(AntiqueBeasts.MOD_ID, "animations/champion_hoplite.animation.json");
     }
     @Override

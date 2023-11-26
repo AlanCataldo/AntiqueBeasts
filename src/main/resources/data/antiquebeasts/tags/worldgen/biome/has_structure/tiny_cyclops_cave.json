@@ -1,7 +1,16 @@
 {
   "replace": false,
   "values": [
-    "#minecraft:is_overworld",
+    "minecraft:plains",
+    "minecraft:sunflower_plains",
+    "minecraft:forest",
+    "minecraft:flower_forest",
+    "minecraft:birch_forest",
+    "minecraft:old_growth_birch_forest",
+    "minecraft:taiga",
+    "minecraft:old_growth_spruce_taiga",
+    "minecraft:windswept_forest",
+    "minecraft:meadow",
     {"id": "terralith:cave/andesite_caves", "required": false},
     {"id": "terralith:cave/diorite_caves", "required": false},
     {"id": "terralith:cave/granite_caves", "required": false},

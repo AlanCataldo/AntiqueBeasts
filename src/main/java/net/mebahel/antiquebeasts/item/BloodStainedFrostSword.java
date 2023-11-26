@@ -24,6 +24,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -101,7 +102,7 @@ public class BloodStainedFrostSword extends SwordItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(Text.translatable("item.antiquebeasts.blood_stained_frost_sword.tooltip1").formatted(Formatting.GRAY, Formatting.ITALIC));
-        tooltip.add(Text.translatable("item.antiquebeasts.blood_stained_frost_sword.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
+        tooltip.add(new TranslatableText("item.antiquebeasts.blood_stained_frost_sword.tooltip1").formatted(Formatting.GRAY, Formatting.ITALIC));
+        tooltip.add(new TranslatableText("item.antiquebeasts.blood_stained_frost_sword.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
     }
 }

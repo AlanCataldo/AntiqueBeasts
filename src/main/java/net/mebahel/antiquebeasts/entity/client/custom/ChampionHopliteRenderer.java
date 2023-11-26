@@ -30,7 +30,7 @@ public class ChampionHopliteRenderer extends GeoEntityRenderer<ChampionHopliteEn
     }
 
     @Override
-    public Identifier getTextureResource(ChampionHopliteEntity animatable) {
+    public Identifier getTextureLocation(ChampionHopliteEntity animatable) {
         return LOCATION_BY_VARIANT.get(animatable.getVariant());
     }
     @Override

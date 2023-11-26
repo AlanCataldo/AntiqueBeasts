@@ -7,6 +7,7 @@
     "FireDamageMixin",
     "ShieldDurabilityMixin",
     "ShieldSoundMixin",
+    "StructureFeatureAccessor",
     "WitherDamageMixin"
   ],
   "client": [

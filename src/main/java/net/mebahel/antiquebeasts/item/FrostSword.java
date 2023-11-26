@@ -18,6 +18,7 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -84,7 +85,7 @@ public class FrostSword extends SwordItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(Text.translatable("item.antiquebeasts.frost_sword.tooltip1").formatted(Formatting.GRAY, Formatting.ITALIC));
-        tooltip.add(Text.translatable("item.antiquebeasts.frost_sword.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
+        tooltip.add(new TranslatableText("item.antiquebeasts.frost_sword.tooltip1").formatted(Formatting.GRAY, Formatting.ITALIC));
+        tooltip.add(new TranslatableText("item.antiquebeasts.frost_sword.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
     }
 }

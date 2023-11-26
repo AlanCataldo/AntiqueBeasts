@@ -53,7 +53,7 @@ public class HopliteShootingGoal extends Goal {
 
                     double offsetX = -0.7;
                     double offsetZ = -0.7;
-                    double yaw = this.hoplite.getBodyYaw();
+                    double yaw = this.hoplite.getYaw();
                     double radians = Math.toRadians(yaw);
 
                     double xProjectile = this.hoplite.getX() + Math.cos(radians) * offsetX;

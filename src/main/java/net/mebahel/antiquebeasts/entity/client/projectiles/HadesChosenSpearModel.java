@@ -8,17 +8,17 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class HadesChosenSpearModel extends AnimatedGeoModel<HadesChosenSpearEntity> {
     @Override
-    public Identifier getModelResource(HadesChosenSpearEntity object) {
+    public Identifier getModelLocation(HadesChosenSpearEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "geo/hoplite_spear.geo.json");
     }
 
     @Override
-    public Identifier getTextureResource(HadesChosenSpearEntity object) {
+    public Identifier getTextureLocation(HadesChosenSpearEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "textures/item/weapon/netherite_hoplite_spear.png");
     }
 
     @Override
-    public Identifier getAnimationResource(HadesChosenSpearEntity animatable) {
+    public Identifier getAnimationFileLocation(HadesChosenSpearEntity animatable) {
         return new Identifier(AntiqueBeasts.MOD_ID, "animations/champion_hoplite.animation.json");
     }
 

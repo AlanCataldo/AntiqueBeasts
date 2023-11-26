@@ -18,7 +18,7 @@ public class ThrowingRockRenderer extends GeoProjectilesRenderer<ThrowingRockEnt
     }
 
     @Override
-    public Identifier getTextureResource(ThrowingRockEntity animatable) {
+    public Identifier getTextureLocation(ThrowingRockEntity animatable) {
         return new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/cyclops_texture.png");
     }
 

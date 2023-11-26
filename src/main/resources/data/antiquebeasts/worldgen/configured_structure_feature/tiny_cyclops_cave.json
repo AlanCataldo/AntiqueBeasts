@@ -1,0 +1,9 @@
+{
+  "type": "antiquebeasts:tiny_cyclops_cave_structure",
+  "config": {
+    "start_pool": "antiquebeasts:tiny_cyclops_cave/start_pool",
+    "size": 1
+  },
+  "biomes": "#antiquebeasts:has_structure/tiny_cyclops_cave",
+  "spawn_overrides": {}
+}

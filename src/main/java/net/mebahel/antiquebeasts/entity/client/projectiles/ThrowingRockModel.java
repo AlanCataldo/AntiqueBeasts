@@ -7,17 +7,17 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class ThrowingRockModel extends AnimatedGeoModel<ThrowingRockEntity> {
     @Override
-    public Identifier getModelResource(ThrowingRockEntity object) {
+    public Identifier getModelLocation(ThrowingRockEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "geo/throwingrock.geo.json");
     }
 
     @Override
-    public Identifier getTextureResource(ThrowingRockEntity object) {
+    public Identifier getTextureLocation(ThrowingRockEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/throwingrock_texture.png");
     }
 
     @Override
-    public Identifier getAnimationResource(ThrowingRockEntity animatable) {
+    public Identifier getAnimationFileLocation(ThrowingRockEntity animatable) {
         return new Identifier(AntiqueBeasts.MOD_ID, "animations/throwingrock.animation.json");
     }
 

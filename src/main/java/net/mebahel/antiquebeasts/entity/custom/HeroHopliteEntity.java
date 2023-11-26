@@ -186,8 +186,8 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
                 this.nodeMaker = new LandPathNodeMaker();
                 this.nodeMaker.setCanEnterOpenDoors(true);
                 return new PathNodeNavigator(this.nodeMaker, range) {
-                    protected float getDistance(PathNode a, PathNode b) {
-                        return a.getHorizontalDistance(b);
+                    private float getDistance(PathNode a, PathNode b) {
+                        return a.getDistance(b);
                     }
                 };
             }

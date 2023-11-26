@@ -2,6 +2,7 @@ package net.mebahel.antiquebeasts.world.gen;
 
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.fabricmc.fabric.mixin.object.builder.SpawnRestrictionAccessor;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.custom.*;
 import net.minecraft.entity.*;
@@ -24,7 +25,7 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SKYLANDS_SUMMER, TerralithBiomeKeys.WARM_RIVER, TerralithBiomeKeys.VOLCANIC_PEAKS,
                         TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS, TerralithBiomeKeys.BIRCH_TAIGA),
                 SpawnGroup.CREATURE, ModEntities.CYCLOPS, 3, 1, 1);
-        SpawnRestriction.register(ModEntities.CYCLOPS, SpawnRestriction.Location.ON_GROUND,
+        SpawnRestrictionAccessor.callRegister(ModEntities.CYCLOPS, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
@@ -46,7 +47,7 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.WINTRY_FOREST,TerralithBiomeKeys.WINTRY_LOWLANDS, TerralithBiomeKeys.COLD_SHRUBLAND,
                         TerralithBiomeKeys.GRAVEL_DESERT),
                 SpawnGroup.CREATURE, ModEntities.FROST_CYCLOPS, 3, 1, 1);
-        SpawnRestriction.register(ModEntities.FROST_CYCLOPS, SpawnRestriction.Location.ON_GROUND,
+        SpawnRestrictionAccessor.callRegister(ModEntities.FROST_CYCLOPS, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
@@ -67,7 +68,7 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SKYLANDS_SUMMER, TerralithBiomeKeys.WARM_RIVER, TerralithBiomeKeys.VOLCANIC_PEAKS,
                         TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS, TerralithBiomeKeys.BIRCH_TAIGA),
                 SpawnGroup.CREATURE, ModEntities.HERO_HOPLITE, 4, 1, 1);
-        SpawnRestriction.register(ModEntities.HERO_HOPLITE, SpawnRestriction.Location.ON_GROUND,
+        SpawnRestrictionAccessor.callRegister(ModEntities.HERO_HOPLITE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
@@ -88,7 +89,7 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SKYLANDS_SUMMER, TerralithBiomeKeys.WARM_RIVER, TerralithBiomeKeys.VOLCANIC_PEAKS,
                         TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS, TerralithBiomeKeys.BIRCH_TAIGA),
                 SpawnGroup.CREATURE, ModEntities.CHAMPION_HOPLITE, 7, 1, 2);
-        SpawnRestriction.register(ModEntities.CHAMPION_HOPLITE, SpawnRestriction.Location.ON_GROUND,
+        SpawnRestrictionAccessor.callRegister(ModEntities.CHAMPION_HOPLITE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
@@ -108,7 +109,7 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SKYLANDS_SUMMER, TerralithBiomeKeys.WARM_RIVER, TerralithBiomeKeys.VOLCANIC_PEAKS,
                         TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS, TerralithBiomeKeys.BIRCH_TAIGA),
                 SpawnGroup.CREATURE, ModEntities.ELITE_HOPLITE, 8, 1, 3);
-        SpawnRestriction.register(ModEntities.ELITE_HOPLITE, SpawnRestriction.Location.ON_GROUND,
+        SpawnRestrictionAccessor.callRegister(ModEntities.ELITE_HOPLITE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
@@ -121,7 +122,7 @@ public class ModEntitySpawn {
                         IncendiumBiomeKeys.ASH_BARRENS, IncendiumBiomeKeys.QUARTZ_FLATS, IncendiumBiomeKeys.WEEPING_VALLEY,
                         IncendiumBiomeKeys.WITHERED_FOREST, IncendiumBiomeKeys.VOLCANIC_DELTAS),
                 SpawnGroup.MONSTER, ModEntities.HADES_SHADE, 15, 1, 1);
-        SpawnRestriction.register(ModEntities.HADES_SHADE, SpawnRestriction.Location.ON_GROUND,
+        SpawnRestrictionAccessor.callRegister(ModEntities.HADES_SHADE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
@@ -134,7 +135,7 @@ public class ModEntitySpawn {
                         IncendiumBiomeKeys.ASH_BARRENS, IncendiumBiomeKeys.QUARTZ_FLATS, IncendiumBiomeKeys.WEEPING_VALLEY,
                         IncendiumBiomeKeys.WITHERED_FOREST),
             SpawnGroup.MONSTER, ModEntities.HADES_CHOSEN, 3, 1, 1);
-        SpawnRestriction.register(ModEntities.HADES_CHOSEN, SpawnRestriction.Location.ON_GROUND,
+        SpawnRestrictionAccessor.callRegister(ModEntities.HADES_CHOSEN, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;

@@ -1,12 +1,11 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
 import net.mebahel.antiquebeasts.entity.custom.HadesShadeEntity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.util.math.random.Random;
 
 import java.util.EnumSet;
+import java.util.Random;
 
 public class HadesShadeFlyGoal extends Goal {
     private final HadesShadeEntity shade;

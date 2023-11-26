@@ -13,17 +13,17 @@ import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
 public class HadesShadeModel extends AnimatedGeoModel<HadesShadeEntity> {
     @Override
-    public Identifier getModelResource(HadesShadeEntity object) {
+    public Identifier getModelLocation(HadesShadeEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "geo/hades_shade.geo.json");
     }
 
     @Override
-    public Identifier getTextureResource(HadesShadeEntity object) {
+    public Identifier getTextureLocation(HadesShadeEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/hades_shade_texture.png");
     }
 
     @Override
-    public Identifier getAnimationResource(HadesShadeEntity animatable) {
+    public Identifier getAnimationFileLocation(HadesShadeEntity animatable) {
         return new Identifier(AntiqueBeasts.MOD_ID, "animations/hades_shade.animation.json");
     }
 }
