@@ -19,6 +19,6 @@ public class IronPlateArmorModel extends AnimatedGeoModel<IronPlateArmorItem> {
 
     @Override
     public Identifier getAnimationFileLocation(IronPlateArmorItem animatable) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "geo/iron_plate_armor.geo.json");
+        return new Identifier(AntiqueBeasts.MOD_ID, "animations/armor.animation.json");
     }
 }
