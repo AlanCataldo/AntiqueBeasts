@@ -24,30 +24,22 @@ import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.IAnimationTickable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.SoundKeyframeEvent;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 import static java.lang.Math.random;
 
-public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimationTickable {
+public class CyclopsEntity extends AnimalEntity implements GeoEntity {
     double rand;
     double last_step = 0;
-    public String animationProcedure = "empty";
     public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(CyclopsEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(CyclopsEntity.class,
@@ -57,16 +49,11 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
     public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(CyclopsEntity.class,
             TrackedDataHandlerRegistry.STRING);
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
 
     public CyclopsEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
-    }
-
-    @Override
-    public int tickTimer() {
-        return age;
     }
 
     @Nullable
@@ -104,7 +91,7 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
         return this.dataTracker.get(ATTACK_NAME);
     }
     private boolean shouldDespawnInPeaceful() {
-        return world.getDifficulty() == Difficulty.PEACEFUL;
+        return this.getWorld().getDifficulty() == Difficulty.PEACEFUL;
     }
     @Override
     public void tick() {
@@ -113,7 +100,6 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
             remove(Entity.RemovalReason.DISCARDED);
         }
     }
-
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(SHOOTING, false);
@@ -143,83 +129,42 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
     }
 
-    private <E extends IAnimatable> PlayState movementPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty") && !this.isShooting()) {
-            if (event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.walk", ILoopType.EDefaultLoopTypes.LOOP));
-                return PlayState.CONTINUE;
-            } else if (!this.isSwinging() && !this.isShooting()) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.idle", ILoopType.EDefaultLoopTypes.LOOP));
-                return PlayState.CONTINUE;
-            }
-        }
-        return PlayState.STOP;
-    }
-
-    private <E extends IAnimatable> PlayState shootingPredicate(AnimationEvent<E> event) {
-        if (this.isShooting() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped) && !this.isSwinging()) {
-            event.getController().markNeedsReload();
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.cyclops.ranged_attack",
-                    ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+    private PlayState predicate(AnimationState animationState) {
+        if(animationState.isMoving()) {
+            animationState.getController().setAnimation(RawAnimation.begin().then("animation.cyclops.walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
+
+        animationState.getController().setAnimation(RawAnimation.begin().then("animation.cyclops.idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
 
-    private <E extends IAnimatable> PlayState attackPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty") && this.isSwinging()) {
-            if (event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
-                event.getController().markNeedsReload();
-                event.getController().setAnimation(new AnimationBuilder().addAnimation(this.getAttackName()
-                        , ILoopType.EDefaultLoopTypes.PLAY_ONCE));
-                return PlayState.CONTINUE;
-            }
-            return PlayState.CONTINUE;
+    private PlayState attackPredicate(AnimationState state) {
+        if(this.isSwinging() && !this.isShooting() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
+            state.getController().forceAnimationReset();
+            state.getController().setAnimation(RawAnimation.begin().then(this.getAttackName(), Animation.LoopType.PLAY_ONCE));
         }
+
         return PlayState.CONTINUE;
     }
-    private <E extends IAnimatable> PlayState procedurePredicate(AnimationEvent<E> event) {
-        if (!(this.animationProcedure.equals("empty"))
-                && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation(this.animationProcedure, ILoopType.EDefaultLoopTypes.PLAY_ONCE));
-            if (event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
-                this.animationProcedure = "empty";
-                event.getController().markNeedsReload();
-            }
+
+    private PlayState shootingPredicate(AnimationState state) {
+        if(this.isShooting() && !this.isSwinging() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
+            state.getController().forceAnimationReset();
+            state.getController().setAnimation(RawAnimation.begin().then("animation.cyclops.ranged_attack", Animation.LoopType.PLAY_ONCE));
         }
+
         return PlayState.CONTINUE;
     }
     @Override
-    public void registerControllers(AnimationData data) {
-        AnimationController<CyclopsEntity> controller = new AnimationController<>(this, "controller", 0,
-                this::movementPredicate);
-        AnimationController<CyclopsEntity> controller1 = new AnimationController<>(this, "attacking", 0, this::attackPredicate);
-        AnimationController<CyclopsEntity> controller3 = new AnimationController<>(this, "shooting", 0, this::shootingPredicate);
-        AnimationController<CyclopsEntity> controller2 = new AnimationController<>(this, "procedure", 0, this::procedurePredicate);
-        controller1.registerSoundListener(this::soundListener);
-        controller3.registerSoundListener(this::soundListener);
-        data.addAnimationController(controller);
-        data.addAnimationController(controller1);
-        data.addAnimationController(controller3);
-        data.addAnimationController(controller2);
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController(this, "controller",0, this::predicate));
+        controllers.add(new AnimationController(this, "attacking",0, this::attackPredicate));
+        controllers.add(new AnimationController(this, "shooting",0, this::shootingPredicate));
     }
 
-    private <ENTITY extends IAnimatable> void soundListener(SoundKeyframeEvent<ENTITY> event) {
-        if (event.sound.matches("cyclops_hit1")) {
-            if (this.world.isClient) {
-                this.getEntityWorld().playSound(this.getX(), this.getY(), this.getZ(), ModSounds.CYCLOPS_HIT1,
-                        SoundCategory.HOSTILE, 1F, 1.0F, true);
-            }
-        }
-        if (event.sound.matches("cyclops_hurt2")) {
-            if (this.world.isClient) {
-                this.getEntityWorld().playSound(this.getX(), this.getY(), this.getZ(), ModSounds.CYCLOPS_HURT2,
-                        SoundCategory.HOSTILE, 0.75F, 1.0F, true);
-            }
-        }
-    }
     @Override
-    public AnimationFactory getFactory() {
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
     }
 
@@ -243,11 +188,11 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
     protected void playStepSound(BlockPos pos, BlockState state) {
         if (last_step == 0) {
             this.playSound(ModSounds.CYCLOPS_STEP1, 0.75f, 1.0f);
-            last_step = tickTimer();
+            last_step = this.age;
         }
-        if (last_step + 14 <= tickTimer()) {
+        if (last_step + 14 <= this.age) {
             this.playSound(ModSounds.CYCLOPS_STEP1, 0.75f, 1.0f);
-            last_step = tickTimer();
+            last_step = this.age;
         }
     }
 

@@ -27,23 +27,28 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.Objects;
 
-public class ThrowingHopliteSpearEntity extends PersistentProjectileEntity implements IAnimatable {
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-
+public class ThrowingHopliteSpearEntity extends PersistentProjectileEntity implements GeoEntity {
+    private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
     @Override
-    public void registerControllers(AnimationData data) {
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
     }
 
+    private PlayState predicate(AnimationState animationState) {
+        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+        return PlayState.CONTINUE;
+    }
     @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController(this, "controller",0, this::predicate));
     }
 
     private static final TrackedData<Byte> LOYALTY;
@@ -102,7 +107,7 @@ public class ThrowingHopliteSpearEntity extends PersistentProjectileEntity imple
         int i = (Byte)this.dataTracker.get(LOYALTY);
         if (i > 0 && (this.dealtDamage || this.isNoClip()) && entity != null) {
             if (!this.isOwnerAlive()) {
-                if (!this.world.isClient && this.pickupType == PickupPermission.ALLOWED) {
+                if (!this.getWorld().isClient && this.pickupType == PickupPermission.ALLOWED) {
                     this.dropStack(this.asItemStack(), 0.1F);
                 }
 
@@ -111,7 +116,7 @@ public class ThrowingHopliteSpearEntity extends PersistentProjectileEntity imple
                 this.setNoClip(true);
                 Vec3d vec3d = entity.getEyePos().subtract(this.getPos());
                 this.setPos(this.getX(), this.getY() + vec3d.y * 0.015 * (double)i, this.getZ());
-                if (this.world.isClient) {
+                if (this.getWorld().isClient) {
                     this.lastRenderY = this.getY();
                 }
 
@@ -158,7 +163,7 @@ public class ThrowingHopliteSpearEntity extends PersistentProjectileEntity imple
         }
 
         Entity entity2 = this.getOwner();
-        DamageSource damageSource = DamageSource.trident(this, entity2 == null ? this : entity2);
+        DamageSource damageSource = this.getDamageSources().trident(this, entity2 == null ? this : entity2);
         this.dealtDamage = true;
 
         SoundEvent soundEvent = SoundEvents.ITEM_TRIDENT_HIT;
@@ -180,13 +185,13 @@ public class ThrowingHopliteSpearEntity extends PersistentProjectileEntity imple
 
         this.setVelocity(this.getVelocity().multiply(-0.01, -0.1, -0.01));
         float g = 1.0F;
-        if (this.world instanceof ServerWorld && this.world.isThundering() && this.hasChanneling()) {
+        if (this.getWorld() instanceof ServerWorld && this.getWorld().isThundering() && this.hasChanneling()) {
             BlockPos blockPos = entity.getBlockPos();
-            if (this.world.isSkyVisible(blockPos)) {
-                LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(this.world);
+            if (this.getWorld().isSkyVisible(blockPos)) {
+                LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(this.getWorld());
                 lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos));
                 lightningEntity.setChanneler(entity2 instanceof ServerPlayerEntity ? (ServerPlayerEntity)entity2 : null);
-                this.world.spawnEntity(lightningEntity);
+                this.getWorld().spawnEntity(lightningEntity);
                 soundEvent = SoundEvents.ITEM_TRIDENT_THUNDER;
                 g = 5.0F;
             }

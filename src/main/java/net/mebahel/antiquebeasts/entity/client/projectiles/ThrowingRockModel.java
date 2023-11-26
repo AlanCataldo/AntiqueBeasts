@@ -3,9 +3,9 @@ package net.mebahel.antiquebeasts.entity.client.projectiles;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.entity.projectiles.ThrowingRockEntity;
 import net.minecraft.util.Identifier;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class ThrowingRockModel extends AnimatedGeoModel<ThrowingRockEntity> {
+public class ThrowingRockModel extends GeoModel<ThrowingRockEntity> {
     @Override
     public Identifier getModelResource(ThrowingRockEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "geo/throwingrock.geo.json");

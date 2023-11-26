@@ -8,7 +8,6 @@ public class RawCyclopsMeat extends Item {
 
     public RawCyclopsMeat() {
         super(new Item.Settings()
-                .group(ItemGroup.FOOD)
                 .food(new FoodComponent.Builder()
                         .hunger(4)
                         .saturationModifier(4f)

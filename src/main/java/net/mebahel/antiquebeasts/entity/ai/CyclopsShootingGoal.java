@@ -46,7 +46,7 @@ public class CyclopsShootingGoal extends Goal {
         }
         if (this.cyclops.distanceTo(livingEntity) > 8) {
             if (this.cyclops.canSee(livingEntity)) {
-                World world = this.cyclops.world;
+                World world = this.cyclops.getWorld();
                 this.cyclops.setCooldown(Math.max(this.cyclops.getCooldown() - 1, 0));
                 if (this.cyclops.getCooldown() == 10) {
                     ProjectileEntity throwingRockEntity;

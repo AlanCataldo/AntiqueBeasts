@@ -3,9 +3,9 @@ package net.mebahel.antiquebeasts.entity.client.projectiles;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.entity.projectiles.HopliteSpearEntity;
 import net.minecraft.util.Identifier;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class HopliteSpearModel extends AnimatedGeoModel<HopliteSpearEntity> {
+public class HopliteSpearModel extends GeoModel<HopliteSpearEntity> {
     @Override
     public Identifier getModelResource(HopliteSpearEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "geo/hoplite_spear.geo.json");

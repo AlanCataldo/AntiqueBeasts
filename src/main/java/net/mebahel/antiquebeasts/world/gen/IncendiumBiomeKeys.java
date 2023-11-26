@@ -1,8 +1,8 @@
 package net.mebahel.antiquebeasts.world.gen;
 
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
 
 public class IncendiumBiomeKeys {
@@ -15,6 +15,6 @@ public class IncendiumBiomeKeys {
     public static final RegistryKey<Biome> WEEPING_VALLEY = register("incendium:weeping_valley");
     public static final RegistryKey<Biome> WITHERED_FOREST = register("incendium:withered_forest");
     private static RegistryKey<Biome> register(String name) {
-        return RegistryKey.of(Registry.BIOME_KEY, new Identifier(name));
+        return RegistryKey.of(RegistryKeys.BIOME, new Identifier(name));
     }
 }

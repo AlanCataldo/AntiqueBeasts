@@ -2,6 +2,7 @@ package net.mebahel.antiquebeasts.entity.client.custom;
 
 import com.google.common.collect.Maps;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
+import net.mebahel.antiquebeasts.entity.custom.HadesShadeEntity;
 import net.mebahel.antiquebeasts.entity.custom.HeroHopliteEntity;
 import net.mebahel.antiquebeasts.entity.variant.HeroHopliteVariant;
 import net.minecraft.client.render.RenderLayer;
@@ -12,7 +13,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 import java.util.Map;
 
@@ -30,16 +31,11 @@ public class HeroHopliteRenderer extends GeoEntityRenderer<HeroHopliteEntity> {
     }
 
     @Override
-    public Identifier getTextureResource(HeroHopliteEntity animatable) {
+    public Identifier getTextureLocation(HeroHopliteEntity animatable) {
         return LOCATION_BY_VARIANT.get(animatable.getVariant());
     }
     @Override
-    public RenderLayer getRenderType(HeroHopliteEntity animatable, float partialTick, MatrixStack poseStack,
-                                     @Nullable VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer,
-                                     int packedLight, Identifier texture) {
-
-        poseStack.scale(1f, 1f, 1f);
-        return super.getRenderType(animatable, partialTick, poseStack, bufferSource, buffer, packedLight, texture);
+    public RenderLayer getRenderType(HeroHopliteEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {
+        return super.getRenderType(animatable, texture, bufferSource, partialTick);
     }
-
 }

@@ -24,7 +24,7 @@ public class HopliteMeleeAttackGoal extends Goal {
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
     }
     public boolean canStart() {
-        long l = this.mob.world.getTime();
+        long l = this.mob.getWorld().getTime();
         if (l - this.lastUpdateTime < MAX_COOLDOWN) {
             return false;
         } else {

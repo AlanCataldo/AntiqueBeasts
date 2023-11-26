@@ -18,7 +18,7 @@ public class ShieldSoundMixin {
     @Inject(method = "damage", at = @At("HEAD"))
     public void changeShieldSound(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity thisEntity = (LivingEntity) (Object) this;
-        if (!thisEntity.world.isClient && thisEntity.isBlocking() && thisEntity.getActiveItem().getItem() instanceof CustomShieldItem) {
+        if (!thisEntity.getWorld().isClient && thisEntity.isBlocking() && thisEntity.getActiveItem().getItem() instanceof CustomShieldItem) {
             Entity attacker = source.getAttacker();
             if (attacker != null) {
                 Vec3d vec3d = attacker.getPos();
@@ -29,7 +29,7 @@ public class ShieldSoundMixin {
                     float f = (float)(MathHelper.atan2(e, d) * 57.2957763671875D) - 90.0F;
                     float g = MathHelper.abs(MathHelper.wrapDegrees(thisEntity.getYaw()) - f);
                     if (g > 90F && g < 270.0F) {
-                        thisEntity.world.playSound(null, thisEntity.getX(), thisEntity.getY(), thisEntity.getZ(), ModSounds.SHIELD_BLOCK, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                        thisEntity.getWorld().playSound(null, thisEntity.getX(), thisEntity.getY(), thisEntity.getZ(), ModSounds.SHIELD_BLOCK, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     }
                 }
             }

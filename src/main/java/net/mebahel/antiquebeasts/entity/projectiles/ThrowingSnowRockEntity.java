@@ -1,6 +1,5 @@
 package net.mebahel.antiquebeasts.entity.projectiles;
 
-import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.block.BlockState;
@@ -24,37 +23,31 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import static net.mebahel.antiquebeasts.entity.ModEntities.THROWINGSNOWROCK;
 
-public class ThrowingSnowRockEntity extends ThrownItemEntity implements IAnimatable {
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+public class ThrowingSnowRockEntity extends ThrownItemEntity implements GeoEntity {
+    private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
+    }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("throwingrock.animation.idle", EDefaultLoopTypes.LOOP));
+    private PlayState predicate(AnimationState animationState) {
+        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
-
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::predicate));
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController(this, "controller",0, this::predicate));
     }
 
     public ThrowingSnowRockEntity(EntityType<? extends ThrowingSnowRockEntity> entityType, World world) {
@@ -74,7 +67,7 @@ public class ThrowingSnowRockEntity extends ThrownItemEntity implements IAnimata
             ParticleEffect particleEffect = ModParticles.SNOWROCKSPLASH_PARTICLE;
 
             for(int i = 0; i < 8; ++i) {
-                this.world.addParticle(particleEffect, this.getX(), this.getY(), this.getZ(),
+                this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(),
                         0f, 0f, 0f);
             }
         }
@@ -82,8 +75,8 @@ public class ThrowingSnowRockEntity extends ThrownItemEntity implements IAnimata
 
     protected void onCollision(HitResult hitResult) {
         super.onCollision(hitResult);
-        if (!this.world.isClient) {
-            this.world.sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient) {
+            this.getWorld().sendEntityStatus(this, (byte)3);
             this.discard();
         }
     }
@@ -92,7 +85,7 @@ public class ThrowingSnowRockEntity extends ThrownItemEntity implements IAnimata
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         LivingEntity target = (LivingEntity) entityHitResult.getEntity();
-        target.damage(DamageSource.thrownProjectile(this, this.getOwner()), (float)15);
+        target.damage(this.getDamageSources().thrown(this, this.getOwner()), (float)15);
         playSound(ModSounds.CYCLOPS_FLESHCRUSH3, 1f, 1f);
         Entity entity = this.getEffectCause();
 
@@ -113,8 +106,8 @@ public class ThrowingSnowRockEntity extends ThrownItemEntity implements IAnimata
 
     @Override
     protected void onBlockHit(BlockHitResult blockHitResult) {
-        BlockState blockState = this.world.getBlockState(blockHitResult.getBlockPos());
-        blockState.onProjectileHit(this.world, blockState, blockHitResult, this);
+        BlockState blockState = this.getWorld().getBlockState(blockHitResult.getBlockPos());
+        blockState.onProjectileHit(this.getWorld(), blockState, blockHitResult, this);
         playSound(ModSounds.CYCLOPS_ROCKCRUSH1, 1f, 1f);
     }
 
@@ -125,14 +118,14 @@ public class ThrowingSnowRockEntity extends ThrownItemEntity implements IAnimata
         boolean bl = false;
         if (hitResult.getType() == HitResult.Type.BLOCK) {
             BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-            BlockState blockState = this.world.getBlockState(blockPos);
+            BlockState blockState = this.getWorld().getBlockState(blockPos);
             if (blockState.isOf(Blocks.NETHER_PORTAL)) {
                 this.setInNetherPortal(blockPos);
                 bl = true;
             } else if (blockState.isOf(Blocks.END_GATEWAY)) {
-                BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+                BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
                 if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-                    EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+                    EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
                 }
                 bl = true;
             }
@@ -151,7 +144,7 @@ public class ThrowingSnowRockEntity extends ThrownItemEntity implements IAnimata
         float h;
         if (this.isTouchingWater()) {
             for(int i = 0; i < 4; ++i) {
-                this.world.addParticle(ParticleTypes.BUBBLE, d - vec3d.x * 0.25, e - vec3d.y * 0.25, f - vec3d.z * 0.25, vec3d.x, vec3d.y, vec3d.z);
+                this.getWorld().addParticle(ParticleTypes.BUBBLE, d - vec3d.x * 0.25, e - vec3d.y * 0.25, f - vec3d.z * 0.25, vec3d.x, vec3d.y, vec3d.z);
             }
 
             h = 0.8F;

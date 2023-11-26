@@ -36,7 +36,7 @@ public class HadesShadeMoveControl extends MoveControl {
 
         for(int i = 1; i < steps; ++i) {
             box = box.offset(direction);
-            if (!this.ghast.world.isSpaceEmpty(this.ghast, box)) {
+            if (!this.ghast.getWorld().isSpaceEmpty(this.ghast, box)) {
                 return false;
             }
         }

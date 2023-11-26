@@ -3,9 +3,9 @@ package net.mebahel.antiquebeasts.entity.armor;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.item.DiamondPlateArmorItem;
 import net.minecraft.util.Identifier;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class DiamondPlateArmorModel extends AnimatedGeoModel<DiamondPlateArmorItem> {
+public class DiamondPlateArmorModel extends GeoModel<DiamondPlateArmorItem> {
     @Override
     public Identifier getModelResource(DiamondPlateArmorItem object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "geo/diamond_plate_armor.geo.json");

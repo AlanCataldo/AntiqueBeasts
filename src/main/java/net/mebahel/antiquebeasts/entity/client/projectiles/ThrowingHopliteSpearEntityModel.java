@@ -1,12 +1,11 @@
 package net.mebahel.antiquebeasts.entity.client.projectiles;
 
 import net.mebahel.antiquebeasts.AntiqueBeasts;
-import net.mebahel.antiquebeasts.entity.projectiles.HopliteSpearEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.ThrowingHopliteSpearEntity;
 import net.minecraft.util.Identifier;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class ThrowingHopliteSpearEntityModel extends AnimatedGeoModel<ThrowingHopliteSpearEntity> {
+public class ThrowingHopliteSpearEntityModel extends GeoModel<ThrowingHopliteSpearEntity> {
     String type = "";
     public ThrowingHopliteSpearEntityModel(String type) {
         this.type = type;

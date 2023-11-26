@@ -23,7 +23,6 @@ public class ConcentratedCyclopsBloodItem extends Item {
                 .meat()
                 .build()));
     }
-
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         super.finishUsing(stack, world, user);
         if (!world.isClient) {
@@ -40,28 +39,22 @@ public class ConcentratedCyclopsBloodItem extends Item {
         }
         return stack;
     }
-
     public int getMaxUseTime(ItemStack stack) {
         return 40;
     }
-
     public UseAction getUseAction(ItemStack stack) {
         return UseAction.DRINK;
     }
-
     public SoundEvent getDrinkSound() {
         return SoundEvents.ITEM_HONEY_BOTTLE_DRINK;
     }
-
     public SoundEvent getEatSound() {
         return SoundEvents.ITEM_HONEY_BOTTLE_DRINK;
     }
-
     @Override
     public boolean hasGlint(ItemStack stack) {
         return true;
     }
-
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         return ItemUsage.consumeHeldItem(world, user, hand);
     }

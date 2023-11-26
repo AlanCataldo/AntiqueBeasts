@@ -4,23 +4,13 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.mebahel.antiquebeasts.entity.ModEntities;
-import net.mebahel.antiquebeasts.entity.armor.DiamondPlateArmorRenderer;
-import net.mebahel.antiquebeasts.entity.armor.GoldPlateArmorRenderer;
-import net.mebahel.antiquebeasts.entity.armor.IronPlateArmorRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.*;
 import net.mebahel.antiquebeasts.entity.client.projectiles.*;
-import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.particle.custom.RockSplashParticle;
 import net.mebahel.antiquebeasts.particle.custom.SnowRockSplashParticle;
-import net.mebahel.antiquebeasts.screen.BloodInfusingStationScreen;
-import net.mebahel.antiquebeasts.screen.ModScreenHandlers;
 import net.mebahel.antiquebeasts.util.ShieldModelPredicate;
 import net.mebahel.antiquebeasts.util.SpearModelPredicate;
-import net.minecraft.client.gui.screen.ingame.HandledScreens;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 public class AntiqueBeastsClient implements ClientModInitializer {
     @Override
@@ -42,13 +32,12 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.NETHERITE_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "netherite"));
         ParticleFactoryRegistry.getInstance().register(ModParticles.ROCKSPLASH_PARTICLE, RockSplashParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.SNOWROCKSPLASH_PARTICLE, SnowRockSplashParticle.Factory::new);
-        HandledScreens.register(ModScreenHandlers.BLOOD_INFUSING_STATION_SCREEN_HANDLER, BloodInfusingStationScreen::new);
-        GeoArmorRenderer.registerArmorRenderer(new IronPlateArmorRenderer(), ModItems.IRON_PLATE_BOOTS,
+        /*GeoArmorRenderer.registerArmorRenderer(new IronPlateArmorRenderer(), ModItems.IRON_PLATE_BOOTS,
                 ModItems.IRON_PLATE_LEGGINGS, ModItems.IRON_PLATE_CHESTPLATE, ModItems.IRON_PLATE_HELMET);
         GeoArmorRenderer.registerArmorRenderer(new GoldPlateArmorRenderer(), ModItems.GOLD_PLATE_BOOTS,
                 ModItems.GOLD_PLATE_LEGGINGS, ModItems.GOLD_PLATE_CHESTPLATE, ModItems.GOLD_PLATE_HELMET);
         GeoArmorRenderer.registerArmorRenderer(new DiamondPlateArmorRenderer(), ModItems.DIAMOND_PLATE_BOOTS,
-                ModItems.DIAMOND_PLATE_LEGGINGS, ModItems.DIAMOND_PLATE_CHESTPLATE, ModItems.DIAMOND_PLATE_HELMET);
+                ModItems.DIAMOND_PLATE_LEGGINGS, ModItems.DIAMOND_PLATE_CHESTPLATE, ModItems.DIAMOND_PLATE_HELMET);*/
         ShieldModelPredicate.registerShieldModels();
         SpearModelPredicate.registerSpearModels();
     }

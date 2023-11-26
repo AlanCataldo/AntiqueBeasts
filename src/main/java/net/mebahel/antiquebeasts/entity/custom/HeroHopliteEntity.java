@@ -23,21 +23,15 @@ import net.minecraft.util.Util;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.IAnimationTickable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 import javax.annotation.Nullable;
 
 
-public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAnimationTickable {
-    public String animationProcedure = "empty";
+public class HeroHopliteEntity extends HopliteEntity implements GeoEntity {
     public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(HeroHopliteEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
 
@@ -48,7 +42,11 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
     public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(HeroHopliteEntity.class,
             TrackedDataHandlerRegistry.STRING);
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
+    }
 
     public void setAttackName(String attackName) {
         this.dataTracker.set(ATTACK_NAME, attackName);
@@ -66,11 +64,6 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
     public HeroHopliteEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
-    }
-
-    @Override
-    public int tickTimer() {
-        return age;
     }
     protected void initDataTracker() {
         super.initDataTracker();
@@ -120,64 +113,38 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
     }
-    private <E extends IAnimatable> PlayState movementPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty") && !this.isShooting()) {
-            if (event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", ILoopType.EDefaultLoopTypes.LOOP));
-                return PlayState.CONTINUE;
-            } else if (!this.isSwinging()) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
-                return PlayState.CONTINUE;
-            }
-        }
-        return PlayState.STOP;
-    }
-    private <E extends IAnimatable> PlayState attackPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty") && this.isSwinging()) {
-            if (this.isSwinging() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
-                event.getController().markNeedsReload();
-                event.getController().setAnimation(new AnimationBuilder().addAnimation(this.getAttackName(), ILoopType.EDefaultLoopTypes.PLAY_ONCE));
-                return PlayState.CONTINUE;
-            }
+    private PlayState predicate(AnimationState animationState) {
+        if(animationState.isMoving()) {
+            animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
-        return PlayState.CONTINUE;
-    }
-    private <E extends IAnimatable> PlayState procedurePredicate(AnimationEvent<E> event) {
-        if (!(this.animationProcedure.equals("empty"))
-                && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation(this.animationProcedure, ILoopType.EDefaultLoopTypes.PLAY_ONCE));
-            if (event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
-                this.animationProcedure = "empty";
-                event.getController().markNeedsReload();
-            }
-        }
+
+        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
 
-    private <E extends IAnimatable> PlayState shootingPredicate(AnimationEvent<E> event) {
-        if (this.isShooting() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped) && !this.isSwinging()) {
-            event.getController().markNeedsReload();
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("throwing", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
-            return PlayState.CONTINUE;
+    private PlayState attackPredicate(AnimationState state) {
+        if(this.isSwinging() && !this.isShooting() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
+            state.getController().forceAnimationReset();
+            state.getController().setAnimation(RawAnimation.begin().then(this.getAttackName(), Animation.LoopType.PLAY_ONCE));
         }
+
+        return PlayState.CONTINUE;
+    }
+
+    private PlayState shootingPredicate(AnimationState state) {
+        if(this.isShooting() && !this.isSwinging() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
+            state.getController().forceAnimationReset();
+            state.getController().setAnimation(RawAnimation.begin().then("throwing", Animation.LoopType.PLAY_ONCE));
+        }
+
         return PlayState.CONTINUE;
     }
     @Override
-    public void registerControllers(AnimationData data) {
-        AnimationController<HeroHopliteEntity> controller = new AnimationController<>(this, "controller", 0,
-                this::movementPredicate);
-        AnimationController<HeroHopliteEntity> controller1 = new AnimationController<>(this, "attacking", 0, this::attackPredicate);
-        AnimationController<HeroHopliteEntity> controller2 = new AnimationController<>(this, "procedure", 0, this::procedurePredicate);
-        AnimationController<HeroHopliteEntity> controller3 = new AnimationController<>(this, "shooting", 0, this::shootingPredicate);
-        data.addAnimationController(controller);
-        data.addAnimationController(controller1);
-        data.addAnimationController(controller2);
-        data.addAnimationController(controller3);
-    }
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController(this, "controller",0, this::predicate));
+        controllers.add(new AnimationController(this, "attacking",0, this::attackPredicate));
+        controllers.add(new AnimationController(this, "shooting",0, this::shootingPredicate));
     }
 
     protected EntityNavigation createNavigation(World world) {

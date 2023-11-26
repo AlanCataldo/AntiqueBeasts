@@ -15,15 +15,14 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.IAnimationTickable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import static java.lang.Math.random;
 
 
-public class HopliteEntity extends AnimalEntity implements IAnimatable, IAnimationTickable {
+public class HopliteEntity extends AnimalEntity implements GeoEntity {
     double rand;
     public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(HopliteEntity.class,
             TrackedDataHandlerRegistry.STRING);
@@ -31,7 +30,6 @@ public class HopliteEntity extends AnimalEntity implements IAnimatable, IAnimati
             TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(HopliteEntity.class,
             TrackedDataHandlerRegistry.FLOAT);
-
     protected HopliteEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -52,15 +50,11 @@ public class HopliteEntity extends AnimalEntity implements IAnimatable, IAnimati
     public void setCooldown(float cooldown) {
         this.dataTracker.set(COOLDOWN, cooldown);
     }
-    @Override
-    public void registerControllers(AnimationData animationData) {}
-    @Override
-    public AnimationFactory getFactory() {
-        return null;
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
     }
     @Override
-    public int tickTimer() {
-        return 0;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return null;
     }
     @Nullable
     @Override
@@ -68,7 +62,7 @@ public class HopliteEntity extends AnimalEntity implements IAnimatable, IAnimati
         return null;
     }
     private boolean shouldDespawnInPeaceful() {
-        return world.getDifficulty() == Difficulty.PEACEFUL;
+        return this.getWorld().getDifficulty() == Difficulty.PEACEFUL;
     }
     @Override
     public void tick() {

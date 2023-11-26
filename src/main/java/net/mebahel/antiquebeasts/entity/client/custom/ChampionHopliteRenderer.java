@@ -12,7 +12,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
+
 
 import java.util.Map;
 
@@ -30,16 +31,11 @@ public class ChampionHopliteRenderer extends GeoEntityRenderer<ChampionHopliteEn
     }
 
     @Override
-    public Identifier getTextureResource(ChampionHopliteEntity animatable) {
+    public Identifier getTextureLocation(ChampionHopliteEntity animatable) {
         return LOCATION_BY_VARIANT.get(animatable.getVariant());
     }
     @Override
-    public RenderLayer getRenderType(ChampionHopliteEntity animatable, float partialTick, MatrixStack poseStack,
-                                     @Nullable VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer,
-                                     int packedLight, Identifier texture) {
-
-        poseStack.scale(1f, 1f, 1f);
-        return super.getRenderType(animatable, partialTick, poseStack, bufferSource, buffer, packedLight, texture);
+    public RenderLayer getRenderType(ChampionHopliteEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {
+        return super.getRenderType(animatable, texture, bufferSource, partialTick);
     }
-
 }

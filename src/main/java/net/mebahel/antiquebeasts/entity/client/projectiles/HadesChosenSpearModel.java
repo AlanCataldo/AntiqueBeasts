@@ -2,11 +2,10 @@ package net.mebahel.antiquebeasts.entity.client.projectiles;
 
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.entity.projectiles.HadesChosenSpearEntity;
-import net.mebahel.antiquebeasts.entity.projectiles.HopliteSpearEntity;
 import net.minecraft.util.Identifier;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class HadesChosenSpearModel extends AnimatedGeoModel<HadesChosenSpearEntity> {
+public class HadesChosenSpearModel extends GeoModel<HadesChosenSpearEntity> {
     @Override
     public Identifier getModelResource(HadesChosenSpearEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "geo/hoplite_spear.geo.json");

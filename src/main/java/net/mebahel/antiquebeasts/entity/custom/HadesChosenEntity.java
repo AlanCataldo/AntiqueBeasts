@@ -11,6 +11,8 @@ import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageType;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -18,56 +20,42 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.IAnimationTickable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 
 import static java.lang.Math.random;
 
 
-public class HadesChosenEntity extends HostileEntity implements IAnimatable, IAnimationTickable {
-    public String animationProcedure = "empty";
+public class HadesChosenEntity extends HostileEntity implements GeoEntity {
     double rand;
     public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(HadesChosenEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
-
     public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(HadesChosenEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(HadesChosenEntity.class,
             TrackedDataHandlerRegistry.FLOAT);
     public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(HadesChosenEntity.class,
             TrackedDataHandlerRegistry.STRING);
-
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-
+    private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
+    }
     public void setAttackName(String attackName) {
         this.dataTracker.set(ATTACK_NAME, attackName);
     }
-
     public String getAttackName() {
         return this.dataTracker.get(ATTACK_NAME);
     }
-
     public void setShooting(boolean shooting) {
         this.dataTracker.set(SHOOTING, shooting);
     }
-
-
     public HadesChosenEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
-    }
-
-    @Override
-    public int tickTimer() {
-        return age;
     }
     protected void initDataTracker() {
         super.initDataTracker();
@@ -76,21 +64,16 @@ public class HadesChosenEntity extends HostileEntity implements IAnimatable, IAn
         this.dataTracker.startTracking(COOLDOWN, 0f);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
     }
-
     public float getCooldown() { return this.dataTracker.get(COOLDOWN);}
-
     public void setCooldown(float cooldown) {
         this.dataTracker.set(COOLDOWN, cooldown);
     }
-
     public boolean isShooting() {
         return this.dataTracker.get(SHOOTING);
     }
-
     public void setSwinging(boolean swinging) {
         this.dataTracker.set(SWINGING, swinging);
     }
-
     public boolean isSwinging() {
         return this.dataTracker.get(SWINGING);
     }
@@ -115,66 +98,35 @@ public class HadesChosenEntity extends HostileEntity implements IAnimatable, IAn
         this.targetSelector.add(1, new RevengeGoal(this));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
     }
-    private <E extends IAnimatable> PlayState movementPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty") && !this.isShooting()) {
-            if (event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", ILoopType.EDefaultLoopTypes.LOOP));
-                return PlayState.CONTINUE;
-            } else if (!this.isSwinging()) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
-                return PlayState.CONTINUE;
-            }
-        }
-        return PlayState.STOP;
-    }
-    private <E extends IAnimatable> PlayState attackPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty") && this.isSwinging()) {
-            if (this.isSwinging() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
-                event.getController().markNeedsReload();
-                event.getController().setAnimation(new AnimationBuilder().addAnimation(this.getAttackName(), ILoopType.EDefaultLoopTypes.PLAY_ONCE));
-                return PlayState.CONTINUE;
-            }
+    private PlayState predicate(AnimationState animationState) {
+        if(animationState.isMoving()) {
+            animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
-        return PlayState.CONTINUE;
-    }
-    private <E extends IAnimatable> PlayState procedurePredicate(AnimationEvent<E> event) {
-        if (!(this.animationProcedure.equals("empty"))
-                && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation(this.animationProcedure, ILoopType.EDefaultLoopTypes.PLAY_ONCE));
-            if (event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
-                this.animationProcedure = "empty";
-                event.getController().markNeedsReload();
-            }
-        }
-        return PlayState.CONTINUE;
-    }
 
-    private <E extends IAnimatable> PlayState shootingPredicate(AnimationEvent<E> event) {
-        if (this.isShooting() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped) && !this.isSwinging()) {
-            event.getController().markNeedsReload();
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("throwing", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
-            return PlayState.CONTINUE;
+        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+        return PlayState.CONTINUE;
+    }
+    private PlayState attackPredicate(AnimationState state) {
+        if(this.isSwinging() && !this.isShooting() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
+            state.getController().forceAnimationReset();
+            state.getController().setAnimation(RawAnimation.begin().then(this.getAttackName(), Animation.LoopType.PLAY_ONCE));
+        }
+        return PlayState.CONTINUE;
+    }
+    private PlayState shootingPredicate(AnimationState state) {
+        if(this.isShooting() && !this.isSwinging() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
+            state.getController().forceAnimationReset();
+            state.getController().setAnimation(RawAnimation.begin().then("throwing", Animation.LoopType.PLAY_ONCE));
         }
         return PlayState.CONTINUE;
     }
     @Override
-    public void registerControllers(AnimationData data) {
-        AnimationController<HadesChosenEntity> controller = new AnimationController<>(this, "controller", 0,
-                this::movementPredicate);
-        AnimationController<HadesChosenEntity> controller1 = new AnimationController<>(this, "attacking", 0, this::attackPredicate);
-        AnimationController<HadesChosenEntity> controller2 = new AnimationController<>(this, "procedure", 0, this::procedurePredicate);
-        AnimationController<HadesChosenEntity> controller3 = new AnimationController<>(this, "shooting", 0, this::shootingPredicate);
-        data.addAnimationController(controller);
-        data.addAnimationController(controller1);
-        data.addAnimationController(controller2);
-        data.addAnimationController(controller3);
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController(this, "controller",0, this::predicate));
+        controllers.add(new AnimationController(this, "attacking",0, this::attackPredicate));
+        controllers.add(new AnimationController(this, "shooting",0, this::shootingPredicate));
     }
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
-    }
-
     protected EntityNavigation createNavigation(World world) {
         return new MobNavigation(this, world) {
             protected PathNodeNavigator createPathNodeNavigator(int range) {
@@ -188,15 +140,13 @@ public class HadesChosenEntity extends HostileEntity implements IAnimatable, IAn
             }
         };
     }
-
     @Override
     public boolean damage(DamageSource source, float amount) {
-        if (source.isFire() || source == DamageSource.WITHER) {
+        if (source.isOf(DamageTypes.IN_FIRE) || source.isOf(DamageTypes.ON_FIRE) || source.isOf(DamageTypes.WITHER)) {
             return false;
         }
         return super.damage(source, amount);
     }
-
     @Override
     public void onDeath(DamageSource cause) {
         super.onDeath(cause);
@@ -209,7 +159,7 @@ public class HadesChosenEntity extends HostileEntity implements IAnimatable, IAn
                 double y = this.getY();
                 double z = this.getZ();
 
-                HadesShadeEntity hadesShade = new HadesShadeEntity(ModEntities.HADES_SHADE, this.world);
+                HadesShadeEntity hadesShade = new HadesShadeEntity(ModEntities.HADES_SHADE, this.getWorld());
                 hadesShade.setPosition(x, y, z);
                 hadesShade.playSound(ModSounds.HADES_SHADE_SPAWN, 0.5f, 1);
                 world.spawnEntity(hadesShade);

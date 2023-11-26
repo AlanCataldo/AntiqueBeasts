@@ -45,7 +45,7 @@ public class HopliteShootingGoal extends Goal {
         System.out.print(this.hoplite.getCooldown() + " COOLDOWN");
         if (this.hoplite.distanceTo(livingEntity) > 6) {
             if (this.hoplite.canSee(livingEntity)) {
-                World world = this.hoplite.world;
+                World world = this.hoplite.getWorld();
                 this.hoplite.setCooldown(Math.max(this.hoplite.getCooldown() - 1, 0));
                 if (this.hoplite.getCooldown() == 7) {
                     ProjectileEntity hopliteSpearEntity;

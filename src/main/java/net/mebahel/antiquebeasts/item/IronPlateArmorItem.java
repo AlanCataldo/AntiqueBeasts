@@ -1,70 +1,41 @@
 package net.mebahel.antiquebeasts.item;
 
-import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.Item;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
-public class IronPlateArmorItem extends ArmorItem implements IAnimatable {
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-
+public class IronPlateArmorItem extends ArmorItem implements GeoItem {
     public IronPlateArmorItem(ArmorMaterial materialIn, EquipmentSlot slot, Item.Settings builder) {
-        super(materialIn, slot, builder);
+        super(materialIn, Type.CHESTPLATE, builder);
     }
-
-
-    private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-
-        LivingEntity livingEntity = event.getExtraDataOfType(LivingEntity.class).get(0);
-
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
-
-
-        if (livingEntity instanceof ArmorStandEntity) {
-            return PlayState.CONTINUE;
-        }
-
-        List<Item> armorList = new ArrayList<>(4);
-        for (EquipmentSlot slot : EquipmentSlot.values()) {
-            if (slot.getType() == EquipmentSlot.Type.ARMOR) {
-                if (livingEntity.getEquippedStack(slot) != null) {
-                    armorList.add(livingEntity.getEquippedStack(slot).getItem());
-                }
-            }
-        }
-
-
-        boolean isWearingAll = new HashSet<>(armorList).containsAll(Arrays.asList(ModItems.IRON_PLATE_BOOTS,
-                ModItems.IRON_PLATE_LEGGINGS, ModItems.IRON_PLATE_CHESTPLATE, ModItems.IRON_PLATE_HELMET));
-        return isWearingAll ? PlayState.CONTINUE : PlayState.STOP;
-    }
-
-    // All you need to do here is add your animation controllers to the
-    // AnimationData
+    private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller", 20, this::predicate));
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
     }
-
+    private PlayState predicate(AnimationState animationState) {
+        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+        return PlayState.CONTINUE;
+    }
     @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController(this, "controller",0, this::predicate));
+    }
+    @Override
+    public void createRenderer(Consumer<Object> consumer) {
+
+    }
+    @Override
+    public Supplier<Object> getRenderProvider() {
+        return null;
     }
 }

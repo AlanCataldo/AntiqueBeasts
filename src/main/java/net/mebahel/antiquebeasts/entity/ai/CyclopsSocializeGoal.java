@@ -28,7 +28,7 @@ public class CyclopsSocializeGoal extends Goal {
             return false;
         }
 
-        List<CyclopsEntity> cyclopses = this.cyclops.world.getEntitiesByClass(CyclopsEntity.class, this.cyclops.getBoundingBox().expand(20),
+        List<CyclopsEntity> cyclopses = this.cyclops.getWorld().getEntitiesByClass(CyclopsEntity.class, this.cyclops.getBoundingBox().expand(20),
                 cyclopsEntity -> cyclopsEntity != this.cyclops && !cyclopsEntity.hasStatusEffect(this.potionEffect) && this.cyclops.canSee(cyclopsEntity));
 
         for (CyclopsEntity otherCyclops : cyclopses) {

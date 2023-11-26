@@ -3,9 +3,9 @@ package net.mebahel.antiquebeasts.entity.armor;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.item.IronPlateArmorItem;
 import net.minecraft.util.Identifier;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class IronPlateArmorModel extends AnimatedGeoModel<IronPlateArmorItem> {
+public class IronPlateArmorModel extends GeoModel<IronPlateArmorItem> {
     @Override
     public Identifier getModelResource(IronPlateArmorItem object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "geo/iron_plate_armor.geo.json");
