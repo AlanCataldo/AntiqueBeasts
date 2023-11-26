@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "antiquebeasts:item/weapon/gol_hoplite_spear",
+		"0": "antiquebeasts:item/weapon/gold_hoplite_spear",
 		"particle": "antiquebeasts:item/weapon/gold_hoplite_spear"
 	},
 	"elements": [
