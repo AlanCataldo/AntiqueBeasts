@@ -26,36 +26,29 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 
 import static net.mebahel.antiquebeasts.entity.ModEntities.HOPLITE_SPEAR;
-
 public class HopliteSpearEntity extends ThrownItemEntity implements GeoEntity {
-
     private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
     }
-
     private PlayState predicate(AnimationState animationState) {
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+        animationState.getController().setAnimation(RawAnimation.begin().then("throw", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController(this, "controller",0, this::predicate));
     }
-
     public HopliteSpearEntity(EntityType<? extends HopliteSpearEntity> entityType, World world) {
         super(entityType, world);
     }
-
     public HopliteSpearEntity(World world, LivingEntity owner) {
         super(HOPLITE_SPEAR, owner, world);
     }
-
     protected Item getDefaultItem() {
         return null;
     }
-
     protected void onCollision(HitResult hitResult) {
         super.onCollision(hitResult);
         if (!this.getWorld().isClient) {
@@ -63,15 +56,12 @@ public class HopliteSpearEntity extends ThrownItemEntity implements GeoEntity {
             this.discard();
         }
     }
-
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         LivingEntity target = (LivingEntity) entityHitResult.getEntity();
-
         target.damage(this.getDamageSources().thrown(this, this.getOwner()), (float)10);
         target.damage(this.getDamageSources().lightningBolt(), 2.0F);
-
         Vec3d lightningSpawnPos = target.getPos();
         LightningEntity lightningEntity = new LightningEntity(EntityType.LIGHTNING_BOLT, this.getWorld());
         lightningEntity.setPos(lightningSpawnPos.x, lightningSpawnPos.y, lightningSpawnPos.z);

@@ -92,13 +92,13 @@ public class ModItems {
     public static final Item IRON_PLATE_BOOTS = registerItem("iron_plate_boots",
             new IronPlateArmorItem(ModArmorMaterials.IRON_PLATE, EquipmentSlot.FEET, new FabricItemSettings()));
     public static final Item GOLD_PLATE_HELMET = registerItem("gold_plate_helmet",
-            new GoldPlateArmorItem(ModArmorMaterials.GOLD_PLATE, EquipmentSlot.HEAD, new FabricItemSettings()));
+            new GoldPlateArmorItem(ModArmorMaterials.GOLD_PLATE, ArmorItem.Type.HELMET, new FabricItemSettings()));
     public static final Item GOLD_PLATE_CHESTPLATE = registerItem("gold_plate_chestplate",
-            new GoldPlateArmorItem(ModArmorMaterials.GOLD_PLATE, EquipmentSlot.CHEST, new FabricItemSettings()));
+            new GoldPlateArmorItem(ModArmorMaterials.GOLD_PLATE, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
     public static final Item GOLD_PLATE_LEGGINGS = registerItem("gold_plate_leggings",
-            new GoldPlateArmorItem(ModArmorMaterials.GOLD_PLATE, EquipmentSlot.LEGS, new FabricItemSettings()));
+            new GoldPlateArmorItem(ModArmorMaterials.GOLD_PLATE, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
     public static final Item GOLD_PLATE_BOOTS = registerItem("gold_plate_boots",
-            new GoldPlateArmorItem(ModArmorMaterials.GOLD_PLATE, EquipmentSlot.FEET, new FabricItemSettings()));
+            new GoldPlateArmorItem(ModArmorMaterials.GOLD_PLATE, ArmorItem.Type.BOOTS, new FabricItemSettings()));
     public static final Item DIAMOND_PLATE_HELMET = registerItem("diamond_plate_helmet",
             new DiamondPlateArmorItem(ModArmorMaterials.DIAMOND_PLATE, EquipmentSlot.HEAD, new FabricItemSettings()));
     public static final Item DIAMOND_PLATE_CHESTPLATE = registerItem("diamond_plate_chestplate",
@@ -147,7 +147,12 @@ public class ModItems {
         entries.add(NETHERITE_PLATE_SHIELD);
         entries.add(FROST_SWORD);
         entries.add(BLOOD_STAINED_FROST_SWORD);
+        entries.add(GOLD_PLATE_HELMET);
+        entries.add(GOLD_PLATE_CHESTPLATE);
+        entries.add(GOLD_PLATE_LEGGINGS);
+        entries.add(GOLD_PLATE_BOOTS);
     }
+
 
     public static void registerModItems() {
         AntiqueBeasts.LOGGER.debug("Registering Mod Items for " + AntiqueBeasts.MOD_ID);

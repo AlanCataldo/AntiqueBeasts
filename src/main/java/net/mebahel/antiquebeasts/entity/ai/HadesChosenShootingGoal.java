@@ -14,28 +14,22 @@ import java.util.Objects;
 
 public class HadesChosenShootingGoal extends Goal {
     private final HadesChosenEntity hoplite;
-
     public HadesChosenShootingGoal(HadesChosenEntity hoplite) {
         this.hoplite = hoplite;
     }
-
     public boolean canStart() {
         return this.hoplite.getTarget() != null;
     }
-
     public void start() {
         this.hoplite.setCooldown(80);
     }
-
     public void stop() {
         this.hoplite.setCooldown(80);
         this.hoplite.setShooting(false);
     }
-
     public boolean shouldRunEveryTick() {
         return true;
     }
-
     public void tick() {
         LivingEntity livingEntity = this.hoplite.getTarget();
         if (this.hoplite.isShooting()) {

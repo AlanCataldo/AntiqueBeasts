@@ -18,7 +18,7 @@ public class HadesChosenSpearModel extends GeoModel<HadesChosenSpearEntity> {
 
     @Override
     public Identifier getAnimationResource(HadesChosenSpearEntity animatable) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "animations/champion_hoplite.animation.json");
+        return new Identifier(AntiqueBeasts.MOD_ID, "animations/hoplite_spear.animation.json");
     }
 
 }

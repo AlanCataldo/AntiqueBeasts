@@ -37,7 +37,7 @@ public class HadesChosenSpearEntity extends ThrownItemEntity implements GeoEntit
     }
 
     private PlayState predicate(AnimationState animationState) {
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+        animationState.getController().setAnimation(RawAnimation.begin().then("throw", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
     @Override

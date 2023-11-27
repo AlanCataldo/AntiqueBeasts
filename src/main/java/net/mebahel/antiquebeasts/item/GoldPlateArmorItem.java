@@ -13,8 +13,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class GoldPlateArmorItem extends ArmorItem implements GeoItem {
-    public GoldPlateArmorItem(ArmorMaterial materialIn, EquipmentSlot slot, Settings builder) {
-        super(materialIn, Type.CHESTPLATE, builder);
+    public GoldPlateArmorItem(ArmorMaterial materialIn, ArmorItem.Type type, Settings builder) {
+        super(materialIn, type, builder);
     }
     private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
     @Override
