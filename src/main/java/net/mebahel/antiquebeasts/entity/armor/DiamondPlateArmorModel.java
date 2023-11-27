@@ -18,6 +18,6 @@ public class DiamondPlateArmorModel extends GeoModel<DiamondPlateArmorItem> {
 
     @Override
     public Identifier getAnimationResource(DiamondPlateArmorItem animatable) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "animations/armor.animation.json");
+        return new Identifier(AntiqueBeasts.MOD_ID, "animations/gold_plate_armor.animation.json");
     }
 }

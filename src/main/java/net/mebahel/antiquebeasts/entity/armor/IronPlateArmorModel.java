@@ -18,6 +18,6 @@ public class IronPlateArmorModel extends GeoModel<IronPlateArmorItem> {
 
     @Override
     public Identifier getAnimationResource(IronPlateArmorItem animatable) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "animations/armor.animation.json");
+        return new Identifier(AntiqueBeasts.MOD_ID, "animations/gold_plate_armor.animation.json");
     }
 }
