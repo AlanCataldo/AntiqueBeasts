@@ -133,7 +133,18 @@ public class ModItems {
         entries.add(HADES_CHOSEN_SPAWN_EGG);
         entries.add(HADES_SHADE_SPAWN_EGG);
     }
-
+    public static void addItemToIngredientItemGroup(FabricItemGroupEntries entries) {
+        entries.add(DIAMOND_PLATE);
+        entries.add(GOLD_PLATE);
+        entries.add(IRON_PLATE);
+        entries.add(FROST_SHARD);
+    }
+    public static void addItemToFoodItemGroup(FabricItemGroupEntries entries) {
+        entries.add(COOKED_CYCLOPS_MEAT);
+        entries.add(RAW_CYCLOPS_MEAT);
+        entries.add(CONCENTRATED_CYCLOPS_BLOOD);
+        entries.add(CYCLOPS_BLOOD);
+    }
     public static void addItemToCombatItemGroup(FabricItemGroupEntries entries) {
         entries.add(IRON_HOPLITE_SPEAR);
         entries.add(GOLD_HOPLITE_SPEAR);
@@ -165,6 +176,8 @@ public class ModItems {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(ModItems::addItemToSpawnEggItemGroup);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(ModItems::addItemToCombatItemGroup);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(ModItems::addItemToIngredientItemGroup);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(ModItems::addItemToFoodItemGroup);
     }
 }
 
