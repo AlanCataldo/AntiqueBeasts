@@ -1,7 +1,5 @@
 package net.mebahel.antiquebeasts.entity.client.projectiles;
 
-import net.mebahel.antiquebeasts.AntiqueBeasts;
-import net.mebahel.antiquebeasts.entity.projectiles.ThrowingHopliteSpearEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.ThrowingRockEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -17,10 +15,6 @@ import software.bernie.geckolib.util.RenderUtils;
 public class ThrowingRockRenderer extends GeoEntityRenderer<ThrowingRockEntity> {
     public ThrowingRockRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new ThrowingRockModel());
-    }
-    @Override
-    public Identifier getTextureLocation(ThrowingRockEntity animatable) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/cyclops_texture.png");
     }
     @Override
     public RenderLayer getRenderType(ThrowingRockEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {

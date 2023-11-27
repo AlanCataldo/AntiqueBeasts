@@ -73,14 +73,14 @@ public class CyclopsShootingGoal extends Goal {
                     float distance;
                     float speed;
                     if (this.cyclops.distanceTo(livingEntity) > 25) {
-                        distance = 2.5f;
-                        speed = 0.85f;
+                        distance = 2f;
+                        speed = 1.25f;
                     } else if (this.cyclops.distanceTo(livingEntity) >= 12 && this.cyclops.distanceTo(livingEntity) <= 17) {
-                        distance = 0.65f;
-                        speed = 0.90f;
+                        distance = 0.85f;
+                        speed = 1f;
                     } else {
-                        distance = 0.40f;
-                        speed = 0.80f;
+                        distance = 0.60f;
+                        speed = 0.85f;
                     }
                     throwingRockEntity.setVelocity(e, f + h * distance, g, speed, 1.5F);
                     throwingRockEntity.setPosition(xProjectile, this.cyclops.getBodyY(1.1), zProjectile);

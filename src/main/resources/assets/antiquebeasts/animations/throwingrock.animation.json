@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"throwingrock.animation.idle": {
+		"idle": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
@@ -11,16 +11,16 @@
 							"vector": [0, 0, 0]
 						},
 						"0.5": {
-							"vector": [0, -90, -90]
+							"vector": [0, 0, -90]
 						},
 						"1.0": {
-							"vector": [0, -180, -180]
+							"vector": [0, 0, -180]
 						},
 						"1.5": {
-							"vector": [0, -270, -270]
+							"vector": [0, 0, -270]
 						},
 						"2.0": {
-							"vector": [0, -360, -360]
+							"vector": [0, 0, -360]
 						}
 					}
 				}

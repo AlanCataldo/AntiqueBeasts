@@ -35,7 +35,7 @@ public class HadesChosenModel extends GeoModel<HadesChosenEntity> {
         }
         if (head != null) {
             head.setRotY(7.0F * yawAngle);
-            head.setRotX(7.0F * pitchAngle);
+            head.setRotZ(7.0F * pitchAngle);
         }
     }
 }

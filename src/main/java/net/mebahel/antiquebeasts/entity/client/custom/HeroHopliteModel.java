@@ -34,7 +34,7 @@ public class HeroHopliteModel extends GeoModel<HeroHopliteEntity> {
         }
         if (head != null) {
             head.setRotY(7.0F * yawAngle);
-            head.setRotX(7.0F * pitchAngle);
+            head.setRotZ(7.0F * pitchAngle);
         }
     }
 }
