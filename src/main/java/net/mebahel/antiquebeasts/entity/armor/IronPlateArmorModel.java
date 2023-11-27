@@ -8,16 +8,16 @@ import software.bernie.geckolib.model.GeoModel;
 public class IronPlateArmorModel extends GeoModel<IronPlateArmorItem> {
     @Override
     public Identifier getModelResource(IronPlateArmorItem object) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "geo/iron_plate_armor.geo.json");
+        return new Identifier(AntiqueBeasts.MOD_ID, "geo/item/iron_plate_armor.geo.json");
     }
 
     @Override
     public Identifier getTextureResource(IronPlateArmorItem object) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "textures/armor/iron_plate_armor.png");
+        return new Identifier(AntiqueBeasts.MOD_ID, "textures/item/iron_plate_armor.png");
     }
 
     @Override
     public Identifier getAnimationResource(IronPlateArmorItem animatable) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "animations/gold_plate_armor.animation.json");
+        return new Identifier(AntiqueBeasts.MOD_ID, "animations/item/gold_plate_armor.animation.json");
     }
 }

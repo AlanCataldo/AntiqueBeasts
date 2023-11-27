@@ -7,11 +7,9 @@ import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.item.*;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -83,30 +81,30 @@ public class ModItems {
             new Item(new FabricItemSettings()));
     public static final Item DIAMOND_PLATE = registerItem("diamond_plate",
             new Item(new FabricItemSettings()));
-    public static final Item IRON_PLATE_HELMET = registerItem("iron_plate_helmet",
-            new IronPlateArmorItem(ModArmorMaterials.IRON_PLATE, EquipmentSlot.HEAD, new FabricItemSettings()));
-    public static final Item IRON_PLATE_CHESTPLATE = registerItem("iron_plate_chestplate",
-            new IronPlateArmorItem(ModArmorMaterials.IRON_PLATE, EquipmentSlot.CHEST, new FabricItemSettings()));
-    public static final Item IRON_PLATE_LEGGINGS = registerItem("iron_plate_leggings",
-            new IronPlateArmorItem(ModArmorMaterials.IRON_PLATE, EquipmentSlot.LEGS, new FabricItemSettings()));
-    public static final Item IRON_PLATE_BOOTS = registerItem("iron_plate_boots",
-            new IronPlateArmorItem(ModArmorMaterials.IRON_PLATE, EquipmentSlot.FEET, new FabricItemSettings()));
-    public static final Item GOLD_PLATE_HELMET = registerItem("gold_plate_helmet",
+    public static final IronPlateArmorItem IRON_PLATE_HELMET = registerItem("iron_plate_helmet",
+            new IronPlateArmorItem(ModArmorMaterials.IRON_PLATE, ArmorItem.Type.HELMET, new FabricItemSettings()));
+    public static final IronPlateArmorItem IRON_PLATE_CHESTPLATE = registerItem("iron_plate_chestplate",
+            new IronPlateArmorItem(ModArmorMaterials.IRON_PLATE, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
+    public static final IronPlateArmorItem IRON_PLATE_LEGGINGS = registerItem("iron_plate_leggings",
+            new IronPlateArmorItem(ModArmorMaterials.IRON_PLATE, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
+    public static final IronPlateArmorItem IRON_PLATE_BOOTS = registerItem("iron_plate_boots",
+            new IronPlateArmorItem(ModArmorMaterials.IRON_PLATE, ArmorItem.Type.BOOTS, new FabricItemSettings()));
+    public static final GoldPlateArmorItem GOLD_PLATE_HELMET = registerItem("gold_plate_helmet",
             new GoldPlateArmorItem(ModArmorMaterials.GOLD_PLATE, ArmorItem.Type.HELMET, new FabricItemSettings()));
-    public static final Item GOLD_PLATE_CHESTPLATE = registerItem("gold_plate_chestplate",
+    public static final GoldPlateArmorItem GOLD_PLATE_CHESTPLATE = registerItem("gold_plate_chestplate",
             new GoldPlateArmorItem(ModArmorMaterials.GOLD_PLATE, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
-    public static final Item GOLD_PLATE_LEGGINGS = registerItem("gold_plate_leggings",
+    public static final GoldPlateArmorItem GOLD_PLATE_LEGGINGS = registerItem("gold_plate_leggings",
             new GoldPlateArmorItem(ModArmorMaterials.GOLD_PLATE, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
-    public static final Item GOLD_PLATE_BOOTS = registerItem("gold_plate_boots",
+    public static final GoldPlateArmorItem GOLD_PLATE_BOOTS = registerItem("gold_plate_boots",
             new GoldPlateArmorItem(ModArmorMaterials.GOLD_PLATE, ArmorItem.Type.BOOTS, new FabricItemSettings()));
-    public static final Item DIAMOND_PLATE_HELMET = registerItem("diamond_plate_helmet",
-            new DiamondPlateArmorItem(ModArmorMaterials.DIAMOND_PLATE, EquipmentSlot.HEAD, new FabricItemSettings()));
-    public static final Item DIAMOND_PLATE_CHESTPLATE = registerItem("diamond_plate_chestplate",
-            new DiamondPlateArmorItem(ModArmorMaterials.DIAMOND_PLATE, EquipmentSlot.CHEST, new FabricItemSettings()));
-    public static final Item DIAMOND_PLATE_LEGGINGS = registerItem("diamond_plate_leggings",
-            new DiamondPlateArmorItem(ModArmorMaterials.DIAMOND_PLATE, EquipmentSlot.LEGS, new FabricItemSettings()));
-    public static final Item DIAMOND_PLATE_BOOTS = registerItem("diamond_plate_boots",
-            new DiamondPlateArmorItem(ModArmorMaterials.DIAMOND_PLATE, EquipmentSlot.FEET, new FabricItemSettings()));
+    public static final DiamondPlateArmorItem DIAMOND_PLATE_HELMET = registerItem("diamond_plate_helmet",
+            new DiamondPlateArmorItem(ModArmorMaterials.DIAMOND_PLATE, ArmorItem.Type.HELMET, new FabricItemSettings()));
+    public static final DiamondPlateArmorItem DIAMOND_PLATE_CHESTPLATE = registerItem("diamond_plate_chestplate",
+            new DiamondPlateArmorItem(ModArmorMaterials.DIAMOND_PLATE, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
+    public static final DiamondPlateArmorItem DIAMOND_PLATE_LEGGINGS = registerItem("diamond_plate_leggings",
+            new DiamondPlateArmorItem(ModArmorMaterials.DIAMOND_PLATE, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
+    public static final DiamondPlateArmorItem DIAMOND_PLATE_BOOTS = registerItem("diamond_plate_boots",
+            new DiamondPlateArmorItem(ModArmorMaterials.DIAMOND_PLATE, ArmorItem.Type.BOOTS, new FabricItemSettings()));
     public static final Item RAW_CYCLOPS_MEAT = registerItem("raw_cyclops_meat",
             new RawCyclopsMeat());
     public static final Item COOKED_CYCLOPS_MEAT = registerItem("cooked_cyclops_meat",
@@ -123,7 +121,7 @@ public class ModItems {
             tooltip.add(Text.translatable("item.antiquebeasts.netherite_hoplite_spear.tooltip").formatted(Formatting.GRAY, Formatting.ITALIC));
         }
     });
-    private static Item registerItem(String name, Item item) {
+    public static <I extends Item> I registerItem(String name, I item) {
         return Registry.register(Registries.ITEM, new Identifier(AntiqueBeasts.MOD_ID, name), item);
     }
     public static void addItemToSpawnEggItemGroup(FabricItemGroupEntries entries) {
@@ -151,6 +149,14 @@ public class ModItems {
         entries.add(GOLD_PLATE_CHESTPLATE);
         entries.add(GOLD_PLATE_LEGGINGS);
         entries.add(GOLD_PLATE_BOOTS);
+        entries.add(IRON_PLATE_HELMET);
+        entries.add(IRON_PLATE_CHESTPLATE);
+        entries.add(IRON_PLATE_LEGGINGS);
+        entries.add(IRON_PLATE_BOOTS);
+        entries.add(DIAMOND_PLATE_HELMET);
+        entries.add(DIAMOND_PLATE_CHESTPLATE);
+        entries.add(DIAMOND_PLATE_LEGGINGS);
+        entries.add(DIAMOND_PLATE_BOOTS);
     }
 
 

@@ -44,7 +44,6 @@ public class ThrowingHopliteSpearEntity extends PersistentProjectileEntity imple
 
     private PlayState predicate(AnimationState animationState) {
         if (this.inGroundTime > 0) {
-            System.out.println("STOPIR");
             animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
         } else {
             animationState.getController().setAnimation(RawAnimation.begin().then("throw", Animation.LoopType.LOOP));

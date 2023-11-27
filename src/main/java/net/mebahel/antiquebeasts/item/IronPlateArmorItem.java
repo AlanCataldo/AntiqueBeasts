@@ -1,10 +1,14 @@
 package net.mebahel.antiquebeasts.item;
 
+import net.mebahel.antiquebeasts.entity.armor.IronPlateArmorRenderer;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.animatable.client.RenderProvider;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
@@ -14,28 +18,38 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class IronPlateArmorItem extends ArmorItem implements GeoItem {
-    public IronPlateArmorItem(ArmorMaterial materialIn, EquipmentSlot slot, Item.Settings builder) {
-        super(materialIn, Type.CHESTPLATE, builder);
+    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
+    public IronPlateArmorItem(ArmorMaterial materialIn, ArmorItem.Type type, Settings builder) {
+        super(materialIn, type, builder);
     }
-    private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
     @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {return this.cache;}
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController(this, "controller", 20, this::predicate));
     }
     private PlayState predicate(AnimationState animationState) {
         animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller",0, this::predicate));
-    }
-    @Override
     public void createRenderer(Consumer<Object> consumer) {
+        consumer.accept(new RenderProvider() {
+            private IronPlateArmorRenderer renderer;
 
+            @Override
+            public BipedEntityModel<LivingEntity> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack,
+                                                                        EquipmentSlot equipmentSlot, BipedEntityModel<LivingEntity> original) {
+                if (this.renderer == null)
+                    this.renderer = new IronPlateArmorRenderer();
+                this.renderer.prepForRender(livingEntity, itemStack, equipmentSlot, original);
+                return this.renderer;
+            }
+        });
     }
     @Override
     public Supplier<Object> getRenderProvider() {
-        return null;
+        return this.renderProvider;
     }
 }

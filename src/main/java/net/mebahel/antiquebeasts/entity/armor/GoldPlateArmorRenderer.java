@@ -9,6 +9,6 @@ import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
 public class GoldPlateArmorRenderer extends GeoArmorRenderer<GoldPlateArmorItem> {
     public GoldPlateArmorRenderer() {
-        super(new DefaultedItemGeoModel<>(new Identifier(AntiqueBeasts.MOD_ID, "gold_plate_armor")));
+        super(new GoldPlateArmorModel());
     }
 }
