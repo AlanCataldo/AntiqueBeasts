@@ -35,6 +35,8 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.ClientUtils;
+
 import static java.lang.Math.random;
 
 public class CyclopsEntity extends AnimalEntity implements GeoEntity {
@@ -158,9 +160,13 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
     }
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller",0, this::predicate));
-        controllers.add(new AnimationController(this, "attacking",0, this::attackPredicate));
-        controllers.add(new AnimationController(this, "shooting",0, this::shootingPredicate));
+        controllers.add(new AnimationController(this, "controller", 0, this::predicate));
+        controllers.add(new AnimationController(this, "attacking", 0, this::attackPredicate));
+        controllers.add(new AnimationController(this, "shooting", 0, this::shootingPredicate).setSoundKeyframeHandler(state -> {
+            PlayerEntity player = ClientUtils.getClientPlayer();
+            if (player != null)
+                player.playSound(ModSounds.CYCLOPS_HURT2, 1, 1);
+        }));
     }
 
     @Override
