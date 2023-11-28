@@ -10,10 +10,7 @@
     "WitherDamageMixin"
   ],
   "client": [
-    "BrewingRecipeRegistryMixin",
-    "ItemRendererAccessor",
-    "ItemRendererMixin",
-    "ModelLoaderMixin"
+    "BrewingRecipeRegistryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

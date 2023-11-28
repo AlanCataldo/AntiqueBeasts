@@ -20,7 +20,7 @@ public class ThrowingHopliteSpearEntityRenderer extends GeoProjectilesRenderer<T
     public RenderLayer getRenderType(ThrowingHopliteSpearEntity animatable, float partialTick, MatrixStack poseStack,
                                      @Nullable VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer,
                                      int packedLight, Identifier texture) {
-        poseStack.scale(1.35f, 1.35f, 1.35f);
+        poseStack.scale(0.6f, 0.6f, 0.6f);
         return super.getRenderType(animatable, partialTick, poseStack, bufferSource, buffer, packedLight, texture);
     }
 }
