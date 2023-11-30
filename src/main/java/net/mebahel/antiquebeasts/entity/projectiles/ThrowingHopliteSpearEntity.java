@@ -44,11 +44,11 @@ public class ThrowingHopliteSpearEntity extends PersistentProjectileEntity imple
 
     private PlayState predicate(AnimationState animationState) {
         if (this.inGroundTime > 0) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+            return PlayState.STOP;
         } else {
             animationState.getController().setAnimation(RawAnimation.begin().then("throw", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
         }
-        return PlayState.CONTINUE;
     }
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
