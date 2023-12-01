@@ -299,12 +299,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "antiquebeasts:weapon/iron_hoplite_spear_2d",
+          "name": "antiquebeasts:weapon/iron_hoplite_spear",
           "weight": 10
         },
         {
           "type": "minecraft:item",
-          "name": "antiquebeasts:weapon/gold_hoplite_spear_2d",
+          "name": "antiquebeasts:weapon/gold_hoplite_spear",
           "weight": 7
         },
         {

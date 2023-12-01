@@ -21,6 +21,7 @@ public class HopliteMeleeAttackGoal extends Goal {
     public HopliteMeleeAttackGoal(HopliteEntity mob, double speed, boolean pauseWhenMobIdle) {
         this.mob = mob;
         this.speed = speed;
+        this.cooldown = MAX_COOLDOWN + 8;
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
     }
     public boolean canStart() {
@@ -50,7 +51,6 @@ public class HopliteMeleeAttackGoal extends Goal {
     }
     public void start() {
         this.mob.setAttacking(true);
-        this.cooldown = MAX_COOLDOWN + 4;
     }
     public void stop() {
         this.mob.setAttacking(false);
@@ -100,6 +100,6 @@ public class HopliteMeleeAttackGoal extends Goal {
         }
     }
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return 10f + entity.getWidth();
+        return 8f + entity.getWidth();
     }
 }

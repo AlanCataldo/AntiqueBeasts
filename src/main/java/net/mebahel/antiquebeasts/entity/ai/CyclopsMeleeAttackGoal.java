@@ -23,6 +23,7 @@ public class CyclopsMeleeAttackGoal extends Goal {
         this.mob = mob;
         this.speed = speed;
         this.weapon= weapon;
+        this.cooldown = MAX_COOLDOWN + 8;
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
     }
 
@@ -55,7 +56,6 @@ public class CyclopsMeleeAttackGoal extends Goal {
 
     public void start() {
         this.mob.setAttacking(true);
-        this.cooldown = MAX_COOLDOWN + 4;
     }
 
     public void stop() {
@@ -111,6 +111,6 @@ public class CyclopsMeleeAttackGoal extends Goal {
     }
 
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return 18f + entity.getWidth();
+        return 12f + entity.getWidth();
     }
 }

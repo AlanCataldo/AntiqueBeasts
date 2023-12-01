@@ -16,6 +16,7 @@ public class HadesShadeMeleeAttackGoal extends Goal {
 
     public HadesShadeMeleeAttackGoal(HadesShadeEntity mob) {
         this.mob = mob;
+        this.cooldown = MAX_COOLDOWN + 8;
         this.setControls(EnumSet.of(Control.MOVE));
     }
     public boolean canStart() {
@@ -31,7 +32,6 @@ public class HadesShadeMeleeAttackGoal extends Goal {
         Vec3d vec3d = livingEntity.getEyePos();
         this.mob.getMoveControl().moveTo(vec3d.x, vec3d.y, vec3d.z, 1.0);
         this.mob.setAttacking(true);
-        this.cooldown = MAX_COOLDOWN + 4;
     }
     public void stop() {
         this.mob.setAttacking(false);
