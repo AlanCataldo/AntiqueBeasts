@@ -24,6 +24,7 @@ public class HadesChosenMeleeAttackGoal extends Goal {
     public HadesChosenMeleeAttackGoal(HadesChosenEntity mob, double speed) {
         this.mob = mob;
         this.speed = speed;
+        this.cooldown = MAX_COOLDOWN + 8;
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
     }
     public boolean canStart() {
@@ -53,7 +54,6 @@ public class HadesChosenMeleeAttackGoal extends Goal {
     }
     public void start() {
         this.mob.setAttacking(true);
-        this.cooldown = MAX_COOLDOWN + 4;
     }
     public void stop() {
         this.mob.setAttacking(false);
@@ -104,6 +104,6 @@ public class HadesChosenMeleeAttackGoal extends Goal {
         }
     }
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return 10f + entity.getWidth();
+        return 8f + entity.getWidth();
     }
 }

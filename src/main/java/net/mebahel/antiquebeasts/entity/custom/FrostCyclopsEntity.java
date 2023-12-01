@@ -3,6 +3,7 @@ package net.mebahel.antiquebeasts.entity.custom;
 import net.mebahel.antiquebeasts.entity.ai.CyclopsMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.CyclopsShootingGoal;
 import net.mebahel.antiquebeasts.entity.ai.CyclopsSocializeGoal;
+import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.*;
@@ -21,6 +22,7 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.ClientUtils;
 
 public class FrostCyclopsEntity extends CyclopsEntity implements GeoEntity {
     public String animationProcedure = "empty";
@@ -94,8 +96,16 @@ public class FrostCyclopsEntity extends CyclopsEntity implements GeoEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController(this, "controller",0, this::predicate));
-        controllers.add(new AnimationController(this, "attacking",0, this::attackPredicate));
-        controllers.add(new AnimationController(this, "shooting",0, this::shootingPredicate));
+        controllers.add(new AnimationController(this, "attacking", 0, this::attackPredicate).setSoundKeyframeHandler(state -> {
+            PlayerEntity player = ClientUtils.getClientPlayer();
+            if (player != null)
+                player.playSound(ModSounds.CYCLOPS_HIT1, 1, 1);
+        }));
+        controllers.add(new AnimationController(this, "shooting", 0, this::shootingPredicate).setSoundKeyframeHandler(state -> {
+            PlayerEntity player = ClientUtils.getClientPlayer();
+            if (player != null)
+                player.playSound(ModSounds.CYCLOPS_HURT2, 1, 1);
+        }));
     }
     protected EntityNavigation createNavigation(World world) {
         return new MobNavigation(this, world) {

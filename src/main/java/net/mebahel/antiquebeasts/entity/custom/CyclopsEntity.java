@@ -161,7 +161,11 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController(this, "controller", 0, this::predicate));
-        controllers.add(new AnimationController(this, "attacking", 0, this::attackPredicate));
+        controllers.add(new AnimationController(this, "attacking", 0, this::attackPredicate).setSoundKeyframeHandler(state -> {
+            PlayerEntity player = ClientUtils.getClientPlayer();
+            if (player != null)
+                player.playSound(ModSounds.CYCLOPS_HIT1, 1, 1);
+        }));
         controllers.add(new AnimationController(this, "shooting", 0, this::shootingPredicate).setSoundKeyframeHandler(state -> {
             PlayerEntity player = ClientUtils.getClientPlayer();
             if (player != null)
@@ -238,7 +242,7 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
 
     @Override
     public int getMinAmbientSoundDelay() {
-        return 240;
+        return 180;
     }
     @Override
     protected SoundEvent getAmbientSound() {
