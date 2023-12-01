@@ -98,7 +98,7 @@ public class HeroHopliteEntity extends HopliteEntity implements GeoEntity {
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 35.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0f)
                 .add(EntityAttributes.GENERIC_ARMOR, 8f)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5f)
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2f)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5f);
     }
     @Override

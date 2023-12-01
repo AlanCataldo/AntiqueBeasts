@@ -62,13 +62,13 @@ public class HadesChosenShootingGoal extends Goal {
                     float distance;
                     float speed;
                     if (this.hoplite.distanceTo(livingEntity) > 25) {
-                        distance = 2.5f;
+                        distance = 1f;
                         speed = 0.85f;
                     } else if (this.hoplite.distanceTo(livingEntity) >= 12 && this.hoplite.distanceTo(livingEntity) <= 17) {
-                        distance = 0.65f;
+                        distance = 0.75f;
                         speed = 0.90f;
                     } else {
-                        distance = 0.40f;
+                        distance = 0.55f;
                         speed = 0.80f;
                     }
                     hopliteSpearEntity.setVelocity(e, f + h * distance, g, speed, 1.5F);

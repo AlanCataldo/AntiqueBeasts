@@ -13,6 +13,7 @@ import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -59,22 +60,27 @@ public class HopliteSpearEntity extends ThrownItemEntity implements GeoEntity {
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
+        this.playSound(SoundEvents.ITEM_TRIDENT_HIT, 0.7f, 0.9f);
         LivingEntity target = (LivingEntity) entityHitResult.getEntity();
         target.damage(this.getDamageSources().thrown(this, this.getOwner()), (float)10);
         target.damage(this.getDamageSources().lightningBolt(), 2.0F);
-        Vec3d lightningSpawnPos = target.getPos();
-        LightningEntity lightningEntity = new LightningEntity(EntityType.LIGHTNING_BOLT, this.getWorld());
-        lightningEntity.setPos(lightningSpawnPos.x, lightningSpawnPos.y, lightningSpawnPos.z);
-        this.getWorld().spawnEntity(lightningEntity);
+        if (target.getWorld().isSkyVisible(target.getBlockPos())) {
+            Vec3d lightningSpawnPos = target.getPos();
+            LightningEntity lightningEntity = new LightningEntity(EntityType.LIGHTNING_BOLT, this.getWorld());
+            lightningEntity.setPos(lightningSpawnPos.x, lightningSpawnPos.y, lightningSpawnPos.z);
+            this.getWorld().spawnEntity(lightningEntity);
+        }
     }
     @Override
     protected void onBlockHit(BlockHitResult blockHitResult) {
-        this.playSound(ModSounds.SPEAR_HIT, 0.5f, 1.1f);
+        this.playSound(SoundEvents.ITEM_TRIDENT_HIT, 0.7f, 0.9f);
         BlockState blockState = this.getWorld().getBlockState(blockHitResult.getBlockPos());
         blockState.onProjectileHit(this.getWorld(), blockState, blockHitResult, this);
-        Vec3d lightningSpawnPos = blockHitResult.getPos();
-        LightningEntity lightningEntity = new LightningEntity(EntityType.LIGHTNING_BOLT, this.getWorld());
-        lightningEntity.setPos(lightningSpawnPos.x, lightningSpawnPos.y, lightningSpawnPos.z);
-        this.getWorld().spawnEntity(lightningEntity);
+        if (this.getWorld().isSkyVisible(blockHitResult.getBlockPos())) {
+            Vec3d lightningSpawnPos = blockHitResult.getPos();
+            LightningEntity lightningEntity = new LightningEntity(EntityType.LIGHTNING_BOLT, this.getWorld());
+            lightningEntity.setPos(lightningSpawnPos.x, lightningSpawnPos.y, lightningSpawnPos.z);
+            this.getWorld().spawnEntity(lightningEntity);
+        }
     }
 }

@@ -14,6 +14,7 @@ import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -68,14 +69,14 @@ public class HadesChosenSpearEntity extends ThrownItemEntity implements GeoEntit
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
+        this.playSound(SoundEvents.ITEM_TRIDENT_HIT, 0.7f, 0.9f);
         LivingEntity target = (LivingEntity) entityHitResult.getEntity();
-
         target.damage(this.getDamageSources().thrown(this, this.getOwner()), 10);
         target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 6 * 20, 0));
     }
     @Override
     protected void onBlockHit(BlockHitResult blockHitResult) {
-        this.playSound(ModSounds.SPEAR_HIT, 0.5f, 1.1f);
+        this.playSound(SoundEvents.ITEM_TRIDENT_HIT, 0.7f, 0.9f);
         BlockState blockState = this.getWorld().getBlockState(blockHitResult.getBlockPos());
         blockState.onProjectileHit(this.getWorld(), blockState, blockHitResult, this);
     }

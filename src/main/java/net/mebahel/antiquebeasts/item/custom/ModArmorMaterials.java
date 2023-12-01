@@ -16,7 +16,7 @@ import java.util.EnumMap;
 import java.util.function.Supplier;
 
 public enum ModArmorMaterials implements StringIdentifiable, ArmorMaterial {
-    IRON_PLATE("iron_plate_armor", 16, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
+    IRON_PLATE("iron", 16, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
         map.put(ArmorItem.Type.BOOTS, 3);
         map.put(ArmorItem.Type.LEGGINGS, 4);
         map.put(ArmorItem.Type.CHESTPLATE, 6);
@@ -24,7 +24,7 @@ public enum ModArmorMaterials implements StringIdentifiable, ArmorMaterial {
     }), 15, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F, 0.0F, () -> {
         return Ingredient.ofItems(new ItemConvertible[]{ModItems.IRON_PLATE});
     }),
-    GOLD_PLATE("gold_plate_armor", 18, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
+    GOLD_PLATE("gold", 18, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
         map.put(ArmorItem.Type.BOOTS, 3);
         map.put(ArmorItem.Type.LEGGINGS, 4);
         map.put(ArmorItem.Type.CHESTPLATE, 6);
@@ -32,7 +32,7 @@ public enum ModArmorMaterials implements StringIdentifiable, ArmorMaterial {
     }), 12, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0.0F, 0.0F, () -> {
         return Ingredient.ofItems(new ItemConvertible[]{ModItems.GOLD_PLATE});
     }),
-    DIAMOND_PLATE("diamond_plate_armor", 35, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
+    DIAMOND_PLATE("diamond", 35, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
         map.put(ArmorItem.Type.BOOTS, 4);
         map.put(ArmorItem.Type.LEGGINGS, 5);
         map.put(ArmorItem.Type.CHESTPLATE, 8);
@@ -41,7 +41,7 @@ public enum ModArmorMaterials implements StringIdentifiable, ArmorMaterial {
         return Ingredient.ofItems(new ItemConvertible[]{ModItems.DIAMOND_PLATE});
     }),
 
-    NETHERITE_PLATE("netherite_plate_armor", 39, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
+    NETHERITE_PLATE("netherite", 39, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
         map.put(ArmorItem.Type.BOOTS, 4);
         map.put(ArmorItem.Type.LEGGINGS, 5);
         map.put(ArmorItem.Type.CHESTPLATE, 8);

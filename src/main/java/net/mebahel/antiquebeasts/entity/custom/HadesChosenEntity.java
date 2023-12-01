@@ -84,7 +84,7 @@ public class HadesChosenEntity extends HostileEntity implements GeoEntity {
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5.5f)
                 .add(EntityAttributes.GENERIC_ARMOR, 8f)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.6f)
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.3f)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5f);
     }
     @Override
