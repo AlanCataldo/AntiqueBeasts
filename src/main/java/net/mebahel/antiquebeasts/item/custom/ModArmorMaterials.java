@@ -1,6 +1,7 @@
 package net.mebahel.antiquebeasts.item.custom;
 
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
@@ -11,14 +12,18 @@ import net.minecraft.util.Lazy;
 import java.util.function.Supplier;
 
 public enum ModArmorMaterials implements ArmorMaterial {
-    IRON_PLATE("iron_plate", 17, new int[]{2, 6, 6, 2}, 12, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F, 0.0F, () -> {
-        return Ingredient.ofItems(Items.IRON_INGOT);
+    IRON_PLATE("iron_plate", 15, new int[]{3, 4, 6, 2}, 12, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F, 0.0F, () -> {
+        return Ingredient.ofItems(ModItems.IRON_PLATE);
     }),
-    GOLD_PLATE("gold_plate", 20, new int[]{2, 6, 6, 2}, 25, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0.0F, 0.0F, () -> {
-        return Ingredient.ofItems(Items.GOLD_INGOT);
+    GOLD_PLATE("gold_plate", 18, new int[]{3, 4, 6, 3}, 25, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0.0F, 0.0F, () -> {
+        return Ingredient.ofItems(ModItems.GOLD_PLATE);
     }),
-    DIAMOND_PLATE("diamond_plate", 35, new int[]{3, 7, 8, 3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2F, 0.1F, () -> {
-        return Ingredient.ofItems(Items.DIAMOND);
+    DIAMOND_PLATE("diamond_plate", 35, new int[]{4, 5, 8, 4}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2F, 0.1F, () -> {
+        return Ingredient.ofItems(ModItems.DIAMOND_PLATE);
+    }),
+
+    NETHERITE_PLATE("diamond_plate", 39, new int[]{4, 5, 8, 4}, 20, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 3F, 0.2F, () -> {
+        return Ingredient.ofItems(Items.NETHERITE_INGOT);
     });
 
     private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};

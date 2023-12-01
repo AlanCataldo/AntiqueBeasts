@@ -7,6 +7,7 @@ import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.armor.DiamondPlateArmorRenderer;
 import net.mebahel.antiquebeasts.entity.armor.GoldPlateArmorRenderer;
 import net.mebahel.antiquebeasts.entity.armor.IronPlateArmorRenderer;
+import net.mebahel.antiquebeasts.entity.armor.NetheritePlateArmorRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.*;
 import net.mebahel.antiquebeasts.entity.client.projectiles.*;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
@@ -49,6 +50,8 @@ public class AntiqueBeastsClient implements ClientModInitializer {
                 ModItems.GOLD_PLATE_LEGGINGS, ModItems.GOLD_PLATE_CHESTPLATE, ModItems.GOLD_PLATE_HELMET);
         GeoArmorRenderer.registerArmorRenderer(new DiamondPlateArmorRenderer(), ModItems.DIAMOND_PLATE_BOOTS,
                 ModItems.DIAMOND_PLATE_LEGGINGS, ModItems.DIAMOND_PLATE_CHESTPLATE, ModItems.DIAMOND_PLATE_HELMET);
+        GeoArmorRenderer.registerArmorRenderer(new NetheritePlateArmorRenderer(), ModItems.NETHERITE_PLATE_BOOTS,
+                ModItems.NETHERITE_PLATE_LEGGINGS, ModItems.NETHERITE_PLATE_CHESTPLATE, ModItems.NETHERITE_PLATE_HELMET);
         ShieldModelPredicate.registerShieldModels();
         SpearModelPredicate.registerSpearModels();
     }

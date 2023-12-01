@@ -124,6 +124,14 @@ public class ModItems {
             new DiamondPlateArmorItem(ModArmorMaterials.DIAMOND_PLATE, EquipmentSlot.LEGS, new FabricItemSettings().group(ItemGroup.COMBAT)));
     public static final Item DIAMOND_PLATE_BOOTS = registerItem("diamond_plate_boots",
             new DiamondPlateArmorItem(ModArmorMaterials.DIAMOND_PLATE, EquipmentSlot.FEET, new FabricItemSettings().group(ItemGroup.COMBAT)));
+    public static final Item NETHERITE_PLATE_HELMET = registerItem("netherite_plate_helmet",
+            new NetheritePlateArmorItem(ModArmorMaterials.NETHERITE_PLATE, EquipmentSlot.HEAD, new FabricItemSettings().group(ItemGroup.COMBAT)));
+    public static final Item NETHERITE_PLATE_CHESTPLATE = registerItem("netherite_plate_chestplate",
+            new NetheritePlateArmorItem(ModArmorMaterials.NETHERITE_PLATE, EquipmentSlot.CHEST, new FabricItemSettings().group(ItemGroup.COMBAT)));
+    public static final Item NETHERITE_PLATE_LEGGINGS = registerItem("netherite_plate_leggings",
+            new NetheritePlateArmorItem(ModArmorMaterials.NETHERITE_PLATE, EquipmentSlot.LEGS, new FabricItemSettings().group(ItemGroup.COMBAT)));
+    public static final Item NETHERITE_PLATE_BOOTS = registerItem("netherite_plate_boots",
+            new NetheritePlateArmorItem(ModArmorMaterials.NETHERITE_PLATE, EquipmentSlot.FEET, new FabricItemSettings().group(ItemGroup.COMBAT)));
     public static final Item RAW_CYCLOPS_MEAT = registerItem("raw_cyclops_meat",
             new RawCyclopsMeat());
     public static final Item COOKED_CYCLOPS_MEAT = registerItem("cooked_cyclops_meat",
