@@ -34,7 +34,7 @@ public class ChampionHopliteModel extends GeoModel<ChampionHopliteEntity> {
         }
         if (head != null) {
             head.setRotY(7.0F * yawAngle);
-            head.setRotZ(7.0F * pitchAngle);
+            head.setRotX(7.0F * pitchAngle);
         }
     }
 }

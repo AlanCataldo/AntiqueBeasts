@@ -35,7 +35,7 @@ public class EliteHopliteModel extends GeoModel<EliteHopliteEntity> {
         }
         if (head != null) {
             head.setRotY(7.0F * yawAngle);
-            head.setRotZ(7.0F * pitchAngle);
+            head.setRotX(7.0F * pitchAngle);
         }
     }
 }
