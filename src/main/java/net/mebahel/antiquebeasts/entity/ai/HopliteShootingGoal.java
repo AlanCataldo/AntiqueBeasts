@@ -69,13 +69,13 @@ public class HopliteShootingGoal extends Goal {
                     float speed;
                     if (this.hoplite.distanceTo(livingEntity) > 25) {
                         distance = 1f;
-                        speed = 2f;
+                        speed = 0.85f;
                     } else if (this.hoplite.distanceTo(livingEntity) >= 12 && this.hoplite.distanceTo(livingEntity) <= 17) {
-                        distance = 0.85f;
-                        speed = 2f;
+                        distance = 0.75f;
+                        speed = 0.90f;
                     } else {
-                        distance = 0.65f;
-                        speed = 2f;
+                        distance = 0.55f;
+                        speed = 0.80f;
                     }
                     hopliteSpearEntity.setVelocity(e, f + h * distance, g, speed, 1.5F);
                     hopliteSpearEntity.setPosition(xProjectile, this.hoplite.getBodyY(1.1), zProjectile);
