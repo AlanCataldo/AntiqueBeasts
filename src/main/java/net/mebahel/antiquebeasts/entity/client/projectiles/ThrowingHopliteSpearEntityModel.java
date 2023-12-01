@@ -32,7 +32,7 @@ public class ThrowingHopliteSpearEntityModel extends AnimatedGeoModel<ThrowingHo
 
     @Override
     public Identifier getAnimationResource(ThrowingHopliteSpearEntity animatable) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "animations/champion_hoplite.animation.json");
+        return new Identifier(AntiqueBeasts.MOD_ID, "animations/hoplite_spear.animation.json");
     }
 
 }

@@ -41,7 +41,7 @@ public class HadesChosenSpearEntity extends ThrownItemEntity implements IAnimata
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", EDefaultLoopTypes.LOOP));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("throw", EDefaultLoopTypes.LOOP));
         return PlayState.CONTINUE;
     }
 
