@@ -66,7 +66,7 @@ public class HadesChosenMeleeAttackGoal extends Goal {
     public void tick() {
         LivingEntity livingEntity = this.mob.getTarget();
         if (livingEntity != null) {
-            this.mob.getLookControl().lookAt(livingEntity, 15.0F, 7.5F);
+            this.mob.getLookControl().lookAt(livingEntity, 15.0F, 15.0F);
             double d = this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
             this.attack(livingEntity, d);
             this.cooldown = Math.max(this.cooldown - 1, 0);

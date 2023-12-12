@@ -101,17 +101,17 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.72f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 35.0D)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.7f)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 36.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0f)
-                .add(EntityAttributes.GENERIC_ARMOR, 8f)
+                .add(EntityAttributes.GENERIC_ARMOR, 9f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5f)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5f);
     }
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new HopliteMeleeAttackGoal(this, 0.42f,false));
+        this.goalSelector.add(2, new HopliteMeleeAttackGoal(this, 0.46f,false));
         this.goalSelector.add(3, new HopliteShootingGoal(this));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
