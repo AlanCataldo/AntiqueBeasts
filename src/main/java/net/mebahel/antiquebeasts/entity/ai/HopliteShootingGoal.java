@@ -1,6 +1,5 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
-import net.mebahel.antiquebeasts.entity.custom.HeroHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.HopliteEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.HopliteSpearEntity;
 import net.minecraft.entity.LivingEntity;
@@ -23,11 +22,11 @@ public class HopliteShootingGoal extends Goal {
     }
 
     public void start() {
-        this.hoplite.setCooldown(80);
+        this.hoplite.setCooldown(81);
     }
 
     public void stop() {
-        this.hoplite.setCooldown(80);
+        this.hoplite.setCooldown(81);
         this.hoplite.setShooting(false);
     }
 
@@ -85,7 +84,7 @@ public class HopliteShootingGoal extends Goal {
                 } else if (this.hoplite.getCooldown() == 0) {
                     this.hoplite.setCooldown(81);
                     this.hoplite.setShooting(false);
-                } else if (this.hoplite.getCooldown() <= 80 && this.hoplite.getCooldown() > 20) {
+                } else if (this.hoplite.getCooldown() <= 81 && this.hoplite.getCooldown() > 20) {
                     this.hoplite.setShooting(false);
                 }
             } else {
