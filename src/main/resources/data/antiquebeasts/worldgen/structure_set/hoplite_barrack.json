@@ -1,17 +1,17 @@
 {
   "structures": [
     {
-      "structure": "antiquebeasts:ext_cyclops_cave",
+      "structure": "antiquebeasts:hoplite_barrack",
       "weight": 1
     }
   ],
   "placement": {
     "type": "minecraft:random_spread",
-    "salt": 31321488,
+    "salt": 86321488,
     "exclusion_zone": [
       {
-        "other_set":"minecraft:villages",
-        "chunk_count": 3
+      "other_set":"minecraft:villages",
+      "chunk_count": 3
       },
       {
         "other_set":"minecraft:woodland_mansions",
@@ -26,7 +26,7 @@
         "chunk_count": 3
       }
     ],
-    "spacing": 24,
-    "separation": 10
+    "spacing": 32,
+    "separation": 16
   }
 }

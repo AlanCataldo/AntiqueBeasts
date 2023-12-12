@@ -47,7 +47,7 @@ public class ChampionHopliteModel extends AnimatedGeoModel<ChampionHopliteEntity
             head_x = head.getRotationY() + (extraData.netHeadYaw * ((float) Math.PI / 340F)) * unpausedMultiplier;
         }
 
-        head_y = head.getRotationZ() + (extraData.headPitch * ((float) Math.PI / 340)) * unpausedMultiplier;
+        head_y = head.getRotationZ() + (extraData.headPitch * ((float) Math.PI / 170F)) * unpausedMultiplier;
 
         if (head_x > 1.3f) {
             head_x = 1.3f;
@@ -56,6 +56,6 @@ public class ChampionHopliteModel extends AnimatedGeoModel<ChampionHopliteEntity
         }
 
         head.setRotationY(head_x);
-        head.setRotationZ(head_y);
+        head.setRotationX(head_y);
     }
 }
