@@ -54,6 +54,7 @@ public class HadesChosenMeleeAttackGoal extends Goal {
     }
     public void start() {
         this.mob.setAttacking(true);
+        this.cooldown = MAX_COOLDOWN + 8;
     }
     public void stop() {
         this.mob.setAttacking(false);
@@ -104,6 +105,6 @@ public class HadesChosenMeleeAttackGoal extends Goal {
         }
     }
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return 10f + entity.getWidth();
+        return 6f + entity.getWidth();
     }
 }
