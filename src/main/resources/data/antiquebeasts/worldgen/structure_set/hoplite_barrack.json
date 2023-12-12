@@ -24,6 +24,10 @@
       {
         "other_set":"minecraft:pillager_outposts",
         "chunk_count": 4
+      },
+      {
+        "other_set":"antiquebeasts:ext_cyclops_cave",
+        "chunk_count": 3
       }
     ],
     "spacing": 42,

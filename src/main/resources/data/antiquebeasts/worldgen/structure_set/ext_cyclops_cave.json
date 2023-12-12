@@ -24,6 +24,10 @@
       {
         "other_set":"minecraft:pillager_outposts",
         "chunk_count": 3
+      },
+      {
+        "other_set":"antiquebeasts:hoplite_barrack",
+        "chunk_count": 3
       }
     ],
     "spacing": 24,
