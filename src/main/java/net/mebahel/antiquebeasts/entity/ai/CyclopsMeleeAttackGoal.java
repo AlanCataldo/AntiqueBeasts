@@ -111,6 +111,6 @@ public class CyclopsMeleeAttackGoal extends Goal {
     }
 
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return 12f + entity.getWidth();
+        return 11f + entity.getWidth();
     }
 }
