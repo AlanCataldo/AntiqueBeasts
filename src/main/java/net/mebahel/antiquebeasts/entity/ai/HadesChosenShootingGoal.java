@@ -21,10 +21,10 @@ public class HadesChosenShootingGoal extends Goal {
         return this.hoplite.getTarget() != null;
     }
     public void start() {
-        this.hoplite.setCooldown(80);
+        this.hoplite.setCooldown(81);
     }
     public void stop() {
-        this.hoplite.setCooldown(80);
+        this.hoplite.setCooldown(81);
         this.hoplite.setShooting(false);
     }
     public boolean shouldRunEveryTick() {

@@ -25,12 +25,12 @@ public class CyclopsShootingGoal extends Goal {
     }
 
     public void start() {
-        this.cyclops.setCooldown(100);
+        this.cyclops.setCooldown(101);
     }
 
     public void stop() {
         this.cyclops.setShooting(false);
-        this.cyclops.setCooldown(100);
+        this.cyclops.setCooldown(101);
     }
 
     public boolean shouldRunEveryTick() {

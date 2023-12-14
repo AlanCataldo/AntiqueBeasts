@@ -104,7 +104,7 @@ public class HeroHopliteEntity extends HopliteEntity implements GeoEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new HopliteMeleeAttackGoal(this, 0.42f,false));
+        this.goalSelector.add(2, new HopliteMeleeAttackGoal(this, 0.45f,false));
         this.goalSelector.add(3, new HopliteShootingGoal(this));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));

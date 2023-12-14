@@ -90,7 +90,7 @@ public class HadesChosenEntity extends HostileEntity implements GeoEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new HadesChosenMeleeAttackGoal(this, 0.42f));
+        this.goalSelector.add(2, new HadesChosenMeleeAttackGoal(this, 0.45f));
         this.goalSelector.add(3, new HadesChosenShootingGoal(this));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
