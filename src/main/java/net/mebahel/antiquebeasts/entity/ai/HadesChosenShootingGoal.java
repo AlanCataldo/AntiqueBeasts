@@ -24,11 +24,11 @@ public class HadesChosenShootingGoal extends Goal {
     }
 
     public void start() {
-        this.hoplite.setCooldown(80);
+        this.hoplite.setCooldown(81);
     }
 
     public void stop() {
-        this.hoplite.setCooldown(80);
+        this.hoplite.setCooldown(81);
         this.hoplite.setShooting(false);
     }
 
@@ -85,7 +85,7 @@ public class HadesChosenShootingGoal extends Goal {
                 } else if (this.hoplite.getCooldown() == 0) {
                     this.hoplite.setCooldown(81);
                     this.hoplite.setShooting(false);
-                } else if (this.hoplite.getCooldown() <= 80 && this.hoplite.getCooldown() > 20) {
+                } else if (this.hoplite.getCooldown() <= 81 && this.hoplite.getCooldown() > 20) {
                     this.hoplite.setShooting(false);
                 }
             } else {
