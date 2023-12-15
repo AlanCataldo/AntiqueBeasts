@@ -96,7 +96,7 @@ public class HadesChosenMeleeAttackGoal extends Goal {
                     && Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).getValue() == 1.5f)
                 Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(0.5f);
             this.mob.setSwinging(true);
-        } else if (squaredDistance <= d && this.cooldown == 10) {
+        } else if (squaredDistance <= d && this.cooldown == 12) {
             if (this.mob.tryAttack(target))
                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 7 * 20, 0));
         }

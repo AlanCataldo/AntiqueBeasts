@@ -92,7 +92,7 @@ public class HopliteMeleeAttackGoal extends Goal {
                     && Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).getValue() == 1.5f)
                 Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(0.5f);
             this.mob.setSwinging(true);
-        } else if (squaredDistance <= d && this.cooldown == 10) {
+        } else if (squaredDistance <= d && this.cooldown == 12) {
             this.mob.tryAttack(target);
         }
         if (squaredDistance > d) {
