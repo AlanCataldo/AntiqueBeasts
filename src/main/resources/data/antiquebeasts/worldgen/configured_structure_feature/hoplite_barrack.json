@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:village",
+  "config": {
+    "start_pool": "antiquebeasts:hoplite_barrack/start_pool",
+    "size": 1
+  },
+  "adapt_noise": true,
+  "biomes": "#antiquebeasts:has_structure/hoplite_barrack",
+  "spawn_overrides": {}
+}
