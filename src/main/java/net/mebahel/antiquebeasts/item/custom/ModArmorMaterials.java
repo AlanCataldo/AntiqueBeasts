@@ -12,13 +12,17 @@ import java.util.function.Supplier;
 
 public enum ModArmorMaterials implements ArmorMaterial {
     IRON_PLATE("iron_plate", 17, new int[]{2, 6, 6, 2}, 12, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F, 0.0F, () -> {
-        return Ingredient.ofItems(Items.IRON_INGOT);
+        return Ingredient.ofItems(ModItems.IRON_PLATE);
     }),
     GOLD_PLATE("gold_plate", 20, new int[]{2, 6, 6, 2}, 25, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0.0F, 0.0F, () -> {
-        return Ingredient.ofItems(Items.GOLD_INGOT);
+        return Ingredient.ofItems(ModItems.GOLD_PLATE);
     }),
     DIAMOND_PLATE("diamond_plate", 35, new int[]{3, 7, 8, 3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2F, 0.1F, () -> {
-        return Ingredient.ofItems(Items.DIAMOND);
+        return Ingredient.ofItems(ModItems.DIAMOND_PLATE);
+    }),
+
+    NETHERITE_PLATE("netherite_plate", 35, new int[]{3, 8, 8, 3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 3F, 0.2F, () -> {
+        return Ingredient.ofItems(Items.NETHERITE_INGOT);
     });
 
     private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};

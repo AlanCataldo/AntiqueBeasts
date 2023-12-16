@@ -1,12 +1,12 @@
 {
   "type": "minecraft:smithing",
   "base": {
-    "item": "antiquebeasts:weapon/diamond_hoplite_spear_2d"
+    "item": "antiquebeasts:weapon/diamond_hoplite_spear"
   },
   "addition": {
   "item": "minecraft:netherite_ingot"
 },
   "result": {
-    "item": "antiquebeasts:weapon/netherite_hoplite_spear_2d"
+    "item": "antiquebeasts:weapon/netherite_hoplite_spear"
   }
 }
