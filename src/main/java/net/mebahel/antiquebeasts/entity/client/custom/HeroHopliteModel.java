@@ -54,6 +54,6 @@ public class HeroHopliteModel extends AnimatedGeoModel<HeroHopliteEntity> {
         }
 
         head.setRotationY(head_x);
-        head.setRotationZ(head_y);
+        head.setRotationX(head_y);
     }
 }

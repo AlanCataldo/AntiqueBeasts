@@ -55,6 +55,6 @@ public class ChampionHopliteModel extends AnimatedGeoModel<ChampionHopliteEntity
         }
 
         head.setRotationY(head_x);
-        head.setRotationZ(head_y);
+        head.setRotationX(head_y);
     }
 }
