@@ -22,6 +22,16 @@ public class ModEntities {
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, FrostCyclopsEntity::new)
                     .dimensions(EntityDimensions.fixed(0.95f, 4.75f)).build());
 
+    public static final EntityType<HersirEntity> HERSIR = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "hersir"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HersirEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
+
+    public static final EntityType<ThrowingAxeManEntity> THROWING_AXEMAN = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "throwing_axeman"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ThrowingAxeManEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
+
     public static final EntityType<ChampionHopliteEntity> CHAMPION_HOPLITE = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "champion_hoplite"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ChampionHopliteEntity::new)
@@ -51,6 +61,11 @@ public class ModEntities {
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "throwingrock"),
             FabricEntityTypeBuilder.<ThrowingRockEntity>create(SpawnGroup.MISC, ThrowingRockEntity::new)
                     .dimensions(EntityDimensions.fixed(2f, 2f)).build());
+
+    public static final EntityType<ThrowingAxeEntity> THROWING_AXE = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "throwing_axe"),
+            FabricEntityTypeBuilder.<ThrowingAxeEntity>create(SpawnGroup.MISC, ThrowingAxeEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
 
     public static final EntityType<ThrowingSnowRockEntity> THROWINGSNOWROCK = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "throwingsnowrock"),

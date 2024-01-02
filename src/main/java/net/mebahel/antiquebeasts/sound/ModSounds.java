@@ -30,6 +30,16 @@ public class ModSounds {
     public static SoundEvent CYCLOPS_ATTACKING2 = registerSoundEvent("cyclops_attacking2");
     public static SoundEvent HOPLITE_ATTACKING1 = registerSoundEvent("hoplite_attacking1");
     public static SoundEvent HOPLITE_ATTACKING2 = registerSoundEvent("hoplite_attacking2");
+    public static SoundEvent HERSIR_ATTACKING1 = registerSoundEvent("hersir_attacking1");
+    public static SoundEvent HERSIR_ATTACKING2 = registerSoundEvent("hersir_attacking2");
+    public static SoundEvent HERSIR_AMBIENT1 = registerSoundEvent("hersir_ambient1");
+    public static SoundEvent HERSIR_AMBIENT2 = registerSoundEvent("hersir_ambient2");
+    public static SoundEvent HERSIR_AMBIENT3 = registerSoundEvent("hersir_ambient3");
+    public static SoundEvent THROWING_AXEMAN_AMBIENT1 = registerSoundEvent("throwing_axeman_ambient1");
+    public static SoundEvent THROWING_AXEMAN_AMBIENT2 = registerSoundEvent("throwing_axeman_ambient2");
+    public static SoundEvent THROWING_AXEMAN_AMBIENT3 = registerSoundEvent("throwing_axeman_ambient3");
+    public static SoundEvent THROWING_AXEMAN_ATTACKING1 = registerSoundEvent("throwing_axeman_attacking1");
+    public static SoundEvent THROWING_AXEMAN_ATTACKING2 = registerSoundEvent("throwing_axeman_attacking2");
     public static SoundEvent HADES_SHADE_HURT1 = registerSoundEvent("hades_shade_hurt1");
     public static SoundEvent HADES_SHADE_HURT2 = registerSoundEvent("hades_shade_hurt2");
     public static SoundEvent HADES_SHADE_AMBIENT1 = registerSoundEvent("hades_shade_ambient1");
@@ -38,6 +48,8 @@ public class ModSounds {
     public static SoundEvent HADES_SHADE_SPAWN = registerSoundEvent("hades_shade_spawn");
     public static SoundEvent SPEAR_HIT = registerSoundEvent("spear_hit");
     public static SoundEvent SHIELD_BLOCK = registerSoundEvent("shield_block");
+    public static SoundEvent SWING = registerSoundEvent("swing1");
+    public static SoundEvent FLESHCRUSH1 = registerSoundEvent("fleshcrush1");
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));

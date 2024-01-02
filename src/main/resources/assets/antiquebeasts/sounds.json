@@ -178,5 +178,77 @@
     "sounds": [
       "antiquebeasts:shield_block"
     ]
+  },
+  "hersir_attacking1": {
+    "subtitle": "antiquebeasts:hersir_attacking1",
+    "sounds": [
+      "antiquebeasts:hersir_attacking1"
+    ]
+  },
+  "hersir_attacking2": {
+    "subtitle": "antiquebeasts:hersir_attacking2",
+    "sounds": [
+      "antiquebeasts:hersir_attacking2"
+    ]
+  },
+  "hersir_ambient1": {
+    "subtitle": "antiquebeasts:hersir_ambient1",
+    "sounds": [
+      "antiquebeasts:hersir_ambient1"
+    ]
+  },
+  "hersir_ambient2": {
+    "subtitle": "antiquebeasts:hersir_ambient2",
+    "sounds": [
+      "antiquebeasts:hersir_ambient2"
+    ]
+  },
+  "hersir_ambient3": {
+    "subtitle": "antiquebeasts:hersir_ambient3",
+    "sounds": [
+      "antiquebeasts:hersir_ambient3"
+    ]
+  },
+  "swing1": {
+    "subtitle": "antiquebeasts:swing1",
+    "sounds": [
+      "antiquebeasts:swing1"
+    ]
+  },
+  "fleshcrush1": {
+    "subtitle": "antiquebeasts:fleshcrush1",
+    "sounds": [
+      "antiquebeasts:fleshcrush1"
+    ]
+  },
+  "throwing_axeman_ambient1": {
+    "subtitle": "antiquebeasts:throwing_axeman_ambient1",
+    "sounds": [
+      "antiquebeasts:throwing_axeman_ambient1"
+    ]
+  },
+  "throwing_axeman_ambient2": {
+    "subtitle": "antiquebeasts:throwing_axeman_ambient2",
+    "sounds": [
+      "antiquebeasts:throwing_axeman_ambient2"
+    ]
+  },
+  "throwing_axeman_ambient3": {
+    "subtitle": "antiquebeasts:throwing_axeman_ambient3",
+    "sounds": [
+      "antiquebeasts:throwing_axeman_ambient3"
+    ]
+  },
+  "throwing_axeman_attacking1": {
+    "subtitle": "antiquebeasts:throwing_axeman_attacking1",
+    "sounds": [
+      "antiquebeasts:throwing_axeman_attacking1"
+    ]
+  },
+  "throwing_axeman_attacking2": {
+    "subtitle": "antiquebeasts:throwing_axeman_attacking2",
+    "sounds": [
+      "antiquebeasts:throwing_axeman_attacking2"
+    ]
   }
 }

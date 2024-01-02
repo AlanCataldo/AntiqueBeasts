@@ -69,6 +69,7 @@ public class HadesShadeMeleeAttackGoal extends Goal {
         }
         if (squaredDistance > d) {
             this.mob.setSwinging(false);
+            this.cooldown = MAX_COOLDOWN;
         }
     }
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {

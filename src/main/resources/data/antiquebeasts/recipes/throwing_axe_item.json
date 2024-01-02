@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " ##",
+    " /#",
+    "/  "
+  ],
+  "key" : {
+    "#": {
+      "item" : "antiquebeasts:high_iron_ingot"
+    },
+    "/": {
+      "item" : "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:weapon/throwing_axe_item"
+  }
+}

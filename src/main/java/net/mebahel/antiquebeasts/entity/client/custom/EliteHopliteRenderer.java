@@ -29,11 +29,6 @@ public class EliteHopliteRenderer extends GeoEntityRenderer<EliteHopliteEntity> 
     }
 
     @Override
-    public Identifier getTextureLocation(EliteHopliteEntity animatable) {
-        return LOCATION_BY_VARIANT.get(animatable.getVariant());
-    }
-
-    @Override
     public RenderLayer getRenderType(EliteHopliteEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
     }

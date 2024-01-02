@@ -10,7 +10,7 @@
     "WitherDamageMixin"
   ],
   "client": [
-    "BrewingRecipeRegistryMixin",
+    "BrewingRecipeRegistryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -107,6 +107,7 @@ public class CyclopsMeleeAttackGoal extends Goal {
                 target.setFrozenTicks(260);
         } else if (squaredDistance > d) {
             this.mob.setSwinging(false);
+            this.cooldown = MAX_COOLDOWN;
         }
     }
 

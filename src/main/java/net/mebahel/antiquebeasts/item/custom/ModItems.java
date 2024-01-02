@@ -40,6 +40,12 @@ public class ModItems {
     public static final Item HADES_CHOSEN_SPAWN_EGG = registerItem("hades_chosen_spawn_egg",
             new SpawnEggItem(ModEntities.HADES_CHOSEN,2563101, 13355979,
                     new FabricItemSettings()));
+    public static final Item HERSIR_SPAWN_EGG = registerItem("hersir_spawn_egg",
+            new SpawnEggItem(ModEntities.HERSIR,5062969, 8684678,
+                    new FabricItemSettings()));
+    public static final Item THROWING_AXEMAN_SPAWN_EGG = registerItem("throwing_axeman_spawn_egg",
+            new SpawnEggItem(ModEntities.THROWING_AXEMAN,5062969, 6900268,
+                    new FabricItemSettings()));
     public static final Item FROST_SWORD = registerItem("frost_sword",
             new FrostSword(ModToolMaterial.FROST_WEAPON,6, -2.8f,
                     new FabricItemSettings()));
@@ -58,6 +64,10 @@ public class ModItems {
     public static final Item CONCENTRATED_CYCLOPS_BLOOD = registerItem("concentrated_cyclops_blood",
             new ConcentratedCyclopsBloodItem(new FabricItemSettings()));
     public static final Item IRON_PLATE = registerItem("iron_plate",
+            new Item(new FabricItemSettings()));
+    public static final Item HIGH_IRON_INGOT = registerItem("high_iron_ingot",
+            new Item(new FabricItemSettings()));
+    public static final Item HIGH_IRON_SCRAP = registerItem("high_iron_scrap",
             new Item(new FabricItemSettings()));
     public static final Item IRON_PLATE_SHIELD = registerItem("shield/iron_plate_shield",
             new CustomShieldItem(new FabricItemSettings().maxDamage(550)));
@@ -105,7 +115,6 @@ public class ModItems {
             new DiamondPlateArmorItem(ModArmorMaterials.DIAMOND_PLATE, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
     public static final DiamondPlateArmorItem DIAMOND_PLATE_BOOTS = registerItem("diamond_plate_boots",
             new DiamondPlateArmorItem(ModArmorMaterials.DIAMOND_PLATE, ArmorItem.Type.BOOTS, new FabricItemSettings()));
-
     public static final NetheritePlateArmorItem NETHERITE_PLATE_HELMET = registerItem("netherite_plate_helmet",
             new NetheritePlateArmorItem(ModArmorMaterials.NETHERITE_PLATE, ArmorItem.Type.HELMET, new FabricItemSettings()));
     public static final NetheritePlateArmorItem NETHERITE_PLATE_CHESTPLATE = registerItem("netherite_plate_chestplate",
@@ -130,6 +139,11 @@ public class ModItems {
             tooltip.add(Text.translatable("item.antiquebeasts.netherite_hoplite_spear.tooltip").formatted(Formatting.GRAY, Formatting.ITALIC));
         }
     });
+    public static final ThrowingAxeItem THROWING_AXE_ITEM = registerItem("weapon/throwing_axe_item",
+            new ThrowingAxeItem(ModToolMaterial.THROWING_AXE,4.5f, -2.8f, new FabricItemSettings()));
+    public static final HersirAxe HERSIR_AXE = registerItem("weapon/hersir_axe",
+            new HersirAxe(ModToolMaterial.HERSIR_AXE,8, -3.25f,
+                    new FabricItemSettings()));
     public static <I extends Item> I registerItem(String name, I item) {
         return Registry.register(Registries.ITEM, new Identifier(AntiqueBeasts.MOD_ID, name), item);
     }
@@ -141,12 +155,16 @@ public class ModItems {
         entries.add(HERO_HOPLITE_SPAWN_EGG);
         entries.add(HADES_CHOSEN_SPAWN_EGG);
         entries.add(HADES_SHADE_SPAWN_EGG);
+        entries.add(HERSIR_SPAWN_EGG);
+        entries.add(THROWING_AXEMAN_SPAWN_EGG);
     }
     public static void addItemToIngredientItemGroup(FabricItemGroupEntries entries) {
         entries.add(DIAMOND_PLATE);
         entries.add(GOLD_PLATE);
         entries.add(IRON_PLATE);
         entries.add(FROST_SHARD);
+        entries.add(HIGH_IRON_INGOT);
+        entries.add(HIGH_IRON_SCRAP);
     }
     public static void addItemToFoodItemGroup(FabricItemGroupEntries entries) {
         entries.add(COOKED_CYCLOPS_MEAT);
@@ -181,6 +199,8 @@ public class ModItems {
         entries.add(NETHERITE_PLATE_CHESTPLATE);
         entries.add(NETHERITE_PLATE_LEGGINGS);
         entries.add(NETHERITE_PLATE_BOOTS);
+        entries.add(HERSIR_AXE);
+        entries.add(THROWING_AXE_ITEM);
     }
 
 

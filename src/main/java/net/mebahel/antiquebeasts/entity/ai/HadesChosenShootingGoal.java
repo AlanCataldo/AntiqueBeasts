@@ -1,9 +1,7 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
 import net.mebahel.antiquebeasts.entity.custom.HadesChosenEntity;
-import net.mebahel.antiquebeasts.entity.custom.HopliteEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.HadesChosenSpearEntity;
-import net.mebahel.antiquebeasts.entity.projectiles.HopliteSpearEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.attribute.EntityAttributes;
