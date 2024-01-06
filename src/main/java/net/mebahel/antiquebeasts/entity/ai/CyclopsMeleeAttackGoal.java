@@ -1,10 +1,14 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
 import net.mebahel.antiquebeasts.entity.custom.CyclopsEntity;
+import net.mebahel.antiquebeasts.item.CustomShieldItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+
 import java.util.EnumSet;
 import java.util.Objects;
 
@@ -15,7 +19,7 @@ public class CyclopsMeleeAttackGoal extends Goal {
     private final double speed;
     String weapon = "";
     private Path path;
-    private static final int MAX_COOLDOWN = 26;
+    private static final int MAX_COOLDOWN = 21;
     private int cooldown;
     private long lastUpdateTime;
 
@@ -93,7 +97,7 @@ public class CyclopsMeleeAttackGoal extends Goal {
             this.mob.getNavigation().stop();
         if (squaredDistance <= d && this.cooldown <= 0) {
             this.cooldown = MAX_COOLDOWN;
-        } else if (squaredDistance <= d && this.cooldown == 25) {
+        } else if (squaredDistance <= d && this.cooldown == 20) {
             if (Objects.equals(this.mob.getAttackName(), "animation.cyclops.attack")) {
                 Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(1.5f);
                 Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(6f);
@@ -102,7 +106,15 @@ public class CyclopsMeleeAttackGoal extends Goal {
                 Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(8f);
             }
             this.mob.setSwinging(true);
-        } else if (squaredDistance <= d && this.cooldown == 11) {
+        } else if (squaredDistance <= d && this.cooldown == 8) {
+            if (target instanceof PlayerEntity player) {
+                if (player.isBlocking()) {
+                    ItemStack activeItem = player.getActiveItem();
+                    if (!(activeItem.getItem() instanceof CustomShieldItem)) {
+                        player.disableShield(true);
+                    }
+                }
+            }
             if (this.mob.tryAttack(target) && Objects.equals(this.weapon, "frost"))
                 target.setFrozenTicks(260);
         } else if (squaredDistance > d) {
