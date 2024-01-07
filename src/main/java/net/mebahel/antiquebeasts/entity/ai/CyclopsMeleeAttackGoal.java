@@ -75,7 +75,7 @@ public class CyclopsMeleeAttackGoal extends Goal {
     public void tick() {
         LivingEntity livingEntity = this.mob.getTarget();
         if (livingEntity != null) {
-            this.mob.getLookControl().lookAt(livingEntity, 15.0F, 12.5F);
+            this.mob.getLookControl().lookAt(livingEntity, 15.0F, 7.5F);
             double d = this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
             this.attack(livingEntity, d);
             this.cooldown = Math.max(this.cooldown - 1, 0);
@@ -106,7 +106,7 @@ public class CyclopsMeleeAttackGoal extends Goal {
                 Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(8f);
             }
             this.mob.setSwinging(true);
-        } else if (squaredDistance <= d && this.cooldown == 8) {
+        } else if (squaredDistance <= d && this.cooldown == 7) {
             if (target instanceof PlayerEntity player) {
                 if (player.isBlocking()) {
                     ItemStack activeItem = player.getActiveItem();
@@ -124,6 +124,6 @@ public class CyclopsMeleeAttackGoal extends Goal {
     }
 
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return 11f + entity.getWidth();
+        return 14f + entity.getWidth();
     }
 }

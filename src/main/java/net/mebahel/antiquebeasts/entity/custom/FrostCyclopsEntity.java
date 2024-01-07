@@ -104,7 +104,7 @@ public class FrostCyclopsEntity extends CyclopsEntity implements GeoEntity {
         controllers.add(new AnimationController(this, "shooting", 0, this::shootingPredicate).setSoundKeyframeHandler(state -> {
             PlayerEntity player = ClientUtils.getClientPlayer();
             if (player != null)
-                player.playSound(ModSounds.SWING, 1, 1);
+                player.playSound(ModSounds.SWING, 1, 0.6f);
         }));
     }
     protected EntityNavigation createNavigation(World world) {

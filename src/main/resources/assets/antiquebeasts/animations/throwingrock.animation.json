@@ -3,24 +3,24 @@
 	"animations": {
 		"idle": {
 			"loop": true,
-			"animation_length": 2,
+			"animation_length": 1,
 			"bones": {
 				"bone": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
+						"0.25": {
+							"vector": [0, 0, 90]
+						},
 						"0.5": {
-							"vector": [0, 0, -90]
+							"vector": [0, 0, 180]
+						},
+						"0.75": {
+							"vector": [0, 0, 270]
 						},
 						"1.0": {
-							"vector": [0, 0, -180]
-						},
-						"1.5": {
-							"vector": [0, 0, -270]
-						},
-						"2.0": {
-							"vector": [0, 0, -360]
+							"vector": [0, 0, 360]
 						}
 					}
 				}

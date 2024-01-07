@@ -119,11 +119,14 @@ public class ThrowingAxeManEntity extends AnimalEntity implements GeoEntity {
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new ThrowingAxeManShootingGoal(this, 80F));
-        this.goalSelector.add(5, new ThrowingAxeManLookAtTargetGoal(this));
+        this.goalSelector.add(3, new ThrowingAxeManLookAtTargetGoal(this));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.35f, 1f));
 
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
+    }
+    public void jumpPublic() {
+        this.jump();
     }
 
     @Override

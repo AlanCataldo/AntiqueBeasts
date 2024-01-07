@@ -21,7 +21,7 @@ public class ThrowingAxeManLookAtTargetGoal extends Goal {
     }
 
     public boolean canStart() {
-        return this.shade.getRandom().nextFloat() < 0.02F;
+        return this.shade.getTarget() != null;
     }
     public boolean shouldContinue() {
         return this.lookTime >= 0;
@@ -39,17 +39,17 @@ public class ThrowingAxeManLookAtTargetGoal extends Goal {
     }
 
     public void tick() {
-        if (this.shade.getTarget() == null) {
-            --this.lookTime;
-            this.shade.getLookControl().lookAt(this.shade.getX() + this.deltaX, this.shade.getEyeY(), this.shade.getZ() + this.deltaZ);
-        } else {
-            LivingEntity livingEntity = this.shade.getTarget();
+        LivingEntity livingEntity = this.shade.getTarget();
+        if (livingEntity != null) {
             if (livingEntity.squaredDistanceTo(this.shade) < 4096.0) {
                 double e = livingEntity.getX() - this.shade.getX();
                 double f = livingEntity.getZ() - this.shade.getZ();
                 this.shade.setYaw(-((float)MathHelper.atan2(e, f)) * 57.295776F);
                 this.shade.bodyYaw = this.shade.getYaw();
             }
+        } else {
+            --this.lookTime;
+            this.shade.getLookControl().lookAt(this.shade.getX() + this.deltaX, this.shade.getEyeY(), this.shade.getZ() + this.deltaZ);
         }
     }
 }

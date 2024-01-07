@@ -23,6 +23,7 @@ public class ThrowingRockRenderer extends GeoEntityRenderer<ThrowingRockEntity> 
     @Override
     public void preRender(MatrixStack poseStack, ThrowingRockEntity animatable, BakedGeoModel model, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue,
                           float alpha) {
+        poseStack.scale(1.15f, 1.15f, 1.15f);
         RenderUtils.faceRotation(poseStack, animatable, partialTick);
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }

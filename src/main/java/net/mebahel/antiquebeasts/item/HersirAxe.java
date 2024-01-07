@@ -40,9 +40,4 @@ public class HersirAxe extends AxeItem {
     public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
         return slot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(slot);
     }
-    @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(Text.translatable("item.antiquebeasts.frost_sword.tooltip1").formatted(Formatting.GRAY, Formatting.ITALIC));
-        tooltip.add(Text.translatable("item.antiquebeasts.frost_sword.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
-    }
 }

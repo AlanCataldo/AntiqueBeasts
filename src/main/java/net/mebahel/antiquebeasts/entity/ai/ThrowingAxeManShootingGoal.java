@@ -2,9 +2,12 @@ package net.mebahel.antiquebeasts.entity.ai;
 
 import net.mebahel.antiquebeasts.entity.custom.ThrowingAxeManEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.ThrowingAxeEntity;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class ThrowingAxeManShootingGoal extends Goal {
@@ -63,7 +66,9 @@ public class ThrowingAxeManShootingGoal extends Goal {
                 this.combatTicks = 0;
             }
             if (this.combatTicks > -1) {
-                if (d > (double)(this.squaredRange * 0.75F)) {
+                if (this.actor.horizontalCollision && this.actor.isOnGround()) {
+                    this.backward = false;
+                } else if (d > (double)(this.squaredRange * 0.75F)) {
                     this.backward = false;
                 } else if (d < (double)(this.squaredRange * 0.25F)) {
                     this.backward = true;
