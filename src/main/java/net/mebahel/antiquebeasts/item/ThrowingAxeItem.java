@@ -24,7 +24,7 @@ public class ThrowingAxeItem extends AxeItem {
         world.playSound(null, user.getX(), user.getY(), user.getZ(), ModSounds.SWING, SoundCategory.NEUTRAL, 0.5F, 1.1F);
 
         if (!world.isClient) {
-            ThrowingAxeEntity throwingAxeEntity = new ThrowingAxeEntity(world, user);
+            ThrowingAxeEntity throwingAxeEntity = new ThrowingAxeEntity(world, user, 8);
             throwingAxeEntity.setItem(itemStack);
             throwingAxeEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 0.85F, 0F);
             world.spawnEntity(throwingAxeEntity);

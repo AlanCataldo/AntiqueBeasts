@@ -81,7 +81,7 @@ public class ThrowingAxeManShootingGoal extends Goal {
                 this.actor.setCooldown(Math.max(this.actor.getCooldown() - 1, 0));
                 if (this.actor.getCooldown() == 9) {
                     ProjectileEntity throwingAxeEntity;
-                    throwingAxeEntity = new ThrowingAxeEntity(world, this.actor);
+                    throwingAxeEntity = new ThrowingAxeEntity(world, this.actor, 6f);
 
                     double offsetX = -0.7;
                     double offsetZ = -0.7;

@@ -32,8 +32,10 @@ import software.bernie.geckolib.core.object.PlayState;
 import static net.mebahel.antiquebeasts.entity.ModEntities.THROWING_AXE;
 
 public class ThrowingAxeEntity extends ThrownItemEntity implements GeoEntity {
+    float damage;
     public ThrowingAxeEntity(EntityType<? extends ThrowingAxeEntity> entityType, World world) {
         super(entityType, world);
+        this.damage = damage;
     }
     private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
     @Override
@@ -48,8 +50,9 @@ public class ThrowingAxeEntity extends ThrownItemEntity implements GeoEntity {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController(this, "controller",0, this::predicate));
     }
-    public ThrowingAxeEntity(World world, LivingEntity owner) {
+    public ThrowingAxeEntity(World world, LivingEntity owner, float damage) {
         super(THROWING_AXE, owner, world);
+        this.damage = damage;
     }
 
     protected Item getDefaultItem() {
