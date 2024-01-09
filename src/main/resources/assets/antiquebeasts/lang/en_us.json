@@ -64,6 +64,7 @@
   "item.antiquebeasts.netherite_hoplite_spear.tooltip": "This spear inflicts Wither",
   "item.antiquebeasts.high_iron_ingot": "High Iron Ingot",
   "item.antiquebeasts.high_iron_scrap": "High Iron Scrap",
-  "item.antiquebeasts.weapon.throwing_axe_item": "Throwing axe",
-  "item.antiquebeasts.weapon.hersir_axe": "Hersir axe"
+  "item.antiquebeasts.weapon.throwing_axe_item": "High Iron Throwing axe",
+  "item.antiquebeasts.weapon.hersir_axe": "High Iron Heavy Axe",
+  "item.antiquebeasts.weapon.high_iron_sword": "High Iron Sword"
 }

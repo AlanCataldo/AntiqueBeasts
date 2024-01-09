@@ -6,14 +6,18 @@ import net.minecraft.recipe.Ingredient;
 import java.util.function.Supplier;
 
 public enum ModToolMaterial implements ToolMaterial {
-    FROST_WEAPON(4, 1600, 4.0F, 0.5F, 17, () -> {
+    FROST_WEAPON(4, 1550, 4.0F, 0.5F, 17, () -> {
         return Ingredient.ofItems(Items.DIAMOND);
     }),
-    HERSIR_AXE(4, 1200, 7.0F, 0.5F, 19, () -> {
+    HERSIR_AXE(4, 680, 6.5F, 0.5F, 19, () -> {
         return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
     }),
 
-    THROWING_AXE(2, 826, 6.0F, 0.5F, 15, () -> {
+    HIGH_IRON(4, 680, 7.0F, 1.5F, 19, () -> {
+        return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
+    }),
+
+    THROWING_AXE(2, 680, 6.0F, 0.5F, 15, () -> {
         return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
     });
 

@@ -144,6 +144,10 @@ public class ModItems {
     public static final HersirAxe HERSIR_AXE = registerItem("weapon/hersir_axe",
             new HersirAxe(ModToolMaterial.HERSIR_AXE,8, -3.25f,
                     new FabricItemSettings()));
+
+    public static final SwordItem HIGH_IRON_SWORD = registerItem("weapon/high_iron_sword",
+            new SwordItem(ModToolMaterial.HIGH_IRON,4, -2.4f,
+                    new FabricItemSettings()));
     public static <I extends Item> I registerItem(String name, I item) {
         return Registry.register(Registries.ITEM, new Identifier(AntiqueBeasts.MOD_ID, name), item);
     }
@@ -201,6 +205,7 @@ public class ModItems {
         entries.add(NETHERITE_PLATE_BOOTS);
         entries.add(HERSIR_AXE);
         entries.add(THROWING_AXE_ITEM);
+        entries.add(HIGH_IRON_SWORD);
     }
 
 
