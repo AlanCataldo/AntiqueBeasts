@@ -2,6 +2,7 @@ package net.mebahel.antiquebeasts.entity.custom;
 
 import net.mebahel.antiquebeasts.entity.ai.HopliteMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.variant.ChampionHopliteVariant;
+import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -25,6 +26,7 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.ClientUtils;
 
 import javax.annotation.Nullable;
 
@@ -108,7 +110,11 @@ public class ChampionHopliteEntity extends HopliteEntity implements GeoEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController(this, "controller",0, this::predicate));
-        controllers.add(new AnimationController(this, "attacking",0, this::attackPredicate));
+        controllers.add(new AnimationController(this, "attacking", 0, this::attackPredicate).setSoundKeyframeHandler(state -> {
+            PlayerEntity player = ClientUtils.getClientPlayer();
+            if (player != null)
+                player.playSound(ModSounds.SWING, 1, 1.5f);
+        }));
     }
     protected EntityNavigation createNavigation(World world) {
         return new MobNavigation(this, world) {

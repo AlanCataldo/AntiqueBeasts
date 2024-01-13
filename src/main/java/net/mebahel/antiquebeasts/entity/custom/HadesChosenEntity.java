@@ -25,6 +25,7 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.ClientUtils;
 
 import static java.lang.Math.random;
 
@@ -124,8 +125,16 @@ public class HadesChosenEntity extends HostileEntity implements GeoEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController(this, "controller",0, this::predicate));
-        controllers.add(new AnimationController(this, "attacking",0, this::attackPredicate));
-        controllers.add(new AnimationController(this, "shooting",0, this::shootingPredicate));
+        controllers.add(new AnimationController(this, "attacking", 0, this::attackPredicate).setSoundKeyframeHandler(state -> {
+            PlayerEntity player = ClientUtils.getClientPlayer();
+            if (player != null)
+                player.playSound(ModSounds.SWING, 1, 1.5f);
+        }));
+        controllers.add(new AnimationController(this, "shooting", 0, this::shootingPredicate).setSoundKeyframeHandler(state -> {
+            PlayerEntity player = ClientUtils.getClientPlayer();
+            if (player != null)
+                player.playSound(ModSounds.SWING, 1, 1f);
+        }));
     }
     protected EntityNavigation createNavigation(World world) {
         return new MobNavigation(this, world) {

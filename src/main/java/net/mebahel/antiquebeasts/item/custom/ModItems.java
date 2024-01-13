@@ -43,6 +43,9 @@ public class ModItems {
     public static final Item HERSIR_SPAWN_EGG = registerItem("hersir_spawn_egg",
             new SpawnEggItem(ModEntities.HERSIR,5062969, 8684678,
                     new FabricItemSettings()));
+    public static final Item HUSKARL_SPAWN_EGG = registerItem("huskarl_spawn_egg",
+            new SpawnEggItem(ModEntities.HUSKARL,5790044, 11046446,
+                    new FabricItemSettings()));
     public static final Item THROWING_AXEMAN_SPAWN_EGG = registerItem("throwing_axeman_spawn_egg",
             new SpawnEggItem(ModEntities.THROWING_AXEMAN,5062969, 6900268,
                     new FabricItemSettings()));
@@ -51,12 +54,7 @@ public class ModItems {
                     new FabricItemSettings()));
     public static final Item BLOOD_STAINED_FROST_SWORD = registerItem("blood_stained_frost_sword",
             new BloodStainedFrostSword(ModToolMaterial.FROST_WEAPON,7, -3f,
-                    new FabricItemSettings()) {
-                @Override
-                public boolean hasGlint(ItemStack stack) {
-                    return true;
-                }
-            });
+                    new FabricItemSettings()));
     public static final Item FROST_SHARD = registerItem("frost_shard",
             new Item(new FabricItemSettings()));
     public static final Item CYCLOPS_BLOOD = registerItem("cyclops_blood",
@@ -73,6 +71,8 @@ public class ModItems {
             new CustomShieldItem(new FabricItemSettings().maxDamage(550)));
     public static final Item GOLD_PLATE_SHIELD = registerItem("shield/gold_plate_shield",
             new CustomShieldItem(new FabricItemSettings().maxDamage(700)));
+    public static final Item HIGH_IRON_SHIELD = registerItem("shield/high_iron_shield",
+            new CustomShieldItem(new FabricItemSettings().maxDamage(750)));
     public static final Item DIAMOND_PLATE_SHIELD = registerItem("shield/diamond_plate_shield",
             new CustomShieldItem(new FabricItemSettings().maxDamage(850)) {
                 @Override
@@ -160,6 +160,7 @@ public class ModItems {
         entries.add(HADES_CHOSEN_SPAWN_EGG);
         entries.add(HADES_SHADE_SPAWN_EGG);
         entries.add(HERSIR_SPAWN_EGG);
+        entries.add(HUSKARL_SPAWN_EGG);
         entries.add(THROWING_AXEMAN_SPAWN_EGG);
     }
     public static void addItemToIngredientItemGroup(FabricItemGroupEntries entries) {
@@ -183,6 +184,7 @@ public class ModItems {
         entries.add(NETHERITE_HOPLITE_SPEAR);
         entries.add(IRON_PLATE_SHIELD);
         entries.add(GOLD_PLATE_SHIELD);
+        entries.add(HIGH_IRON_SHIELD);
         entries.add(DIAMOND_PLATE_SHIELD);
         entries.add(NETHERITE_PLATE_SHIELD);
         entries.add(FROST_SWORD);

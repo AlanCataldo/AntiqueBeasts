@@ -23,6 +23,7 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.HADES_CHOSEN, HadesChosenRenderer::new);
         EntityRendererRegistry.register(ModEntities.HADES_SHADE, HadesShadeRenderer::new);
         EntityRendererRegistry.register(ModEntities.HERSIR, HersirRenderer::new);
+        EntityRendererRegistry.register(ModEntities.HUSKARL, HuskarlRenderer::new);
         EntityRendererRegistry.register(ModEntities.THROWING_AXEMAN, ThrowingAxeManRenderer::new);
         EntityRendererRegistry.register(ModEntities.THROWINGROCK, ThrowingRockRenderer::new);
         EntityRendererRegistry.register(ModEntities.HOPLITE_SPEAR, HopliteSpearRenderer::new);

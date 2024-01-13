@@ -52,7 +52,7 @@
         {
           "type": "minecraft:item",
           "name": "antiquebeasts:weapon/throwing_axe_item",
-          "weight": 19,
+          "weight": 29,
           "functions": [
             {
               "add": false,

@@ -1,27 +1,28 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
-import net.mebahel.antiquebeasts.entity.custom.HadesChosenEntity;
-import net.mebahel.antiquebeasts.entity.custom.HopliteEntity;
+import net.mebahel.antiquebeasts.entity.custom.HersirEntity;
+import net.mebahel.antiquebeasts.entity.custom.HuskarlEntity;
+import net.mebahel.antiquebeasts.item.CustomShieldItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 
 import java.util.EnumSet;
 import java.util.Objects;
 
 import static java.lang.Math.random;
 
-public class HadesChosenMeleeAttackGoal extends Goal {
-    protected final HadesChosenEntity mob;
+public class HuskarlMeleeAttackGoal extends Goal {
+    protected final HuskarlEntity mob;
     private final double speed;
     private static final int MAX_COOLDOWN = 21;
     public int cooldown;
     private long lastUpdateTime;
     double rand;
-    public HadesChosenMeleeAttackGoal(HadesChosenEntity mob, double speed) {
+    public HuskarlMeleeAttackGoal(HuskarlEntity mob, double speed, boolean pauseWhenMobIdle) {
         this.mob = mob;
         this.speed = speed;
         this.cooldown = MAX_COOLDOWN + 8;
@@ -54,6 +55,7 @@ public class HadesChosenMeleeAttackGoal extends Goal {
     }
     public void start() {
         this.mob.setAttacking(true);
+        this.cooldown = MAX_COOLDOWN + 8;
     }
     public void stop() {
         this.mob.setAttacking(false);
@@ -76,12 +78,6 @@ public class HadesChosenMeleeAttackGoal extends Goal {
         double squaredDistance = this.mob.squaredDistanceTo(target.getX(), target.getY(), target.getZ());
         double d = this.getSquaredMaxAttackDistance(target);
 
-        rand = random();
-        if (rand < 0.5)
-            this.mob.setAttackName("attack");
-        else
-            this.mob.setAttackName("attack2");
-
         if (!this.mob.isSwinging())
             this.mob.getNavigation().startMovingTo(target, this.speed);
         else
@@ -98,19 +94,12 @@ public class HadesChosenMeleeAttackGoal extends Goal {
             this.cooldown = MAX_COOLDOWN + 2;
             this.mob.setSwinging(false);
         } else if (squaredDistance <= d && this.cooldown == 20) {
-            if (Objects.equals(this.mob.getAttackName(), "attack")
-                    && Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).getValue() == 0.5f)
-                Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(1.5f);
-            else if (Objects.equals(this.mob.getAttackName(), "attack2")
-                    && Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).getValue() == 1.5f)
-                Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(0.5f);
             this.mob.setSwinging(true);
-        } else if (squaredDistance <= d && this.cooldown == 12 && this.mob.isSwinging()) {
-            if (this.mob.tryAttack(target))
-                target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 7 * 20, 0));
+        } else if (squaredDistance <= d && this.cooldown == 10 && this.mob.isSwinging()) {
+            this.mob.tryAttack(target);
         }
     }
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return 6f + entity.getWidth();
+        return 5f + entity.getWidth();
     }
 }

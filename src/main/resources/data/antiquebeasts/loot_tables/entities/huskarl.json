@@ -27,7 +27,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "antiquebeasts:weapon/hersir_axe",
+          "name": "antiquebeasts:weapon/high_iron_sword",
           "weight": 1,
           "functions": [
             {

@@ -17,6 +17,7 @@
   "item.antiquebeasts.hades_chosen_spawn_egg": "Hades chosen spawn egg",
   "item.antiquebeasts.hades_shade_spawn_egg": "Hades shade spawn egg",
   "item.antiquebeasts.hersir_spawn_egg": "Hersir spawn egg",
+  "item.antiquebeasts.huskarl_spawn_egg": "Huskarl spawn egg",
   "item.antiquebeasts.throwing_axeman_spawn_egg": "Throwing Axeman spawn egg",
 
   "item.antiquebeasts.throwingrock": "Throwing rock",
@@ -66,5 +67,6 @@
   "item.antiquebeasts.high_iron_scrap": "High Iron Scrap",
   "item.antiquebeasts.weapon.throwing_axe_item": "High Iron Throwing axe",
   "item.antiquebeasts.weapon.hersir_axe": "High Iron Heavy Axe",
-  "item.antiquebeasts.weapon.high_iron_sword": "High Iron Sword"
+  "item.antiquebeasts.weapon.high_iron_sword": "High Iron Sword",
+  "item.antiquebeasts.shield.high_iron_shield": "High Iron Shield"
 }

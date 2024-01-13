@@ -11,6 +11,7 @@ public class ShieldModelPredicate {
         registerShield(ModItems.GOLD_PLATE_SHIELD);
         registerShield(ModItems.DIAMOND_PLATE_SHIELD);
         registerShield(ModItems.NETHERITE_PLATE_SHIELD);
+        registerShield(ModItems.HIGH_IRON_SHIELD);
     }
     private static void registerShield(Item shield) {
         ModelPredicateProviderRegistry.register(

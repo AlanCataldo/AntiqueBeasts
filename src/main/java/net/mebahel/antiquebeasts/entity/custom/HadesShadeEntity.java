@@ -29,7 +29,6 @@ import static java.lang.Math.random;
 
 public class HadesShadeEntity extends FlyingEntity implements GeoEntity {
     double rand;
-    public String animationProcedure = "empty";
 
     public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(HadesShadeEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);

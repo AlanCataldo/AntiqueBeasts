@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "W": {
-      "tag": "minecraft:planks"
+      "item": "minecraft:planks"
     },
     "o": {
       "item": "antiquebeasts:gold_plate"
