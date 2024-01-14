@@ -89,7 +89,7 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.GLACIAL_CHASM, TerralithBiomeKeys.SNOWY_BADLANDS, TerralithBiomeKeys.ALPINE_GROVE,
                         TerralithBiomeKeys.WINTRY_FOREST,TerralithBiomeKeys.WINTRY_LOWLANDS, TerralithBiomeKeys.COLD_SHRUBLAND,
                         TerralithBiomeKeys.GRAVEL_DESERT),
-                SpawnGroup.CREATURE, ModEntities.HUSKARL, 15, 1, 2);
+                SpawnGroup.CREATURE, ModEntities.HUSKARL, 12, 1, 2);
         SpawnRestriction.register(ModEntities.HUSKARL, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
