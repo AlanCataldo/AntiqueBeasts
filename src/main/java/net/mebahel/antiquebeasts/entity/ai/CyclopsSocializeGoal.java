@@ -51,7 +51,7 @@ public class CyclopsSocializeGoal extends Goal {
 
     public boolean shouldContinue() {
         return this.socializeTimer > 0 && this.mate != null && this.cyclops.squaredDistanceTo(this.mate) > SOCIALIZE_DISTANCE &&
-                this.cyclops.getTarget() != null;
+                this.cyclops.getTarget() != null && this.mate.getTarget() != null;
     }
 
     public void tick() {
