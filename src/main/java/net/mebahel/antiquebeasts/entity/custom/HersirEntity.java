@@ -122,7 +122,7 @@ public class HersirEntity extends AnimalEntity implements GeoEntity {
         controllers.add(new AnimationController(this, "attacking", 0, this::attackPredicate).setSoundKeyframeHandler(state -> {
             PlayerEntity player = ClientUtils.getClientPlayer();
             if (player != null)
-                player.playSound(ModSounds.SWING, 1, 0.9f);
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.SWING, this.getSoundCategory(), 0.8f, 0.8f);
         }));
     }
     protected EntityNavigation createNavigation(World world) {

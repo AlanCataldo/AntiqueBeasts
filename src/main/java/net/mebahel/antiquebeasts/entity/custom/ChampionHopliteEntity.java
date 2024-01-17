@@ -113,7 +113,7 @@ public class ChampionHopliteEntity extends HopliteEntity implements GeoEntity {
         controllers.add(new AnimationController(this, "attacking", 0, this::attackPredicate).setSoundKeyframeHandler(state -> {
             PlayerEntity player = ClientUtils.getClientPlayer();
             if (player != null)
-                player.playSound(ModSounds.SWING, 1, 1.5f);
+                player.playSound(ModSounds.SWING, 0.5f, 1.5f);
         }));
     }
     protected EntityNavigation createNavigation(World world) {
