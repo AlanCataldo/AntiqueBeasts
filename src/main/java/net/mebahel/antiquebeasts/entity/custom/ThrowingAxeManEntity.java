@@ -97,7 +97,9 @@ public class ThrowingAxeManEntity extends AnimalEntity implements GeoEntity {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller",0, this::predicate));
         controllers.add(new AnimationController(this, "shooting", 0, this::shootingPredicate).setSoundKeyframeHandler(state -> {
-                this.playSound(ModSounds.SWING, 0.8f, 1.2f);
+            PlayerEntity player = ClientUtils.getClientPlayer();
+            if (player != null)
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.SWING, this.getSoundCategory(), 0.8f, 1.25f);
         }));
     }
 
@@ -122,9 +124,6 @@ public class ThrowingAxeManEntity extends AnimalEntity implements GeoEntity {
 
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
-    }
-    public void jumpPublic() {
-        this.jump();
     }
 
     @Override

@@ -115,7 +115,7 @@ public class EliteHopliteEntity extends HopliteEntity implements GeoEntity {
         controllers.add(new AnimationController(this, "attacking", 0, this::attackPredicate).setSoundKeyframeHandler(state -> {
             PlayerEntity player = ClientUtils.getClientPlayer();
             if (player != null)
-                player.playSound(ModSounds.SWING, 0.5f, 1.5f);
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.SWING, this.getSoundCategory(), 0.5f, 1.5f);
         }));
     }
 

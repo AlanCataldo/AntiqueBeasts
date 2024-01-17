@@ -164,12 +164,12 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
         controllers.add(new AnimationController(this, "attacking", 0, this::attackPredicate).setSoundKeyframeHandler(state -> {
             PlayerEntity player = ClientUtils.getClientPlayer();
             if (player != null)
-                player.playSound(ModSounds.CYCLOPS_HIT1, 0.5f, 1);
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.SWING, this.getSoundCategory(), 0.5f, 1f);
         }));
         controllers.add(new AnimationController(this, "shooting", 0, this::shootingPredicate).setSoundKeyframeHandler(state -> {
             PlayerEntity player = ClientUtils.getClientPlayer();
             if (player != null)
-                player.playSound(ModSounds.SWING, 0.5f, 0.6f);
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.SWING, this.getSoundCategory(), 0.5f, 0.6f);
         }));
     }
 
