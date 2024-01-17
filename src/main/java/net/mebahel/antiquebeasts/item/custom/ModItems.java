@@ -46,6 +46,16 @@ public class ModItems {
             new SpawnEggItem(ModEntities.HADES_CHOSEN,2563101, 13355979,
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
+    public static final Item HERSIR_SPAWN_EGG = registerItem("hersir_spawn_egg",
+            new SpawnEggItem(ModEntities.HERSIR,5062969, 8684678,
+                    new FabricItemSettings().group(ItemGroup.MISC)));
+    public static final Item HUSKARL_SPAWN_EGG = registerItem("huskarl_spawn_egg",
+            new SpawnEggItem(ModEntities.HUSKARL,5790044, 11046446,
+                    new FabricItemSettings().group(ItemGroup.MISC)));
+    public static final Item THROWING_AXEMAN_SPAWN_EGG = registerItem("throwing_axeman_spawn_egg",
+            new SpawnEggItem(ModEntities.THROWING_AXEMAN,5062969, 6900268,
+                    new FabricItemSettings().group(ItemGroup.MISC)));
+
     public static final Item FROST_SWORD = registerItem("frost_sword",
             new FrostSword(ModToolMaterial.FROST_WEAPON,6, -2.8f,
                     new FabricItemSettings().group(ItemGroup.COMBAT)));
@@ -67,9 +77,6 @@ public class ModItems {
 
     public static final Item CONCENTRATED_CYCLOPS_BLOOD = registerItem("concentrated_cyclops_blood",
             new ConcentratedCyclopsBloodItem(new FabricItemSettings().group(ItemGroup.FOOD)));
-
-    /*public static final Item CYCLOPS_EYE = registerItem("cyclops_eye",
-            new Item(new FabricItemSettings().group(ItemGroup.MISC)));*/
 
     public static final Item IRON_PLATE = registerItem("iron_plate",
             new Item(new FabricItemSettings().group(ItemGroup.MATERIALS)));
@@ -99,6 +106,25 @@ public class ModItems {
 
     public static final Item DIAMOND_PLATE = registerItem("diamond_plate",
             new Item(new FabricItemSettings().group(ItemGroup.MATERIALS)));
+
+    public static final Item HIGH_IRON_INGOT = registerItem("high_iron_ingot",
+            new Item(new FabricItemSettings().group(ItemGroup.MATERIALS)));
+    public static final Item HIGH_IRON_SCRAP = registerItem("high_iron_scrap",
+            new Item(new FabricItemSettings().group(ItemGroup.MATERIALS)));
+
+    public static final Item THROWING_AXE_ITEM = registerItem("weapon/throwing_axe_item",
+            new ThrowingAxeItem(ModToolMaterial.THROWING_AXE,4.5f, -2.8f,
+                    new FabricItemSettings().group(ItemGroup.COMBAT)));
+    public static final Item HERSIR_AXE = registerItem("weapon/hersir_axe",
+            new HersirAxe(ModToolMaterial.HERSIR_AXE,8, -3.25f,
+                    new FabricItemSettings().group(ItemGroup.COMBAT)));
+
+    public static final Item HIGH_IRON_SWORD = registerItem("weapon/high_iron_sword",
+            new SwordItem(ModToolMaterial.HIGH_IRON,4, -2.4f,
+                    new FabricItemSettings().group(ItemGroup.COMBAT)));
+
+    public static final Item HIGH_IRON_SHIELD = registerItem("shield/high_iron_shield",
+            new CustomShieldItem(new FabricItemSettings().maxDamage(750).group(ItemGroup.COMBAT)));
 
     public static final Item IRON_PLATE_HELMET = registerItem("iron_plate_helmet",
             new IronPlateArmorItem(ModArmorMaterials.IRON_PLATE, EquipmentSlot.HEAD, new FabricItemSettings().group(ItemGroup.COMBAT)));

@@ -33,10 +33,14 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.HERO_HOPLITE, HeroHopliteRenderer::new);
         EntityRendererRegistry.register(ModEntities.HADES_CHOSEN, HadesChosenRenderer::new);
         EntityRendererRegistry.register(ModEntities.HADES_SHADE, HadesShadeRenderer::new);
+        EntityRendererRegistry.register(ModEntities.HERSIR, HersirRenderer::new);
+        EntityRendererRegistry.register(ModEntities.HUSKARL, HuskarlRenderer::new);
+        EntityRendererRegistry.register(ModEntities.THROWING_AXEMAN, ThrowingAxeManRenderer::new);
         EntityRendererRegistry.register(ModEntities.THROWINGROCK, ThrowingRockRenderer::new);
         EntityRendererRegistry.register(ModEntities.HOPLITE_SPEAR, HopliteSpearRenderer::new);
         EntityRendererRegistry.register(ModEntities.HADES_CHOSEN_SPEAR, HadesChosenSpearRenderer::new);
         EntityRendererRegistry.register(ModEntities.THROWINGSNOWROCK, ThrowingSnowRockRenderer::new);
+        EntityRendererRegistry.register(ModEntities.THROWING_AXE, ThrowingAxeRenderer::new);
         EntityRendererRegistry.register(ModEntities.IRON_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "iron"));
         EntityRendererRegistry.register(ModEntities.DIAMOND_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "diamond"));
         EntityRendererRegistry.register(ModEntities.GOLD_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "gold"));

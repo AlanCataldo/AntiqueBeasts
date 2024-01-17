@@ -30,11 +30,13 @@ public class AntiqueBeasts implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ModEntities.HERO_HOPLITE, HeroHopliteEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.HADES_CHOSEN, HadesChosenEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.HADES_SHADE, HadesShadeEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.HERSIR, HersirEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.HUSKARL, HuskarlEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.THROWING_AXEMAN, ThrowingAxeManEntity.setAttributes());
 		ModSounds.registerSounds();
 		ModWorldGen.generateWorldGen();
 		ModItems.registerModItems();
 		ModParticles.registerParticles();
-		//ModBlockEntities.registerBlockEntities();
 		ModScreenHandlers.registerAllScreenHandlers();
 		ModRecipes.registerRecipes();
 		ModPotions.registerPotionRecipe();

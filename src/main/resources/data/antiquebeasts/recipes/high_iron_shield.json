@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "W": {
+      "item": "minecraft:spruce_planks"
+    },
+    "o": {
+      "item": "antiquebeasts:high_iron_ingot"
+    }
+  },
+  "pattern": [
+    "WoW",
+    "WWW",
+    " W "
+  ],
+  "result": {
+    "item": "antiquebeasts:shield/high_iron_shield"
+  }
+}

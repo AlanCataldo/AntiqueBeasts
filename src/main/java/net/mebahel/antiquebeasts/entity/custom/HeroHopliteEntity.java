@@ -3,6 +3,7 @@ package net.mebahel.antiquebeasts.entity.custom;
 import net.mebahel.antiquebeasts.entity.ai.HopliteMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.HopliteShootingGoal;
 import net.mebahel.antiquebeasts.entity.variant.HeroHopliteVariant;
+import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -19,6 +20,7 @@ import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Util;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -29,6 +31,7 @@ import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.SoundKeyframeEvent;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
@@ -170,10 +173,20 @@ public class HeroHopliteEntity extends HopliteEntity implements IAnimatable, IAn
         AnimationController<HeroHopliteEntity> controller1 = new AnimationController<>(this, "attacking", 0, this::attackPredicate);
         AnimationController<HeroHopliteEntity> controller2 = new AnimationController<>(this, "procedure", 0, this::procedurePredicate);
         AnimationController<HeroHopliteEntity> controller3 = new AnimationController<>(this, "shooting", 0, this::shootingPredicate);
+        controller1.registerSoundListener(this::soundListener);
+        controller3.registerSoundListener(this::soundListener);
         data.addAnimationController(controller);
         data.addAnimationController(controller1);
         data.addAnimationController(controller2);
         data.addAnimationController(controller3);
+    }
+    private <ENTITY extends IAnimatable> void soundListener(SoundKeyframeEvent<ENTITY> event) {
+        if (event.sound.matches("swing1")) {
+            if (this.world.isClient) {
+                this.getEntityWorld().playSound(this.getX(), this.getY(), this.getZ(), ModSounds.SWING,
+                        SoundCategory.HOSTILE, 1F, 1.5F, true);
+            }
+        }
     }
     @Override
     public AnimationFactory getFactory() {

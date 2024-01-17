@@ -133,10 +133,10 @@ public class FrostCyclopsEntity extends CyclopsEntity implements IAnimatable, IA
     }
 
     private <ENTITY extends IAnimatable> void soundListener(SoundKeyframeEvent<ENTITY> event) {
-        if (event.sound.matches("cyclops_hit1")) {
+        if (event.sound.matches("swing1")) {
             if (this.world.isClient) {
-                this.getEntityWorld().playSound(this.getX(), this.getY(), this.getZ(), ModSounds.CYCLOPS_HIT1,
-                        SoundCategory.HOSTILE, 0.65F, 1.0F, true);
+                this.getEntityWorld().playSound(this.getX(), this.getY(), this.getZ(), ModSounds.SWING,
+                        SoundCategory.HOSTILE, 1F, 0.65F, true);
             }
         }
     }

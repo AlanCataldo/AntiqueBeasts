@@ -51,36 +51,38 @@ public class CyclopsSocializeGoal extends Goal {
 
     public boolean shouldContinue() {
         return this.socializeTimer > 0 && this.mate != null && this.cyclops.squaredDistanceTo(this.mate) > SOCIALIZE_DISTANCE &&
-                this.cyclops.getTarget() != null;
+                this.cyclops.getTarget() != null && this.mate.getTarget() != null;
     }
 
     public void tick() {
-        if (this.cyclops.hasStatusEffect(this.potionEffect)) {
-            this.stop();
-        }
-        if (this.mate != null) {
+        if (this.cyclops.getTarget() == null && this.mate.getTarget() == null) {
+            if (this.cyclops.hasStatusEffect(this.potionEffect)) {
+                this.stop();
+            }
+            if (this.mate != null) {
 
-            double dx = this.mate.getX() - this.cyclops.getX();
-            double dy = this.mate.getY() - this.cyclops.getY();
-            double dz = this.mate.getZ() - this.cyclops.getZ();
+                double dx = this.mate.getX() - this.cyclops.getX();
+                double dy = this.mate.getY() - this.cyclops.getY();
+                double dz = this.mate.getZ() - this.cyclops.getZ();
 
-            double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-            dx /= distance;
-            dy /= distance;
-            dz /= distance;
+                double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                dx /= distance;
+                dy /= distance;
+                dz /= distance;
 
-            double targetX = this.mate.getX() - dx * SOCIALIZE_DISTANCE;
-            double targetY = this.mate.getY() - dy * SOCIALIZE_DISTANCE;
-            double targetZ = this.mate.getZ() - dz * SOCIALIZE_DISTANCE;
+                double targetX = this.mate.getX() - dx * SOCIALIZE_DISTANCE;
+                double targetY = this.mate.getY() - dy * SOCIALIZE_DISTANCE;
+                double targetZ = this.mate.getZ() - dz * SOCIALIZE_DISTANCE;
 
-            this.cyclops.getLookControl().lookAt(this.mate);
-            this.mate.getLookControl().lookAt(this.cyclops);
-            this.cyclops.getNavigation().startMovingTo(targetX, targetY, targetZ, 0.69f);
+                this.cyclops.getLookControl().lookAt(this.mate);
+                this.mate.getLookControl().lookAt(this.cyclops);
+                this.cyclops.getNavigation().startMovingTo(targetX, targetY, targetZ, 0.69f);
 
-            this.socializeTimer =  this.socializeTimer - 1;
-            if (this.socializeTimer == 0) {
-                this.cyclops.addStatusEffect(new StatusEffectInstance(this.potionEffect, 2400, 1));
-                this.mate.addStatusEffect(new StatusEffectInstance(this.potionEffect, 2400, 1));
+                this.socializeTimer =  this.socializeTimer - 1;
+                if (this.socializeTimer == 0) {
+                    this.cyclops.addStatusEffect(new StatusEffectInstance(this.potionEffect, 2400, 1));
+                    this.mate.addStatusEffect(new StatusEffectInstance(this.potionEffect, 2400, 1));
+                }
             }
         }
     }

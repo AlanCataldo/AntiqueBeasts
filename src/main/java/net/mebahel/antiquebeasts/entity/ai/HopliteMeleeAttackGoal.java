@@ -25,7 +25,7 @@ public class HopliteMeleeAttackGoal extends Goal {
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
     }
     public boolean canStart() {
-        long l = this.mob.world.getTime();
+        long l = this.mob.getWorld().getTime();
         if (l - this.lastUpdateTime < MAX_COOLDOWN) {
             return false;
         } else {
@@ -51,11 +51,11 @@ public class HopliteMeleeAttackGoal extends Goal {
     }
     public void start() {
         this.mob.setAttacking(true);
-        this.cooldown = MAX_COOLDOWN + 8;
     }
     public void stop() {
         this.mob.setAttacking(false);
         this.mob.setSwinging(false);
+        this.mob.getNavigation().stop();
     }
     public boolean shouldRunEveryTick() {
         return true;
@@ -64,26 +64,36 @@ public class HopliteMeleeAttackGoal extends Goal {
         LivingEntity livingEntity = this.mob.getTarget();
         if (livingEntity != null) {
             this.mob.getLookControl().lookAt(livingEntity, 15.0F, 15.0F);
-            double d = this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
-            this.attack(livingEntity, d);
-            this.cooldown = Math.max(this.cooldown - 1, 0);
+            this.attack(livingEntity);
         } else {
-            this.cooldown = MAX_COOLDOWN;
+            this.stop();
         }
     }
-    protected void attack(LivingEntity target, double squaredDistance) {
+    protected void attack(LivingEntity target) {
+        double squaredDistance = this.mob.squaredDistanceTo(target.getX(), target.getY(), target.getZ());
+        double d = this.getSquaredMaxAttackDistance(target);
+
         rand = random();
         if (rand < 0.5)
             this.mob.setAttackName("attack");
         else
             this.mob.setAttackName("attack2");
+
         if (!this.mob.isSwinging())
             this.mob.getNavigation().startMovingTo(target, this.speed);
         else
             this.mob.getNavigation().stop();
-        double d = this.getSquaredMaxAttackDistance(target);
+
+        if (squaredDistance > d) {
+            this.cooldown = MAX_COOLDOWN + 2;
+            this.mob.setSwinging(false);
+        } else {
+            this.cooldown = Math.max(this.cooldown - 1, 0);
+        }
+
         if (squaredDistance <= d && this.cooldown == 0) {
-            this.cooldown = MAX_COOLDOWN;
+            this.cooldown = MAX_COOLDOWN + 2;
+            this.mob.setSwinging(false);
         } else if (squaredDistance <= d && this.cooldown == 20) {
             if (Objects.equals(this.mob.getAttackName(), "attack")
                     && Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).getValue() == 0.5f)
@@ -92,11 +102,8 @@ public class HopliteMeleeAttackGoal extends Goal {
                     && Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).getValue() == 1.5f)
                 Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(0.5f);
             this.mob.setSwinging(true);
-        } else if (squaredDistance <= d && this.cooldown == 12) {
+        } else if (squaredDistance <= d && this.cooldown == 12 && this.mob.isSwinging()) {
             this.mob.tryAttack(target);
-        }
-        if (squaredDistance > d) {
-            this.mob.setSwinging(false);
         }
     }
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {

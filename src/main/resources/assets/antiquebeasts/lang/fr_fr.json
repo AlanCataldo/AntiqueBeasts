@@ -6,6 +6,9 @@
   "entity.antiquebeasts.hades_shade": "Ombre d'Hadès",
   "entity.antiquebeasts.cyclops": "Cyclope",
   "entity.antiquebeasts.frost_cyclops": "Cyclope de glace",
+  "entity.antiquebeasts.hersir": "Hersir",
+  "entity.antiquebeasts.throwing_axeman": "Lanceur de hache",
+
   "item.antiquebeasts.cyclops_spawn_egg": "Oeuf d'apparition de cyclope",
   "item.antiquebeasts.frost-cyclops_spawn_egg": "Oeuf d'apparition de cyclope de glace",
   "item.antiquebeasts.champion_hoplite_spawn_egg": "Oeuf d'apparition d'hoplite champion",
@@ -13,6 +16,10 @@
   "item.antiquebeasts.hero_hoplite_spawn_egg": "Oeuf d'apparition d'hoplite héro",
   "item.antiquebeasts.hades_chosen_spawn_egg": "Oeuf d'apparition d'Élu d'Hadès",
   "item.antiquebeasts.hades_shade_spawn_egg": "Oeuf d'apparition d'Ombre d'Hadès",
+  "item.antiquebeasts.hersir_spawn_egg": "Oeuf d'apparition d'Hersir",
+  "item.antiquebeasts.huskarl_spawn_egg": "Oeuf d'apparition d'Huskarl",
+  "item.antiquebeasts.throwing_axeman_spawn_egg": "Oeuf d'apparition de Lanceur de hache",
+
   "item.antiquebeasts.throwingrock": "Rocher de lancer",
   "item.antiquebeasts.raw_cyclops_meat": "Viande de cyclope crue",
   "item.antiquebeasts.cooked_cyclops_meat": "Viande de cyclope cuite",
@@ -55,9 +62,11 @@
   "item.antiquebeasts.weapon.gold_hoplite_spear": "Lance de combat en or",
   "item.antiquebeasts.weapon.diamond_hoplite_spear": "Lance de combat en diamant",
   "item.antiquebeasts.weapon.netherite_hoplite_spear": "Lance de combat en netherite",
-  "item.antiquebeasts.weapon.iron_hoplite_spear_2d": "Lance de combat en fer",
-  "item.antiquebeasts.weapon.gold_hoplite_spear_2d": "Lance de combat en or",
-  "item.antiquebeasts.weapon.diamond_hoplite_spear_2d": "Lance de combat en diamant",
-  "item.antiquebeasts.weapon.netherite_hoplite_spear_2d": "Lance de combat en netherite",
-  "item.antiquebeasts.netherite_hoplite_spear.tooltip": "Cette lance inflige Wither"
+  "item.antiquebeasts.netherite_hoplite_spear.tooltip": "Cette lance inflige Wither",
+  "item.antiquebeasts.high_iron_ingot": "Lingot de Haut Fer",
+  "item.antiquebeasts.high_iron_scrap": "Fragement de Haut Fer",
+  "item.antiquebeasts.weapon.throwing_axe_item": "Hache de lancer en haut fer",
+  "item.antiquebeasts.weapon.hersir_axe": "Hache Lourde en haut fer",
+  "item.antiquebeasts.weapon.high_iron_sword": "Épée en haut fer",
+  "item.antiquebeasts.shield.high_iron_shield": "Bouclier en haut fer"
 }

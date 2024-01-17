@@ -85,4 +85,24 @@ public class ModEntities {
             Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "netherite_throwing_hoplite_spear"),
             FabricEntityTypeBuilder.<ThrowingHopliteSpearEntity>create(SpawnGroup.MISC, ThrowingHopliteSpearEntity::new)
                     .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+
+    public static final EntityType<ThrowingAxeEntity> THROWING_AXE = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "throwing_axe"),
+            FabricEntityTypeBuilder.<ThrowingAxeEntity>create(SpawnGroup.MISC, ThrowingAxeEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+
+    public static final EntityType<HersirEntity> HERSIR = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "hersir"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HersirEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
+
+    public static final EntityType<HuskarlEntity> HUSKARL = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "huskarl"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HuskarlEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
+
+    public static final EntityType<ThrowingAxeManEntity> THROWING_AXEMAN = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "throwing_axeman"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ThrowingAxeManEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
 }

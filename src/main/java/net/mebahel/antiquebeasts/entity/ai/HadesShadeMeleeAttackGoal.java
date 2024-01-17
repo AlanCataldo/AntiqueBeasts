@@ -16,7 +16,6 @@ public class HadesShadeMeleeAttackGoal extends Goal {
 
     public HadesShadeMeleeAttackGoal(HadesShadeEntity mob) {
         this.mob = mob;
-        this.cooldown = MAX_COOLDOWN + 8;
         this.setControls(EnumSet.of(Control.MOVE));
     }
     public boolean canStart() {
@@ -32,6 +31,7 @@ public class HadesShadeMeleeAttackGoal extends Goal {
         Vec3d vec3d = livingEntity.getEyePos();
         this.mob.getMoveControl().moveTo(vec3d.x, vec3d.y, vec3d.z, 1.0);
         this.mob.setAttacking(true);
+        this.cooldown = MAX_COOLDOWN + 4;
     }
     public void stop() {
         this.mob.setAttacking(false);
@@ -50,25 +50,29 @@ public class HadesShadeMeleeAttackGoal extends Goal {
                 this.mob.getMoveControl().moveTo(vec3d.x, vec3d.y - 1, vec3d.z, 1);
             }
             this.mob.getLookControl().lookAt(livingEntity);
-            double d = this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
-            this.attack(livingEntity, d);
-            this.cooldown = Math.max(this.cooldown - 1, 0);
+            this.attack(livingEntity);
         } else {
-            this.cooldown = MAX_COOLDOWN;
+            this.stop();
         }
     }
-    protected void attack(LivingEntity target, double squaredDistance) {
+    protected void attack(LivingEntity target) {
+        double squaredDistance = this.mob.squaredDistanceTo(target.getX(), target.getY(), target.getZ());
         double d = this.getSquaredMaxAttackDistance(target);
+
+        if (squaredDistance > d) {
+            this.cooldown = MAX_COOLDOWN + 2;
+            this.mob.setSwinging(false);
+        } else {
+            this.cooldown = Math.max(this.cooldown - 1, 0);
+        }
+
         if (squaredDistance <= d && this.cooldown == 0) {
-            this.cooldown = MAX_COOLDOWN;
+            this.cooldown = MAX_COOLDOWN + 2;
+            this.mob.setSwinging(false);
         } else if (squaredDistance <= d && this.cooldown == 20) {
             this.mob.setSwinging(true);
-        } else if (squaredDistance <= d && this.cooldown == 10) {
-            if (this.mob.tryAttack(target))
-                target.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 6 * 20, 0));
-        }
-        if (squaredDistance > d) {
-            this.mob.setSwinging(false);
+        } else if (squaredDistance <= d && this.cooldown == 10 && this.mob.isSwinging()) {
+            this.mob.tryAttack(target);
         }
     }
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {

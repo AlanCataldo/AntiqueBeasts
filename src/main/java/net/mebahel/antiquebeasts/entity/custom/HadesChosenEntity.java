@@ -16,6 +16,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -24,6 +25,7 @@ import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.SoundKeyframeEvent;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
@@ -165,10 +167,20 @@ public class HadesChosenEntity extends HostileEntity implements IAnimatable, IAn
         AnimationController<HadesChosenEntity> controller1 = new AnimationController<>(this, "attacking", 0, this::attackPredicate);
         AnimationController<HadesChosenEntity> controller2 = new AnimationController<>(this, "procedure", 0, this::procedurePredicate);
         AnimationController<HadesChosenEntity> controller3 = new AnimationController<>(this, "shooting", 0, this::shootingPredicate);
+        controller1.registerSoundListener(this::soundListener);
+        controller3.registerSoundListener(this::soundListener);
         data.addAnimationController(controller);
         data.addAnimationController(controller1);
         data.addAnimationController(controller2);
         data.addAnimationController(controller3);
+    }
+    private <ENTITY extends IAnimatable> void soundListener(SoundKeyframeEvent<ENTITY> event) {
+        if (event.sound.matches("swing1")) {
+            if (this.world.isClient) {
+                this.getEntityWorld().playSound(this.getX(), this.getY(), this.getZ(), ModSounds.SWING,
+                        SoundCategory.HOSTILE, 1F, 1.5F, true);
+            }
+        }
     }
     @Override
     public AnimationFactory getFactory() {

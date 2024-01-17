@@ -205,16 +205,10 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
     }
 
     private <ENTITY extends IAnimatable> void soundListener(SoundKeyframeEvent<ENTITY> event) {
-        if (event.sound.matches("cyclops_hit1")) {
+        if (event.sound.matches("swing1")) {
             if (this.world.isClient) {
-                this.getEntityWorld().playSound(this.getX(), this.getY(), this.getZ(), ModSounds.CYCLOPS_HIT1,
-                        SoundCategory.HOSTILE, 1F, 1.0F, true);
-            }
-        }
-        if (event.sound.matches("cyclops_hurt2")) {
-            if (this.world.isClient) {
-                this.getEntityWorld().playSound(this.getX(), this.getY(), this.getZ(), ModSounds.CYCLOPS_HURT2,
-                        SoundCategory.HOSTILE, 0.75F, 1.0F, true);
+                this.getEntityWorld().playSound(this.getX(), this.getY(), this.getZ(), ModSounds.SWING,
+                        SoundCategory.HOSTILE, 1F, 0.65F, true);
             }
         }
     }

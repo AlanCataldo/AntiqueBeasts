@@ -1,11 +1,14 @@
 {
-  "entity.antiquebeasts.elite_hoplite": "Elite hoplite",
-  "entity.antiquebeasts.champion_hoplite": "Champion hoplite",
-  "entity.antiquebeasts.hero_hoplite": "Hero hoplite",
-  "entity.antiquebeasts.hades_chosen": "Hades chosen",
-  "entity.antiquebeasts.hades_shade": "Hades shade",
+  "entity.antiquebeasts.elite_hoplite": "Elite Hoplite",
+  "entity.antiquebeasts.champion_hoplite": "Champion Hoplite",
+  "entity.antiquebeasts.hero_hoplite": "Hero Hoplite",
+  "entity.antiquebeasts.hades_chosen": "Hades Chosen",
+  "entity.antiquebeasts.hades_shade": "Hades Shade",
   "entity.antiquebeasts.cyclops": "Cyclops",
   "entity.antiquebeasts.frost_cyclops": "Frost cyclops",
+  "entity.antiquebeasts.hersir": "Hersir",
+  "entity.antiquebeasts.throwing_axeman": "Throwing Axeman",
+
   "item.antiquebeasts.cyclops_spawn_egg": "Cyclops spawn egg",
   "item.antiquebeasts.frost-cyclops_spawn_egg": "Frost cyclops spawn egg",
   "item.antiquebeasts.champion_hoplite_spawn_egg": "Champion hoplite spawn egg",
@@ -13,6 +16,10 @@
   "item.antiquebeasts.hero_hoplite_spawn_egg": "Hero hoplite spawn egg",
   "item.antiquebeasts.hades_chosen_spawn_egg": "Hades chosen spawn egg",
   "item.antiquebeasts.hades_shade_spawn_egg": "Hades shade spawn egg",
+  "item.antiquebeasts.hersir_spawn_egg": "Hersir spawn egg",
+  "item.antiquebeasts.huskarl_spawn_egg": "Huskarl spawn egg",
+  "item.antiquebeasts.throwing_axeman_spawn_egg": "Throwing Axeman spawn egg",
+
   "item.antiquebeasts.throwingrock": "Throwing rock",
   "item.antiquebeasts.raw_cyclops_meat": "Raw cyclops meat",
   "item.antiquebeasts.cooked_cyclops_meat": "Cooked cyclops meat",
@@ -56,8 +63,10 @@
   "item.antiquebeasts.weapon.diamond_hoplite_spear": "Diamond throwing spear",
   "item.antiquebeasts.weapon.netherite_hoplite_spear": "Netherite throwing spear",
   "item.antiquebeasts.netherite_hoplite_spear.tooltip": "This spear inflicts Wither",
-  "item.antiquebeasts.weapon.iron_hoplite_spear_2d": "Iron throwing spear",
-  "item.antiquebeasts.weapon.gold_hoplite_spear_2d": "Gold throwing spear",
-  "item.antiquebeasts.weapon.diamond_hoplite_spear_2d": "Diamond throwing spear",
-  "item.antiquebeasts.weapon.netherite_hoplite_spear_2d": "Netherite throwing spear"
+  "item.antiquebeasts.high_iron_ingot": "High Iron Ingot",
+  "item.antiquebeasts.high_iron_scrap": "High Iron Scrap",
+  "item.antiquebeasts.weapon.throwing_axe_item": "High Iron Throwing axe",
+  "item.antiquebeasts.weapon.hersir_axe": "High Iron Heavy Axe",
+  "item.antiquebeasts.weapon.high_iron_sword": "High Iron Sword",
+  "item.antiquebeasts.shield.high_iron_shield": "High Iron Shield"
 }
