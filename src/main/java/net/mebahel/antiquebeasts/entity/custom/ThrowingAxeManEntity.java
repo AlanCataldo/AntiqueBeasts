@@ -5,10 +5,7 @@ import net.mebahel.antiquebeasts.entity.ai.ThrowingAxeManShootingGoal;
 import net.mebahel.antiquebeasts.entity.variant.ChampionHopliteVariant;
 import net.mebahel.antiquebeasts.entity.variant.ThrowingAxeManVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
@@ -27,6 +24,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Util;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -35,6 +33,7 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
@@ -83,6 +82,17 @@ public class ThrowingAxeManEntity extends AnimalEntity implements GeoEntity {
             return PlayState.CONTINUE;
         }
         return PlayState.CONTINUE;
+    }
+
+    private boolean shouldDespawnInPeaceful() {
+        return this.getWorld().getDifficulty() == Difficulty.PEACEFUL;
+    }
+
+    public void tick() {
+        super.tick();
+        if (shouldDespawnInPeaceful()) {
+            remove(Entity.RemovalReason.DISCARDED);
+        }
     }
 
     private PlayState shootingPredicate(AnimationState state) {

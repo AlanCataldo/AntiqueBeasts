@@ -8,16 +8,11 @@
   "placement": {
     "type": "minecraft:random_spread",
     "salt": 1024489314,
-    "exclusion_zone": [
-      {
-      "other_set":"minecraft:fortress",
-      "chunk_count": 10
-      },
-      {
-        "other_set":"minecraft:bastion_remnant",
-        "chunk_count": 10
-      }
-    ],
+    "exclusion_zone":
+    {
+      "other_set":"minecraft:nether_complexes",
+      "chunk_count": 8
+    },
     "spacing": 48,
     "separation": 24
   }

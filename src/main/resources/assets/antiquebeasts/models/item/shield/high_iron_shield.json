@@ -296,8 +296,8 @@
 			"scale": [0.7, 0.7, 0.7]
 		},
 		"fixed": {
-			"rotation": [0, 0, 180],
-			"translation": [-0.25, -10, 0]
+			"rotation": [0, -90, 180],
+			"translation": [-0.25, 9.75, 0.75]
 		}
 	},
 	"groups": [

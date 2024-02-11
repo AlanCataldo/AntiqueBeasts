@@ -1,19 +1,19 @@
 {
   "structures": [
     {
-      "structure": "antiquebeasts:ext_cyclops_cave",
+      "structure": "antiquebeasts:norse_farmer_camp",
       "weight": 1
     }
   ],
   "placement": {
     "type": "minecraft:random_spread",
-    "salt": 31321488,
+    "salt": 86321489,
     "exclusion_zone":
     {
       "other_set":"minecraft:villages",
       "chunk_count": 8
     },
-    "spacing": 24,
-    "separation": 10
+    "spacing": 42,
+    "separation": 20
   }
 }

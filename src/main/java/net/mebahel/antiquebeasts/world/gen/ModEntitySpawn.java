@@ -67,7 +67,7 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.GLACIAL_CHASM, TerralithBiomeKeys.SNOWY_BADLANDS, TerralithBiomeKeys.ALPINE_GROVE,
                         TerralithBiomeKeys.WINTRY_FOREST,TerralithBiomeKeys.WINTRY_LOWLANDS, TerralithBiomeKeys.COLD_SHRUBLAND,
                         TerralithBiomeKeys.GRAVEL_DESERT),
-                SpawnGroup.CREATURE, ModEntities.HERSIR, 15, 1, 2);
+                SpawnGroup.CREATURE, ModEntities.HERSIR, 20, 1, 2);
         SpawnRestriction.register(ModEntities.HERSIR, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
@@ -161,6 +161,7 @@ public class ModEntitySpawn {
                     }
                     return ChampionHopliteEntity.canMobSpawn(type, world, spawnReason, pos, random);
                 });
+
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                         BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST,
                         BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
@@ -186,7 +187,7 @@ public class ModEntitySpawn {
                 BiomeKeys.BASALT_DELTAS, BiomeKeys.SOUL_SAND_VALLEY, BiomeKeys.NETHER_WASTES,
                         IncendiumBiomeKeys.ASH_BARRENS, IncendiumBiomeKeys.QUARTZ_FLATS, IncendiumBiomeKeys.WEEPING_VALLEY,
                         IncendiumBiomeKeys.WITHERED_FOREST, IncendiumBiomeKeys.VOLCANIC_DELTAS),
-                SpawnGroup.MONSTER, ModEntities.HADES_SHADE, 15, 1, 1);
+                SpawnGroup.MONSTER, ModEntities.HADES_SHADE, 9, 1, 1);
         SpawnRestriction.register(ModEntities.HADES_SHADE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
