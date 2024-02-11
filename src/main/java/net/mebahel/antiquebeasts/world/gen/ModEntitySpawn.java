@@ -186,7 +186,7 @@ public class ModEntitySpawn {
                 BiomeKeys.BASALT_DELTAS, BiomeKeys.SOUL_SAND_VALLEY, BiomeKeys.NETHER_WASTES,
                         IncendiumBiomeKeys.ASH_BARRENS, IncendiumBiomeKeys.QUARTZ_FLATS, IncendiumBiomeKeys.WEEPING_VALLEY,
                         IncendiumBiomeKeys.WITHERED_FOREST, IncendiumBiomeKeys.VOLCANIC_DELTAS),
-                SpawnGroup.MONSTER, ModEntities.HADES_SHADE, 15, 1, 1);
+                SpawnGroup.MONSTER, ModEntities.HADES_SHADE, 9, 1, 1);
         SpawnRestriction.register(ModEntities.HADES_SHADE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {

@@ -25,7 +25,7 @@ public class HuskarlModel extends AnimatedGeoModel<HuskarlEntity> {
                 map.put(HersirVariant.DEFAULT,
                         new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/huskarl1_texture.png"));
                 map.put(HersirVariant.CLOAK,
-                        new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/huskarl1_texture.png"));
+                        new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/huskarl2_texture.png"));
             });
     @Override
     public Identifier getModelResource(HuskarlEntity object) {

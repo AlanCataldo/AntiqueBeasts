@@ -5,10 +5,7 @@ import net.mebahel.antiquebeasts.entity.ai.ThrowingAxeManShootingGoal;
 import net.mebahel.antiquebeasts.entity.variant.EliteHopliteVariant;
 import net.mebahel.antiquebeasts.entity.variant.ThrowingAxeManVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
@@ -29,6 +26,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Util;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -86,6 +84,17 @@ public class ThrowingAxeManEntity extends AnimalEntity implements IAnimatable, I
     public ThrowingAxeManEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
+    }
+
+    private boolean shouldDespawnInPeaceful() {
+        return this.world.getDifficulty() == Difficulty.PEACEFUL;
+    }
+
+    public void tick() {
+        super.tick();
+        if (shouldDespawnInPeaceful()) {
+            remove(Entity.RemovalReason.DISCARDED);
+        }
     }
 
     @Override

@@ -8,28 +8,11 @@
   "placement": {
     "type": "minecraft:random_spread",
     "salt": 86321488,
-    "exclusion_zone": [
-      {
+    "exclusion_zone":
+    {
       "other_set":"minecraft:villages",
-      "chunk_count": 4
-      },
-      {
-        "other_set":"minecraft:woodland_mansions",
-        "chunk_count": 4
-      },
-      {
-        "other_set":"minecraft:ruined_portals",
-        "chunk_count": 4
-      },
-      {
-        "other_set":"minecraft:pillager_outposts",
-        "chunk_count": 4
-      },
-      {
-        "other_set":"antiquebeasts:ext_cyclops_cave",
-        "chunk_count": 3
-      }
-    ],
+      "chunk_count": 8
+    },
     "spacing": 42,
     "separation": 20
   }

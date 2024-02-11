@@ -52,7 +52,7 @@
         {
           "type": "minecraft:item",
           "name": "antiquebeasts:weapon/hersir_axe",
-          "weight": 29,
+          "weight": 49,
           "functions": [
             {
               "add": false,

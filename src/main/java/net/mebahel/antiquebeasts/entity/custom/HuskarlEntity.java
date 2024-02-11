@@ -4,10 +4,7 @@ import net.mebahel.antiquebeasts.entity.ai.HuskarlMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.variant.EliteHopliteVariant;
 import net.mebahel.antiquebeasts.entity.variant.HersirVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -26,6 +23,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Util;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -72,6 +70,17 @@ public class HuskarlEntity extends AnimalEntity implements IAnimatable, IAnimati
     @Override
     public int tickTimer() {
         return age;
+    }
+
+    private boolean shouldDespawnInPeaceful() {
+        return this.world.getDifficulty() == Difficulty.PEACEFUL;
+    }
+
+    public void tick() {
+        super.tick();
+        if (shouldDespawnInPeaceful()) {
+            remove(Entity.RemovalReason.DISCARDED);
+        }
     }
 
     protected void initDataTracker() {
