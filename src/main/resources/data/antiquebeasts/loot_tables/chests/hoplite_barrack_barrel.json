@@ -28,7 +28,7 @@
             }
           ],
           "name": "minecraft:mutton",
-          "weight": 30
+          "weight": 35
         },
         {
           "type": "minecraft:item",
@@ -44,7 +44,7 @@
             }
           ],
           "name": "minecraft:bread",
-          "weight": 25
+          "weight": 30
         },
         {
           "type": "minecraft:item",
@@ -60,7 +60,7 @@
             }
           ],
           "name": "minecraft:melon_slice",
-          "weight": 25
+          "weight": 30
         },
         {
           "type": "minecraft:item",
@@ -76,7 +76,7 @@
             }
           ],
           "name": "minecraft:potato",
-          "weight": 20
+          "weight": 30
         },
         {
           "type": "minecraft:item",
@@ -92,7 +92,7 @@
             }
           ],
           "name": "minecraft:baked_potato",
-          "weight": 20
+          "weight": 25
         },
         {
           "type": "minecraft:item",
@@ -108,7 +108,7 @@
             }
           ],
           "name": "minecraft:carrot",
-          "weight": 20
+          "weight": 30
         },
         {
           "type": "minecraft:item",
@@ -124,13 +124,13 @@
             }
           ],
           "name": "antiquebeasts:raw_cyclops_meat",
-          "weight": 20
+          "weight": 12
         }
       ],
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 6.0,
-        "min": 6.0
+        "max": 5.0,
+        "min": 4.0
       }
     }
   ]
