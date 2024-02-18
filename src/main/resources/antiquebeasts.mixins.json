@@ -7,10 +7,10 @@
     "FireDamageMixin",
     "ShieldDurabilityMixin",
     "ShieldSoundMixin",
-    "WitherDamageMixin"
+    "WitherDamageMixin",
+    "BrewingRecipeRegistryMixin"
   ],
   "client": [
-    "BrewingRecipeRegistryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

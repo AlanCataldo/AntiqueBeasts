@@ -47,7 +47,6 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.NETHERITE_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "netherite"));
         ParticleFactoryRegistry.getInstance().register(ModParticles.ROCKSPLASH_PARTICLE, RockSplashParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.SNOWROCKSPLASH_PARTICLE, SnowRockSplashParticle.Factory::new);
-        HandledScreens.register(ModScreenHandlers.BLOOD_INFUSING_STATION_SCREEN_HANDLER, BloodInfusingStationScreen::new);
         GeoArmorRenderer.registerArmorRenderer(new IronPlateArmorRenderer(), ModItems.IRON_PLATE_BOOTS,
                 ModItems.IRON_PLATE_LEGGINGS, ModItems.IRON_PLATE_CHESTPLATE, ModItems.IRON_PLATE_HELMET);
         GeoArmorRenderer.registerArmorRenderer(new GoldPlateArmorRenderer(), ModItems.GOLD_PLATE_BOOTS,
