@@ -1,0 +1,21 @@
+package net.mebahel.antiquebeasts.entity.client.custom;
+
+import net.mebahel.antiquebeasts.entity.custom.EinherjarEntity;
+import net.mebahel.antiquebeasts.entity.custom.HuskarlEntity;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
+
+public class EinherjarRenderer extends GeoEntityRenderer<EinherjarEntity> {
+    public EinherjarRenderer(EntityRendererFactory.Context renderManager) {
+        super(renderManager, new EinherjarModel());
+        this.shadowRadius = 0.25f;
+    }
+    @Override
+    public RenderLayer getRenderType(EinherjarEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {
+        return super.getRenderType(animatable, texture, bufferSource, partialTick);
+    }
+}

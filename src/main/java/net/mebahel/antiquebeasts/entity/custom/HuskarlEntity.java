@@ -1,6 +1,5 @@
 package net.mebahel.antiquebeasts.entity.custom;
 
-import net.mebahel.antiquebeasts.entity.ai.HersirMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.HuskarlMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.variant.HersirVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
@@ -32,8 +31,8 @@ import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
@@ -42,7 +41,7 @@ import javax.annotation.Nullable;
 import static java.lang.Math.random;
 
 
-public class HuskarlEntity extends AnimalEntity implements GeoEntity {
+public class HuskarlEntity extends NorseEntity implements GeoEntity {
     double rand;
     public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(HuskarlEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);

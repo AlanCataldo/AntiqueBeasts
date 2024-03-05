@@ -41,7 +41,7 @@ import javax.annotation.Nullable;
 import static java.lang.Math.random;
 
 
-public class HersirEntity extends AnimalEntity implements GeoEntity {
+public class HersirEntity extends NorseEntity implements GeoEntity {
     double rand;
     public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(HersirEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);

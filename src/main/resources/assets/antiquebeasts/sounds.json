@@ -12,7 +12,7 @@
     ]
   },
   "cyclops_hurt2": {
-    "subtitle": "antiquebeasts.cyclops_walk",
+    "subtitle": "antiquebeasts.cyclops_hurt2",
     "sounds": [
       "antiquebeasts:cyclops_hurt2"
     ]
@@ -249,6 +249,66 @@
     "subtitle": "antiquebeasts:throwing_axeman_attacking2",
     "sounds": [
       "antiquebeasts:throwing_axeman_attacking2"
+    ]
+  },
+  "einherjar_ambient1": {
+    "subtitle": "antiquebeasts:einherjar_ambient1",
+    "sounds": [
+      "antiquebeasts:einherjar_ambient1"
+    ]
+  },
+  "einherjar_ambient2": {
+    "subtitle": "antiquebeasts:einherjar_ambient2",
+    "sounds": [
+      "antiquebeasts:einherjar_ambient2"
+    ]
+  },
+  "einherjar_ambient3": {
+    "subtitle": "antiquebeasts:einherjar_ambient3",
+    "sounds": [
+      "antiquebeasts:einherjar_ambient3"
+    ]
+  },
+  "einherjar_ambient4": {
+    "subtitle": "antiquebeasts:einherjar_ambient4",
+    "sounds": [
+      "antiquebeasts:einherjar_ambient4"
+    ]
+  },
+  "einherjar_ambient5": {
+    "subtitle": "antiquebeasts:einherjar_ambient5",
+    "sounds": [
+      "antiquebeasts:einherjar_ambient5"
+    ]
+  },
+  "einherjar_ambient6": {
+    "subtitle": "antiquebeasts:einherjar_ambient5",
+    "sounds": [
+      "antiquebeasts:einherjar_ambient6"
+    ]
+  },
+  "einherjar_hurt1": {
+    "subtitle": "antiquebeasts:einherjar_hurt1",
+    "sounds": [
+      "antiquebeasts:einherjar_hurt1"
+    ]
+  },
+  "einherjar_hurt2": {
+    "subtitle": "antiquebeasts:einherjar_hurt2",
+    "sounds": [
+      "antiquebeasts:einherjar_hurt2"
+    ]
+  },
+  "einherjar_death1": {
+    "subtitle": "antiquebeasts:einherjar_death1",
+    "sounds": [
+      "antiquebeasts:einherjar_death1"
+    ]
+  },
+  "einherjar_horn": {
+    "subtitle": "antiquebeasts:einherjar_horn",
+    "sounds": [
+      "antiquebeasts:einherjar_horn"
     ]
   }
 }

@@ -18,11 +18,6 @@ public class CyclopsRenderer extends GeoEntityRenderer<CyclopsEntity> {
     }
 
     @Override
-    public Identifier getTextureLocation(CyclopsEntity animatable) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/cyclops_texture.png");
-    }
-
-    @Override
     public RenderLayer getRenderType(CyclopsEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
     }

@@ -18,6 +18,8 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static net.minecraft.registry.tag.InstrumentTags.SCREAMING_GOAT_HORNS;
+
 public class ModItems {
     public static final Item CYCLOPS_SPAWN_EGG = registerItem("cyclops_spawn_egg",
             new SpawnEggItem(ModEntities.CYCLOPS,10053120, 6821916,
@@ -49,12 +51,19 @@ public class ModItems {
     public static final Item THROWING_AXEMAN_SPAWN_EGG = registerItem("throwing_axeman_spawn_egg",
             new SpawnEggItem(ModEntities.THROWING_AXEMAN,5062969, 6900268,
                     new FabricItemSettings()));
+
+    public static final Item EINHERJAR_SPAWN_EGG = registerItem("einherjar_spawn_egg",
+            new SpawnEggItem(ModEntities.EINHERJAR,5062969, 11046446,
+                    new FabricItemSettings()));
     public static final Item FROST_SWORD = registerItem("frost_sword",
             new FrostSword(ModToolMaterial.FROST_WEAPON,6, -2.8f,
                     new FabricItemSettings()));
     public static final Item BLOOD_STAINED_FROST_SWORD = registerItem("blood_stained_frost_sword",
             new BloodStainedFrostSword(ModToolMaterial.FROST_WEAPON,7, -3f,
                     new FabricItemSettings()));
+
+    public static final Item EINHERJAR_HORN = registerItem("einherjar_horn",
+            new EinherjarHorn(new FabricItemSettings().maxDamage(7), SCREAMING_GOAT_HORNS));
     public static final Item FROST_SHARD = registerItem("frost_shard",
             new Item(new FabricItemSettings()));
     public static final Item CYCLOPS_BLOOD = registerItem("cyclops_blood",
@@ -162,6 +171,7 @@ public class ModItems {
         entries.add(HERSIR_SPAWN_EGG);
         entries.add(HUSKARL_SPAWN_EGG);
         entries.add(THROWING_AXEMAN_SPAWN_EGG);
+        entries.add(EINHERJAR_SPAWN_EGG);
     }
     public static void addItemToIngredientItemGroup(FabricItemGroupEntries entries) {
         entries.add(DIAMOND_PLATE);
@@ -208,6 +218,7 @@ public class ModItems {
         entries.add(HERSIR_AXE);
         entries.add(THROWING_AXE_ITEM);
         entries.add(HIGH_IRON_SWORD);
+        entries.add(EINHERJAR_HORN);
     }
 
 

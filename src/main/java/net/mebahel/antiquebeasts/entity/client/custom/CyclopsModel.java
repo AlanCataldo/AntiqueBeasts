@@ -1,23 +1,36 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
+import com.google.common.collect.Maps;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.entity.custom.ChampionHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.CyclopsEntity;
+import net.mebahel.antiquebeasts.entity.custom.EinherjarEntity;
+import net.mebahel.antiquebeasts.entity.variant.CyclopsVariant;
+import net.mebahel.antiquebeasts.entity.variant.EinherjarVariant;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
 import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.model.data.EntityModelData;
 
+import java.util.Map;
+
 public class CyclopsModel extends GeoModel<CyclopsEntity> {
+    public static final Map<CyclopsVariant, Identifier> LOCATION_BY_VARIANT =
+            Util.make(Maps.newEnumMap(CyclopsVariant.class), (map) -> {
+                map.put(CyclopsVariant.DEFAULT,
+                        new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/cyclops_texture.png"));
+                map.put(CyclopsVariant.CLOAK,
+                        new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/cyclops_texture1.png"));
+            });
     @Override
     public Identifier getModelResource(CyclopsEntity object) {
         return new Identifier(AntiqueBeasts.MOD_ID, "geo/cyclops.geo.json");
     }
-    @Override
-    public Identifier getTextureResource(CyclopsEntity object) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/cyclops_texture.png");
+    public Identifier getTextureResource(CyclopsEntity animatable) {
+        return LOCATION_BY_VARIANT.get(animatable.getVariant());
     }
     @Override
     public Identifier getAnimationResource(CyclopsEntity animatable) {

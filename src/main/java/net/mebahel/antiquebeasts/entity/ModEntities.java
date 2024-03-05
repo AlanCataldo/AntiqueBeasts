@@ -37,6 +37,11 @@ public class ModEntities {
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ThrowingAxeManEntity::new)
                     .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
 
+    public static final EntityType<EinherjarEntity> EINHERJAR = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "einherjar"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, EinherjarEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 2.49f)).build());
+
     public static final EntityType<ChampionHopliteEntity> CHAMPION_HOPLITE = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "champion_hoplite"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ChampionHopliteEntity::new)

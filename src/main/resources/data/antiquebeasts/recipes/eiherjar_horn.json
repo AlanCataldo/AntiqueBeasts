@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IIG",
+    "IHI",
+    "III"
+  ],
+  "key" : {
+    "I": {
+      "item" : "antiquebeasts:high_iron_ingot"
+    },
+    "H": {
+      "item" : "minecraft:goat_horn"
+    },
+    "G": {
+      "item" : "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:einherjar_horn"
+  }
+}

@@ -39,7 +39,7 @@ import software.bernie.geckolib.util.ClientUtils;
 
 import static java.lang.Math.random;
 
-public class ThrowingAxeManEntity extends AnimalEntity implements GeoEntity {
+public class ThrowingAxeManEntity extends NorseEntity implements GeoEntity {
     double rand;
     private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
 

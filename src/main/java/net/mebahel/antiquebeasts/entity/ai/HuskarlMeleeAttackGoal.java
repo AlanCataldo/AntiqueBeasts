@@ -77,25 +77,15 @@ public class HuskarlMeleeAttackGoal extends Goal {
     protected void attack(LivingEntity target) {
         double squaredDistance = this.mob.squaredDistanceTo(target.getX(), target.getY(), target.getZ());
         double d = this.getSquaredMaxAttackDistance(target);
+        this.cooldown = Math.max(this.cooldown - 1, 0);
+        this.mob.getNavigation().startMovingTo(target, this.speed);
 
-        if (!this.mob.isSwinging())
-            this.mob.getNavigation().startMovingTo(target, this.speed);
-        else
-            this.mob.getNavigation().stop();
-
-        if (squaredDistance > d) {
-            this.cooldown = MAX_COOLDOWN + 2;
-            this.mob.setSwinging(false);
-        } else {
-            this.cooldown = Math.max(this.cooldown - 1, 0);
-        }
-
-        if (squaredDistance <= d && this.cooldown == 0) {
+        if (this.cooldown == 0) {
             this.cooldown = MAX_COOLDOWN + 2;
             this.mob.setSwinging(false);
         } else if (squaredDistance <= d && this.cooldown == 20) {
             this.mob.setSwinging(true);
-        } else if (squaredDistance <= d && this.cooldown == 10 && this.mob.isSwinging()) {
+        } else if (squaredDistance <= d + 1 && this.cooldown == 10 && this.mob.isSwinging()) {
             this.mob.tryAttack(target);
         }
     }

@@ -8,6 +8,7 @@
   "entity.antiquebeasts.frost_cyclops": "Frost cyclops",
   "entity.antiquebeasts.hersir": "Hersir",
   "entity.antiquebeasts.throwing_axeman": "Throwing Axeman",
+  "entity.antiquebeasts.einherjar": "Einherjar",
 
   "item.antiquebeasts.cyclops_spawn_egg": "Cyclops spawn egg",
   "item.antiquebeasts.frost-cyclops_spawn_egg": "Frost cyclops spawn egg",
@@ -19,6 +20,7 @@
   "item.antiquebeasts.hersir_spawn_egg": "Hersir spawn egg",
   "item.antiquebeasts.huskarl_spawn_egg": "Huskarl spawn egg",
   "item.antiquebeasts.throwing_axeman_spawn_egg": "Throwing Axeman spawn egg",
+  "item.antiquebeasts.einherjar_spawn_egg": "Einherjar spawn egg",
 
   "item.antiquebeasts.throwingrock": "Throwing rock",
   "item.antiquebeasts.raw_cyclops_meat": "Raw cyclops meat",
@@ -68,5 +70,7 @@
   "item.antiquebeasts.weapon.throwing_axe_item": "High Iron Throwing axe",
   "item.antiquebeasts.weapon.hersir_axe": "High Iron Heavy Axe",
   "item.antiquebeasts.weapon.high_iron_sword": "High Iron Sword",
-  "item.antiquebeasts.shield.high_iron_shield": "High Iron Shield"
+  "item.antiquebeasts.shield.high_iron_shield": "High Iron Shield",
+  "item.antiquebeasts.einherjar_horn": "Einherjar Horn",
+  "item.antiquebeasts.einherjar_horn.tooltip": "War cry"
 }

@@ -1,6 +1,7 @@
 package net.mebahel.antiquebeasts.mixin;
 
 import net.mebahel.antiquebeasts.entity.custom.CyclopsEntity;
+import net.mebahel.antiquebeasts.entity.custom.EinherjarEntity;
 import net.mebahel.antiquebeasts.entity.custom.FrostCyclopsEntity;
 import net.mebahel.antiquebeasts.entity.custom.HersirEntity;
 import net.mebahel.antiquebeasts.item.CustomShieldItem;
@@ -44,7 +45,8 @@ public class ShieldDurabilityMixin {
                 }
                 if (attacker != null) {
                     ItemStack attackerItem = attacker.getMainHandStack();
-                    if (attackerItem.getItem() instanceof AxeItem || attacker instanceof HersirEntity || attacker instanceof CyclopsEntity) {
+                    if (attackerItem.getItem() instanceof AxeItem || attacker instanceof HersirEntity || attacker instanceof CyclopsEntity
+                            || attacker instanceof EinherjarEntity) {
                         player.getItemCooldownManager().set(activeItem.getItem(), 100);
                         player.clearActiveItem();
                         player.getWorld().sendEntityStatus(player, (byte)30);

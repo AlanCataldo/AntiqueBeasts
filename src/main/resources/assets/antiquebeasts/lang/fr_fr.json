@@ -8,6 +8,7 @@
   "entity.antiquebeasts.frost_cyclops": "Cyclope de glace",
   "entity.antiquebeasts.hersir": "Hersir",
   "entity.antiquebeasts.throwing_axeman": "Lanceur de hache",
+  "entity.antiquebeasts.einherjar": "Einherjar",
 
   "item.antiquebeasts.cyclops_spawn_egg": "Oeuf d'apparition de cyclope",
   "item.antiquebeasts.frost-cyclops_spawn_egg": "Oeuf d'apparition de cyclope de glace",
@@ -19,6 +20,7 @@
   "item.antiquebeasts.hersir_spawn_egg": "Oeuf d'apparition d'Hersir",
   "item.antiquebeasts.huskarl_spawn_egg": "Oeuf d'apparition d'Huskarl",
   "item.antiquebeasts.throwing_axeman_spawn_egg": "Oeuf d'apparition de Lanceur de hache",
+  "item.antiquebeasts.einherjar_spawn_egg": "Oeuf d'apparition d'Einherjar",
 
   "item.antiquebeasts.throwingrock": "Rocher de lancer",
   "item.antiquebeasts.raw_cyclops_meat": "Viande de cyclope crue",
@@ -68,5 +70,7 @@
   "item.antiquebeasts.weapon.throwing_axe_item": "Hache de lancer en haut fer",
   "item.antiquebeasts.weapon.hersir_axe": "Hache Lourde en haut fer",
   "item.antiquebeasts.weapon.high_iron_sword": "Épée en haut fer",
-  "item.antiquebeasts.shield.high_iron_shield": "Bouclier en haut fer"
+  "item.antiquebeasts.shield.high_iron_shield": "Bouclier en haut fer",
+  "item.antiquebeasts.einherjar_horn": "Corne d'Einherjar",
+  "item.antiquebeasts.einherjar_horn.tooltip": "Cri de guerre"
 }
