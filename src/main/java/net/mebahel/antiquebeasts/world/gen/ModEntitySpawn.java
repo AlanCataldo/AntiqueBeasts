@@ -90,7 +90,7 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.GLACIAL_CHASM, TerralithBiomeKeys.SNOWY_BADLANDS, TerralithBiomeKeys.ALPINE_GROVE,
                         TerralithBiomeKeys.WINTRY_FOREST,TerralithBiomeKeys.WINTRY_LOWLANDS, TerralithBiomeKeys.COLD_SHRUBLAND,
                         TerralithBiomeKeys.GRAVEL_DESERT),
-                SpawnGroup.CREATURE, ModEntities.EINHERJAR, 6, 1, 2);
+                SpawnGroup.CREATURE, ModEntities.EINHERJAR, 6, 1, 1);
         SpawnRestriction.register(ModEntities.EINHERJAR, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
