@@ -14,13 +14,9 @@ import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.particle.custom.RockSplashParticle;
 import net.mebahel.antiquebeasts.particle.custom.SnowRockSplashParticle;
-import net.mebahel.antiquebeasts.screen.BloodInfusingStationScreen;
-import net.mebahel.antiquebeasts.screen.ModScreenHandlers;
+import net.mebahel.antiquebeasts.util.HornModelPredicate;
 import net.mebahel.antiquebeasts.util.ShieldModelPredicate;
 import net.mebahel.antiquebeasts.util.SpearModelPredicate;
-import net.minecraft.client.gui.screen.ingame.HandledScreens;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.render.entity.EntityRendererFactory;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 public class AntiqueBeastsClient implements ClientModInitializer {
@@ -41,6 +37,8 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.HADES_CHOSEN_SPEAR, HadesChosenSpearRenderer::new);
         EntityRendererRegistry.register(ModEntities.THROWINGSNOWROCK, ThrowingSnowRockRenderer::new);
         EntityRendererRegistry.register(ModEntities.THROWING_AXE, ThrowingAxeRenderer::new);
+        EntityRendererRegistry.register(ModEntities.EINHERJAR, EinherjarRenderer::new);
+        EntityRendererRegistry.register(ModEntities.VALKYRIE, ValkyrieRenderer::new);
         EntityRendererRegistry.register(ModEntities.IRON_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "iron"));
         EntityRendererRegistry.register(ModEntities.DIAMOND_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "diamond"));
         EntityRendererRegistry.register(ModEntities.GOLD_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "gold"));
@@ -57,5 +55,6 @@ public class AntiqueBeastsClient implements ClientModInitializer {
                 ModItems.NETHERITE_PLATE_LEGGINGS, ModItems.NETHERITE_PLATE_CHESTPLATE, ModItems.NETHERITE_PLATE_HELMET);
         ShieldModelPredicate.registerShieldModels();
         SpearModelPredicate.registerSpearModels();
+        HornModelPredicate.registerHornModels();
     }
 }

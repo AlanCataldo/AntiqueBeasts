@@ -1,11 +1,19 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
+import net.mebahel.antiquebeasts.entity.custom.HersirEntity;
 import net.mebahel.antiquebeasts.entity.custom.HuskarlEntity;
+import net.mebahel.antiquebeasts.item.CustomShieldItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 
 import java.util.EnumSet;
+import java.util.Objects;
+
+import static java.lang.Math.random;
 
 public class HuskarlMeleeAttackGoal extends Goal {
     protected final HuskarlEntity mob;
@@ -69,25 +77,15 @@ public class HuskarlMeleeAttackGoal extends Goal {
     protected void attack(LivingEntity target) {
         double squaredDistance = this.mob.squaredDistanceTo(target.getX(), target.getY(), target.getZ());
         double d = this.getSquaredMaxAttackDistance(target);
+        this.cooldown = Math.max(this.cooldown - 1, 0);
+        this.mob.getNavigation().startMovingTo(target, this.speed);
 
-        if (!this.mob.isSwinging())
-            this.mob.getNavigation().startMovingTo(target, this.speed);
-        else
-            this.mob.getNavigation().stop();
-
-        if (squaredDistance > d) {
-            this.cooldown = MAX_COOLDOWN + 2;
-            this.mob.setSwinging(false);
-        } else {
-            this.cooldown = Math.max(this.cooldown - 1, 0);
-        }
-
-        if (squaredDistance <= d && this.cooldown == 0) {
+        if (this.cooldown == 0) {
             this.cooldown = MAX_COOLDOWN + 2;
             this.mob.setSwinging(false);
         } else if (squaredDistance <= d && this.cooldown == 20) {
             this.mob.setSwinging(true);
-        } else if (squaredDistance <= d && this.cooldown == 10 && this.mob.isSwinging()) {
+        } else if (squaredDistance <= d + 1 && this.cooldown == 10 && this.mob.isSwinging()) {
             this.mob.tryAttack(target);
         }
     }

@@ -42,6 +42,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
 import static java.lang.Math.random;
 
 public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimationTickable {

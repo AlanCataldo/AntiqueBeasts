@@ -3,14 +3,11 @@
   "pattern": [
     "   ",
     "# #",
-    "- -"
+    "# #"
   ],
   "key" : {
     "#": {
       "item" : "antiquebeasts:iron_plate"
-    },
-    "-": {
-      "item" : "minecraft:blue_wool"
     }
   },
   "result": {

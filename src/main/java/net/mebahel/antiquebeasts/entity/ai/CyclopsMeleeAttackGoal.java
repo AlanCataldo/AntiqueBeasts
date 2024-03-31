@@ -81,31 +81,19 @@ public class CyclopsMeleeAttackGoal extends Goal {
             this.stop();
         }
     }
-
     protected void attack(LivingEntity target) {
         double squaredDistance = this.mob.squaredDistanceTo(target.getX(), target.getY(), target.getZ());
         double d = this.getSquaredMaxAttackDistance(target);
-
+        this.cooldown = Math.max(this.cooldown - 1, 0);
+        this.mob.getNavigation().startMovingTo(target, this.speed);
         double rand = random();
+
         if (rand < 0.5)
             this.mob.setAttackName("animation.cyclops.attack");
         else
             this.mob.setAttackName("animation.cyclops.attack2");
 
-
-        if (!this.mob.isSwinging())
-            this.mob.getNavigation().startMovingTo(target, this.speed);
-        else
-            this.mob.getNavigation().stop();
-
-        if (squaredDistance > d) {
-            this.cooldown = MAX_COOLDOWN + 2;
-            this.mob.setSwinging(false);
-        } else {
-            this.cooldown = Math.max(this.cooldown - 1, 0);
-        }
-
-        if (squaredDistance <= d && this.cooldown == 0) {
+        if (this.cooldown == 0) {
             this.cooldown = MAX_COOLDOWN + 2;
             this.mob.setSwinging(false);
         } else if (squaredDistance <= d && this.cooldown == 20) {
@@ -117,7 +105,7 @@ public class CyclopsMeleeAttackGoal extends Goal {
                 Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(8f);
             }
             this.mob.setSwinging(true);
-        } else if (squaredDistance <= d && this.cooldown == 8 && this.mob.isSwinging()) {
+        } else if (squaredDistance <= d + 1 && this.cooldown == 10 && this.mob.isSwinging()) {
             if (target instanceof PlayerEntity player) {
                 if (player.isBlocking()) {
                     ItemStack activeItem = player.getActiveItem();

@@ -2,7 +2,6 @@ package net.mebahel.antiquebeasts.entity;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
-import net.mebahel.antiquebeasts.entity.client.projectiles.ThrowingHopliteSpearEntityRenderer;
 import net.mebahel.antiquebeasts.entity.custom.*;
 import net.mebahel.antiquebeasts.entity.projectiles.*;
 import net.minecraft.entity.EntityDimensions;
@@ -105,4 +104,14 @@ public class ModEntities {
             Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "throwing_axeman"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ThrowingAxeManEntity::new)
                     .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
+
+    public static final EntityType<EinherjarEntity> EINHERJAR = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "einherjar"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, EinherjarEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 2.49f)).build());
+
+    public static final EntityType<ValkyrieEntity> VALKYRIE = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "valkyrie"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ValkyrieEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 2.49f)).build());
 }

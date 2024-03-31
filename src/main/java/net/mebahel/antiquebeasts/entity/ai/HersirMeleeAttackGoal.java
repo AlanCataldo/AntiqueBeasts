@@ -1,9 +1,12 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
 import net.mebahel.antiquebeasts.entity.custom.HersirEntity;
+import net.mebahel.antiquebeasts.item.CustomShieldItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 
 import java.util.EnumSet;
 
@@ -14,14 +17,14 @@ public class HersirMeleeAttackGoal extends Goal {
     public int cooldown;
     private long lastUpdateTime;
     double rand;
-    public HersirMeleeAttackGoal(HersirEntity mob, double speed, boolean pauseWhenMobIdle) {
+    public HersirMeleeAttackGoal(HersirEntity mob, double speed) {
         this.mob = mob;
         this.speed = speed;
         this.cooldown = MAX_COOLDOWN + 8;
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
     }
     public boolean canStart() {
-        long l = this.mob.world.getTime();
+        long l = this.mob.getWorld().getTime();
         if (l - this.lastUpdateTime < MAX_COOLDOWN) {
             return false;
         } else {
@@ -66,28 +69,27 @@ public class HersirMeleeAttackGoal extends Goal {
             this.stop();
         }
     }
+
     protected void attack(LivingEntity target) {
         double squaredDistance = this.mob.squaredDistanceTo(target.getX(), target.getY(), target.getZ());
         double d = this.getSquaredMaxAttackDistance(target);
+        this.cooldown = Math.max(this.cooldown - 1, 0);
+        this.mob.getNavigation().startMovingTo(target, this.speed);
 
-        if (!this.mob.isSwinging())
-            this.mob.getNavigation().startMovingTo(target, this.speed);
-        else
-            this.mob.getNavigation().stop();
-
-        if (squaredDistance > d) {
-            this.cooldown = MAX_COOLDOWN + 2;
-            this.mob.setSwinging(false);
-        } else {
-            this.cooldown = Math.max(this.cooldown - 1, 0);
-        }
-
-        if (squaredDistance <= d && this.cooldown == 0) {
+        if (this.cooldown == 0) {
             this.cooldown = MAX_COOLDOWN + 2;
             this.mob.setSwinging(false);
         } else if (squaredDistance <= d && this.cooldown == 20) {
             this.mob.setSwinging(true);
-        } else if (squaredDistance <= d && this.cooldown == 10 && this.mob.isSwinging()) {
+        } else if (squaredDistance <= d + 1 && this.cooldown == 10 && this.mob.isSwinging()) {
+            if (target instanceof PlayerEntity player) {
+                if (player.isBlocking()) {
+                    ItemStack activeItem = player.getActiveItem();
+                    if (!(activeItem.getItem() instanceof CustomShieldItem)) {
+                        player.disableShield(true);
+                    }
+                }
+            }
             this.mob.tryAttack(target);
         }
     }

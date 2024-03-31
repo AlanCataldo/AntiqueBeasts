@@ -16,6 +16,9 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static net.minecraft.tag.InstrumentTags.GOAT_HORNS;
+import static net.minecraft.tag.InstrumentTags.SCREAMING_GOAT_HORNS;
+
 public class ModItems {
     public static final Item CYCLOPS_SPAWN_EGG = registerItem("cyclops_spawn_egg",
             new SpawnEggItem(ModEntities.CYCLOPS,10053120, 6821916,
@@ -176,6 +179,15 @@ public class ModItems {
             tooltip.add(Text.translatable("item.antiquebeasts.netherite_hoplite_spear.tooltip").formatted(Formatting.GRAY, Formatting.ITALIC));
         }
     });
+
+    public static final Item EINHERJAR_SPAWN_EGG = registerItem("einherjar_spawn_egg",
+            new SpawnEggItem(ModEntities.EINHERJAR,5062969, 11046446,
+                    new FabricItemSettings().group(ItemGroup.MISC)));
+    public static final Item VALKYRIE_SPAWN_EGG = registerItem("valkyrie_spawn_egg",
+            new SpawnEggItem(ModEntities.VALKYRIE,16449021, 16506719,
+                    new FabricItemSettings().group(ItemGroup.MISC)));
+    public static final Item EINHERJAR_HORN = registerItem("einherjar_horn",
+            new EinherjarHorn(new FabricItemSettings().maxDamage(7).group(ItemGroup.COMBAT), SCREAMING_GOAT_HORNS));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(AntiqueBeasts.MOD_ID, name), item);

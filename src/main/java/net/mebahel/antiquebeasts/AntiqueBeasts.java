@@ -2,14 +2,12 @@ package net.mebahel.antiquebeasts;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.mebahel.antiquebeasts.block.ModBlockEntities;
+import net.mebahel.antiquebeasts.block.ModBlocks;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.custom.*;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.potion.ModPotions;
-import net.mebahel.antiquebeasts.recipe.ModRecipes;
-import net.mebahel.antiquebeasts.screen.ModScreenHandlers;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.world.gen.ModWorldGen;
 import org.slf4j.Logger;
@@ -33,11 +31,13 @@ public class AntiqueBeasts implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ModEntities.HERSIR, HersirEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.HUSKARL, HuskarlEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.THROWING_AXEMAN, ThrowingAxeManEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.EINHERJAR, EinherjarEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.VALKYRIE, ValkyrieEntity.setAttributes());
 		ModSounds.registerSounds();
 		ModWorldGen.generateWorldGen();
 		ModItems.registerModItems();
+		ModBlocks.registerModBlocks();
 		ModParticles.registerParticles();
-		ModRecipes.registerRecipes();
 		ModPotions.registerPotionRecipe();
 	}
 }

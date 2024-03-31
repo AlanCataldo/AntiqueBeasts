@@ -47,8 +47,30 @@ public class ModSounds {
     public static SoundEvent HADES_SHADE_SPAWN = registerSoundEvent("hades_shade_spawn");
     public static SoundEvent SPEAR_HIT = registerSoundEvent("spear_hit");
     public static SoundEvent SHIELD_BLOCK = registerSoundEvent("shield_block");
+
     public static SoundEvent SWING = registerSoundEvent("swing1");
     public static SoundEvent FLESHCRUSH1 = registerSoundEvent("fleshcrush1");
+    public static SoundEvent EINHERJAR_AMBIENT1 = registerSoundEvent("einherjar_ambient1");
+    public static SoundEvent EINHERJAR_AMBIENT2 = registerSoundEvent("einherjar_ambient2");
+    public static SoundEvent EINHERJAR_AMBIENT3 = registerSoundEvent("einherjar_ambient3");
+    public static SoundEvent EINHERJAR_AMBIENT4 = registerSoundEvent("einherjar_ambient4");
+    public static SoundEvent EINHERJAR_AMBIENT5 = registerSoundEvent("einherjar_ambient5");
+    public static SoundEvent EINHERJAR_AMBIENT6 = registerSoundEvent("einherjar_ambient6");
+    public static SoundEvent EINHERJAR_HURT1 = registerSoundEvent("einherjar_hurt1");
+    public static SoundEvent EINHERJAR_HURT2 = registerSoundEvent("einherjar_hurt2");
+    public static SoundEvent EINHERJAR_DEATH1 = registerSoundEvent("einherjar_death1");
+    public static SoundEvent EINHERJAR_HORN = registerSoundEvent("einherjar_horn");
+    public static SoundEvent VALKYRIE_ATTACK1 = registerSoundEvent("valkyrie_attack1");
+    public static SoundEvent VALKYRIE_ATTACK2 = registerSoundEvent("valkyrie_attack2");
+    public static SoundEvent VALKYRIE_ATTACK3 = registerSoundEvent("valkyrie_attack3");
+    public static SoundEvent VALKYRIE_AMBIENT1 = registerSoundEvent("valkyrie_ambient1");
+    public static SoundEvent VALKYRIE_AMBIENT2 = registerSoundEvent("valkyrie_ambient2");
+    public static SoundEvent VALKYRIE_AMBIENT3 = registerSoundEvent("valkyrie_ambient3");
+    public static SoundEvent VALKYRIE_DEATH1 = registerSoundEvent("valkyrie_death1");
+    public static SoundEvent VALKYRIE_DEATH2 = registerSoundEvent("valkyrie_death2");
+    public static SoundEvent VALKYRIE_HURT1 = registerSoundEvent("valkyrie_hurt1");
+    public static SoundEvent VALKYRIE_HURT2 = registerSoundEvent("valkyrie_hurt2");
+    public static SoundEvent HEAL = registerSoundEvent("heal");
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registry.SOUND_EVENT, id, new SoundEvent(id));

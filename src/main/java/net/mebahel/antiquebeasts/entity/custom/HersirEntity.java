@@ -110,7 +110,7 @@ public class HersirEntity extends AnimalEntity implements IAnimatable, IAnimatio
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new HersirMeleeAttackGoal(this, 0.46f, false));
+        this.goalSelector.add(2, new HersirMeleeAttackGoal(this, 0.46f));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
 
