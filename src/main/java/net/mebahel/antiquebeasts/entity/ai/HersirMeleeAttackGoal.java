@@ -1,6 +1,7 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
 import net.mebahel.antiquebeasts.entity.custom.HersirEntity;
+import net.mebahel.antiquebeasts.entity.custom.NorseEntity;
 import net.mebahel.antiquebeasts.item.CustomShieldItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
@@ -21,7 +22,7 @@ public class HersirMeleeAttackGoal extends Goal {
     public int cooldown;
     private long lastUpdateTime;
     double rand;
-    public HersirMeleeAttackGoal(HersirEntity mob, double speed, boolean pauseWhenMobIdle) {
+    public HersirMeleeAttackGoal(HersirEntity mob, double speed) {
         this.mob = mob;
         this.speed = speed;
         this.cooldown = MAX_COOLDOWN + 8;

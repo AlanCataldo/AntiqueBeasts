@@ -9,6 +9,7 @@
   "entity.antiquebeasts.hersir": "Hersir",
   "entity.antiquebeasts.throwing_axeman": "Lanceur de hache",
   "entity.antiquebeasts.einherjar": "Einherjar",
+  "entity.antiquebeasts.valkyrie": "Valkyrie",
 
   "item.antiquebeasts.cyclops_spawn_egg": "Oeuf d'apparition de cyclope",
   "item.antiquebeasts.frost-cyclops_spawn_egg": "Oeuf d'apparition de cyclope de glace",
@@ -21,6 +22,7 @@
   "item.antiquebeasts.huskarl_spawn_egg": "Oeuf d'apparition d'Huskarl",
   "item.antiquebeasts.throwing_axeman_spawn_egg": "Oeuf d'apparition de Lanceur de hache",
   "item.antiquebeasts.einherjar_spawn_egg": "Oeuf d'apparition d'Einherjar",
+  "item.antiquebeasts.valkyrie_spawn_egg": "Oeuf d'apparition de Valkyrie",
 
   "item.antiquebeasts.throwingrock": "Rocher de lancer",
   "item.antiquebeasts.raw_cyclops_meat": "Viande de cyclope crue",

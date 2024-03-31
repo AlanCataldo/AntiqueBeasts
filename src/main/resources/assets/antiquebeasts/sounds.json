@@ -310,5 +310,71 @@
     "sounds": [
       "antiquebeasts:einherjar_horn"
     ]
+  },
+  "valkyrie_ambient1": {
+    "subtitle": "antiquebeasts:valkyrie_ambient1",
+    "sounds": [
+      "antiquebeasts:valkyrie_ambient1"
+    ]
+  },
+  "valkyrie_ambient2": {
+    "subtitle": "antiquebeasts:valkyrie_ambient2",
+    "sounds": [
+      "antiquebeasts:valkyrie_ambient2"
+    ]
+  },
+  "valkyrie_ambient3": {
+    "subtitle": "antiquebeasts:valkyrie_ambient3",
+    "sounds": [
+      "antiquebeasts:valkyrie_ambient3"
+    ]
+  },
+  "valkyrie_attack1": {
+    "subtitle": "antiquebeasts:valkyrie_attack1",
+    "sounds": [
+      "antiquebeasts:valkyrie_attack1"
+    ]
+  },
+  "valkyrie_attack2": {
+    "subtitle": "antiquebeasts:valkyrie_attack2",
+    "sounds": [
+      "antiquebeasts:valkyrie_attack2"
+    ]
+  },
+  "valkyrie_attack3": {
+    "subtitle": "antiquebeasts:valkyrie_attack3",
+    "sounds": [
+      "antiquebeasts:valkyrie_attack3"
+    ]
+  },
+  "heal": {
+    "subtitle": "antiquebeasts:heal",
+    "sounds": [
+      "antiquebeasts:heal"
+    ]
+  },
+  "valkyrie_death1": {
+    "subtitle": "antiquebeasts:valkyrie_death1",
+    "sounds": [
+      "antiquebeasts:valkyrie_death1"
+    ]
+  },
+  "valkyrie_death2": {
+    "subtitle": "antiquebeasts:valkyrie_death2",
+    "sounds": [
+      "antiquebeasts:valkyrie_death2"
+    ]
+  },
+  "valkyrie_hurt1": {
+    "subtitle": "antiquebeasts:valkyrie_hurt1",
+    "sounds": [
+      "antiquebeasts:valkyrie_hurt1"
+    ]
+  },
+  "valkyrie_hurt2": {
+    "subtitle": "antiquebeasts:valkyrie_hurt2",
+    "sounds": [
+      "antiquebeasts:valkyrie_hurt2"
+    ]
   }
 }

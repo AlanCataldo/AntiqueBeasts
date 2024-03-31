@@ -61,12 +61,23 @@ public class ModSounds {
     public static SoundEvent EINHERJAR_HURT2 = registerSoundEvent("einherjar_hurt2");
     public static SoundEvent EINHERJAR_DEATH1 = registerSoundEvent("einherjar_death1");
     public static SoundEvent EINHERJAR_HORN = registerSoundEvent("einherjar_horn");
+    public static SoundEvent VALKYRIE_ATTACK1 = registerSoundEvent("valkyrie_attack1");
+    public static SoundEvent VALKYRIE_ATTACK2 = registerSoundEvent("valkyrie_attack2");
+    public static SoundEvent VALKYRIE_ATTACK3 = registerSoundEvent("valkyrie_attack3");
+    public static SoundEvent VALKYRIE_AMBIENT1 = registerSoundEvent("valkyrie_ambient1");
+    public static SoundEvent VALKYRIE_AMBIENT2 = registerSoundEvent("valkyrie_ambient2");
+    public static SoundEvent VALKYRIE_AMBIENT3 = registerSoundEvent("valkyrie_ambient3");
+    public static SoundEvent VALKYRIE_DEATH1 = registerSoundEvent("valkyrie_death1");
+    public static SoundEvent VALKYRIE_DEATH2 = registerSoundEvent("valkyrie_death2");
+    public static SoundEvent VALKYRIE_HURT1 = registerSoundEvent("valkyrie_hurt1");
+    public static SoundEvent VALKYRIE_HURT2 = registerSoundEvent("valkyrie_hurt2");
+    public static SoundEvent HEAL = registerSoundEvent("heal");
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
     }
 
     public static void registerSounds() {
-        System.out.println("Registering ModSounds for " + AntiqueBeasts.MOD_ID);
+        System.out.println("Registering Sounds for " + AntiqueBeasts.MOD_ID);
     }
 }

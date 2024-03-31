@@ -1,0 +1,15 @@
+{
+  "name": "antiquebeasts:temple/prison",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "antiquebeasts:temple_prison",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

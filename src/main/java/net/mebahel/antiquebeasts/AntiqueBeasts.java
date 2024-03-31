@@ -2,6 +2,7 @@ package net.mebahel.antiquebeasts;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.mebahel.antiquebeasts.block.ModBlocks;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.custom.*;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
@@ -31,7 +32,9 @@ public class AntiqueBeasts implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ModEntities.HUSKARL, HuskarlEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.THROWING_AXEMAN, ThrowingAxeManEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.EINHERJAR, EinherjarEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.VALKYRIE, ValkyrieEntity.setAttributes());
 		ModSounds.registerSounds();
+		ModBlocks.registerModBlocks();
 		ModWorldGen.generateWorldGen();
 		ModItems.registerModItems();
 		ModParticles.registerParticles();

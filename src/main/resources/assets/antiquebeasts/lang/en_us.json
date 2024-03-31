@@ -9,6 +9,7 @@
   "entity.antiquebeasts.hersir": "Hersir",
   "entity.antiquebeasts.throwing_axeman": "Throwing Axeman",
   "entity.antiquebeasts.einherjar": "Einherjar",
+  "entity.antiquebeasts.valkyrie": "Valkyrie",
 
   "item.antiquebeasts.cyclops_spawn_egg": "Cyclops spawn egg",
   "item.antiquebeasts.frost-cyclops_spawn_egg": "Frost cyclops spawn egg",
@@ -21,6 +22,7 @@
   "item.antiquebeasts.huskarl_spawn_egg": "Huskarl spawn egg",
   "item.antiquebeasts.throwing_axeman_spawn_egg": "Throwing Axeman spawn egg",
   "item.antiquebeasts.einherjar_spawn_egg": "Einherjar spawn egg",
+  "item.antiquebeasts.valkyrie_spawn_egg": "Valkyrie spawn egg",
 
   "item.antiquebeasts.throwingrock": "Throwing rock",
   "item.antiquebeasts.raw_cyclops_meat": "Raw cyclops meat",

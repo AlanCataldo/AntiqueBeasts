@@ -43,16 +43,6 @@
               "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "minecraft:iron_sword",
-          "weight": 15
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:enchant_randomly"
-            }
-          ],
           "name": "minecraft:iron_axe",
           "weight": 15
         },
@@ -127,7 +117,7 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:wheat",
+          "name": "minecraft:potato",
           "weight": 25
         },
         {
@@ -174,22 +164,6 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 1.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "minecraft:netherite_scrap",
-          "weight": 1
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
                 "max": 2.0,
                 "min": 1.0
               },
@@ -211,11 +185,21 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
           "name": "antiquebeasts:weapon/iron_hoplite_spear",
           "weight": 10
         },
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
           "name": "antiquebeasts:weapon/gold_hoplite_spear",
           "weight": 7
         },
@@ -228,22 +212,6 @@
           "type": "minecraft:item",
           "name": "antiquebeasts:shield/gold_plate_shield",
           "weight": 3
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 0.0,
-                "min": 0.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "minecraft:bone",
-          "weight": 25
         }
       ],
       "rolls": {

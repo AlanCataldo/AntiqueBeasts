@@ -1,13 +1,13 @@
 package net.mebahel.antiquebeasts.entity.custom;
 
 import net.mebahel.antiquebeasts.entity.ai.HersirMeleeAttackGoal;
-import net.mebahel.antiquebeasts.entity.ai.HopliteMeleeAttackGoal;
-import net.mebahel.antiquebeasts.entity.variant.ChampionHopliteVariant;
 import net.mebahel.antiquebeasts.entity.variant.HersirVariant;
-import net.mebahel.antiquebeasts.entity.variant.ThrowingAxeManVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
+import net.minecraft.entity.ai.goal.LookAroundGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -16,35 +16,29 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.*;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
-
-import javax.annotation.Nullable;
 
 import static java.lang.Math.random;
 
 
 public class HersirEntity extends NorseEntity implements GeoEntity {
     double rand;
-    public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(HersirEntity.class,
-            TrackedDataHandlerRegistry.BOOLEAN);
 
     public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(HersirEntity.class,
             TrackedDataHandlerRegistry.STRING);
@@ -78,18 +72,21 @@ public class HersirEntity extends NorseEntity implements GeoEntity {
             remove(Entity.RemovalReason.DISCARDED);
         }
     }
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(SWINGING, false);
-        this.dataTracker.startTracking(ATTACK_NAME, "attack");
-        this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
-    }
+    public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(HersirEntity.class,
+            TrackedDataHandlerRegistry.BOOLEAN);
+
     public void setSwinging(boolean swinging) {
         this.dataTracker.set(SWINGING, swinging);
     }
 
     public boolean isSwinging() {
         return this.dataTracker.get(SWINGING);
+    }
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(SWINGING, false);
+        this.dataTracker.startTracking(ATTACK_NAME, "attack");
+        this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
@@ -104,7 +101,7 @@ public class HersirEntity extends NorseEntity implements GeoEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new HersirMeleeAttackGoal(this, 0.45f, false));
+        this.goalSelector.add(2, new HersirMeleeAttackGoal(this, 0.45f));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
 
@@ -194,11 +191,6 @@ public class HersirEntity extends NorseEntity implements GeoEntity {
         if (soundEvent != null) {
             this.playSound(soundEvent, 0.35f, 1f);
         }
-    }
-    @org.jetbrains.annotations.Nullable
-    @Override
-    public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        return null;
     }
 
     /* VARIANTS */

@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
+import net.mebahel.antiquebeasts.block.ModBlocks;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.item.*;
 import net.minecraft.client.item.TooltipContext;
@@ -54,6 +55,10 @@ public class ModItems {
 
     public static final Item EINHERJAR_SPAWN_EGG = registerItem("einherjar_spawn_egg",
             new SpawnEggItem(ModEntities.EINHERJAR,5062969, 11046446,
+                    new FabricItemSettings()));
+
+    public static final Item VALKYRIE_SPAWN_EGG = registerItem("valkyrie_spawn_egg",
+            new SpawnEggItem(ModEntities.VALKYRIE,16449021, 16506719,
                     new FabricItemSettings()));
     public static final Item FROST_SWORD = registerItem("frost_sword",
             new FrostSword(ModToolMaterial.FROST_WEAPON,6, -2.8f,
@@ -172,6 +177,7 @@ public class ModItems {
         entries.add(HUSKARL_SPAWN_EGG);
         entries.add(THROWING_AXEMAN_SPAWN_EGG);
         entries.add(EINHERJAR_SPAWN_EGG);
+        entries.add(VALKYRIE_SPAWN_EGG);
     }
     public static void addItemToIngredientItemGroup(FabricItemGroupEntries entries) {
         entries.add(DIAMOND_PLATE);
@@ -186,6 +192,10 @@ public class ModItems {
         entries.add(RAW_CYCLOPS_MEAT);
         entries.add(CONCENTRATED_CYCLOPS_BLOOD);
         entries.add(CYCLOPS_BLOOD);
+    }
+
+    public static void addItemToFunctionalItemGroup(FabricItemGroupEntries entries) {
+        entries.add(ModBlocks.AMPHORA);
     }
     public static void addItemToCombatItemGroup(FabricItemGroupEntries entries) {
         entries.add(IRON_HOPLITE_SPEAR);
@@ -229,6 +239,7 @@ public class ModItems {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(ModItems::addItemToCombatItemGroup);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(ModItems::addItemToIngredientItemGroup);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(ModItems::addItemToFoodItemGroup);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(ModItems::addItemToFunctionalItemGroup);
     }
 }
 
