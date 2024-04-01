@@ -22,7 +22,7 @@ public class CyclopsModel extends AnimatedGeoModel<CyclopsEntity> {
 
     @Override
     public Identifier getTextureResource(CyclopsEntity object) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/cyclops_texture.png");
+        return CyclopsRenderer.LOCATION_BY_VARIANT.get(object.getVariant());
     }
 
     @Override

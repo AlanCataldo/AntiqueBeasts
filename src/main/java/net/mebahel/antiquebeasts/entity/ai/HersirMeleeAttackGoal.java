@@ -1,14 +1,19 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
 import net.mebahel.antiquebeasts.entity.custom.HersirEntity;
+import net.mebahel.antiquebeasts.entity.custom.NorseEntity;
 import net.mebahel.antiquebeasts.item.CustomShieldItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
 import java.util.EnumSet;
+import java.util.Objects;
+
+import static java.lang.Math.random;
 
 public class HersirMeleeAttackGoal extends Goal {
     protected final HersirEntity mob;

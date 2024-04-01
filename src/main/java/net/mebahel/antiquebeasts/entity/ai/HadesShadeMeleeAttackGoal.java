@@ -3,8 +3,6 @@ package net.mebahel.antiquebeasts.entity.ai;
 import net.mebahel.antiquebeasts.entity.custom.HadesShadeEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.EnumSet;

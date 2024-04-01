@@ -1,9 +1,9 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
+import net.mebahel.antiquebeasts.entity.custom.NorseEntity;
 import net.mebahel.antiquebeasts.entity.custom.ValkyrieEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.predicate.entity.EntityPredicates;
 
 import java.util.Optional;
@@ -38,11 +38,11 @@ public class ValkyrieHealingGoal extends Goal {
 
     @Override
     public void tick() {
-        Optional<AnimalEntity> entityToHeal = this.valkyrie.getWorld().getEntitiesByClass(AnimalEntity.class, this.valkyrie.getBoundingBox().expand(this.searchRadius), EntityPredicates.VALID_LIVING_ENTITY).stream()
+        Optional<NorseEntity> entityToHeal = this.valkyrie.getWorld().getEntitiesByClass(NorseEntity.class, this.valkyrie.getBoundingBox().expand(this.searchRadius), EntityPredicates.VALID_LIVING_ENTITY).stream()
                 .filter(entity -> entity.getHealth() < entity.getMaxHealth())
                 .findFirst();
         if (entityToHeal.isPresent()) {
-            AnimalEntity entity = entityToHeal.get();
+            NorseEntity entity = entityToHeal.get();
             this.valkyrie.setHealing(true);
             this.valkyrie.lookAtEntity(entity, 15f, 15f);
             this.valkyrie.getLookControl().lookAt(entity, 15f, 15f);

@@ -1,7 +1,6 @@
 package net.mebahel.antiquebeasts.entity.custom;
 
 import net.mebahel.antiquebeasts.entity.ai.HersirMeleeAttackGoal;
-import net.mebahel.antiquebeasts.entity.variant.EliteHopliteVariant;
 import net.mebahel.antiquebeasts.entity.variant.HersirVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.*;
@@ -15,7 +14,6 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ZombieEntity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -44,7 +42,7 @@ import javax.annotation.Nullable;
 import static java.lang.Math.random;
 
 
-public class HersirEntity extends AnimalEntity implements IAnimatable, IAnimationTickable {
+public class HersirEntity extends NorseEntity implements IAnimatable, IAnimationTickable {
     double rand;
     public String animationProcedure = "empty";
     public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(HersirEntity.class,
@@ -62,7 +60,7 @@ public class HersirEntity extends AnimalEntity implements IAnimatable, IAnimatio
     }
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
-    public HersirEntity(EntityType<? extends AnimalEntity> entityType, World world) {
+    public HersirEntity(EntityType<? extends NorseEntity> entityType, World world) {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
     }

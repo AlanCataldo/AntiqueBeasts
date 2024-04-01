@@ -29,6 +29,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class EinherjarHorn extends Item {
 
@@ -44,7 +46,7 @@ public class EinherjarHorn extends Item {
         super.appendTooltip(stack, world, tooltip, context);
         Optional<RegistryKey<Instrument>> optional = this.getInstrument(stack).flatMap(RegistryEntry::getKey);
         if (optional.isPresent()) {
-            MutableText mutableText = Text.translatable(Util.createTranslationKey("instrument", ((RegistryKey)optional.get()).getValue()));
+            MutableText mutableText = Text.translatable("War cry");
             tooltip.add(mutableText.formatted(Formatting.GRAY));
         }
 
@@ -56,16 +58,6 @@ public class EinherjarHorn extends Item {
         return itemStack;
     }
 
-    public static void setRandomInstrumentFromTag(ItemStack stack, TagKey<Instrument> instrumentTag, Random random) {
-        Optional<RegistryEntry<Instrument>> optional = Registry.INSTRUMENT.getEntryList(instrumentTag).flatMap((entryList) -> {
-            return entryList.getRandom(random);
-        });
-        if (optional.isPresent()) {
-            setInstrument(stack, (RegistryEntry)optional.get());
-        }
-
-    }
-
     private static void setInstrument(ItemStack stack, RegistryEntry<Instrument> instrument) {
         NbtCompound nbtCompound = stack.getOrCreateNbt();
         nbtCompound.putString("instrument", ((RegistryKey)instrument.getKey().orElseThrow(() -> {
@@ -75,11 +67,11 @@ public class EinherjarHorn extends Item {
 
     public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
         if (this.isIn(group)) {
-            Iterator var3 = Registry.INSTRUMENT.iterateEntries(this.instrumentTag).iterator();
+            Stream<RegistryEntry<Instrument>> stream = StreamSupport.stream(Registry.INSTRUMENT.iterateEntries(this.instrumentTag).spliterator(), false);
+            Optional<RegistryEntry<Instrument>> optionalInstrument = stream.findFirst();
 
-            while(var3.hasNext()) {
-                RegistryEntry<Instrument> registryEntry = (RegistryEntry)var3.next();
-                stacks.add(getStackForInstrument(ModItems.EINHERJAR_HORN, registryEntry));
+            if (optionalInstrument.isPresent()) {
+                stacks.add(getStackForInstrument(ModItems.EINHERJAR_HORN, optionalInstrument.get()));
             }
         }
     }
@@ -87,11 +79,9 @@ public class EinherjarHorn extends Item {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
         Optional<RegistryEntry<Instrument>> optional = this.getInstrument(itemStack);
-        System.out.println("J'UTILISE :" + optional);
         if (optional.isPresent()) {
             Instrument instrument = (Instrument)((RegistryEntry)optional.get()).value();
             user.setCurrentHand(hand);
-            System.out.println("JE JOUE");
             List<TameableEntity> tamedAnimals = user.getWorld().getEntitiesByClass(TameableEntity.class, user.getBoundingBox().expand(20),
                     tameableEntity -> tameableEntity.isTamed() && tameableEntity.getOwner() == user);
             for (TameableEntity pet : tamedAnimals) {
@@ -99,6 +89,9 @@ public class EinherjarHorn extends Item {
             }
             user.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 1200, 0));
             playSound(world, user, instrument);
+            itemStack.damage(1, user, (playerEntity) -> {
+                playerEntity.sendToolBreakStatus(hand);
+            });
             user.getItemCooldownManager().set(this, instrument.useDuration());
             return TypedActionResult.consume(itemStack);
         } else {
@@ -113,10 +106,8 @@ public class EinherjarHorn extends Item {
 
     private Optional<RegistryEntry<Instrument>> getInstrument(ItemStack stack) {
         NbtCompound nbtCompound = stack.getNbt();
-        if (nbtCompound != null) {
+        if (nbtCompound != null && nbtCompound.contains("instrument", 8)) {
             Identifier identifier = Identifier.tryParse(nbtCompound.getString("instrument"));
-            System.out.println("IDENTIFIER :" + nbtCompound);
-            System.out.println("IDENTIFIER :" + identifier);
             if (identifier != null) {
                 return Registry.INSTRUMENT.getEntry(RegistryKey.of(Registry.INSTRUMENT_KEY, identifier));
             }

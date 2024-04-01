@@ -51,7 +51,7 @@ import javax.annotation.Nullable;
 import static java.lang.Math.random;
 
 
-public class EinherjarEntity extends AnimalEntity implements IAnimatable, IAnimationTickable {
+public class EinherjarEntity extends NorseEntity implements IAnimatable, IAnimationTickable {
     double rand;
 
     public String animationProcedure = "empty";
@@ -77,42 +77,36 @@ public class EinherjarEntity extends AnimalEntity implements IAnimatable, IAnima
         return factory;
     }
 
-    private <E extends IAnimatable> PlayState movementPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty")) {
-            if (event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", ILoopType.EDefaultLoopTypes.LOOP));
-                return PlayState.CONTINUE;
-            } else if (!this.isSwinging()) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
-                return PlayState.CONTINUE;
-            }
+    private <E extends IAnimatable> PlayState movementPredicate(AnimationEvent<E> animationState) {
+        if (animationState.isMoving()) {
+            animationState.getController().setAnimation(new AnimationBuilder().addAnimation("walk", ILoopType.EDefaultLoopTypes.LOOP));
+            return PlayState.CONTINUE;
         }
-        return PlayState.STOP;
+        animationState.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
+        return PlayState.CONTINUE;
     }
 
     private <E extends IAnimatable> PlayState attackPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty") && this.isSwinging()) {
-            if (event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
-                event.getController().markNeedsReload();
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
-                return PlayState.CONTINUE;
-            }
+        if (this.isSwinging() && !this.getHorn() &&
+                event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
+            event.getController().markNeedsReload();
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
             return PlayState.CONTINUE;
+        } else if (this.getHorn()) {
+            return PlayState.STOP;
         }
         return PlayState.CONTINUE;
     }
 
     private <E extends IAnimatable> PlayState hornPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty") && this.getHorn()) {
-            if (event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
-                event.getController().markNeedsReload();
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("horn", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
-                return PlayState.CONTINUE;
-            }
-            return PlayState.CONTINUE;
+        if (this.getHorn()&&
+                event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
+            event.getController().markNeedsReload();
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("horn", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
         }
         return PlayState.CONTINUE;
     }
+
     private <E extends IAnimatable> PlayState procedurePredicate(AnimationEvent<E> event) {
         if (!(this.animationProcedure.equals("empty"))
                 && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
@@ -177,7 +171,7 @@ public class EinherjarEntity extends AnimalEntity implements IAnimatable, IAnima
         return this.dataTracker.get(ATTACK_NAME);
     }
 
-    public EinherjarEntity(EntityType<? extends AnimalEntity> entityType, World world) {
+    public EinherjarEntity(EntityType<? extends NorseEntity> entityType, World world) {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
     }

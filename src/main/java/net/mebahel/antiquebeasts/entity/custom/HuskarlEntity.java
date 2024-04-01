@@ -1,7 +1,6 @@
 package net.mebahel.antiquebeasts.entity.custom;
 
 import net.mebahel.antiquebeasts.entity.ai.HuskarlMeleeAttackGoal;
-import net.mebahel.antiquebeasts.entity.variant.EliteHopliteVariant;
 import net.mebahel.antiquebeasts.entity.variant.HersirVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.*;
@@ -44,7 +43,7 @@ import javax.annotation.Nullable;
 import static java.lang.Math.random;
 
 
-public class HuskarlEntity extends AnimalEntity implements IAnimatable, IAnimationTickable {
+public class HuskarlEntity extends NorseEntity implements IAnimatable, IAnimationTickable {
     double rand;
     public String animationProcedure = "empty";
     public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(HuskarlEntity.class,
@@ -62,7 +61,7 @@ public class HuskarlEntity extends AnimalEntity implements IAnimatable, IAnimati
     }
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
-    public HuskarlEntity(EntityType<? extends AnimalEntity> entityType, World world) {
+    public HuskarlEntity(EntityType<? extends NorseEntity> entityType, World world) {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
     }

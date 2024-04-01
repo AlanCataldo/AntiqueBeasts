@@ -7,13 +7,14 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class ModBlocks {
     public static final Block AMPHORA = registerBlock("amphora",
-            new Block(FabricBlockSettings.copyOf(Blocks.BONE_BLOCK).sounds(BlockSoundGroup.TUFF)));
+            new Block(FabricBlockSettings.copyOf(Blocks.ACACIA_LEAVES).sounds(BlockSoundGroup.TUFF)));
 
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);
@@ -21,7 +22,7 @@ public class ModBlocks {
     }
 
     private static Item registerBlockItem(String name, Block block) {
-        return Registry.register(Registry.ITEM, new Identifier(AntiqueBeasts.MOD_ID, name), new BlockItem(block, new FabricItemSettings()));
+        return Registry.register(Registry.ITEM, new Identifier(AntiqueBeasts.MOD_ID, name), new BlockItem(block, new FabricItemSettings().group(ItemGroup.DECORATIONS)));
     }
 
     public static void registerModBlocks() {

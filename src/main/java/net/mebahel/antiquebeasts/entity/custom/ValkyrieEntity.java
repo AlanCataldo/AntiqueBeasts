@@ -21,7 +21,6 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ZombieEntity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -49,7 +48,7 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 import static java.lang.Math.random;
 
 
-public class ValkyrieEntity extends AnimalEntity implements IAnimatable, IAnimationTickable {
+public class ValkyrieEntity extends NorseEntity implements IAnimatable, IAnimationTickable {
     double rand;
 
     public String animationProcedure = "empty";
@@ -65,39 +64,27 @@ public class ValkyrieEntity extends AnimalEntity implements IAnimatable, IAnimat
         return factory;
     }
 
-    private <E extends IAnimatable> PlayState movementPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty")) {
-            if (event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", ILoopType.EDefaultLoopTypes.LOOP));
-                return PlayState.CONTINUE;
-            } else if (!this.isSwinging()) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
-                return PlayState.CONTINUE;
-            }
+    private <E extends IAnimatable> PlayState movementPredicate(AnimationEvent<E> animationState) {
+        if (animationState.isMoving()) {
+            animationState.getController().setAnimation(new AnimationBuilder().addAnimation("walk", ILoopType.EDefaultLoopTypes.LOOP));
+            return PlayState.CONTINUE;
         }
-        return PlayState.STOP;
+        animationState.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
+        return PlayState.CONTINUE;
     }
 
-    private <E extends IAnimatable> PlayState attackPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty") && this.isSwinging()) {
-            if (event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
-                event.getController().markNeedsReload();
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
-                return PlayState.CONTINUE;
-            }
-            return PlayState.CONTINUE;
+    private <E extends IAnimatable> PlayState attackPredicate(AnimationEvent<E> animationState) {
+        if (this.isSwinging() && animationState.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
+            animationState.getController().markNeedsReload();
+            animationState.getController().setAnimation(new AnimationBuilder().addAnimation("attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
         }
         return PlayState.CONTINUE;
     }
 
-    private <E extends IAnimatable> PlayState healPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty") && this.isHealing()) {
-            if (event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
-                event.getController().markNeedsReload();
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("horn", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
-                return PlayState.CONTINUE;
-            }
-            return PlayState.CONTINUE;
+    private <E extends IAnimatable> PlayState healPredicate(AnimationEvent<E> animationState) {
+        if (this.isHealing() && animationState.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
+            animationState.getController().markNeedsReload();
+            animationState.getController().setAnimation(new AnimationBuilder().addAnimation("heal", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
         }
         return PlayState.CONTINUE;
     }
@@ -167,7 +154,7 @@ public class ValkyrieEntity extends AnimalEntity implements IAnimatable, IAnimat
         return this.dataTracker.get(HEALING);
     }
 
-    public ValkyrieEntity(EntityType<? extends AnimalEntity> entityType, World world) {
+    public ValkyrieEntity(EntityType<? extends NorseEntity> entityType, World world) {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
     }
@@ -192,11 +179,11 @@ public class ValkyrieEntity extends AnimalEntity implements IAnimatable, IAnimat
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.76f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 34.0D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0D)
                 .add(EntityAttributes.GENERIC_ARMOR, 6f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.35f)
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5f);
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 2f);
     }
     @Override
     protected void initGoals() {

@@ -3,11 +3,11 @@ package net.mebahel.antiquebeasts.entity.custom;
 import net.mebahel.antiquebeasts.entity.ai.CyclopsMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.CyclopsShootingGoal;
 import net.mebahel.antiquebeasts.entity.ai.CyclopsSocializeGoal;
+import net.mebahel.antiquebeasts.entity.variant.CyclopsVariant;
+import net.mebahel.antiquebeasts.entity.variant.EinherjarVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -23,12 +23,16 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -308,5 +312,41 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
         if (soundEvent != null) {
             this.playSound(soundEvent, 0.35f, 1f);
         }
+    }
+
+    /* VARIANTS */
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putInt("Variant", this.getTypeVariant());
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.dataTracker.set(DATA_ID_TYPE_VARIANT, nbt.getInt("Variant"));
+    }
+    private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
+            DataTracker.registerData(CyclopsEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
+                                 SpawnReason spawnReason, @javax.annotation.Nullable EntityData entityData,
+                                 @javax.annotation.Nullable NbtCompound entityNbt) {
+        CyclopsVariant variant = Util.getRandom(CyclopsVariant.values(), this.random);
+        setVariant(variant);
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+    }
+
+    public CyclopsVariant getVariant() {
+        return CyclopsVariant.byId(this.getTypeVariant() & 255);
+    }
+
+    private int getTypeVariant() {
+        return this.dataTracker.get(DATA_ID_TYPE_VARIANT);
+    }
+
+    private void setVariant(CyclopsVariant variant) {
+        this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
     }
 }

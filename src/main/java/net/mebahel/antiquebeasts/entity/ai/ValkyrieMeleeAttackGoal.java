@@ -86,6 +86,6 @@ public class ValkyrieMeleeAttackGoal extends Goal {
         }
     }
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return 6f + entity.getWidth();
+        return 7f + entity.getWidth();
     }
 }

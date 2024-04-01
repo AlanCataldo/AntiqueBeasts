@@ -47,7 +47,7 @@ import javax.annotation.Nullable;
 import static java.lang.Math.random;
 
 
-public class ThrowingAxeManEntity extends AnimalEntity implements IAnimatable, IAnimationTickable {
+public class ThrowingAxeManEntity extends NorseEntity implements IAnimatable, IAnimationTickable {
     double rand;
     public String animationProcedure = "empty";
     public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(ThrowingAxeManEntity.class,
@@ -81,7 +81,7 @@ public class ThrowingAxeManEntity extends AnimalEntity implements IAnimatable, I
     }
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
-    public ThrowingAxeManEntity(EntityType<? extends AnimalEntity> entityType, World world) {
+    public ThrowingAxeManEntity(EntityType<? extends NorseEntity> entityType, World world) {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
     }
