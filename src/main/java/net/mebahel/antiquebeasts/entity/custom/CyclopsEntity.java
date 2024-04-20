@@ -124,6 +124,7 @@ public class CyclopsEntity extends AnimalEntity implements IAnimatable, IAnimati
         this.dataTracker.startTracking(SHOOTING, false);
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(COOLDOWN, 0f);
+        this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(ATTACK_NAME, "animation.cyclops.attack");
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
