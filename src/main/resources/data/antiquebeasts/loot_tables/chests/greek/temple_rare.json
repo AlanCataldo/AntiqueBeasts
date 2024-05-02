@@ -1,0 +1,428 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:iron_ingot",
+          "weight": 12
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:gold_ingot",
+          "weight": 12
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:diamond",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "antiquebeasts:iron_plate",
+          "weight": 12
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "antiquebeasts:gold_plate",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "antiquebeasts:diamond_plate",
+          "weight": 4
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 4.0,
+        "min": 3.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:gold_plate_helmet",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:gold_plate_chestplate",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:gold_plate_leggings",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:gold_plate_boots",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:gold_plate_helmet",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:gold_plate_chestplate",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:gold_plate_leggings",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:gold_plate_boots",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:iron_plate_helmet",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:iron_plate_chestplate",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:iron_plate_leggings",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:iron_plate_boots",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:iron_plate_helmet",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:iron_plate_chestplate",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:iron_plate_leggings",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:iron_plate_boots",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:diamond_plate_helmet",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:diamond_plate_chestplate",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:diamond_plate_leggings",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:diamond_plate_boots",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:diamond_plate_helmet",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:diamond_plate_chestplate",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:diamond_plate_leggings",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:diamond_plate_boots",
+          "weight": 8
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 8.0,
+                "min": 4.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:bread",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 8.0,
+                "min": 4.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:chain",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "minecraft:book",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:enchanted_golden_apple",
+          "weight": 3
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 2.0,
+        "min": 2.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:weapon/gold_hoplite_spear",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:weapon/gold_hoplite_spear",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:weapon/diamond_hoplite_spear",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:weapon/diamond_hoplite_spear",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "name": "antiquebeasts:weapon/iron_hoplite_spear",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:weapon/iron_hoplite_spear",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:shield/gold_plate_shield",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:shield/iron_plate_shield",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:shield/diamond_plate_shield",
+          "weight": 8
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
+      }
+    }
+  ]
+}

@@ -21,7 +21,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 3,
       "element": {
         "location": "antiquebeasts:temple_room_2",
         "processors": "minecraft:empty",
@@ -39,9 +39,36 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 3,
       "element": {
         "location": "antiquebeasts:temple_arena",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "antiquebeasts:temple_labyrinth",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "antiquebeasts:temple_stockpile",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "location": "antiquebeasts:temple_prison_zombie",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

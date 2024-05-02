@@ -10,7 +10,7 @@
     "salt": 86321490,
     "exclusion_zone":
     {
-      "other_set":"minecraft:villages",
+      "other_set":"antiquebeasts:norse_farmer_camp",
       "chunk_count": 24
     },
     "spacing": 48,

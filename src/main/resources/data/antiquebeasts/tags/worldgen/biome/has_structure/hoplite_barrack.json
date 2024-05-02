@@ -3,12 +3,6 @@
   "values": [
     "minecraft:plains",
     "minecraft:sunflower_plains",
-    "minecraft:forest",
-    "minecraft:flower_forest",
-    "minecraft:birch_forest",
-    "minecraft:old_growth_birch_forest",
-    "minecraft:windswept_forest",
-    "minecraft:meadow",
     {"id": "terralith:temperate_highlands", "required": false},
     {"id": "terralith:alpha_islands", "required": false},
     {"id": "terralith:blooming_valley", "required": false},
