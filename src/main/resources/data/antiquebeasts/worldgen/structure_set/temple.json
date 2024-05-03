@@ -1,0 +1,19 @@
+{
+  "structures": [
+    {
+      "structure": "antiquebeasts:temple",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 66321488,
+    "exclusion_zone":
+    {
+      "other_set":"antiquebeasts:hoplite_barrack",
+      "chunk_count": 16
+    },
+    "spacing": 96,
+    "separation": 24
+  }
+}

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "#c:climate_temperate",
     "minecraft:plains",
     "minecraft:sunflower_plains",
     "minecraft:forest",

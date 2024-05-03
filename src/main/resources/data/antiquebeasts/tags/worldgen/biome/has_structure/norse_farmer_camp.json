@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "#c:climate_cold",
     "minecraft:snowy_plains",
     "minecraft:snowy_taiga",
     "minecraft:taiga",
