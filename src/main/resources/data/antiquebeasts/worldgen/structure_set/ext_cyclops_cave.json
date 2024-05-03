@@ -11,7 +11,7 @@
     "exclusion_zone":
     {
       "other_set":"minecraft:villages",
-      "chunk_count": 8
+      "chunk_count": 10
     },
     "spacing": 24,
     "separation": 10

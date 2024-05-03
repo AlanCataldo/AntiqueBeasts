@@ -86,7 +86,7 @@
             },
             {
               "function": "minecraft:set_name",
-              "name": "Mansion Map"
+              "name": "Village Map"
             }
           ]
         }

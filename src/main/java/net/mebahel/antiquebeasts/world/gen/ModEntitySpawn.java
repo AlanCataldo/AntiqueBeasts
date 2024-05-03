@@ -8,6 +8,7 @@ import net.minecraft.entity.*;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.BiomeKeys;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
 
 public class ModEntitySpawn {
     public static void addEntitySpawn() {
@@ -21,7 +22,9 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SAKURA_GROVE, TerralithBiomeKeys.SAKURA_VALLEY, TerralithBiomeKeys.BLOOMING_PLATEAU,
                         TerralithBiomeKeys.SKYLANDS, TerralithBiomeKeys. SKYLANDS_AUTUMN, TerralithBiomeKeys.SKYLANDS_SPRING,
                         TerralithBiomeKeys.SKYLANDS_SUMMER, TerralithBiomeKeys.WARM_RIVER, TerralithBiomeKeys.VOLCANIC_PEAKS,
-                        TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS),
+                        TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.PLAINS)).or(BiomeSelectors.tag(ConventionalBiomeTags.FOREST))
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.CLIMATE_TEMPERATE)),
                 SpawnGroup.CREATURE, ModEntities.CYCLOPS, 3, 1, 1);
         SpawnRestriction.register(ModEntities.CYCLOPS, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
@@ -43,7 +46,8 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SNOWY_SHIELD, TerralithBiomeKeys.ALPHA_ISLANDS_WINTER, TerralithBiomeKeys.FROZEN_CLIFFS,
                         TerralithBiomeKeys.GLACIAL_CHASM, TerralithBiomeKeys.SNOWY_BADLANDS, TerralithBiomeKeys.ALPINE_GROVE,
                         TerralithBiomeKeys.WINTRY_FOREST,TerralithBiomeKeys.WINTRY_LOWLANDS, TerralithBiomeKeys.COLD_SHRUBLAND,
-                        TerralithBiomeKeys.GRAVEL_DESERT),
+                        TerralithBiomeKeys.GRAVEL_DESERT)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.CLIMATE_COLD)),
                 SpawnGroup.CREATURE, ModEntities.FROST_CYCLOPS, 4, 1, 1);
         SpawnRestriction.register(ModEntities.FROST_CYCLOPS, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
@@ -66,7 +70,8 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SNOWY_SHIELD, TerralithBiomeKeys.ALPHA_ISLANDS_WINTER, TerralithBiomeKeys.FROZEN_CLIFFS,
                         TerralithBiomeKeys.GLACIAL_CHASM, TerralithBiomeKeys.SNOWY_BADLANDS, TerralithBiomeKeys.ALPINE_GROVE,
                         TerralithBiomeKeys.WINTRY_FOREST,TerralithBiomeKeys.WINTRY_LOWLANDS, TerralithBiomeKeys.COLD_SHRUBLAND,
-                        TerralithBiomeKeys.GRAVEL_DESERT),
+                        TerralithBiomeKeys.GRAVEL_DESERT)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.CLIMATE_COLD)),
                 SpawnGroup.CREATURE, ModEntities.HERSIR, 20, 1, 2);
         SpawnRestriction.register(ModEntities.HERSIR, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
@@ -89,7 +94,8 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SNOWY_SHIELD, TerralithBiomeKeys.ALPHA_ISLANDS_WINTER, TerralithBiomeKeys.FROZEN_CLIFFS,
                         TerralithBiomeKeys.GLACIAL_CHASM, TerralithBiomeKeys.SNOWY_BADLANDS, TerralithBiomeKeys.ALPINE_GROVE,
                         TerralithBiomeKeys.WINTRY_FOREST,TerralithBiomeKeys.WINTRY_LOWLANDS, TerralithBiomeKeys.COLD_SHRUBLAND,
-                        TerralithBiomeKeys.GRAVEL_DESERT),
+                        TerralithBiomeKeys.GRAVEL_DESERT)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.CLIMATE_COLD)),
                 SpawnGroup.CREATURE, ModEntities.EINHERJAR, 6, 1, 1);
         SpawnRestriction.register(ModEntities.EINHERJAR, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
@@ -111,7 +117,8 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SNOWY_SHIELD, TerralithBiomeKeys.ALPHA_ISLANDS_WINTER, TerralithBiomeKeys.FROZEN_CLIFFS,
                         TerralithBiomeKeys.GLACIAL_CHASM, TerralithBiomeKeys.SNOWY_BADLANDS, TerralithBiomeKeys.ALPINE_GROVE,
                         TerralithBiomeKeys.WINTRY_FOREST,TerralithBiomeKeys.WINTRY_LOWLANDS, TerralithBiomeKeys.COLD_SHRUBLAND,
-                        TerralithBiomeKeys.GRAVEL_DESERT),
+                        TerralithBiomeKeys.GRAVEL_DESERT)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.CLIMATE_COLD)),
                 SpawnGroup.CREATURE, ModEntities.VALKYRIE, 8, 1, 1);
         SpawnRestriction.register(ModEntities.VALKYRIE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
@@ -134,7 +141,8 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SNOWY_SHIELD, TerralithBiomeKeys.ALPHA_ISLANDS_WINTER, TerralithBiomeKeys.FROZEN_CLIFFS,
                         TerralithBiomeKeys.GLACIAL_CHASM, TerralithBiomeKeys.SNOWY_BADLANDS, TerralithBiomeKeys.ALPINE_GROVE,
                         TerralithBiomeKeys.WINTRY_FOREST,TerralithBiomeKeys.WINTRY_LOWLANDS, TerralithBiomeKeys.COLD_SHRUBLAND,
-                        TerralithBiomeKeys.GRAVEL_DESERT),
+                        TerralithBiomeKeys.GRAVEL_DESERT)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.CLIMATE_COLD)),
                 SpawnGroup.CREATURE, ModEntities.HUSKARL, 12, 1, 2);
         SpawnRestriction.register(ModEntities.HUSKARL, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
@@ -157,7 +165,8 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SNOWY_SHIELD, TerralithBiomeKeys.ALPHA_ISLANDS_WINTER, TerralithBiomeKeys.FROZEN_CLIFFS,
                         TerralithBiomeKeys.GLACIAL_CHASM, TerralithBiomeKeys.SNOWY_BADLANDS, TerralithBiomeKeys.ALPINE_GROVE,
                         TerralithBiomeKeys.WINTRY_FOREST,TerralithBiomeKeys.WINTRY_LOWLANDS, TerralithBiomeKeys.COLD_SHRUBLAND,
-                        TerralithBiomeKeys.GRAVEL_DESERT),
+                        TerralithBiomeKeys.GRAVEL_DESERT)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.CLIMATE_COLD)),
                 SpawnGroup.CREATURE, ModEntities.THROWING_AXEMAN, 20, 1, 2);
         SpawnRestriction.register(ModEntities.THROWING_AXEMAN, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
@@ -177,7 +186,9 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SAKURA_GROVE, TerralithBiomeKeys.SAKURA_VALLEY, TerralithBiomeKeys.BLOOMING_PLATEAU,
                         TerralithBiomeKeys.SKYLANDS, TerralithBiomeKeys. SKYLANDS_AUTUMN, TerralithBiomeKeys.SKYLANDS_SPRING,
                         TerralithBiomeKeys.SKYLANDS_SUMMER, TerralithBiomeKeys.WARM_RIVER, TerralithBiomeKeys.VOLCANIC_PEAKS,
-                        TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS),
+                        TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.PLAINS)).or(BiomeSelectors.tag(ConventionalBiomeTags.FOREST))
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.CLIMATE_TEMPERATE)),
                 SpawnGroup.CREATURE, ModEntities.HERO_HOPLITE, 4, 1, 1);
         SpawnRestriction.register(ModEntities.HERO_HOPLITE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
@@ -197,7 +208,9 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SAKURA_GROVE, TerralithBiomeKeys.SAKURA_VALLEY, TerralithBiomeKeys.BLOOMING_PLATEAU,
                         TerralithBiomeKeys.SKYLANDS, TerralithBiomeKeys. SKYLANDS_AUTUMN, TerralithBiomeKeys.SKYLANDS_SPRING,
                         TerralithBiomeKeys.SKYLANDS_SUMMER, TerralithBiomeKeys.WARM_RIVER, TerralithBiomeKeys.VOLCANIC_PEAKS,
-                        TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS),
+                        TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.PLAINS)).or(BiomeSelectors.tag(ConventionalBiomeTags.FOREST))
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.CLIMATE_TEMPERATE)),
                 SpawnGroup.CREATURE, ModEntities.CHAMPION_HOPLITE, 7, 1, 2);
         SpawnRestriction.register(ModEntities.CHAMPION_HOPLITE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
@@ -217,7 +230,9 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.SAKURA_GROVE, TerralithBiomeKeys.SAKURA_VALLEY, TerralithBiomeKeys.BLOOMING_PLATEAU,
                         TerralithBiomeKeys.SKYLANDS, TerralithBiomeKeys. SKYLANDS_AUTUMN, TerralithBiomeKeys.SKYLANDS_SPRING,
                         TerralithBiomeKeys.SKYLANDS_SUMMER, TerralithBiomeKeys.WARM_RIVER, TerralithBiomeKeys.VOLCANIC_PEAKS,
-                        TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS),
+                        TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.PLAINS)).or(BiomeSelectors.tag(ConventionalBiomeTags.FOREST))
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.CLIMATE_TEMPERATE)),
                 SpawnGroup.CREATURE, ModEntities.ELITE_HOPLITE, 8, 1, 3);
         SpawnRestriction.register(ModEntities.ELITE_HOPLITE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
