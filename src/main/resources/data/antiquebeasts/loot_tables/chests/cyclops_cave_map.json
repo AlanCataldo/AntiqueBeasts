@@ -232,8 +232,8 @@
               "function": "minecraft:exploration_map",
               "destination": "antiquebeasts:hoplite_barrack",
               "decoration": "red_x",
-              "zoom": 3,
-              "search_radius" : 32
+              "zoom": 2,
+              "search_radius" : 16
             },
             {
               "add": false,
@@ -258,7 +258,7 @@
             },
             {
               "function": "minecraft:set_name",
-              "name": "Greek Barrack Map"
+              "name": "Hoplite Barrack Map"
             },
             {
               "add": false,
