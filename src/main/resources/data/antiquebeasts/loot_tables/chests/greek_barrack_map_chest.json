@@ -386,7 +386,7 @@
               "destination": "antiquebeasts:temple",
               "decoration": "red_x",
               "zoom": 2,
-              "search_radius" : 18
+              "search_radius" : 16
             },
             {
               "function": "minecraft:set_name",

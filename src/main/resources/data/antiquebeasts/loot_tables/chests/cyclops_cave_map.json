@@ -236,6 +236,10 @@
               "search_radius" : 16
             },
             {
+              "function": "minecraft:set_name",
+              "name": "Hoplite Barrack Map"
+            },
+            {
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
@@ -258,7 +262,7 @@
             },
             {
               "function": "minecraft:set_name",
-              "name": "Greek Barrack Map"
+              "name": "Hoplite Barrack Map"
             },
             {
               "add": false,
