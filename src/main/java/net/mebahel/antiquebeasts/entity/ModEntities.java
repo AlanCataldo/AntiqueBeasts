@@ -12,6 +12,28 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModEntities {
+    public static final EntityType<ServantEntity> SERVANT = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "servant"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ServantEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
+
+    public static final EntityType<MummyEntity> MUMMY = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "mummy"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, MummyEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 2.49f)).build());
+    public static final EntityType<CamelryEntity> CAMELRY = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "camelry"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, CamelryEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
+
+    public static final EntityType<AxemanEntity> AXEMAN = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "axeman"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, AxemanEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
+    public static final EntityType<WadjetEntity> WADJET = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "wadjet"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, WadjetEntity::new)
+                    .dimensions(EntityDimensions.fixed(1.49f, 2.49f)).build());
     public static final EntityType<CyclopsEntity> CYCLOPS = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "cyclops"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, CyclopsEntity::new)
@@ -80,6 +102,20 @@ public class ModEntities {
     public static final EntityType<ThrowingAxeEntity> THROWING_AXE = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "throwing_axe"),
             FabricEntityTypeBuilder.<ThrowingAxeEntity>create(SpawnGroup.MISC, ThrowingAxeEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+
+    public static final EntityType<VenomEntity> VENOM = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "venom"),
+            FabricEntityTypeBuilder.<VenomEntity>create(SpawnGroup.MISC, VenomEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+
+    public static final EntityType<VenomSlowEntity> VENOM_SLOW = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "venom_slow"),
+            FabricEntityTypeBuilder.<VenomSlowEntity>create(SpawnGroup.MISC, VenomSlowEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+    public static final EntityType<MummyProjectileEntity> MUMMY_PROJECTILE = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "mummy_projectile"),
+            FabricEntityTypeBuilder.<MummyProjectileEntity>create(SpawnGroup.MISC, MummyProjectileEntity::new)
                     .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
 
     public static final EntityType<ThrowingSnowRockEntity> THROWINGSNOWROCK = Registry.register(

@@ -13,6 +13,66 @@ import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
 public class ModEntitySpawn {
     public static void addEntitySpawn() {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                                BiomeKeys.DESERT, BiomeKeys.BADLANDS)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.DESERT)).or(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS)),
+                SpawnGroup.CREATURE, ModEntities.SERVANT, 8, 1, 3);
+        SpawnRestriction.register(ModEntities.SERVANT, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return CyclopsEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                });
+
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                                BiomeKeys.DESERT, BiomeKeys.BADLANDS)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.DESERT)).or(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS)),
+                SpawnGroup.CREATURE, ModEntities.MUMMY, 6, 1, 1);
+        SpawnRestriction.register(ModEntities.MUMMY, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return CyclopsEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                });
+
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                                BiomeKeys.DESERT, BiomeKeys.BADLANDS)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.DESERT)).or(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS)),
+                SpawnGroup.CREATURE, ModEntities.CAMELRY, 10, 1, 2);
+        SpawnRestriction.register(ModEntities.CAMELRY, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return CyclopsEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                });
+
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                                BiomeKeys.DESERT, BiomeKeys.BADLANDS)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.DESERT)).or(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS)),
+                SpawnGroup.CREATURE, ModEntities.AXEMAN, 12, 1, 2);
+        SpawnRestriction.register(ModEntities.AXEMAN, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return CyclopsEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                });
+
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                                BiomeKeys.DESERT, BiomeKeys.BADLANDS)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.DESERT)).or(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS)),
+                SpawnGroup.CREATURE, ModEntities.WADJET, 4, 1, 1);
+        SpawnRestriction.register(ModEntities.WADJET, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return CyclopsEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                });
+
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                         BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST,
                         BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.MEADOW, BiomeKeys.OLD_GROWTH_BIRCH_FOREST,
                         TerralithBiomeKeys.YELLOWSTONE, TerralithBiomeKeys.AMETHYST_CANYON, TerralithBiomeKeys.TEMPERATE_HIGHLANDS,

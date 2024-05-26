@@ -22,6 +22,21 @@ import java.util.List;
 import static net.minecraft.registry.tag.InstrumentTags.SCREAMING_GOAT_HORNS;
 
 public class ModItems {
+    public static final Item WAJDET_SPAWN_EGG = registerItem("wajdet_spawn_egg",
+            new SpawnEggItem(ModEntities.MUMMY,10053120, 6821916,
+                    new FabricItemSettings()));
+    public static final Item AXEMAN_SPAWN_EGG = registerItem("axeman_spawn_egg",
+            new SpawnEggItem(ModEntities.MUMMY,10053120, 6821916,
+                    new FabricItemSettings()));
+    public static final Item CAMELRY_SPAWN_EGG = registerItem("camelry_spawn_egg",
+            new SpawnEggItem(ModEntities.MUMMY,10053120, 6821916,
+                    new FabricItemSettings()));
+    public static final Item SERVANT_SPAWN_EGG = registerItem("servant_spawn_egg",
+            new SpawnEggItem(ModEntities.MUMMY,10053120, 6821916,
+                    new FabricItemSettings()));
+    public static final Item MUMMY_SPAWN_EGG = registerItem("mummy_spawn_egg",
+            new SpawnEggItem(ModEntities.MUMMY,10053120, 6821916,
+                    new FabricItemSettings()));
     public static final Item CYCLOPS_SPAWN_EGG = registerItem("cyclops_spawn_egg",
             new SpawnEggItem(ModEntities.CYCLOPS,10053120, 6821916,
                     new FabricItemSettings()));
@@ -166,6 +181,11 @@ public class ModItems {
         return Registry.register(Registries.ITEM, new Identifier(AntiqueBeasts.MOD_ID, name), item);
     }
     public static void addItemToSpawnEggItemGroup(FabricItemGroupEntries entries) {
+        entries.add(WAJDET_SPAWN_EGG);
+        entries.add(AXEMAN_SPAWN_EGG);
+        entries.add(CAMELRY_SPAWN_EGG);
+        entries.add(SERVANT_SPAWN_EGG);
+        entries.add(MUMMY_SPAWN_EGG);
         entries.add(CYCLOPS_SPAWN_EGG);
         entries.add(FROST_CYCLOPS_SPAWN_EGG);
         entries.add(ELITE_HOPLITE_SPAWN_EGG);
