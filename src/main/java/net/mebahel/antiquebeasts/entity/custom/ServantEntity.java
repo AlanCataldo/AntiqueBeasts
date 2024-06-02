@@ -1,14 +1,15 @@
 package net.mebahel.antiquebeasts.entity.custom;
 
 import net.mebahel.antiquebeasts.entity.ai.EgyptianMeleeAttackGoal;
-import net.mebahel.antiquebeasts.entity.ai.MummyShootingGoal;
-import net.mebahel.antiquebeasts.entity.ai.MummySummonGoal;
 import net.mebahel.antiquebeasts.entity.variant.EgyptiantVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
+import net.minecraft.entity.ai.goal.LookAroundGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -16,7 +17,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -32,6 +32,8 @@ import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInst
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
+
+import java.util.Objects;
 
 import static java.lang.Math.random;
 
@@ -65,7 +67,7 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.55f)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.57f)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 18.0D)
                 .add(EntityAttributes.GENERIC_ARMOR, 1f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0f)
@@ -75,7 +77,7 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new EgyptianMeleeAttackGoal(this, 0.51f, 5f, 1));
+        this.goalSelector.add(2, new EgyptianMeleeAttackGoal(this, 0.57f, 5f, 1, 10));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.45f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
 
@@ -115,7 +117,11 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
             if (player != null)
                 this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.SWING, this.getSoundCategory(), 0.5f, 1.5f);
         }));
-        controllers.add(new AnimationController(this, "spawning", 0, this::spawnPredicate));
+        controllers.add(new AnimationController(this, "spawning", 0, this::spawnPredicate).setSoundKeyframeHandler(state -> {
+            PlayerEntity player = ClientUtils.getClientPlayer();
+            if (player != null)
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.MUMMY_SPAWN, this.getSoundCategory(), 0.65f, 1f);
+        }));
     }
 
     @Override
@@ -123,6 +129,11 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
         super.tick();
         if (shouldDespawnInPeaceful()) {
             remove(RemovalReason.DISCARDED);
+        }
+        if (this.age < 40) {
+            Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0);
+        } else if (Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getValue() == 0) {
+            Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.57f);
         }
     }
     @Override

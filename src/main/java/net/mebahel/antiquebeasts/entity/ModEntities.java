@@ -12,6 +12,11 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModEntities {
+
+    public static final EntityType<ElephantRiderEntity> ELEPHANT_RIDER = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "elephant_rider"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ElephantRiderEntity::new)
+                    .dimensions(EntityDimensions.fixed(1.49f, 3.99f)).build());
     public static final EntityType<ServantEntity> SERVANT = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "servant"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ServantEntity::new)
@@ -24,7 +29,7 @@ public class ModEntities {
     public static final EntityType<CamelryEntity> CAMELRY = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "camelry"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, CamelryEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
+                    .dimensions(EntityDimensions.fixed(0.99f, 2.99f)).build());
 
     public static final EntityType<AxemanEntity> AXEMAN = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "axeman"),

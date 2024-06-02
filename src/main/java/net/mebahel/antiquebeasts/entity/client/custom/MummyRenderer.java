@@ -11,7 +11,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class MummyRenderer extends GeoEntityRenderer<MummyEntity> {
     public MummyRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new MummyModel());
-        this.shadowRadius = 0.25f;
+        this.shadowRadius = 0.5f;
     }
     @Override
     public RenderLayer getRenderType(MummyEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {

@@ -1,8 +1,7 @@
 package net.mebahel.antiquebeasts.entity.custom;
 
-import net.mebahel.antiquebeasts.entity.ai.WajdetLookAtTargetGoal;
-import net.mebahel.antiquebeasts.entity.ai.WajdetShootingGoal;
-import net.mebahel.antiquebeasts.entity.variant.EgyptiantVariant;
+import net.mebahel.antiquebeasts.entity.ai.WadjetLookAtTargetGoal;
+import net.mebahel.antiquebeasts.entity.ai.WadjetShootingGoal;
 import net.mebahel.antiquebeasts.entity.variant.WadjetVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.EntityData;
@@ -20,17 +19,14 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Util;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -120,8 +116,8 @@ public class WadjetEntity extends EgyptianEntity implements GeoEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new WajdetShootingGoal(this, 128F));
-        this.goalSelector.add(3, new WajdetLookAtTargetGoal(this));
+        this.goalSelector.add(2, new WadjetShootingGoal(this, 128F));
+        this.goalSelector.add(3, new WadjetLookAtTargetGoal(this));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.35f, 1f));
 
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));

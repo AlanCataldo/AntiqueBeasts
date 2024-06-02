@@ -1,13 +1,18 @@
 package net.mebahel.antiquebeasts.entity.custom;
 
-import net.mebahel.antiquebeasts.entity.ai.CyclopsShootingGoal;
 import net.mebahel.antiquebeasts.entity.ai.EgyptianMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.MummyShootingGoal;
 import net.mebahel.antiquebeasts.entity.ai.MummySummonGoal;
 import net.mebahel.antiquebeasts.entity.variant.EgyptiantVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityData;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
+import net.minecraft.entity.ai.goal.LookAroundGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -15,7 +20,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -29,9 +33,10 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
+
+import java.util.Objects;
 
 import static java.lang.Math.random;
 
@@ -85,14 +90,14 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
         this.dataTracker.startTracking(COOLDOWN, 0);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
-        this.dataTracker.startTracking(SPAWN_CD, 160);
+        this.dataTracker.startTracking(SPAWN_CD, 110);
         this.dataTracker.startTracking(SPAWN, false);
         this.dataTracker.startTracking(HAS_SPAWNED, false);
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.55f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 24.0D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 36.0D)
                 .add(EntityAttributes.GENERIC_ARMOR, 4f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5.0f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2f)
@@ -103,7 +108,7 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new MummySummonGoal(this, 0.51f));
         this.goalSelector.add(3, new MummyShootingGoal(this, 0.51f));
-        this.goalSelector.add(4, new EgyptianMeleeAttackGoal(this, 0.51f, 6f, 1));
+        this.goalSelector.add(4, new EgyptianMeleeAttackGoal(this, 0.51f, 6f, 1, 10));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.45f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
 
@@ -140,6 +145,7 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
             state.getController().forceAnimationReset();
             state.getController().setAnimation(RawAnimation.begin().then("spawn", Animation.LoopType.PLAY_ONCE));
         }
+
         this.setHasSpawned(true);
         return PlayState.CONTINUE;
     }
@@ -160,7 +166,11 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
             if (player != null)
                 this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.SWING, this.getSoundCategory(), 0.5f, 1.5f);
         }));
-        controllers.add(new AnimationController(this, "spawning", 0, this::spawnPredicate));
+        controllers.add(new AnimationController(this, "spawning", 0, this::spawnPredicate).setSoundKeyframeHandler(state -> {
+            PlayerEntity player = ClientUtils.getClientPlayer();
+            if (player != null)
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.MUMMY_SPAWN, this.getSoundCategory(), 0.65f, 1f);
+        }));
         controllers.add(new AnimationController(this, "raise", 0, this::raisePredicate).setSoundKeyframeHandler(state -> {
             PlayerEntity player = ClientUtils.getClientPlayer();
             if (player != null)
@@ -178,6 +188,12 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
         super.tick();
         if (shouldDespawnInPeaceful()) {
             remove(Entity.RemovalReason.DISCARDED);
+        }
+
+        if (this.age < 40 || this.isShooting() || this.getSpawn()) {
+            Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0);
+        } else if (Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getValue() == 0) {
+            Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.51f);
         }
     }
     @Override
@@ -207,18 +223,12 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Variant", this.getTypeVariant());
         nbt.putBoolean("HasSpawned", true);
-        nbt.putInt("SpawnCooldown", this.getSpawnCooldown());
-        nbt.putBoolean("Shooting", this.isShooting());
-        nbt.putInt("Cooldown", this.getCooldown());
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, nbt.getInt("Variant"));
         this.setHasSpawned(nbt.getBoolean("HasSpawned"));
-        this.setSpawnCooldown(nbt.getInt("SpawnCooldown"));
-        this.setShooting(nbt.getBoolean("Shooting"));
-        this.setCooldown(nbt.getInt("Cooldown"));
     }
     private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
             DataTracker.registerData(MummyEntity.class, TrackedDataHandlerRegistry.INTEGER);

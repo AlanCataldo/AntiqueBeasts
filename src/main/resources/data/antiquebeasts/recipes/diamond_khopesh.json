@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  D",
+    " DD",
+    " S "
+  ],
+  "key" : {
+    "D": {
+      "item" : "antiquebeasts:diamond_scarab"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:weapon/diamond_khopesh"
+  }
+}

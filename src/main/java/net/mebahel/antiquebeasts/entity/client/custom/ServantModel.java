@@ -46,8 +46,7 @@ public class ServantModel extends GeoModel<ServantEntity> {
         }
         if (head != null) {
             head.setRotY(3.0F * yawAngle);
-            head.setRotX(3.0F * pitchAngle);
+            head.setRotZ(3.0F * pitchAngle);
         }
     }
-
 }

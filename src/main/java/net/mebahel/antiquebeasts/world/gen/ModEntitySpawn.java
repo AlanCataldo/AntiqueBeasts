@@ -15,13 +15,25 @@ public class ModEntitySpawn {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 BiomeKeys.DESERT, BiomeKeys.BADLANDS)
                         .or(BiomeSelectors.tag(ConventionalBiomeTags.DESERT)).or(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS)),
-                SpawnGroup.CREATURE, ModEntities.SERVANT, 8, 1, 3);
+                SpawnGroup.CREATURE, ModEntities.ELEPHANT_RIDER, 4, 1, 1);
+        SpawnRestriction.register(ModEntities.ELEPHANT_RIDER, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return ElephantRiderEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                });
+
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                                BiomeKeys.DESERT, BiomeKeys.BADLANDS)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.DESERT)).or(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS)),
+                SpawnGroup.CREATURE, ModEntities.SERVANT, 12, 1, 3);
         SpawnRestriction.register(ModEntities.SERVANT, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
                     }
-                    return CyclopsEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                    return ServantEntity.canMobSpawn(type, world, spawnReason, pos, random);
                 });
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
@@ -33,7 +45,7 @@ public class ModEntitySpawn {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
                     }
-                    return CyclopsEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                    return MummyEntity.canMobSpawn(type, world, spawnReason, pos, random);
                 });
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
@@ -45,7 +57,7 @@ public class ModEntitySpawn {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
                     }
-                    return CyclopsEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                    return CamelryEntity.canMobSpawn(type, world, spawnReason, pos, random);
                 });
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
@@ -57,19 +69,19 @@ public class ModEntitySpawn {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
                     }
-                    return CyclopsEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                    return AxemanEntity.canMobSpawn(type, world, spawnReason, pos, random);
                 });
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 BiomeKeys.DESERT, BiomeKeys.BADLANDS)
                         .or(BiomeSelectors.tag(ConventionalBiomeTags.DESERT)).or(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS)),
-                SpawnGroup.CREATURE, ModEntities.WADJET, 4, 1, 1);
+                SpawnGroup.CREATURE, ModEntities.WADJET, 6, 1, 1);
         SpawnRestriction.register(ModEntities.WADJET, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
                     }
-                    return CyclopsEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                    return WadjetEntity.canMobSpawn(type, world, spawnReason, pos, random);
                 });
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(

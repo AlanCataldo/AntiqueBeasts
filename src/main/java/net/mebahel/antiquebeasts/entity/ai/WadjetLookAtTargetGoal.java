@@ -7,13 +7,13 @@ import net.minecraft.util.math.MathHelper;
 
 import java.util.EnumSet;
 
-public class WajdetLookAtTargetGoal extends Goal {
+public class WadjetLookAtTargetGoal extends Goal {
     private final WadjetEntity shade;
     private double deltaX;
     private double deltaZ;
     private int lookTime;
 
-    public WajdetLookAtTargetGoal(WadjetEntity shade) {
+    public WadjetLookAtTargetGoal(WadjetEntity shade) {
         this.shade = shade;
         this.setControls(EnumSet.of(Control.LOOK));
     }

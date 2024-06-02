@@ -11,9 +11,11 @@
   "entity.antiquebeasts.einherjar": "Einherjar",
   "entity.antiquebeasts.valkyrie": "Valkyrie",
   "entity.antiquebeasts.axeman": "Homme d'arme",
-  "entity.antiquebeasts.wajdet": "Wajdet",
+  "entity.antiquebeasts.wadjet": "Wajdet",
   "entity.antiquebeasts.camelry": "Méharée",
   "entity.antiquebeasts.mummy": "Momie",
+  "entity.antiquebeasts.servant": "Servant",
+  "entity.antiquebeasts.elephant_rider": "Chevaucheur d'éléphant",
 
   "block.antiquebeasts.amphora": "Amphore",
 
@@ -29,6 +31,12 @@
   "item.antiquebeasts.throwing_axeman_spawn_egg": "Oeuf d'apparition de Lanceur de hache",
   "item.antiquebeasts.einherjar_spawn_egg": "Oeuf d'apparition d'Einherjar",
   "item.antiquebeasts.valkyrie_spawn_egg": "Oeuf d'apparition de Valkyrie",
+  "item.antiquebeasts.mummy_spawn_egg": "Oeuf d'apparition de Momie",
+  "item.antiquebeasts.servant_spawn_egg": "Oeuf d'apparition de Servant",
+  "item.antiquebeasts.wadjet_spawn_egg": "Oeuf d'apparition de Wadjet",
+  "item.antiquebeasts.camelry_spawn_egg": "Oeuf d'apparition de Méharée",
+  "item.antiquebeasts.axeman_spawn_egg": "Oeuf d'apparition d'Homme d'arme'",
+  "item.antiquebeasts.elephant_rider_spawn_egg": "Oeuf d'apparition de Chevaucheur d'éléphant",
 
   "item.antiquebeasts.throwingrock": "Rocher de lancer",
   "item.antiquebeasts.raw_cyclops_meat": "Viande de cyclope crue",
@@ -80,5 +88,17 @@
   "item.antiquebeasts.weapon.high_iron_sword": "Épée en haut fer",
   "item.antiquebeasts.shield.high_iron_shield": "Bouclier en haut fer",
   "item.antiquebeasts.einherjar_horn": "Corne d'Einherjar",
-  "item.antiquebeasts.einherjar_horn.tooltip": "Cri de guerre"
+  "item.antiquebeasts.einherjar_horn.tooltip": "Cri de guerre",
+  "item.antiquebeasts.gold_scarab": "Scarabée en or",
+  "item.antiquebeasts.iron_scarab": "Scarabée en fer",
+  "item.antiquebeasts.diamond_scarab": "Scarabée en diamant",
+
+  "item.antiquebeasts.weapon.iron_khopesh": "Khopesh en fer",
+  "item.antiquebeasts.weapon.gold_khopesh": "Khopesh en or",
+  "item.antiquebeasts.weapon.diamond_khopesh": "Khopesh en diamant",
+  "item.antiquebeasts.weapon.netherite_khopesh": "Khopesh en netherite",
+  "item.antiquebeasts.weapon.iron_egyptian_halberd": "Hallebarde egyptienne en fer",
+  "item.antiquebeasts.weapon.gold_egyptian_halberd": "Hallebarde egyptienne en or",
+  "item.antiquebeasts.weapon.diamond_egyptian_halberd": "Hallebarde egyptienne en diamant",
+  "item.antiquebeasts.weapon.netherite_egyptian_halberd": "Hallebarde egyptienne en netherite"
 }

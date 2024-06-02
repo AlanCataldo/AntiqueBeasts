@@ -11,9 +11,11 @@
   "entity.antiquebeasts.einherjar": "Einherjar",
   "entity.antiquebeasts.valkyrie": "Valkyrie",
   "entity.antiquebeasts.axeman": "Axeman",
-  "entity.antiquebeasts.wajdet": "Wajdet",
+  "entity.antiquebeasts.wadjet": "Wadjet",
   "entity.antiquebeasts.camelry": "Camelry",
   "entity.antiquebeasts.mummy": "Mummy",
+  "entity.antiquebeasts.servant": "Servant",
+  "entity.antiquebeasts.elephant_rider": "Elephant Rider",
 
   "block.antiquebeasts.amphora": "Amphora",
 
@@ -29,6 +31,12 @@
   "item.antiquebeasts.throwing_axeman_spawn_egg": "Throwing Axeman spawn egg",
   "item.antiquebeasts.einherjar_spawn_egg": "Einherjar spawn egg",
   "item.antiquebeasts.valkyrie_spawn_egg": "Valkyrie spawn egg",
+  "item.antiquebeasts.mummy_spawn_egg": "Mummy spawn egg",
+  "item.antiquebeasts.servant_spawn_egg": "Servant spawn egg",
+  "item.antiquebeasts.wadjet_spawn_egg": "Wadjet spawn egg",
+  "item.antiquebeasts.camelry_spawn_egg": "Camelry spawn egg",
+  "item.antiquebeasts.axeman_spawn_egg": "Axeman spawn egg",
+  "item.antiquebeasts.elephant_rider_spawn_egg": "Elephant Rider spawn egg",
 
   "item.antiquebeasts.throwingrock": "Throwing rock",
   "item.antiquebeasts.raw_cyclops_meat": "Raw cyclops meat",
@@ -80,5 +88,17 @@
   "item.antiquebeasts.weapon.high_iron_sword": "High Iron Sword",
   "item.antiquebeasts.shield.high_iron_shield": "High Iron Shield",
   "item.antiquebeasts.einherjar_horn": "Einherjar Horn",
-  "item.antiquebeasts.einherjar_horn.tooltip": "War cry"
+  "item.antiquebeasts.einherjar_horn.tooltip": "War cry",
+  "item.antiquebeasts.gold_scarab": "Gold Scarab",
+  "item.antiquebeasts.iron_scarab": "Iron Scarab",
+  "item.antiquebeasts.diamond_scarab": "Diamond Scarab",
+
+  "item.antiquebeasts.weapon.iron_khopesh": "Iron Khopesh",
+  "item.antiquebeasts.weapon.gold_khopesh": "Gold Khopesh",
+  "item.antiquebeasts.weapon.diamond_khopesh": "Diamond Khopesh",
+  "item.antiquebeasts.weapon.netherite_khopesh": "Netherite Khopesh",
+  "item.antiquebeasts.weapon.iron_egyptian_halberd": "Iron Egyptian Halberd",
+  "item.antiquebeasts.weapon.gold_egyptian_halberd": "Gold Egyptian Halberd",
+  "item.antiquebeasts.weapon.diamond_egyptian_halberd": "Diamond Egyptian Halberd",
+  "item.antiquebeasts.weapon.netherite_egyptian_halberd": "Netherite Egyptian Halberd"
 }

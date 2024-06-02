@@ -413,12 +413,6 @@
       "antiquebeasts:wadjet/wadjet_death_1"
     ]
   },
-  "wadjet_death_2": {
-    "subtitle": "antiquebeasts:wadjet/wadjet_death_2",
-    "sounds": [
-      "antiquebeasts:wadjet/wadjet_death_2"
-    ]
-  },
   "wadjet_spit_1": {
     "subtitle": "antiquebeasts:wadjet/wadjet_spit_1",
     "sounds": [
@@ -521,10 +515,10 @@
       "antiquebeasts:egyptian/mummy_ambient_2"
     ]
   },
-  "servant_die_1": {
-    "subtitle": "antiquebeasts:servant/servant_die_1",
+  "servant_death_1": {
+    "subtitle": "antiquebeasts:servant/servant_death_1",
     "sounds": [
-      "antiquebeasts:servant/servant_die_1"
+      "antiquebeasts:servant/servant_death_1"
     ]
   },
   "servant_hurt_1": {
@@ -549,6 +543,42 @@
     "subtitle": "antiquebeasts:servant/servant_ambient_3",
     "sounds": [
       "antiquebeasts:servant/servant_ambient_3"
+    ]
+  },
+  "cursed_birth": {
+    "subtitle": "antiquebeasts:egyptian/cursed_birth",
+    "sounds": [
+      "antiquebeasts:egyptian/cursed_birth"
+    ]
+  },
+  "mummy_spawn": {
+    "subtitle": "antiquebeasts:egyptian/mummy_spawn",
+    "sounds": [
+      "antiquebeasts:egyptian/mummy_spawn"
+    ]
+  },
+  "elephant_hurt_1": {
+    "subtitle": "antiquebeasts:elephant/elephant_hurt_1",
+    "sounds": [
+      "antiquebeasts:elephant/elephant_hurt_1"
+    ]
+  },
+  "elephant_hurt_2": {
+    "subtitle": "antiquebeasts:elephant/elephant_hurt_2",
+    "sounds": [
+      "antiquebeasts:elephant/elephant_hurt_2"
+    ]
+  },
+  "elephant_death_1": {
+    "subtitle": "antiquebeasts:elephant/elephant_death_1",
+    "sounds": [
+      "antiquebeasts:elephant/elephant_death_1"
+    ]
+  },
+  "elephant_ambient_1": {
+    "subtitle": "antiquebeasts:elephant/elephant_ambient_1",
+    "sounds": [
+      "antiquebeasts:elephant/elephant_ambient_1"
     ]
   }
 }

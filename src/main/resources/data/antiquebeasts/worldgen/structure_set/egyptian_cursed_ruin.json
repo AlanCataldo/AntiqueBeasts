@@ -1,0 +1,19 @@
+{
+  "structures": [
+    {
+      "structure": "antiquebeasts:egyptian_cursed_ruin",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 64581488,
+    "exclusion_zone":
+    {
+      "other_set":"minecraft:villages",
+      "chunk_count": 8
+    },
+    "spacing": 24,
+    "separation": 12
+  }
+}

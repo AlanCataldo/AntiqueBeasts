@@ -100,6 +100,12 @@ public class ModSounds {
     public static SoundEvent SERVANT_AMBIENT_1 = registerSoundEvent("servant_ambient_1");
     public static SoundEvent SERVANT_AMBIENT_2 = registerSoundEvent("servant_ambient_2");
     public static SoundEvent SERVANT_AMBIENT_3 = registerSoundEvent("servant_ambient_3");
+    public static SoundEvent CURSED_BIRTH = registerSoundEvent("cursed_birth");
+    public static SoundEvent MUMMY_SPAWN = registerSoundEvent("mummy_spawn");
+    public static SoundEvent ELEPHANT_HURT_1 = registerSoundEvent("elephant_hurt_1");
+    public static SoundEvent ELEPHANT_HURT_2 = registerSoundEvent("elephant_hurt_2");
+    public static SoundEvent ELEPHANT_DEATH_1 = registerSoundEvent("elephant_death_1");
+    public static SoundEvent ELEPHANT_AMBIENT_1 = registerSoundEvent("elephant_ambient_1");
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));

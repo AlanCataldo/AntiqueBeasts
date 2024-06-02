@@ -22,20 +22,23 @@ import java.util.List;
 import static net.minecraft.registry.tag.InstrumentTags.SCREAMING_GOAT_HORNS;
 
 public class ModItems {
-    public static final Item WAJDET_SPAWN_EGG = registerItem("wajdet_spawn_egg",
-            new SpawnEggItem(ModEntities.MUMMY,10053120, 6821916,
+    public static final Item ELEPHANT_RIDER_SPAWN_EGG = registerItem("elephant_rider_spawn_egg",
+            new SpawnEggItem(ModEntities.ELEPHANT_RIDER,5526612, 10658466,
+                    new FabricItemSettings()));
+    public static final Item WADJET_SPAWN_EGG = registerItem("wadjet_spawn_egg",
+            new SpawnEggItem(ModEntities.WADJET,8612925, 15527888,
                     new FabricItemSettings()));
     public static final Item AXEMAN_SPAWN_EGG = registerItem("axeman_spawn_egg",
-            new SpawnEggItem(ModEntities.MUMMY,10053120, 6821916,
+            new SpawnEggItem(ModEntities.AXEMAN,15783026, 16711422,
                     new FabricItemSettings()));
     public static final Item CAMELRY_SPAWN_EGG = registerItem("camelry_spawn_egg",
-            new SpawnEggItem(ModEntities.MUMMY,10053120, 6821916,
+            new SpawnEggItem(ModEntities.CAMELRY,15783026, 15314250,
                     new FabricItemSettings()));
     public static final Item SERVANT_SPAWN_EGG = registerItem("servant_spawn_egg",
-            new SpawnEggItem(ModEntities.MUMMY,10053120, 6821916,
+            new SpawnEggItem(ModEntities.SERVANT,11375453, 7889747,
                     new FabricItemSettings()));
     public static final Item MUMMY_SPAWN_EGG = registerItem("mummy_spawn_egg",
-            new SpawnEggItem(ModEntities.MUMMY,10053120, 6821916,
+            new SpawnEggItem(ModEntities.MUMMY,11375453, 87,
                     new FabricItemSettings()));
     public static final Item CYCLOPS_SPAWN_EGG = registerItem("cyclops_spawn_egg",
             new SpawnEggItem(ModEntities.CYCLOPS,10053120, 6821916,
@@ -177,11 +180,44 @@ public class ModItems {
     public static final SwordItem HIGH_IRON_SWORD = registerItem("weapon/high_iron_sword",
             new SwordItem(ModToolMaterial.HIGH_IRON,4, -2.4f,
                     new FabricItemSettings()));
+
+    public static final SwordItem IRON_KHOPESH = registerItem("weapon/iron_khopesh",
+            new SwordItem(ModToolMaterial.IRON_KHOPESH,4, -2.2f,
+                    new FabricItemSettings()));
+    public static final SwordItem GOLD_KHOPESH = registerItem("weapon/gold_khopesh",
+            new SwordItem(ModToolMaterial.GOLD_KHOPESH,5, -2.2f,
+                    new FabricItemSettings()));
+    public static final SwordItem DIAMOND_KHOPESH = registerItem("weapon/diamond_khopesh",
+            new SwordItem(ModToolMaterial.DIAMOND_KHOPESH,5, -2.2f,
+                    new FabricItemSettings()));
+    public static final SwordItem NETHERITE_KHOPESH = registerItem("weapon/netherite_khopesh",
+            new SwordItem(ModToolMaterial.NETHERITE_KHOPESH,6, -2.2f,
+                    new FabricItemSettings()));
+
+    public static final SwordItem IRON_EGYPTIAN_HALBERD = registerItem("weapon/iron_egyptian_halberd",
+            new SwordItem(ModToolMaterial.IRON_KHOPESH,5, -2.5f,
+                    new FabricItemSettings()));
+    public static final SwordItem GOLD_EGYPTIAN_HALBERD = registerItem("weapon/gold_egyptian_halberd",
+            new SwordItem(ModToolMaterial.GOLD_KHOPESH,6, -2.5f,
+                    new FabricItemSettings()));
+    public static final SwordItem DIAMOND_EGYPTIAN_HALBERD = registerItem("weapon/diamond_egyptian_halberd",
+            new SwordItem(ModToolMaterial.DIAMOND_KHOPESH,6, -2.5f,
+                    new FabricItemSettings()));
+    public static final SwordItem NETHERITE_EGYPTIAN_HALBERD = registerItem("weapon/netherite_egyptian_halberd",
+            new SwordItem(ModToolMaterial.NETHERITE_KHOPESH,7, -2.5f,
+                    new FabricItemSettings()));
+    public static final Item GOLD_SCARAB = registerItem("gold_scarab",
+            new Item(new FabricItemSettings()));
+    public static final Item IRON_SCARAB = registerItem("iron_scarab",
+            new Item(new FabricItemSettings()));
+    public static final Item DIAMOND_SHARD = registerItem("diamond_scarab",
+            new Item(new FabricItemSettings()));
     public static <I extends Item> I registerItem(String name, I item) {
         return Registry.register(Registries.ITEM, new Identifier(AntiqueBeasts.MOD_ID, name), item);
     }
     public static void addItemToSpawnEggItemGroup(FabricItemGroupEntries entries) {
-        entries.add(WAJDET_SPAWN_EGG);
+        entries.add(ELEPHANT_RIDER_SPAWN_EGG);
+        entries.add(WADJET_SPAWN_EGG);
         entries.add(AXEMAN_SPAWN_EGG);
         entries.add(CAMELRY_SPAWN_EGG);
         entries.add(SERVANT_SPAWN_EGG);
@@ -206,6 +242,9 @@ public class ModItems {
         entries.add(FROST_SHARD);
         entries.add(HIGH_IRON_INGOT);
         entries.add(HIGH_IRON_SCRAP);
+        entries.add(IRON_SCARAB);
+        entries.add(GOLD_SCARAB);
+        entries.add(DIAMOND_SHARD);
     }
     public static void addItemToFoodItemGroup(FabricItemGroupEntries entries) {
         entries.add(COOKED_CYCLOPS_MEAT);
@@ -216,6 +255,7 @@ public class ModItems {
 
     public static void addItemToFunctionalItemGroup(FabricItemGroupEntries entries) {
         entries.add(ModBlocks.AMPHORA);
+        entries.add(ModBlocks.CURSED_GOLDEN_BLOCK);
     }
     public static void addItemToCombatItemGroup(FabricItemGroupEntries entries) {
         entries.add(IRON_HOPLITE_SPEAR);
@@ -249,6 +289,14 @@ public class ModItems {
         entries.add(THROWING_AXE_ITEM);
         entries.add(HIGH_IRON_SWORD);
         entries.add(EINHERJAR_HORN);
+        entries.add(IRON_KHOPESH);
+        entries.add(GOLD_KHOPESH);
+        entries.add(DIAMOND_KHOPESH);
+        entries.add(NETHERITE_KHOPESH);
+        entries.add(IRON_EGYPTIAN_HALBERD);
+        entries.add(GOLD_EGYPTIAN_HALBERD);
+        entries.add(DIAMOND_EGYPTIAN_HALBERD);
+        entries.add(NETHERITE_EGYPTIAN_HALBERD);
     }
 
 

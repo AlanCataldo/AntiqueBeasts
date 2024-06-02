@@ -29,7 +29,6 @@ public class MummySummonGoal extends Goal {
     }
 
     public void stop() {
-        Objects.requireNonNull(this.mummy.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(speed);
         this.mummy.setSpawn(false);
         this.mummy.setSpawnCooldown(300);
     }
@@ -41,6 +40,10 @@ public class MummySummonGoal extends Goal {
     public void tick() {
         if (!this.mummy.isSwinging())
             this.mummy.setSpawnCooldown(this.mummy.getSpawnCooldown() - 1);
+        else {
+            this.mummy.setSpawnCooldown(110);
+            this.mummy.setCooldown(60);
+        }
 
         switch (this.mummy.getSpawnCooldown()) {
             case 0 -> this.stop();
@@ -50,7 +53,6 @@ public class MummySummonGoal extends Goal {
                 spawnMummyAtOffset(world, 3, -2);
             }
             case 26 -> {
-                Objects.requireNonNull(this.mummy.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0f);
                 this.mummy.setSpawn(true);
             }
         }

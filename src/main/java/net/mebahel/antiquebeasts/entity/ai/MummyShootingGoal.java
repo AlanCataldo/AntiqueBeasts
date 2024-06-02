@@ -43,11 +43,6 @@ public class MummyShootingGoal extends Goal {
 
     public void tick() {
         LivingEntity livingEntity = this.cyclops.getTarget();
-        if (this.cyclops.isShooting()) {
-            Objects.requireNonNull(this.cyclops.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0);
-        } else {
-            Objects.requireNonNull(this.cyclops.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(speed);
-        }
         if (this.cyclops.distanceTo(livingEntity) > 2) {
             if (this.cyclops.canSee(livingEntity)) {
                 World world = this.cyclops.getWorld();

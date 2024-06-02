@@ -13,6 +13,19 @@ public enum ModToolMaterial implements ToolMaterial {
         return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
     }),
 
+    IRON_KHOPESH(4, 680, 7F, 1F, 15, () -> {
+        return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
+    }),
+    GOLD_KHOPESH(4, 480, 7F, 0.5F, 19, () -> {
+        return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
+    }),
+    DIAMOND_KHOPESH(4, 1280, 7F, 1F, 17, () -> {
+        return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
+    }),
+    NETHERITE_KHOPESH(4, 1580, 7F, 1F, 20, () -> {
+        return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
+    }),
+
     HIGH_IRON(4, 680, 7.0F, 1.5F, 19, () -> {
         return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
     }),

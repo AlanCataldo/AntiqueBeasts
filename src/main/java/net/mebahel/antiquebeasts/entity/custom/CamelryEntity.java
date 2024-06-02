@@ -63,7 +63,7 @@ public class CamelryEntity extends EgyptianEntity implements GeoEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new EgyptianMeleeAttackGoal(this, 0.45f, 8f, 2));
+        this.goalSelector.add(2, new EgyptianMeleeAttackGoal(this, 0.45f, 9f, 2, 10));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
 

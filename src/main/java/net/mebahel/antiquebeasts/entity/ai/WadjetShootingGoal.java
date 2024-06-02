@@ -3,21 +3,20 @@ package net.mebahel.antiquebeasts.entity.ai;
 import net.mebahel.antiquebeasts.entity.custom.WadjetEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.VenomEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.VenomSlowEntity;
-import net.mebahel.antiquebeasts.entity.variant.EgyptiantVariant;
 import net.mebahel.antiquebeasts.entity.variant.WadjetVariant;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.world.World;
 
-public class WajdetShootingGoal extends Goal {
+public class WadjetShootingGoal extends Goal {
     private final WadjetEntity actor;
     private final float squaredRange;
     private int targetSeeingTicker;
     private boolean movingToLeft;
     private boolean backward;
     private int combatTicks = -1;
-    public WajdetShootingGoal(WadjetEntity actor, float squaredRange) {
+    public WadjetShootingGoal(WadjetEntity actor, float squaredRange) {
         this.actor = actor;
         this.squaredRange = squaredRange;
     }
