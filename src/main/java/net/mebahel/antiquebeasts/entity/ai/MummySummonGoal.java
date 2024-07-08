@@ -41,7 +41,7 @@ public class MummySummonGoal extends Goal {
         if (!this.mummy.isSwinging())
             this.mummy.setSpawnCooldown(this.mummy.getSpawnCooldown() - 1);
         else {
-            this.mummy.setSpawnCooldown(110);
+            this.mummy.setSpawnCooldown(120);
             this.mummy.setCooldown(60);
         }
 

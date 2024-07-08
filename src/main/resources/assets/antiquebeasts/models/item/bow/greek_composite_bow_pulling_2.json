@@ -1,0 +1,6 @@
+{
+  "parent": "antiquebeasts:item/bow/greek_composite_bow",
+  "textures": {
+    "layer0": "antiquebeasts:item/bow/greek_composite_bow_pulling_2"
+  }
+}

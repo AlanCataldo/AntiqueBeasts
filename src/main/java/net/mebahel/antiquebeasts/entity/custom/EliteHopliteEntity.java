@@ -29,6 +29,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 
 
 public class EliteHopliteEntity extends HopliteEntity implements GeoEntity {
@@ -50,6 +51,42 @@ public class EliteHopliteEntity extends HopliteEntity implements GeoEntity {
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
     }
+    public static final TrackedData<Integer> TICKCOUNTER = DataTracker.registerData(EliteHopliteEntity.class,
+            TrackedDataHandlerRegistry.INTEGER);
+
+    public void setTickCounter(Integer counter) {
+        this.dataTracker.set(TICKCOUNTER, counter);
+    }
+
+    public int getTickCounter() {
+        return this.dataTracker.get(TICKCOUNTER);
+    }
+
+    public boolean isTransitionning = false;
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (shouldDespawnInPeaceful()) {
+            remove(RemovalReason.DISCARDED);
+        }
+        if (this.getTickCounter() > 0) {
+            this.setTickCounter(Math.max(this.getTickCounter() - 1, 0));
+        }
+        if (this.getTarget() != null) {
+            this.setTickCounter(14);
+        }
+        if (this.getTickCounter() < 13 && this.getTickCounter() > 0) {
+            this.isTransitionning = true;
+        }
+        if (this.getTickCounter() == 0) {
+            this.isTransitionning = false;
+        }
+    }
+
+    private boolean shouldDespawnInPeaceful() {
+        return this.getWorld().getDifficulty() == Difficulty.PEACEFUL;
+    }
 
     public EliteHopliteEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
@@ -61,6 +98,7 @@ public class EliteHopliteEntity extends HopliteEntity implements GeoEntity {
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
+        this.dataTracker.startTracking(TICKCOUNTER, 0);
     }
 
     public void setSwinging(boolean swinging) {
@@ -92,12 +130,30 @@ public class EliteHopliteEntity extends HopliteEntity implements GeoEntity {
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
     }
     private PlayState predicate(AnimationState animationState) {
-        if(animationState.isMoving()) {
+        if (this.age < 5) {
+            animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
+        if (!this.isAttacking() && this.isTransitionning && this.getTickCounter() != 0
+                && !this.isSwinging()) {
+            animationState.getController().forceAnimationReset();
+            animationState.getController().setAnimation(RawAnimation.begin().then("no_target_transition", Animation.LoopType.PLAY_ONCE));
+            return PlayState.CONTINUE;
+        } else if (animationState.isMoving() && this.isAttacking()) {
+            animationState.getController().setAnimation(RawAnimation.begin().then("walk3", Animation.LoopType.PLAY_ONCE).then("walk2", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        } else if (animationState.isMoving() && !this.isAttacking() && this.getTickCounter() == 0) {
             animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
-
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+        var test = animationState.getController().getCurrentAnimation();
+        if (test != null) {
+            if (!Objects.equals(test.animation().name(), "no_target_transition") ||
+                    (Objects.equals(test.animation().name(), "no_target_transition") && animationState.getController().getAnimationState().equals(AnimationController.State.STOPPED))) {
+                animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            }
+        }
         return PlayState.CONTINUE;
     }
     private PlayState attackPredicate(AnimationState state) {

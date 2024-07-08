@@ -23,6 +23,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -183,5 +184,10 @@ public class WadjetEntity extends EgyptianEntity implements GeoEntity {
     }
     public void setVariant(WadjetVariant variant) {
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
+    }
+
+    public void performJump(Vec3d direction) {
+        this.setVelocity(direction);
+        this.velocityDirty = true;
     }
 }

@@ -24,7 +24,7 @@ public class ThrowingAxeManLookAtTargetGoal extends Goal {
         return this.shade.getTarget() != null;
     }
     public boolean shouldContinue() {
-        return this.lookTime >= 0;
+        return this.lookTime >= 0 && this.shade.getTarget() != null;
     }
 
     public boolean shouldRunEveryTick() {

@@ -10,13 +10,13 @@ import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.particle.custom.MummyProjectileParticle;
 import net.mebahel.antiquebeasts.particle.custom.RockSplashParticle;
 import net.mebahel.antiquebeasts.particle.custom.SnowRockSplashParticle;
-import net.mebahel.antiquebeasts.util.HornModelPredicate;
-import net.mebahel.antiquebeasts.util.ShieldModelPredicate;
-import net.mebahel.antiquebeasts.util.SpearModelPredicate;
+import net.mebahel.antiquebeasts.util.*;
 
 public class AntiqueBeastsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        EntityRendererRegistry.register(ModEntities.PEGASUS, PegasusRenderer::new);
+        EntityRendererRegistry.register(ModEntities.CHIMERA, ChimeraRenderer::new);
         EntityRendererRegistry.register(ModEntities.ELEPHANT_RIDER, ElephantRiderRenderer::new);
         EntityRendererRegistry.register(ModEntities.SERVANT, ServantRenderer::new);
         EntityRendererRegistry.register(ModEntities.MUMMY, MummyRenderer::new);
@@ -43,6 +43,8 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.VENOM, VenomRenderer::new);
         EntityRendererRegistry.register(ModEntities.VENOM_SLOW, VenomSlowRenderer::new);
         EntityRendererRegistry.register(ModEntities.MUMMY_PROJECTILE, MummyProjectileRenderer::new);
+        EntityRendererRegistry.register(ModEntities.CHIMERA_PROJECTILE, ChimeraProjectileRenderer::new);
+        EntityRendererRegistry.register(ModEntities.VALKYRIE_SPEAR, ValkyrieSpearRenderer::new);
         EntityRendererRegistry.register(ModEntities.IRON_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "iron"));
         EntityRendererRegistry.register(ModEntities.DIAMOND_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "diamond"));
         EntityRendererRegistry.register(ModEntities.GOLD_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "gold"));
@@ -52,6 +54,7 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(ModParticles.VENOM_PARTICLE, SnowRockSplashParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.VENOM_SLOW_PARTICLE, SnowRockSplashParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.MUMMY_PROJECTILE_PARTICLE, MummyProjectileParticle.Factory::new);
+        BowPredicate.registerBowModels();
         ShieldModelPredicate.registerShieldModels();
         SpearModelPredicate.registerSpearModels();
         HornModelPredicate.registerHornModels();

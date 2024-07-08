@@ -4,9 +4,13 @@ import net.mebahel.antiquebeasts.entity.custom.WadjetEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.VenomEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.VenomSlowEntity;
 import net.mebahel.antiquebeasts.entity.variant.WadjetVariant;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class WadjetShootingGoal extends Goal {
@@ -74,6 +78,27 @@ public class WadjetShootingGoal extends Goal {
                     this.backward = true;
                 }
                 this.actor.getMoveControl().strafeTo(this.backward ? -0.4F : 0.4F, this.movingToLeft ? 0.4F : -0.4F);
+
+                if (this.backward) {
+                    Vec3d backwardsVec = this.actor.getRotationVec(1.0F).multiply(-1.0);
+                    BlockPos blockBehindPos = new BlockPos(MathHelper.floor(this.actor.getX() + backwardsVec.x), MathHelper.floor(this.actor.getY()), MathHelper.floor(this.actor.getZ() + backwardsVec.z));
+                    BlockState blockBehindState = this.actor.getWorld().getBlockState(blockBehindPos);
+
+                    // Check the block below the block behind
+                    BlockPos blockBelowBehindPos = blockBehindPos.down();
+                    BlockState blockBelowBehindState = this.actor.getWorld().getBlockState(blockBelowBehindPos);
+
+                    if (blockBehindState.isFullCube(this.actor.getWorld(), blockBehindPos)) {
+                        // Calculate the jump direction (backward and upward)
+                        Vec3d jumpDirection = new Vec3d(backwardsVec.x, 0.5, backwardsVec.z).normalize().multiply(0.35);
+                        this.actor.performJump(jumpDirection);
+                    } else if (!blockBelowBehindState.isAir()) {
+                        // Move backward even if the block behind is lower
+                        this.actor.getMoveControl().strafeTo(-0.4F, this.movingToLeft ? 0.4F : -0.4F);
+                    }
+                } else {
+                    this.actor.getMoveControl().strafeTo(this.backward ? -0.4F : 0.4F, this.movingToLeft ? 0.4F : -0.4F);
+                }
             }
 
             if (this.actor.getVisibilityCache().canSee(livingEntity)) {

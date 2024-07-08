@@ -580,5 +580,59 @@
     "sounds": [
       "antiquebeasts:elephant/elephant_ambient_1"
     ]
+  },
+  "chimera_hurt_1": {
+    "subtitle": "antiquebeasts:chimera/chimera_hurt_1",
+    "sounds": [
+      "antiquebeasts:chimera/chimera_hurt_1"
+    ]
+  },
+  "chimera_hurt_2": {
+    "subtitle": "antiquebeasts:chimera/chimera_hurt_2",
+    "sounds": [
+      "antiquebeasts:chimera/chimera_hurt_2"
+    ]
+  },
+  "chimera_death_1": {
+    "subtitle": "antiquebeasts:chimera/chimera_death_1",
+    "sounds": [
+      "antiquebeasts:chimera/chimera_death_1"
+    ]
+  },
+  "chimera_ambient_1": {
+    "subtitle": "antiquebeasts:chimera/chimera_ambient_1",
+    "sounds": [
+      "antiquebeasts:chimera/chimera_ambient_1"
+    ]
+  },
+  "chimera_ambient_2": {
+    "subtitle": "antiquebeasts:chimera/chimera_ambient_2",
+    "sounds": [
+      "antiquebeasts:chimera/chimera_ambient_2"
+    ]
+  },
+  "chimera_ambient_3": {
+    "subtitle": "antiquebeasts:chimera/chimera_ambient_3",
+    "sounds": [
+      "antiquebeasts:chimera/chimera_ambient_3"
+    ]
+  },
+  "chimera_flame_1": {
+    "subtitle": "antiquebeasts:chimera/chimera_flame_1",
+    "sounds": [
+      "antiquebeasts:chimera/chimera_flame_1"
+    ]
+  },
+  "chimera_goat_1": {
+    "subtitle": "antiquebeasts:chimera/chimera_goat_1",
+    "sounds": [
+      "antiquebeasts:chimera/chimera_goat_1"
+    ]
+  },
+  "pegasus_flap_1": {
+    "subtitle": "antiquebeasts:pegasus_flap_1",
+    "sounds": [
+      "antiquebeasts:pegasus_flap_1"
+    ]
   }
 }

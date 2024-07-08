@@ -21,6 +21,7 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Util;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -32,7 +33,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
 import javax.annotation.Nullable;
-
+import java.util.Objects;
 
 public class HeroHopliteEntity extends HopliteEntity implements GeoEntity {
     public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(HeroHopliteEntity.class,
@@ -41,10 +42,24 @@ public class HeroHopliteEntity extends HopliteEntity implements GeoEntity {
             TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(HeroHopliteEntity.class,
             TrackedDataHandlerRegistry.FLOAT);
+
     public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(HeroHopliteEntity.class,
             TrackedDataHandlerRegistry.STRING);
 
+    public static final TrackedData<Integer> TICKCOUNTER = DataTracker.registerData(HeroHopliteEntity.class,
+            TrackedDataHandlerRegistry.INTEGER);
+
+    public void setTickCounter(Integer counter) {
+        this.dataTracker.set(TICKCOUNTER, counter);
+    }
+    public boolean isTransitionning = false;
+
+    public int getTickCounter() {
+        return this.dataTracker.get(TICKCOUNTER);
+    }
+
     private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
+
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
@@ -62,16 +77,17 @@ public class HeroHopliteEntity extends HopliteEntity implements GeoEntity {
         this.dataTracker.set(SHOOTING, shooting);
     }
 
-
     public HeroHopliteEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
     }
+
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(SHOOTING, false);
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(COOLDOWN, 0f);
+        this.dataTracker.startTracking(TICKCOUNTER, 0);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
     }
@@ -97,12 +113,13 @@ public class HeroHopliteEntity extends HopliteEntity implements GeoEntity {
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.72f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 35.0D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 42.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0f)
-                .add(EntityAttributes.GENERIC_ARMOR, 8f)
+                .add(EntityAttributes.GENERIC_ARMOR, 7f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2f)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5f);
     }
+
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
@@ -115,36 +132,76 @@ public class HeroHopliteEntity extends HopliteEntity implements GeoEntity {
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
     }
+    private boolean shouldDespawnInPeaceful() {
+        return this.getWorld().getDifficulty() == Difficulty.PEACEFUL;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (shouldDespawnInPeaceful()) {
+            remove(RemovalReason.DISCARDED);
+        }
+        if (this.getTickCounter() > 0) {
+            this.setTickCounter(Math.max(this.getTickCounter() - 1, 0));
+        }
+        if (this.getTarget() != null) {
+            this.setTickCounter(14);
+        }
+        if (this.getTickCounter() < 13 && this.getTickCounter() > 0) {
+            this.isTransitionning = true;
+        }
+        if (this.getTickCounter() == 0) {
+            this.isTransitionning = false;
+        }
+    }
+
     private PlayState predicate(AnimationState animationState) {
-        if(animationState.isMoving()) {
+        if (this.age < 5) {
+            animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
+        if (!this.isAttacking() && this.isTransitionning && this.getTickCounter() != 0
+                && !this.isSwinging()) {
+            animationState.getController().forceAnimationReset();
+            animationState.getController().setAnimation(RawAnimation.begin().then("no_target_transition", Animation.LoopType.PLAY_ONCE));
+            return PlayState.CONTINUE;
+        } else if (animationState.isMoving() && this.isAttacking()) {
+            animationState.getController().setAnimation(RawAnimation.begin().then("walk3", Animation.LoopType.PLAY_ONCE).then("walk2", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        } else if (animationState.isMoving() && !this.isAttacking() && this.getTickCounter() == 0) {
             animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
-
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+        var test = animationState.getController().getCurrentAnimation();
+        if (test != null) {
+            if (!Objects.equals(test.animation().name(), "no_target_transition") ||
+                    (Objects.equals(test.animation().name(), "no_target_transition") && animationState.getController().getAnimationState().equals(AnimationController.State.STOPPED))) {
+                animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            }
+        }
         return PlayState.CONTINUE;
     }
 
     private PlayState attackPredicate(AnimationState state) {
-        if(this.isSwinging() && !this.isShooting() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
-            state.getController().forceAnimationReset();
+        if (this.isSwinging() && !this.isShooting() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
             state.getController().setAnimation(RawAnimation.begin().then(this.getAttackName(), Animation.LoopType.PLAY_ONCE));
         }
-
         return PlayState.CONTINUE;
     }
 
     private PlayState shootingPredicate(AnimationState state) {
-        if(this.isShooting() && !this.isSwinging() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
+        if (this.isShooting() && !this.isSwinging() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
             state.getController().forceAnimationReset();
             state.getController().setAnimation(RawAnimation.begin().then("throwing", Animation.LoopType.PLAY_ONCE));
         }
-
         return PlayState.CONTINUE;
     }
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller",0, this::predicate));
+        controllers.add(new AnimationController(this, "controller", 0, this::predicate));
         controllers.add(new AnimationController(this, "attacking", 0, this::attackPredicate).setSoundKeyframeHandler(state -> {
             PlayerEntity player = ClientUtils.getClientPlayer();
             if (player != null)
@@ -175,6 +232,7 @@ public class HeroHopliteEntity extends HopliteEntity implements GeoEntity {
     public boolean damage(DamageSource source, float amount) {
         return super.damage(source, amount);
     }
+
     /* VARIANTS */
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
@@ -187,6 +245,7 @@ public class HeroHopliteEntity extends HopliteEntity implements GeoEntity {
         super.readCustomDataFromNbt(nbt);
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, nbt.getInt("Variant"));
     }
+
     private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
             DataTracker.registerData(HeroHopliteEntity.class, TrackedDataHandlerRegistry.INTEGER);
 

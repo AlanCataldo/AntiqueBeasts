@@ -7,6 +7,7 @@
   "entity.antiquebeasts.cyclops": "Cyclope",
   "entity.antiquebeasts.frost_cyclops": "Cyclope de glace",
   "entity.antiquebeasts.hersir": "Hersir",
+  "entity.antiquebeasts.huskarl": "Huskarl",
   "entity.antiquebeasts.throwing_axeman": "Lanceur de hache",
   "entity.antiquebeasts.einherjar": "Einherjar",
   "entity.antiquebeasts.valkyrie": "Valkyrie",
@@ -16,6 +17,8 @@
   "entity.antiquebeasts.mummy": "Momie",
   "entity.antiquebeasts.servant": "Servant",
   "entity.antiquebeasts.elephant_rider": "Chevaucheur d'éléphant",
+  "entity.antiquebeasts.chimera": "Chimère",
+  "entity.antiquebeasts.pegasus": "Pégase",
 
   "block.antiquebeasts.amphora": "Amphore",
 
@@ -37,6 +40,8 @@
   "item.antiquebeasts.camelry_spawn_egg": "Oeuf d'apparition de Méharée",
   "item.antiquebeasts.axeman_spawn_egg": "Oeuf d'apparition d'Homme d'arme'",
   "item.antiquebeasts.elephant_rider_spawn_egg": "Oeuf d'apparition de Chevaucheur d'éléphant",
+  "item.antiquebeasts.chimera_spawn_egg": "Oeuf d'apparition de Chimère",
+  "item.antiquebeasts.pegasus_spawn_egg": "Oeuf d'apparition de Pégase",
 
   "item.antiquebeasts.throwingrock": "Rocher de lancer",
   "item.antiquebeasts.raw_cyclops_meat": "Viande de cyclope crue",
@@ -92,6 +97,8 @@
   "item.antiquebeasts.gold_scarab": "Scarabée en or",
   "item.antiquebeasts.iron_scarab": "Scarabée en fer",
   "item.antiquebeasts.diamond_scarab": "Scarabée en diamant",
+  "item.antiquebeasts.chimera_hair": "Poil de Chimère",
+  "item.antiquebeasts.weapon.valkyrie_spear": "Lance de Valkyrie",
 
   "item.antiquebeasts.weapon.iron_khopesh": "Khopesh en fer",
   "item.antiquebeasts.weapon.gold_khopesh": "Khopesh en or",
@@ -100,5 +107,7 @@
   "item.antiquebeasts.weapon.iron_egyptian_halberd": "Hallebarde egyptienne en fer",
   "item.antiquebeasts.weapon.gold_egyptian_halberd": "Hallebarde egyptienne en or",
   "item.antiquebeasts.weapon.diamond_egyptian_halberd": "Hallebarde egyptienne en diamant",
-  "item.antiquebeasts.weapon.netherite_egyptian_halberd": "Hallebarde egyptienne en netherite"
+  "item.antiquebeasts.weapon.netherite_egyptian_halberd": "Hallebarde egyptienne en netherite",
+  "item.antiquebeasts.bow.egyptian_recurve_bow": "Arc recourbé egyptien",
+  "item.antiquebeasts.bow.greek_composite_bow": "Arc composite grec"
 }

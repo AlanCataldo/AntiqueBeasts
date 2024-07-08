@@ -2,29 +2,7 @@
 	"format_version": "1.8.0",
 	"animations": {
 		"throw": {
-			"loop": true,
-			"animation_length": 1,
-			"bones": {
-				"spear": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.25": {
-							"vector": [-90, 0, 0]
-						},
-						"0.5": {
-							"vector": [-180, 0, 0]
-						},
-						"0.75": {
-							"vector": [-270, 0, 0]
-						},
-						"1.0": {
-							"vector": [-360, 0, 0]
-						}
-					}
-				}
-			}
+			"animation_length": 1
 		}
 	},
 	"geckolib_format_version": 2

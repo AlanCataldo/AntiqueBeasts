@@ -42,7 +42,6 @@ public class HopliteShootingGoal extends Goal {
         } else {
             Objects.requireNonNull(this.hoplite.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.72f);
         }
-        System.out.print(this.hoplite.getCooldown() + " COOLDOWN");
         if (this.hoplite.distanceTo(livingEntity) > 6) {
             if (this.hoplite.canSee(livingEntity)) {
                 World world = this.hoplite.getWorld();

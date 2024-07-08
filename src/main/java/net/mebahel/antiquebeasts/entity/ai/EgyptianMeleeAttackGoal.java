@@ -57,21 +57,15 @@ public class EgyptianMeleeAttackGoal extends Goal {
     protected void attack(LivingEntity target) {
         double squaredDistance = this.mob.squaredDistanceTo(target.getX(), target.getY(), target.getZ());
         double d = this.getSquaredMaxAttackDistance(target);
-        Path path = this.mob.getNavigation().findPathTo(target, attackDistance);
-        this.mob.getNavigation().startMovingAlong(path, this.speed);
-        this.mob.getLookControl().lookAt(target, 7.5F, 7.5F);
         this.cooldown = Math.max(this.cooldown - 1, 0);
-        rand = random();
+        this.mob.getNavigation().startMovingTo(target, this.speed);
 
-        if (squaredDistance <= d * 0.65) {
-            this.mob.getNavigation().stop();
-        }
         if (this.cooldown == 0) {
             this.cooldown = MAX_COOLDOWN + 2;
             this.mob.setSwinging(false);
         } else if (squaredDistance <= d && this.cooldown == 20) {
             this.mob.setSwinging(true);
-        } else if (squaredDistance <= d + 2 && this.cooldown == attackMoment && this.mob.isSwinging()) {
+        } else if (squaredDistance <= d + 1 && this.cooldown == 10 && this.mob.isSwinging()) {
             this.mob.tryAttack(target);
         }
     }

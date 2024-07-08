@@ -23,14 +23,14 @@ public class EinherjarHornGoal extends Goal {
     }
 
     public void start() {
-        if (this.einherjar.getHornCooldown() < 100)
-            this.einherjar.setHornCooldown(100);
+        if (this.einherjar.getHornCooldown() < 60)
+            this.einherjar.setHornCooldown(60);
     }
 
     public void stop() {
         Objects.requireNonNull(this.einherjar.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.65f);
         this.einherjar.setHorn(false);
-        this.einherjar.setHornCooldown(300);
+        this.einherjar.setHornCooldown(180);
     }
 
     public boolean shouldContinue() {
@@ -50,7 +50,7 @@ public class EinherjarHornGoal extends Goal {
                 }
                 this.einherjar.addStatusEffect(new StatusEffectInstance(this.potionEffect, 300, 0));
             }
-            case 26 -> {
+            case 21 -> {
                 Objects.requireNonNull(this.einherjar.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0f);
                 this.einherjar.setHorn(true);
             }

@@ -2,8 +2,6 @@ package net.mebahel.antiquebeasts.entity.client.custom;
 
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.entity.custom.EliteHopliteEntity;
-import net.mebahel.antiquebeasts.entity.custom.FrostCyclopsEntity;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
@@ -22,7 +20,7 @@ public class EliteHopliteModel extends GeoModel<EliteHopliteEntity> {
     }
     @Override
     public Identifier getAnimationResource(EliteHopliteEntity animatable) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "animations/champion_hoplite.animation.json");
+        return new Identifier(AntiqueBeasts.MOD_ID, "animations/hoplite.animation.json");
     }
     @Override
     public void setCustomAnimations(EliteHopliteEntity entity, long uniqueID, AnimationState<EliteHopliteEntity> customPredicate) {

@@ -87,20 +87,6 @@ public class ThrowingAxeEntity extends ThrownItemEntity implements GeoEntity {
         blockState.onProjectileHit(this.getWorld(), blockState, blockHitResult, this);
         playSound(SoundEvents.ITEM_TRIDENT_HIT, 0.35f, 0.75f);
     }
-
-    private void generateParticles() {
-        ParticleEffect particleEffect = ModParticles.VENOM_PARTICLE;
-        for (int i = 0; i < 25; i++) { // Vous pouvez ajuster le nombre de particules selon vos besoins
-            double offsetX = this.random.nextGaussian() * 0.2;
-            double offsetY = this.random.nextGaussian() * 0.2;
-            double offsetZ = this.random.nextGaussian() * 0.2;
-            this.getWorld().addParticle(particleEffect,
-                    this.getX() + offsetX,
-                    this.getY() + offsetY,
-                    this.getZ() + offsetZ,
-                    0, 0, 0);
-        }
-    }
     @Override
     public void tick() {
         super.tick();
@@ -119,9 +105,6 @@ public class ThrowingAxeEntity extends ThrownItemEntity implements GeoEntity {
                 }
                 bl = true;
             }
-        }
-        if (this.getWorld().isClient) {
-            this.generateParticles();
         }
 
         if (hitResult.getType() != HitResult.Type.MISS && !bl) {

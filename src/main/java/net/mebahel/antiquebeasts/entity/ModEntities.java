@@ -13,6 +13,16 @@ import net.minecraft.util.Identifier;
 
 public class ModEntities {
 
+    public static final EntityType<PegasusEntity> PEGASUS = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "pegasus"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, PegasusEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.99f, 1.7f)).build());
+
+    public static final EntityType<ChimeraEntity> CHIMERA = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "chimera"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ChimeraEntity::new)
+                    .dimensions(EntityDimensions.fixed(1.49f, 1.99f)).build());
+
     public static final EntityType<ElephantRiderEntity> ELEPHANT_RIDER = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "elephant_rider"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ElephantRiderEntity::new)
@@ -123,6 +133,11 @@ public class ModEntities {
             FabricEntityTypeBuilder.<MummyProjectileEntity>create(SpawnGroup.MISC, MummyProjectileEntity::new)
                     .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
 
+    public static final EntityType<ChimeraProjectileEntity> CHIMERA_PROJECTILE = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "chimera_projectile"),
+            FabricEntityTypeBuilder.<ChimeraProjectileEntity>create(SpawnGroup.MISC, ChimeraProjectileEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+
     public static final EntityType<ThrowingSnowRockEntity> THROWINGSNOWROCK = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "throwingsnowrock"),
             FabricEntityTypeBuilder.<ThrowingSnowRockEntity>create(SpawnGroup.MISC, ThrowingSnowRockEntity::new)
@@ -131,6 +146,11 @@ public class ModEntities {
     public static final EntityType<HopliteSpearEntity> HOPLITE_SPEAR = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "hoplite_spear"),
             FabricEntityTypeBuilder.<HopliteSpearEntity>create(SpawnGroup.MISC, HopliteSpearEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.9f, 0.9f)).build());
+
+    public static final EntityType<ValkyrieSpearEntity> VALKYRIE_SPEAR = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "valkyrie_spear"),
+            FabricEntityTypeBuilder.<ValkyrieSpearEntity>create(SpawnGroup.MISC, ValkyrieSpearEntity::new)
                     .dimensions(EntityDimensions.fixed(0.9f, 0.9f)).build());
 
     public static final EntityType<HadesChosenSpearEntity> HADES_CHOSEN_SPEAR = Registry.register(

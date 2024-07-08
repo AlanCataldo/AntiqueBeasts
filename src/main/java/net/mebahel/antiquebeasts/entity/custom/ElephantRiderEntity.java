@@ -1,6 +1,8 @@
 package net.mebahel.antiquebeasts.entity.custom;
 
-import net.mebahel.antiquebeasts.entity.ai.EgyptianMeleeAttackGoal;
+import net.mebahel.antiquebeasts.entity.ai.BigEgyptianMeleeAttackGoal;
+import net.mebahel.antiquebeasts.entity.ai.ElephantRiderShootingGoal;
+import net.mebahel.antiquebeasts.entity.ai.MummyShootingGoal;
 import net.mebahel.antiquebeasts.entity.variant.EgyptiantVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.EntityData;
@@ -41,6 +43,19 @@ public class ElephantRiderEntity extends EgyptianEntity implements GeoEntity {
         return factory;
     }
 
+    public static final TrackedData<Integer> COOLDOWN = DataTracker.registerData(ElephantRiderEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(ElephantRiderEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    public void setShooting(boolean shooting) {
+        this.dataTracker.set(SHOOTING, shooting);
+    }
+    public int getCooldown() { return this.dataTracker.get(COOLDOWN);}
+    public void setCooldown(int cooldown) {
+        this.dataTracker.set(COOLDOWN, cooldown);
+    }
+    public boolean isShooting() {
+        return this.dataTracker.get(SHOOTING);
+    }
+
     public ElephantRiderEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
@@ -50,6 +65,8 @@ public class ElephantRiderEntity extends EgyptianEntity implements GeoEntity {
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
+        this.dataTracker.startTracking(SHOOTING, false);
+        this.dataTracker.startTracking(COOLDOWN, 0);
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
@@ -63,7 +80,8 @@ public class ElephantRiderEntity extends EgyptianEntity implements GeoEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new EgyptianMeleeAttackGoal(this, 0.45f, 11f, 3, 6));
+        this.goalSelector.add(2, new ElephantRiderShootingGoal(this, 0.51f));
+        this.goalSelector.add(3, new BigEgyptianMeleeAttackGoal(this, 0.45f, 12f, 3, 6));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
 
@@ -88,6 +106,15 @@ public class ElephantRiderEntity extends EgyptianEntity implements GeoEntity {
 
         return PlayState.CONTINUE;
     }
+
+    private PlayState shootingPredicate(AnimationState state) {
+        if(this.isShooting() && !this.isSwinging() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
+            state.getController().forceAnimationReset();
+            state.getController().setAnimation(RawAnimation.begin().then("shoot", Animation.LoopType.PLAY_ONCE));
+        }
+
+        return PlayState.CONTINUE;
+    }
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController(this, "controller",0, this::predicate));
@@ -96,14 +123,17 @@ public class ElephantRiderEntity extends EgyptianEntity implements GeoEntity {
             if (player != null)
                 this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.SWING, this.getSoundCategory(), 0.5f, 1.5f);
         }));
+        controllers.add(new AnimationController(this, "shooting",0, this::shootingPredicate));
     }
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         rand = random();
-        if (rand < 0.5)
+        if (rand < 0.3)
             return ModSounds.ELEPHANT_HURT_1;
-        else
+        else if (rand > 0.3 && rand < 0.6)
             return ModSounds.ELEPHANT_HURT_2;
+        else
+            return ModSounds.HOPLITE_HURT1;
     }
     @Override
     protected SoundEvent getDeathSound() {

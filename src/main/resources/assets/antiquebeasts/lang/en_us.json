@@ -7,6 +7,7 @@
   "entity.antiquebeasts.cyclops": "Cyclops",
   "entity.antiquebeasts.frost_cyclops": "Frost cyclops",
   "entity.antiquebeasts.hersir": "Hersir",
+  "entity.antiquebeasts.huskarl": "Huskarl",
   "entity.antiquebeasts.throwing_axeman": "Throwing Axeman",
   "entity.antiquebeasts.einherjar": "Einherjar",
   "entity.antiquebeasts.valkyrie": "Valkyrie",
@@ -16,6 +17,8 @@
   "entity.antiquebeasts.mummy": "Mummy",
   "entity.antiquebeasts.servant": "Servant",
   "entity.antiquebeasts.elephant_rider": "Elephant Rider",
+  "entity.antiquebeasts.chimera": "Chimera",
+  "entity.antiquebeasts.pegasus": "Pegasus",
 
   "block.antiquebeasts.amphora": "Amphora",
 
@@ -37,6 +40,8 @@
   "item.antiquebeasts.camelry_spawn_egg": "Camelry spawn egg",
   "item.antiquebeasts.axeman_spawn_egg": "Axeman spawn egg",
   "item.antiquebeasts.elephant_rider_spawn_egg": "Elephant Rider spawn egg",
+  "item.antiquebeasts.chimera_spawn_egg": "Chimera spawn egg",
+  "item.antiquebeasts.pegasus_spawn_egg": "Pegasus spawn egg",
 
   "item.antiquebeasts.throwingrock": "Throwing rock",
   "item.antiquebeasts.raw_cyclops_meat": "Raw cyclops meat",
@@ -92,6 +97,8 @@
   "item.antiquebeasts.gold_scarab": "Gold Scarab",
   "item.antiquebeasts.iron_scarab": "Iron Scarab",
   "item.antiquebeasts.diamond_scarab": "Diamond Scarab",
+  "item.antiquebeasts.chimera_hair": "Chimera Hair",
+  "item.antiquebeasts.weapon.valkyrie_spear": "Valkyrie Spear",
 
   "item.antiquebeasts.weapon.iron_khopesh": "Iron Khopesh",
   "item.antiquebeasts.weapon.gold_khopesh": "Gold Khopesh",
@@ -100,5 +107,7 @@
   "item.antiquebeasts.weapon.iron_egyptian_halberd": "Iron Egyptian Halberd",
   "item.antiquebeasts.weapon.gold_egyptian_halberd": "Gold Egyptian Halberd",
   "item.antiquebeasts.weapon.diamond_egyptian_halberd": "Diamond Egyptian Halberd",
-  "item.antiquebeasts.weapon.netherite_egyptian_halberd": "Netherite Egyptian Halberd"
+  "item.antiquebeasts.weapon.netherite_egyptian_halberd": "Netherite Egyptian Halberd",
+  "item.antiquebeasts.bow.egyptian_recurve_bow": "Egyptian Recurve Bow",
+  "item.antiquebeasts.bow.greek_composite_bow": "Greek Composite Bow"
 }

@@ -2,14 +2,10 @@ package net.mebahel.antiquebeasts.entity.ai;
 
 import net.mebahel.antiquebeasts.entity.custom.MummyEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.MummyProjectileEntity;
-import net.mebahel.antiquebeasts.entity.projectiles.ThrowingRockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.world.World;
-
-import java.util.Objects;
 
 public class MummyShootingGoal extends Goal {
     private final MummyEntity cyclops;
@@ -29,7 +25,7 @@ public class MummyShootingGoal extends Goal {
     }
 
     public void start() {
-        this.cyclops.setCooldown(121);
+        this.cyclops.setCooldown(61);
     }
 
     public void stop() {
@@ -75,7 +71,7 @@ public class MummyShootingGoal extends Goal {
                     throwingRockEntity.setVelocity(e, f + h * distance, g, speed, 1.5F);
                     throwingRockEntity.setPosition(xProjectile, this.cyclops.getBodyY(1), zProjectile);
                     world.spawnEntity(throwingRockEntity);
-                } else if (this.cyclops.getCooldown() == 21) {
+                } else if (this.cyclops.getCooldown() == 19) {
                     this.cyclops.setShooting(true);
                 } else if (this.cyclops.getCooldown() == 0) {
                     this.cyclops.setCooldown(121);

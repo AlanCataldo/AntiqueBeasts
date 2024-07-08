@@ -22,6 +22,12 @@ import java.util.List;
 import static net.minecraft.registry.tag.InstrumentTags.SCREAMING_GOAT_HORNS;
 
 public class ModItems {
+    public static final Item PEGASUS_SPAWN_EGG = registerItem("pegasus_spawn_egg",
+            new SpawnEggItem(ModEntities.PEGASUS,15658734, 15066597,
+                    new FabricItemSettings()));
+    public static final Item CHIMERA_SPAWN_EGG = registerItem("chimera_spawn_egg",
+            new SpawnEggItem(ModEntities.CHIMERA,15090958, 1703936,
+                    new FabricItemSettings()));
     public static final Item ELEPHANT_RIDER_SPAWN_EGG = registerItem("elephant_rider_spawn_egg",
             new SpawnEggItem(ModEntities.ELEPHANT_RIDER,5526612, 10658466,
                     new FabricItemSettings()));
@@ -193,7 +199,6 @@ public class ModItems {
     public static final SwordItem NETHERITE_KHOPESH = registerItem("weapon/netherite_khopesh",
             new SwordItem(ModToolMaterial.NETHERITE_KHOPESH,6, -2.2f,
                     new FabricItemSettings()));
-
     public static final SwordItem IRON_EGYPTIAN_HALBERD = registerItem("weapon/iron_egyptian_halberd",
             new SwordItem(ModToolMaterial.IRON_KHOPESH,5, -2.5f,
                     new FabricItemSettings()));
@@ -212,16 +217,26 @@ public class ModItems {
             new Item(new FabricItemSettings()));
     public static final Item DIAMOND_SHARD = registerItem("diamond_scarab",
             new Item(new FabricItemSettings()));
+    public static final Item EGYPTIAN_RECURVE_BOW = registerItem("bow/egyptian_recurve_bow",
+            new EgyptianRecurveBow(new FabricItemSettings().maxDamage(640)));
+    public static final Item GREEK_COMPOSITE_BOW = registerItem("bow/greek_composite_bow",
+            new GreekCompositeBow(new FabricItemSettings().maxDamage(640)));
+    public static final Item CHIMERA_HAIR = registerItem("chimera_hair",
+            new Item(new FabricItemSettings()));
+    public static final Item VALKYRIE_SPEAR = registerItem("weapon/valkyrie_spear",
+            new ValkyrieSpear(new FabricItemSettings().maxDamage(600)));
     public static <I extends Item> I registerItem(String name, I item) {
         return Registry.register(Registries.ITEM, new Identifier(AntiqueBeasts.MOD_ID, name), item);
     }
     public static void addItemToSpawnEggItemGroup(FabricItemGroupEntries entries) {
         entries.add(ELEPHANT_RIDER_SPAWN_EGG);
-        entries.add(WADJET_SPAWN_EGG);
-        entries.add(AXEMAN_SPAWN_EGG);
         entries.add(CAMELRY_SPAWN_EGG);
-        entries.add(SERVANT_SPAWN_EGG);
+        entries.add(AXEMAN_SPAWN_EGG);
+        entries.add(WADJET_SPAWN_EGG);
         entries.add(MUMMY_SPAWN_EGG);
+        entries.add(SERVANT_SPAWN_EGG);
+
+        entries.add(CHIMERA_SPAWN_EGG);
         entries.add(CYCLOPS_SPAWN_EGG);
         entries.add(FROST_CYCLOPS_SPAWN_EGG);
         entries.add(ELITE_HOPLITE_SPAWN_EGG);
@@ -229,6 +244,8 @@ public class ModItems {
         entries.add(HERO_HOPLITE_SPAWN_EGG);
         entries.add(HADES_CHOSEN_SPAWN_EGG);
         entries.add(HADES_SHADE_SPAWN_EGG);
+        entries.add(PEGASUS_SPAWN_EGG);
+
         entries.add(HERSIR_SPAWN_EGG);
         entries.add(HUSKARL_SPAWN_EGG);
         entries.add(THROWING_AXEMAN_SPAWN_EGG);
@@ -236,15 +253,16 @@ public class ModItems {
         entries.add(VALKYRIE_SPAWN_EGG);
     }
     public static void addItemToIngredientItemGroup(FabricItemGroupEntries entries) {
-        entries.add(DIAMOND_PLATE);
-        entries.add(GOLD_PLATE);
         entries.add(IRON_PLATE);
+        entries.add(GOLD_PLATE);
+        entries.add(DIAMOND_PLATE);
         entries.add(FROST_SHARD);
-        entries.add(HIGH_IRON_INGOT);
         entries.add(HIGH_IRON_SCRAP);
+        entries.add(HIGH_IRON_INGOT);
         entries.add(IRON_SCARAB);
         entries.add(GOLD_SCARAB);
         entries.add(DIAMOND_SHARD);
+        entries.add(CHIMERA_HAIR);
     }
     public static void addItemToFoodItemGroup(FabricItemGroupEntries entries) {
         entries.add(COOKED_CYCLOPS_MEAT);
@@ -258,17 +276,6 @@ public class ModItems {
         entries.add(ModBlocks.CURSED_GOLDEN_BLOCK);
     }
     public static void addItemToCombatItemGroup(FabricItemGroupEntries entries) {
-        entries.add(IRON_HOPLITE_SPEAR);
-        entries.add(GOLD_HOPLITE_SPEAR);
-        entries.add(DIAMOND_HOPLITE_SPEAR);
-        entries.add(NETHERITE_HOPLITE_SPEAR);
-        entries.add(IRON_PLATE_SHIELD);
-        entries.add(GOLD_PLATE_SHIELD);
-        entries.add(HIGH_IRON_SHIELD);
-        entries.add(DIAMOND_PLATE_SHIELD);
-        entries.add(NETHERITE_PLATE_SHIELD);
-        entries.add(FROST_SWORD);
-        entries.add(BLOOD_STAINED_FROST_SWORD);
         entries.add(GOLD_PLATE_HELMET);
         entries.add(GOLD_PLATE_CHESTPLATE);
         entries.add(GOLD_PLATE_LEGGINGS);
@@ -285,10 +292,25 @@ public class ModItems {
         entries.add(NETHERITE_PLATE_CHESTPLATE);
         entries.add(NETHERITE_PLATE_LEGGINGS);
         entries.add(NETHERITE_PLATE_BOOTS);
+
+        entries.add(FROST_SWORD);
+        entries.add(BLOOD_STAINED_FROST_SWORD);
+        entries.add(IRON_HOPLITE_SPEAR);
+        entries.add(IRON_PLATE_SHIELD);
+        entries.add(GOLD_HOPLITE_SPEAR);
+        entries.add(GOLD_PLATE_SHIELD);
+        entries.add(DIAMOND_HOPLITE_SPEAR);
+        entries.add(DIAMOND_PLATE_SHIELD);
+        entries.add(NETHERITE_HOPLITE_SPEAR);
+        entries.add(NETHERITE_PLATE_SHIELD);
+
+        entries.add(HIGH_IRON_SWORD);
+        entries.add(HIGH_IRON_SHIELD);
+        entries.add(VALKYRIE_SPEAR);
         entries.add(HERSIR_AXE);
         entries.add(THROWING_AXE_ITEM);
-        entries.add(HIGH_IRON_SWORD);
         entries.add(EINHERJAR_HORN);
+
         entries.add(IRON_KHOPESH);
         entries.add(GOLD_KHOPESH);
         entries.add(DIAMOND_KHOPESH);
@@ -297,12 +319,13 @@ public class ModItems {
         entries.add(GOLD_EGYPTIAN_HALBERD);
         entries.add(DIAMOND_EGYPTIAN_HALBERD);
         entries.add(NETHERITE_EGYPTIAN_HALBERD);
+        entries.add(EGYPTIAN_RECURVE_BOW);
+        entries.add(GREEK_COMPOSITE_BOW);
     }
 
 
     public static void registerModItems() {
         AntiqueBeasts.LOGGER.debug("Registering Mod Items for " + AntiqueBeasts.MOD_ID);
-
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(ModItems::addItemToSpawnEggItemGroup);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(ModItems::addItemToCombatItemGroup);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(ModItems::addItemToIngredientItemGroup);

@@ -106,6 +106,15 @@ public class ModSounds {
     public static SoundEvent ELEPHANT_HURT_2 = registerSoundEvent("elephant_hurt_2");
     public static SoundEvent ELEPHANT_DEATH_1 = registerSoundEvent("elephant_death_1");
     public static SoundEvent ELEPHANT_AMBIENT_1 = registerSoundEvent("elephant_ambient_1");
+    public static SoundEvent CHIMERA_HURT_1 = registerSoundEvent("chimera_hurt_1");
+    public static SoundEvent CHIMERA_HURT_2 = registerSoundEvent("chimera_hurt_2");
+    public static SoundEvent CHIMERA_DEATH_1 = registerSoundEvent("chimera_death_1");
+    public static SoundEvent CHIMERA_AMBIENT_1 = registerSoundEvent("chimera_ambient_1");
+    public static SoundEvent CHIMERA_AMBIENT_2 = registerSoundEvent("chimera_ambient_2");
+    public static SoundEvent CHIMERA_AMBIENT_3 = registerSoundEvent("chimera_ambient_3");
+    public static SoundEvent CHIMERA_FLAME_1 = registerSoundEvent("chimera_flame_1");
+    public static SoundEvent CHIMERA_GOAT_1 = registerSoundEvent("chimera_goat_1");
+    public static SoundEvent PEGASUS_FLAP_1 = registerSoundEvent("pegasus_flap_1");
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));

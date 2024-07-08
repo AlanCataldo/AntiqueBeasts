@@ -85,11 +85,11 @@ public class HuskarlMeleeAttackGoal extends Goal {
             this.mob.setSwinging(false);
         } else if (squaredDistance <= d && this.cooldown == 20) {
             this.mob.setSwinging(true);
-        } else if (squaredDistance <= d + 1 && this.cooldown == 10 && this.mob.isSwinging()) {
+        } else if (squaredDistance <= d && this.cooldown == 10 && this.mob.isSwinging()) {
             this.mob.tryAttack(target);
         }
     }
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return 5f + entity.getWidth();
+        return 8f + entity.getWidth();
     }
 }

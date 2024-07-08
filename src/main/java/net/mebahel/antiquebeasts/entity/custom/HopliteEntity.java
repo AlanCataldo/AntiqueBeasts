@@ -89,7 +89,7 @@ public class HopliteEntity extends AnimalEntity implements GeoEntity {
     }
     @Override
     public int getMinAmbientSoundDelay() {
-        return 240;
+        return 160;
     }
 
     @Override

@@ -11,7 +11,6 @@ import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -19,6 +18,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -26,6 +26,8 @@ import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInst
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
+
+import java.util.Objects;
 
 import static java.lang.Math.random;
 
@@ -54,6 +56,42 @@ public class HadesChosenEntity extends HostileEntity implements GeoEntity {
     public void setShooting(boolean shooting) {
         this.dataTracker.set(SHOOTING, shooting);
     }
+    public static final TrackedData<Integer> TICKCOUNTER = DataTracker.registerData(EliteHopliteEntity.class,
+            TrackedDataHandlerRegistry.INTEGER);
+
+    public void setTickCounter(Integer counter) {
+        this.dataTracker.set(TICKCOUNTER, counter);
+    }
+
+    public int getTickCounter() {
+        return this.dataTracker.get(TICKCOUNTER);
+    }
+
+    public boolean isTransitionning = false;
+
+    private boolean shouldDespawnInPeaceful() {
+        return this.getWorld().getDifficulty() == Difficulty.PEACEFUL;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (shouldDespawnInPeaceful()) {
+            remove(RemovalReason.DISCARDED);
+        }
+        if (this.getTickCounter() > 0) {
+            this.setTickCounter(Math.max(this.getTickCounter() - 1, 0));
+        }
+        if (this.getTarget() != null) {
+            this.setTickCounter(14);
+        }
+        if (this.getTickCounter() < 13 && this.getTickCounter() > 0) {
+            this.isTransitionning = true;
+        }
+        if (this.getTickCounter() == 0) {
+            this.isTransitionning = false;
+        }
+    }
     public HadesChosenEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
@@ -63,6 +101,7 @@ public class HadesChosenEntity extends HostileEntity implements GeoEntity {
         this.dataTracker.startTracking(SHOOTING, false);
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(COOLDOWN, 0f);
+        this.dataTracker.startTracking(TICKCOUNTER, 0);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
     }
     public float getCooldown() { return this.dataTracker.get(COOLDOWN);}
@@ -100,12 +139,30 @@ public class HadesChosenEntity extends HostileEntity implements GeoEntity {
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
     }
     private PlayState predicate(AnimationState animationState) {
-        if(animationState.isMoving()) {
+        if (this.age < 5) {
+            animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
+        if (!this.isAttacking() && this.isTransitionning && this.getTickCounter() != 0
+                && !this.isSwinging()) {
+            animationState.getController().forceAnimationReset();
+            animationState.getController().setAnimation(RawAnimation.begin().then("no_target_transition", Animation.LoopType.PLAY_ONCE));
+            return PlayState.CONTINUE;
+        } else if (animationState.isMoving() && this.isAttacking()) {
+            animationState.getController().setAnimation(RawAnimation.begin().then("walk3", Animation.LoopType.PLAY_ONCE).then("walk2", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        } else if (animationState.isMoving() && !this.isAttacking() && this.getTickCounter() == 0) {
             animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
-
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+        var test = animationState.getController().getCurrentAnimation();
+        if (test != null) {
+            if (!Objects.equals(test.animation().name(), "no_target_transition") ||
+                    (Objects.equals(test.animation().name(), "no_target_transition") && animationState.getController().getAnimationState().equals(AnimationController.State.STOPPED))) {
+                animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            }
+        }
         return PlayState.CONTINUE;
     }
     private PlayState attackPredicate(AnimationState state) {

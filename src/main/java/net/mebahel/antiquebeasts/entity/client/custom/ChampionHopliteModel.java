@@ -21,7 +21,7 @@ public class ChampionHopliteModel extends GeoModel<ChampionHopliteEntity> {
     }
     @Override
     public Identifier getAnimationResource(ChampionHopliteEntity animatable) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "animations/champion_hoplite.animation.json");
+        return new Identifier(AntiqueBeasts.MOD_ID, "animations/hoplite.animation.json");
     }
     @Override
     public void setCustomAnimations(ChampionHopliteEntity entity, long uniqueID, AnimationState<ChampionHopliteEntity> customPredicate) {

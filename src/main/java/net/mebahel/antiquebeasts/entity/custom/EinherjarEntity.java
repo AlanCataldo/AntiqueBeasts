@@ -104,7 +104,7 @@ public class EinherjarEntity extends NorseEntity implements GeoEntity {
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
-        this.dataTracker.startTracking(HORN_CD, 100);
+        this.dataTracker.startTracking(HORN_CD, 61);
         this.dataTracker.startTracking(HORN, false);
     }
     public void setSwinging(boolean swinging) {

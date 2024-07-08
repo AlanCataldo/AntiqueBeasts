@@ -22,7 +22,7 @@ public class HadesChosenModel extends GeoModel<HadesChosenEntity> {
     }
     @Override
     public Identifier getAnimationResource(HadesChosenEntity animatable) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "animations/champion_hoplite.animation.json");
+        return new Identifier(AntiqueBeasts.MOD_ID, "animations/hoplite.animation.json");
     }
 
     public void setCustomAnimations(HadesChosenEntity entity, long uniqueID, AnimationState<HadesChosenEntity> customPredicate) {
