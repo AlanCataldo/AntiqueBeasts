@@ -3,6 +3,7 @@ package net.mebahel.antiquebeasts.entity.custom;
 import net.mebahel.antiquebeasts.entity.ai.EgyptianMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.variant.EgyptiantVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -177,6 +178,13 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
                                  @javax.annotation.Nullable NbtCompound entityNbt) {
         EgyptiantVariant variant = Util.getRandom(EgyptiantVariant.values(), this.random);
         setVariant(variant);
+
+        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER) {
+            int randomValue = this.random.nextInt(11);
+            if (randomValue >= 0 && randomValue <= 8) {
+                this.remove(Entity.RemovalReason.DISCARDED);
+            }
+        }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
     public EgyptiantVariant getVariant() {

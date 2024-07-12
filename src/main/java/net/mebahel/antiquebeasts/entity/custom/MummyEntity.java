@@ -83,6 +83,7 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
     }
+
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(SWINGING, false);
@@ -239,6 +240,13 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
                                  @javax.annotation.Nullable NbtCompound entityNbt) {
         EgyptiantVariant variant = Util.getRandom(EgyptiantVariant.values(), this.random);
         setVariant(variant);
+
+        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER) {
+            int randomValue = this.random.nextInt(11);
+            if (randomValue >= 0 && randomValue <= 6) {
+                this.remove(Entity.RemovalReason.DISCARDED);
+            }
+        }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
     public EgyptiantVariant getVariant() {

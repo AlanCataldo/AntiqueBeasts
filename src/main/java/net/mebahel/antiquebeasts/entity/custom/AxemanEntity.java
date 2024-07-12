@@ -168,6 +168,13 @@ public class AxemanEntity extends EgyptianEntity implements GeoEntity {
                                  @javax.annotation.Nullable NbtCompound entityNbt) {
         EgyptiantVariant variant = Util.getRandom(EgyptiantVariant.values(), this.random);
         setVariant(variant);
+
+        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER) {
+            int randomValue = this.random.nextInt(11);
+            if (randomValue >= 0 && randomValue <= 7) {
+                this.remove(Entity.RemovalReason.DISCARDED);
+            }
+        }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
     public EgyptiantVariant getVariant() {

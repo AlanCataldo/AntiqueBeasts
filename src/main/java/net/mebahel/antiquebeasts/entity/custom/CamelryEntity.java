@@ -3,10 +3,7 @@ package net.mebahel.antiquebeasts.entity.custom;
 import net.mebahel.antiquebeasts.entity.ai.BigEgyptianMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.variant.EgyptiantVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -30,6 +27,7 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
@@ -152,6 +150,12 @@ public class CamelryEntity extends EgyptianEntity implements GeoEntity {
                                  @javax.annotation.Nullable NbtCompound entityNbt) {
         EgyptiantVariant variant = Util.getRandom(EgyptiantVariant.values(), this.random);
         setVariant(variant);
+        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER) {
+            int randomValue = this.random.nextInt(11);
+            if (randomValue >= 0 && randomValue <= 8) {
+                this.remove(Entity.RemovalReason.DISCARDED);
+            }
+        }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
     public EgyptiantVariant getVariant() {

@@ -71,7 +71,7 @@ public class ModEntitySpawn {
                     return MummyEntity.canMobSpawn(type, world, spawnReason, pos, random);
                 });
 
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+        /*BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 BiomeKeys.DESERT, BiomeKeys.BADLANDS)
                         .or(BiomeSelectors.tag(ConventionalBiomeTags.DESERT)).or(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS)),
                 SpawnGroup.CREATURE, ModEntities.CAMELRY, 10, 1, 2);
@@ -81,7 +81,7 @@ public class ModEntitySpawn {
                         return false;
                     }
                     return CamelryEntity.canMobSpawn(type, world, spawnReason, pos, random);
-                });
+                });*/
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 BiomeKeys.DESERT, BiomeKeys.BADLANDS)
