@@ -43,7 +43,7 @@ public class PegasusEntity extends HorseEntity implements GeoEntity {
     private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
     private boolean isGliding = false;
     private boolean jumping = false;
-    private boolean wasJumpPressed = false;  // Variable pour suivre l'état précédent de la touche de saut
+    private boolean wasJumpPressed = false;
     private int ticksSinceJump = 0;
     private int transitionTicks = 0;
     private int transitionFromGroundTicks = 0;

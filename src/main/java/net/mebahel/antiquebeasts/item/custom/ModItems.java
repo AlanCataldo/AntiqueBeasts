@@ -7,14 +7,17 @@ import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.block.ModBlocks;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.item.*;
+import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+import software.bernie.example.registry.ItemRegistry;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -22,6 +25,12 @@ import java.util.List;
 import static net.minecraft.registry.tag.InstrumentTags.SCREAMING_GOAT_HORNS;
 
 public class ModItems {
+    public static final Item N_D_NILE_MUSIC_DISC = registerItem("music_discs/n_d_nile_music_disc",
+            new MusicDiscItem(7, ModSounds.N_D_NILE_MUSIC,
+                    new FabricItemSettings().maxCount(1), 62));
+    public static final Item BEHOLD_THE_GREAT_SCIENCE_FI_MUSIC_DISC = registerItem("music_discs/behold_the_great_science_fi_music_disc",
+            new MusicDiscItem(7, ModSounds.BEHOLD_THE_GREAT_SCIENCE_FI_MUSIC,
+                    new FabricItemSettings().maxCount(1), 149));
     public static final Item PEGASUS_SPAWN_EGG = registerItem("pegasus_spawn_egg",
             new SpawnEggItem(ModEntities.PEGASUS,15658734, 15066597,
                     new FabricItemSettings()));
@@ -271,6 +280,11 @@ public class ModItems {
         entries.add(CYCLOPS_BLOOD);
     }
 
+    public static void addItemToToolsAndUtilitiesGroup(FabricItemGroupEntries entries) {
+        entries.add(ModItems.N_D_NILE_MUSIC_DISC);
+        entries.add(ModItems.BEHOLD_THE_GREAT_SCIENCE_FI_MUSIC_DISC);
+    }
+
     public static void addItemToFunctionalItemGroup(FabricItemGroupEntries entries) {
         entries.add(ModBlocks.AMPHORA);
         entries.add(ModBlocks.CURSED_GOLDEN_BLOCK);
@@ -331,6 +345,7 @@ public class ModItems {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(ModItems::addItemToIngredientItemGroup);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(ModItems::addItemToFoodItemGroup);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(ModItems::addItemToFunctionalItemGroup);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(ModItems::addItemToToolsAndUtilitiesGroup);
     }
 }
 

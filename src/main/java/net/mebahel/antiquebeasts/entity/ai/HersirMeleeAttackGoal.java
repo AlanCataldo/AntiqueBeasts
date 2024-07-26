@@ -1,19 +1,19 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
+import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.custom.HersirEntity;
-import net.mebahel.antiquebeasts.entity.custom.NorseEntity;
+import net.mebahel.antiquebeasts.entity.custom.EinherjarEntity;
+import net.mebahel.antiquebeasts.entity.custom.ValkyrieEntity;
 import net.mebahel.antiquebeasts.item.CustomShieldItem;
+import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import software.bernie.geckolib.util.ClientUtils;
 
 import java.util.EnumSet;
-import java.util.Objects;
-
-import static java.lang.Math.random;
 
 public class HersirMeleeAttackGoal extends Goal {
     protected final HersirEntity mob;
@@ -21,7 +21,6 @@ public class HersirMeleeAttackGoal extends Goal {
     private static final int MAX_COOLDOWN = 21;
     public int cooldown;
     private long lastUpdateTime;
-    double rand;
     public HersirMeleeAttackGoal(HersirEntity mob, double speed) {
         this.mob = mob;
         this.speed = speed;
@@ -96,8 +95,33 @@ public class HersirMeleeAttackGoal extends Goal {
                 }
             }
             this.mob.tryAttack(target);
+
+
+            if (Math.random() < 1.0 / 30.0) {
+                double angle = Math.random() * 2 * Math.PI;
+                double radius = 3.0;
+
+                double offsetX = radius * Math.cos(angle);
+                double offsetZ = radius * Math.sin(angle);
+                double spawnX = this.mob.getX() + offsetX;
+                double spawnZ = this.mob.getZ() + offsetZ;
+
+                if (Math.random() < 0.5) { // 50% chance
+                    EinherjarEntity einherjar = new EinherjarEntity(ModEntities.EINHERJAR, this.mob.getWorld());
+                    einherjar.refreshPositionAndAngles(spawnX, this.mob.getY(), spawnZ, this.mob.getYaw(), this.mob.getPitch());
+                    this.mob.getWorld().spawnEntity(einherjar);
+                } else {
+                    ValkyrieEntity valkyrie = new ValkyrieEntity(ModEntities.VALKYRIE, this.mob.getWorld());
+                    valkyrie.refreshPositionAndAngles(spawnX, this.mob.getY(), spawnZ, this.mob.getYaw(), this.mob.getPitch());
+                    this.mob.getWorld().spawnEntity(valkyrie);
+                }
+                PlayerEntity player = ClientUtils.getClientPlayer();
+                if (player != null)
+                    this.mob.getWorld().playSound(player, this.mob.getX(), this.mob.getY(), this.mob.getZ(), ModSounds.MYTH_CREATE, this.mob.getSoundCategory(), 0.4f, 1f);
+            }
         }
     }
+
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
         return 5f + entity.getWidth();
     }

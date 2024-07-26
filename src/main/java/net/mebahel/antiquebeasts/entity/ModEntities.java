@@ -12,6 +12,10 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModEntities {
+    public static final EntityType<EgyptianCaravanEntity> EGYPTIAN_CARAVAN = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "egyptian_caravan"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, EgyptianCaravanEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.99f, 2.99f)).build());
 
     public static final EntityType<PegasusEntity> PEGASUS = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "pegasus"),
@@ -25,7 +29,7 @@ public class ModEntities {
 
     public static final EntityType<ElephantRiderEntity> ELEPHANT_RIDER = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "elephant_rider"),
-            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ElephantRiderEntity::new)
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ElephantRiderEntity::create)
                     .dimensions(EntityDimensions.fixed(1.49f, 3.99f)).build());
     public static final EntityType<ServantEntity> SERVANT = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "servant"),
@@ -35,16 +39,16 @@ public class ModEntities {
     public static final EntityType<MummyEntity> MUMMY = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "mummy"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, MummyEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.85f, 2.49f)).build());
+                    .dimensions(EntityDimensions.fixed(0.75f, 2.49f)).build());
     public static final EntityType<CamelryEntity> CAMELRY = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "camelry"),
-            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, CamelryEntity::new)
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, CamelryEntity::create)
                     .dimensions(EntityDimensions.fixed(0.99f, 2.99f)).build());
 
     public static final EntityType<AxemanEntity> AXEMAN = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "axeman"),
-            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, AxemanEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, AxemanEntity::create)
+                    .dimensions(EntityDimensions.fixed(0.6f, 1.99f)).build());
     public static final EntityType<WadjetEntity> WADJET = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "wadjet"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, WadjetEntity::new)

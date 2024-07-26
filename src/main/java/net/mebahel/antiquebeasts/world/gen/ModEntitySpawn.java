@@ -35,7 +35,7 @@ public class ModEntitySpawn {
                     return PegasusEntity.canMobSpawn(type, world, spawnReason, pos, random);
                 });
 
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+        /*BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 BiomeKeys.DESERT, BiomeKeys.BADLANDS)
                         .or(BiomeSelectors.tag(ConventionalBiomeTags.DESERT)).or(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS)),
                 SpawnGroup.CREATURE, ModEntities.ELEPHANT_RIDER, 4, 1, 1);
@@ -45,7 +45,7 @@ public class ModEntitySpawn {
                         return false;
                     }
                     return ElephantRiderEntity.canMobSpawn(type, world, spawnReason, pos, random);
-                });
+                });*/
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 BiomeKeys.DESERT, BiomeKeys.BADLANDS)
@@ -86,6 +86,18 @@ public class ModEntitySpawn {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 BiomeKeys.DESERT, BiomeKeys.BADLANDS)
                         .or(BiomeSelectors.tag(ConventionalBiomeTags.DESERT)).or(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS)),
+                SpawnGroup.CREATURE, ModEntities.EGYPTIAN_CARAVAN, 3, 1, 1);
+        SpawnRestriction.register(ModEntities.EGYPTIAN_CARAVAN, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return CamelryEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                });
+
+        /*BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                                BiomeKeys.DESERT, BiomeKeys.BADLANDS)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.DESERT)).or(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS)),
                 SpawnGroup.CREATURE, ModEntities.AXEMAN, 12, 1, 2);
         SpawnRestriction.register(ModEntities.AXEMAN, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
@@ -93,7 +105,7 @@ public class ModEntitySpawn {
                         return false;
                     }
                     return AxemanEntity.canMobSpawn(type, world, spawnReason, pos, random);
-                });
+                });*/
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 BiomeKeys.DESERT, BiomeKeys.BADLANDS)

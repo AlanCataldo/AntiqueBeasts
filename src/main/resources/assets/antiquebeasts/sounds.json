@@ -420,9 +420,9 @@
     ]
   },
   "egyptian_ambient_1": {
-    "subtitle": "antiquebeasts:egyptian/egyptian_ambient_2",
+    "subtitle": "antiquebeasts:egyptian/egyptian_ambient_1",
     "sounds": [
-      "antiquebeasts:egyptian/egyptian_ambient_2"
+      "antiquebeasts:egyptian/egyptian_ambient_1"
     ]
   },
   "egyptian_ambient_2": {
@@ -432,9 +432,9 @@
     ]
   },
   "egyptian_ambient_3": {
-    "subtitle": "antiquebeasts:egyptian/egyptian_ambient_2",
+    "subtitle": "antiquebeasts:egyptian/egyptian_ambient_3",
     "sounds": [
-      "antiquebeasts:egyptian/egyptian_ambient_2"
+      "antiquebeasts:egyptian/egyptian_ambient_3"
     ]
   },
   "egyptian_attack_1": {
@@ -633,6 +633,36 @@
     "subtitle": "antiquebeasts:pegasus_flap_1",
     "sounds": [
       "antiquebeasts:pegasus_flap_1"
+    ]
+  },
+  "n_d_nile": {
+    "subtitle": "antiquebeasts:music/n_d_nile",
+    "sounds": [
+      {
+        "name":"antiquebeasts:music/n_d_nile",
+        "stream": true
+      }
+    ]
+  },
+  "behold_the_great_science_fi": {
+    "subtitle": "antiquebeasts:music/behold_the_great_science_fi",
+    "sounds": [
+      {
+        "name":"antiquebeasts:music/behold_the_great_science_fi",
+        "stream": true
+      }
+    ]
+  },
+  "military_create": {
+    "subtitle": "antiquebeasts:infantry/military_create",
+    "sounds": [
+      "antiquebeasts:infantry/military_create"
+    ]
+  },
+  "mythical_units": {
+    "subtitle": "antiquebeasts:mythical_units/myth_create",
+    "sounds": [
+      "antiquebeasts:mythical_units/myth_create"
     ]
   }
 }

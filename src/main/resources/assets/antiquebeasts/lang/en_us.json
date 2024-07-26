@@ -21,6 +21,12 @@
   "entity.antiquebeasts.pegasus": "Pegasus",
 
   "block.antiquebeasts.amphora": "Amphora",
+  "block.antiquebeasts.cursed_gold_block": "Cursed gold block",
+
+  "item.antiquebeasts.music_discs.n_d_nile_music_disc": "§bMusic Disc",
+  "item.antiquebeasts.music_discs.n_d_nile_music_disc.desc": "Age Of Mythology - n. d. nile",
+  "item.antiquebeasts.music_discs.behold_the_great_science_fi_music_disc": "§bMusic Disc",
+  "item.antiquebeasts.music_discs.behold_the_great_science_fi_music_disc.desc": "Age Of Mythology - behold the great science fi",
 
   "item.antiquebeasts.cyclops_spawn_egg": "Cyclops spawn egg",
   "item.antiquebeasts.frost-cyclops_spawn_egg": "Frost cyclops spawn egg",

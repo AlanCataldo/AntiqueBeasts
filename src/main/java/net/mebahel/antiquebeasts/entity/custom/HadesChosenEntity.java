@@ -3,9 +3,12 @@ package net.mebahel.antiquebeasts.entity.custom;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.ai.HadesChosenMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.HadesChosenShootingGoal;
+import net.mebahel.antiquebeasts.entity.variant.ChampionHopliteVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -17,8 +20,12 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Util;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -27,6 +34,7 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
+import javax.annotation.Nullable;
 import java.util.Objects;
 
 import static java.lang.Math.random;
@@ -277,5 +285,16 @@ public class HadesChosenEntity extends HostileEntity implements GeoEntity {
         if (soundEvent != null) {
             this.playSound(soundEvent, 0.35f, 0.93f);
         }
+    }
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
+                                 SpawnReason spawnReason, @Nullable EntityData entityData,
+                                 @Nullable NbtCompound entityNbt) {
+        if (spawnReason == SpawnReason.SPAWNER) {
+            PlayerEntity player = ClientUtils.getClientPlayer();
+            if (player != null)
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.MILITARY_CREATE, this.getSoundCategory(), 0.5f, 1f);
+        }
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 }

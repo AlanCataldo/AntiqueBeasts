@@ -3,6 +3,7 @@ package net.mebahel.antiquebeasts.sound;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
@@ -115,6 +116,10 @@ public class ModSounds {
     public static SoundEvent CHIMERA_FLAME_1 = registerSoundEvent("chimera_flame_1");
     public static SoundEvent CHIMERA_GOAT_1 = registerSoundEvent("chimera_goat_1");
     public static SoundEvent PEGASUS_FLAP_1 = registerSoundEvent("pegasus_flap_1");
+    public static SoundEvent N_D_NILE_MUSIC = registerSoundEvent("n_d_nile");
+    public static SoundEvent BEHOLD_THE_GREAT_SCIENCE_FI_MUSIC = registerSoundEvent("behold_the_great_science_fi");
+    public static SoundEvent MILITARY_CREATE = registerSoundEvent("military_create");
+    public static SoundEvent MYTH_CREATE = registerSoundEvent("mythical_units");
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));

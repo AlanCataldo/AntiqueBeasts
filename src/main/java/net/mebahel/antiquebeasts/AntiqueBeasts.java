@@ -1,6 +1,8 @@
 package net.mebahel.antiquebeasts;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.mebahel.antiquebeasts.block.ModBlocks;
 import net.mebahel.antiquebeasts.entity.ModEntities;
@@ -10,6 +12,9 @@ import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.potion.ModPotions;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.world.gen.ModWorldGen;
+import net.minecraft.registry.Registry;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import software.bernie.geckolib.GeckoLib;
@@ -21,6 +26,7 @@ public class AntiqueBeasts implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		GeckoLib.initialize();
+		FabricDefaultAttributeRegistry.register(ModEntities.EGYPTIAN_CARAVAN, EgyptianCaravanEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.PEGASUS, PegasusEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.CHIMERA, ChimeraEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.ELEPHANT_RIDER, ElephantRiderEntity.setAttributes());

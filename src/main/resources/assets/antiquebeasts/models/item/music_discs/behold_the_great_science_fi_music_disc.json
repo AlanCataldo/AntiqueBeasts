@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "antiquebeasts:item/music_discs/behold_the_great_science_fi_music_disc"
+  }
+}

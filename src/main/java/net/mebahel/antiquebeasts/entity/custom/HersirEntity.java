@@ -214,6 +214,11 @@ public class HersirEntity extends NorseEntity implements GeoEntity {
                                  @javax.annotation.Nullable NbtCompound entityNbt) {
         HersirVariant variant = Util.getRandom(HersirVariant.values(), this.random);
         setVariant(variant);
+        if (spawnReason == SpawnReason.SPAWNER) {
+            PlayerEntity player = ClientUtils.getClientPlayer();
+            if (player != null)
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.MILITARY_CREATE, this.getSoundCategory(), 0.5f, 1f);
+        }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 

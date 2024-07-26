@@ -179,7 +179,7 @@ public class WadjetEntity extends EgyptianEntity implements GeoEntity {
 
         if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER) {
             int randomValue = this.random.nextInt(11);
-            if (randomValue >= 0 && randomValue <= 6) {
+            if (randomValue >= 0 && randomValue <= 7) {
                 this.remove(Entity.RemovalReason.DISCARDED);
             }
         }

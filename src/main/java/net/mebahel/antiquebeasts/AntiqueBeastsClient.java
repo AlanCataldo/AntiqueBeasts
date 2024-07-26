@@ -10,11 +10,15 @@ import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.particle.custom.MummyProjectileParticle;
 import net.mebahel.antiquebeasts.particle.custom.RockSplashParticle;
 import net.mebahel.antiquebeasts.particle.custom.SnowRockSplashParticle;
-import net.mebahel.antiquebeasts.util.*;
+import net.mebahel.antiquebeasts.util.BowPredicate;
+import net.mebahel.antiquebeasts.util.HornModelPredicate;
+import net.mebahel.antiquebeasts.util.ShieldModelPredicate;
+import net.mebahel.antiquebeasts.util.SpearModelPredicate;
 
 public class AntiqueBeastsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        EntityRendererRegistry.register(ModEntities.EGYPTIAN_CARAVAN, EgyptianCaravanRenderer::new);
         EntityRendererRegistry.register(ModEntities.PEGASUS, PegasusRenderer::new);
         EntityRendererRegistry.register(ModEntities.CHIMERA, ChimeraRenderer::new);
         EntityRendererRegistry.register(ModEntities.ELEPHANT_RIDER, ElephantRiderRenderer::new);

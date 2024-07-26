@@ -118,7 +118,7 @@ public class ValkyrieEntity extends NorseEntity implements GeoEntity {
     }
     private PlayState predicate(AnimationState animationState) {
         if(animationState.isMoving()) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
+            animationState.getController().setAnimation(RawAnimation.begin().then("idle_to_walk", Animation.LoopType.PLAY_ONCE).then("walk2", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));

@@ -1,7 +1,7 @@
 package net.mebahel.antiquebeasts.entity.custom;
 
-import net.mebahel.antiquebeasts.entity.variant.EgyptiantVariant;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -9,7 +9,6 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
@@ -39,6 +38,23 @@ public class EgyptianEntity extends AnimalEntity {
     public boolean isSwinging() {
         return this.dataTracker.get(SWINGING);
     }
+    private LivingEntity leadEntity;
+    public static final TrackedData<Boolean> IS_IN_CARAVAN = DataTracker.registerData(EgyptianEntity.class,
+            TrackedDataHandlerRegistry.BOOLEAN);
+
+    public void setInCaravan(boolean swinging) {
+        this.dataTracker.set(IS_IN_CARAVAN, swinging);
+    }
+    public boolean isInCaravan() {
+        return this.dataTracker.get(IS_IN_CARAVAN);
+    }
+    public LivingEntity getLeadEntity() {
+        return leadEntity;
+    }
+
+    public void setLeadEntity(LivingEntity leadEntity) {
+        this.leadEntity = leadEntity;
+    }
     protected EntityNavigation createNavigation(World world) {
         return new MobNavigation(this, world) {
             protected PathNodeNavigator createPathNodeNavigator(int range) {
@@ -51,6 +67,10 @@ public class EgyptianEntity extends AnimalEntity {
                 };
             }
         };
+    }
+    @Override
+    public int getMinAmbientSoundDelay() {
+        return 240;
     }
     @Override
     public boolean damage(DamageSource source, float amount) {
