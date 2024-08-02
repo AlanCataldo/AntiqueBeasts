@@ -18,8 +18,23 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 public abstract class ItemRendererMixin {
     @ModifyVariable(method = "renderItem", at = @At(value = "HEAD"), argsOnly = true)
     public BakedModel useHornModel(BakedModel value, ItemStack stack, ModelTransformationMode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        if (stack.isOf(ModItems.EINHERJAR_HORN) && renderMode != ModelTransformationMode.GUI && renderMode != ModelTransformationMode.FIXED) {
-            return ((ItemRendererAccessor) this).antiquebeasts$getModels().getModelManager().getModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "einherjar_horn", "inventory"));
+        if (renderMode == ModelTransformationMode.GUI || renderMode == ModelTransformationMode.FIXED) {
+            if (stack.isOf(ModItems.IRON_EGYPTIAN_HALBERD))
+                return ((ItemRendererAccessor) this).antiquebeasts$getModels().getModelManager().getModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/egyptian_halberd/inv_iron_egyptian_halberd", "inventory"));
+            else if (stack.isOf(ModItems.GOLD_EGYPTIAN_HALBERD))
+                return ((ItemRendererAccessor) this).antiquebeasts$getModels().getModelManager().getModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/egyptian_halberd/inv_gold_egyptian_halberd", "inventory"));
+            else if (stack.isOf(ModItems.DIAMOND_EGYPTIAN_HALBERD))
+                return ((ItemRendererAccessor) this).antiquebeasts$getModels().getModelManager().getModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/egyptian_halberd/inv_diamond_egyptian_halberd", "inventory"));
+            else if (stack.isOf(ModItems.NETHERITE_EGYPTIAN_HALBERD))
+                return ((ItemRendererAccessor) this).antiquebeasts$getModels().getModelManager().getModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/egyptian_halberd/inv_netherite_egyptian_halberd", "inventory"));
+            else if (stack.isOf(ModItems.IRON_HOPLITE_SPEAR))
+                return ((ItemRendererAccessor) this).antiquebeasts$getModels().getModelManager().getModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/spear/inv_iron_hoplite_spear", "inventory"));
+            else if (stack.isOf(ModItems.GOLD_HOPLITE_SPEAR))
+                return ((ItemRendererAccessor) this).antiquebeasts$getModels().getModelManager().getModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/spear/inv_gold_hoplite_spear", "inventory"));
+            else if (stack.isOf(ModItems.DIAMOND_HOPLITE_SPEAR))
+                return ((ItemRendererAccessor) this).antiquebeasts$getModels().getModelManager().getModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/spear/inv_diamond_hoplite_spear", "inventory"));
+            else if (stack.isOf(ModItems.NETHERITE_HOPLITE_SPEAR))
+                return ((ItemRendererAccessor) this).antiquebeasts$getModels().getModelManager().getModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/spear/inv_netherite_hoplite_spear", "inventory"));
         }
         return value;
     }

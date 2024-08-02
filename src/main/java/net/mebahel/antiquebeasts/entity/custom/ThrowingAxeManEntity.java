@@ -199,7 +199,7 @@ public class ThrowingAxeManEntity extends NorseEntity implements GeoEntity {
                                  @javax.annotation.Nullable NbtCompound entityNbt) {
         ThrowingAxeManVariant variant = Util.getRandom(ThrowingAxeManVariant.values(), this.random);
         setVariant(variant);
-        if (spawnReason == SpawnReason.SPAWNER) {
+        if (spawnReason == SpawnReason.SPAWNER && this.getWorld().isClient) {
             PlayerEntity player = ClientUtils.getClientPlayer();
             if (player != null)
                 this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.MILITARY_CREATE, this.getSoundCategory(), 0.5f, 1f);

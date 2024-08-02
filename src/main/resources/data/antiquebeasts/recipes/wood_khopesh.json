@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  G",
+    " GG",
+    " S "
+  ],
+  "key" : {
+    "G": {
+      "tag" : "minecraft:planks"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:weapon/khopesh/wood_khopesh"
+  }
+}

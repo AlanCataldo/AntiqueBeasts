@@ -1,13 +1,13 @@
 {
   "type": "minecraft:smithing_transform",
   "base": {
-    "item": "antiquebeasts:weapon/diamond_egyptian_halberd"
+    "item": "antiquebeasts:weapon/egyptian_halberd/diamond_egyptian_halberd"
   },
   "addition": {
     "item": "minecraft:netherite_ingot"
   },
   "result": {
-    "item": "antiquebeasts:weapon/netherite_egyptian_halberd"
+    "item": "antiquebeasts:weapon/egyptian_halberd/netherite_egyptian_halberd"
   },
   "template": {
     "item": "minecraft:netherite_upgrade_smithing_template"

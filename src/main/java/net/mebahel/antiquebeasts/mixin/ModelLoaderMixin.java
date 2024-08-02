@@ -20,6 +20,13 @@ public abstract class ModelLoaderMixin {
 
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/model/ModelLoader;addModel(Lnet/minecraft/client/util/ModelIdentifier;)V", ordinal = 3, shift = At.Shift.AFTER))
     public void addHornModel(BlockColors blockColors, Profiler profiler, Map jsonUnbakedModels, Map blockStates, CallbackInfo ci) {
-        this.addModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "einherjar_horn", "inventory"));
+        this.addModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/egyptian_halberd/inv_iron_egyptian_halberd", "inventory"));
+        this.addModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/egyptian_halberd/inv_gold_egyptian_halberd", "inventory"));
+        this.addModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/egyptian_halberd/inv_diamond_egyptian_halberd", "inventory"));
+        this.addModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/egyptian_halberd/inv_netherite_egyptian_halberd", "inventory"));
+        this.addModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/spear/inv_iron_hoplite_spear", "inventory"));
+        this.addModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/spear/inv_gold_hoplite_spear", "inventory"));
+        this.addModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/spear/inv_diamond_hoplite_spear", "inventory"));
+        this.addModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/spear/inv_netherite_hoplite_spear", "inventory"));
     }
 }

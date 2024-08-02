@@ -190,7 +190,7 @@
               "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "antiquebeasts:weapon/iron_hoplite_spear",
+          "name": "antiquebeasts:weapon/spear/iron_hoplite_spear",
           "weight": 10
         },
         {
@@ -200,7 +200,7 @@
               "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "antiquebeasts:weapon/gold_hoplite_spear",
+          "name": "antiquebeasts:weapon/spear/gold_hoplite_spear",
           "weight": 7
         },
         {

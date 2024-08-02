@@ -659,8 +659,8 @@
       "antiquebeasts:infantry/military_create"
     ]
   },
-  "mythical_units": {
-    "subtitle": "antiquebeasts:mythical_units/myth_create",
+  "mythical_unit": {
+    "subtitle": "antiquebeasts:mythical_unit/myth_create",
     "sounds": [
       "antiquebeasts:mythical_units/myth_create"
     ]

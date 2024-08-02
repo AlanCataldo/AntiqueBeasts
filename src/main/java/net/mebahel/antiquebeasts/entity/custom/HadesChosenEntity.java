@@ -290,7 +290,7 @@ public class HadesChosenEntity extends HostileEntity implements GeoEntity {
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
                                  SpawnReason spawnReason, @Nullable EntityData entityData,
                                  @Nullable NbtCompound entityNbt) {
-        if (spawnReason == SpawnReason.SPAWNER) {
+        if (spawnReason == SpawnReason.SPAWNER && this.getWorld().isClient) {
             PlayerEntity player = ClientUtils.getClientPlayer();
             if (player != null)
                 this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.MILITARY_CREATE, this.getSoundCategory(), 0.5f, 1f);

@@ -119,7 +119,7 @@ public class ModSounds {
     public static SoundEvent N_D_NILE_MUSIC = registerSoundEvent("n_d_nile");
     public static SoundEvent BEHOLD_THE_GREAT_SCIENCE_FI_MUSIC = registerSoundEvent("behold_the_great_science_fi");
     public static SoundEvent MILITARY_CREATE = registerSoundEvent("military_create");
-    public static SoundEvent MYTH_CREATE = registerSoundEvent("mythical_units");
+    public static SoundEvent MYTH_CREATE = registerSoundEvent("mythical_unit");
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));

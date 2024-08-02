@@ -27,7 +27,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "antiquebeasts:weapon/iron_egyptian_halberd",
+          "name": "antiquebeasts:weapon/egyptian_halberd/iron_egyptian_halberd",
           "weight": 1,
           "functions": [
             {
@@ -51,7 +51,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "antiquebeasts:weapon/iron_egyptian_halberd",
+          "name": "antiquebeasts:weapon/egyptian_halberd/iron_egyptian_halberd",
           "weight": 49,
           "functions": [
             {

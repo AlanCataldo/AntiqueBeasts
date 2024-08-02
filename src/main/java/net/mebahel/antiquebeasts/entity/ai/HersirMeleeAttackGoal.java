@@ -96,7 +96,6 @@ public class HersirMeleeAttackGoal extends Goal {
             }
             this.mob.tryAttack(target);
 
-
             if (Math.random() < 1.0 / 30.0) {
                 double angle = Math.random() * 2 * Math.PI;
                 double radius = 3.0;
@@ -106,7 +105,7 @@ public class HersirMeleeAttackGoal extends Goal {
                 double spawnX = this.mob.getX() + offsetX;
                 double spawnZ = this.mob.getZ() + offsetZ;
 
-                if (Math.random() < 0.5) { // 50% chance
+                if (Math.random() < 0.5) {
                     EinherjarEntity einherjar = new EinherjarEntity(ModEntities.EINHERJAR, this.mob.getWorld());
                     einherjar.refreshPositionAndAngles(spawnX, this.mob.getY(), spawnZ, this.mob.getYaw(), this.mob.getPitch());
                     this.mob.getWorld().spawnEntity(einherjar);
@@ -115,9 +114,13 @@ public class HersirMeleeAttackGoal extends Goal {
                     valkyrie.refreshPositionAndAngles(spawnX, this.mob.getY(), spawnZ, this.mob.getYaw(), this.mob.getPitch());
                     this.mob.getWorld().spawnEntity(valkyrie);
                 }
-                PlayerEntity player = ClientUtils.getClientPlayer();
-                if (player != null)
-                    this.mob.getWorld().playSound(player, this.mob.getX(), this.mob.getY(), this.mob.getZ(), ModSounds.MYTH_CREATE, this.mob.getSoundCategory(), 0.4f, 1f);
+
+                if (this.mob.getWorld().isClient) {
+                    PlayerEntity player = ClientUtils.getClientPlayer();
+                    if (player != null) {
+                        this.mob.getWorld().playSound(player, this.mob.getX(), this.mob.getY(), this.mob.getZ(), ModSounds.MYTH_CREATE, this.mob.getSoundCategory(), 0.4f, 1f);
+                    }
+                }
             }
         }
     }

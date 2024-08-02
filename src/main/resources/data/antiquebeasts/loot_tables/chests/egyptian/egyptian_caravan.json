@@ -117,7 +117,7 @@
               "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "antiquebeasts:weapon/gold_khopesh",
+          "name": "antiquebeasts:weapon/khopesh/gold_khopesh",
           "weight": 10
         },
         {
@@ -127,7 +127,7 @@
               "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "antiquebeasts:weapon/diamond_khopesh",
+          "name": "antiquebeasts:weapon/khopesh/diamond_khopesh",
           "weight": 10
         },
         {
@@ -137,7 +137,7 @@
               "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "antiquebeasts:weapon/gold_egyptian_halberd",
+          "name": "antiquebeasts:weapon/egyptian_halberd/gold_egyptian_halberd",
           "weight": 10
         },
         {
@@ -147,7 +147,7 @@
               "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "antiquebeasts:weapon/diamond_egyptian_halberd",
+          "name": "antiquebeasts:weapon/egyptian_halberd/diamond_egyptian_halberd",
           "weight": 10
         },
         {
@@ -157,7 +157,7 @@
               "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "antiquebeasts:weapon/diamond_khopesh",
+          "name": "antiquebeasts:weapon/khopesh/diamond_khopesh",
           "weight": 15
         },
         {
@@ -167,7 +167,7 @@
               "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "antiquebeasts:weapon/diamond_khopesh",
+          "name": "antiquebeasts:weapon/khopesh/diamond_khopesh",
           "weight": 15
         },
         {
@@ -177,7 +177,7 @@
               "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "antiquebeasts:weapon/diamond_egyptian_halberd",
+          "name": "antiquebeasts:weapon/egyptian_halberd/diamond_egyptian_halberd",
           "weight": 15
         },
         {
@@ -187,7 +187,7 @@
               "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "antiquebeasts:weapon/gold_egyptian_halberd",
+          "name": "antiquebeasts:weapon/egyptian_halberd/gold_egyptian_halberd",
           "weight": 15
         }
       ],
@@ -306,12 +306,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "antiquebeasts:music_discs/n_d_nile_music_disc",
+          "name": "antiquebeasts:music_disc/n_d_nile_music_disc",
           "weight": 1
         },
         {
           "type": "minecraft:item",
-          "name": "antiquebeasts:music_discs/behold_the_great_science_fi_music_disc",
+          "name": "antiquebeasts:music_disc/behold_the_great_science_fi_music_disc",
           "weight": 1
         }
       ],

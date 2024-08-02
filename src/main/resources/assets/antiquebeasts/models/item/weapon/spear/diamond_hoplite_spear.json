@@ -1,0 +1,40 @@
+{
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "antiquebeasts:item/weapon/spear/diamond_hoplite_spear"
+	},
+	"overrides": [
+		{"predicate": {"minecraft:throwing": 1}, "model": "antiquebeasts:item/weapon/spear/diamond_hoplite_spear_throwing"}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 2, 2],
+			"rotation": [0, -90, 45],
+			"scale": [1.5, 1.5, 1.5]
+		},
+		"thirdperson_lefthand": {
+			"translation": [0, 2, 2],
+			"rotation": [0, 90, -45],
+			"scale": [1.5, 1.5, 1.5]
+		},
+		"firstperson_righthand": {
+			"translation": [0, 4, 0],
+			"rotation": [-15, -85, 45],
+			"scale": [1.5, 1.5, 1.5]
+		},
+		"firstperson_lefthand": {
+			"translation": [0, 4, 0],
+			"rotation": [-15, 85, -45],
+			"scale": [1.5, 1.5, 1.5]
+		},
+		"ground": {
+			"translation": [0, 0, 0]
+		},
+		"gui": {
+			"scale": [1, 1, 1]
+		},
+		"fixed": {
+			"scale": [1, 1, 1]
+		}
+	}
+}
