@@ -2,6 +2,7 @@ package net.mebahel.antiquebeasts.entity.custom;
 
 import net.mebahel.antiquebeasts.entity.variant.PegasusVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.util.InputUtil;
@@ -188,9 +189,19 @@ public class PegasusEntity extends HorseEntity implements GeoEntity {
         PlayerEntity player = (PlayerEntity) this.getFirstPassenger();
         BlockPos pos = this.getBlockPos();
         BlockPos belowPos = pos.down(1);
-        boolean isJumpPressed = player != null && InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_SPACE);
-        boolean isGroundClose = !this.getWorld().getBlockState(belowPos).isAir();
         Vec3d vec3d = this.getVelocity();
+        boolean isGroundClose = !this.getWorld().getBlockState(belowPos).isAir();
+
+        boolean isJumpPressed = false;
+        if (isClientSide()) {
+            // Code spécifique au client
+            if (player != null) {
+                isJumpPressed = InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_SPACE);
+                if (MinecraftClient.getInstance().currentScreen instanceof ChatScreen) {
+                    isJumpPressed = false;
+                }
+            }
+        }
 
         ItemStack armorStack = this.getEquippedStack(EquipmentSlot.CHEST);
         Item armorItem = armorStack.getItem();
@@ -238,10 +249,6 @@ public class PegasusEntity extends HorseEntity implements GeoEntity {
         }
 
         if (player != null && this.isSaddled()) {
-            if (MinecraftClient.getInstance().currentScreen instanceof ChatScreen) {
-                isJumpPressed = false;
-            }
-
             if (!this.isOnGround() && !isGroundClose && !this.isGliding) {
                 this.transition++;
             } else if (this.isGliding && (this.isOnGround() || isGroundClose) && !transitioningToFly) {
@@ -314,12 +321,19 @@ public class PegasusEntity extends HorseEntity implements GeoEntity {
         // Mise à jour de l'état précédent de la touche de saut
         wasJumpPressed = isJumpPressed;
     }
-
     public boolean damage(DamageSource source, float amount) {
         if (source.isOf(DamageTypes.FALL)) {
             return false;
         }
         return super.damage(source, amount);
+    }
+
+    @Override
+    public void fall(double heightDifference, boolean onGround, BlockState state, BlockPos pos) {
+        if (this.getFirstPassenger() instanceof PlayerEntity) {
+            return;
+        }
+        super.fall(heightDifference, onGround, state, pos);
     }
 
     /* VARIANTS */
@@ -347,5 +361,9 @@ public class PegasusEntity extends HorseEntity implements GeoEntity {
 
     private void setVariant(PegasusVariant variant) {
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
+    }
+
+    private boolean isClientSide() {
+        return this.getWorld().isClient;
     }
 }

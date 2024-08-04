@@ -25,7 +25,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
 public class FrostCyclopsEntity extends CyclopsEntity implements GeoEntity {
-    public String animationProcedure = "empty";
 
     public FrostCyclopsEntity(EntityType<? extends CyclopsEntity> entityType, World world) {
         super(entityType, world);
@@ -68,11 +67,11 @@ public class FrostCyclopsEntity extends CyclopsEntity implements GeoEntity {
 
     private PlayState predicate(AnimationState animationState) {
         if(animationState.isMoving()) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("animation.cyclops.walk", Animation.LoopType.LOOP));
+            animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
 
-        animationState.getController().setAnimation(RawAnimation.begin().then("animation.cyclops.idle", Animation.LoopType.LOOP));
+        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
 
@@ -88,7 +87,7 @@ public class FrostCyclopsEntity extends CyclopsEntity implements GeoEntity {
     private PlayState shootingPredicate(AnimationState state) {
         if(this.isShooting() && !this.isSwinging() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
             state.getController().forceAnimationReset();
-            state.getController().setAnimation(RawAnimation.begin().then("animation.cyclops.ranged_attack", Animation.LoopType.PLAY_ONCE));
+            state.getController().setAnimation(RawAnimation.begin().then("ranged_attack", Animation.LoopType.PLAY_ONCE));
         }
 
         return PlayState.CONTINUE;

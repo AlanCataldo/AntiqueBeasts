@@ -6,7 +6,10 @@ import net.mebahel.antiquebeasts.entity.ai.CyclopsSocializeGoal;
 import net.mebahel.antiquebeasts.entity.variant.CyclopsVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityData;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -37,13 +40,14 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
 import static java.lang.Math.random;
 
 public class CyclopsEntity extends AnimalEntity implements GeoEntity {
+    private int blinkTimer = 0;
+    private int nextBlink = 0;
     double rand;
     double last_step = 0;
     public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(CyclopsEntity.class,
@@ -60,6 +64,7 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
     public CyclopsEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
+        this.scheduleNextBlink();
     }
 
     @Nullable
@@ -96,15 +101,28 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
     public String getAttackName() {
         return this.dataTracker.get(ATTACK_NAME);
     }
-    private boolean shouldDespawnInPeaceful() {
+    public boolean shouldDespawnInPeaceful() {
         return this.getWorld().getDifficulty() == Difficulty.PEACEFUL;
     }
     @Override
     public void tick() {
         super.tick();
-        if (shouldDespawnInPeaceful()) {
-            remove(Entity.RemovalReason.DISCARDED);
+        if (this.blinkTimer > 0) {
+            this.blinkTimer--;
+        } else if (this.nextBlink > 0) {
+            this.nextBlink--;
+        } else {
+            this.blinkTimer = 5;
+            this.scheduleNextBlink();
         }
+    }
+
+    private void scheduleNextBlink() {
+        this.nextBlink = 80 + this.random.nextInt(160 - 80 + 1);
+    }
+
+    public boolean isBlinking() {
+        return this.blinkTimer > 0;
     }
     protected void initDataTracker() {
         super.initDataTracker();
@@ -112,7 +130,7 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(COOLDOWN, 0f);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
-        this.dataTracker.startTracking(ATTACK_NAME, "animation.cyclops.attack");
+        this.dataTracker.startTracking(ATTACK_NAME, "attack");
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
@@ -138,11 +156,11 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
 
     private PlayState predicate(AnimationState animationState) {
         if(animationState.isMoving()) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("animation.cyclops.walk", Animation.LoopType.LOOP));
+            animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
 
-        animationState.getController().setAnimation(RawAnimation.begin().then("animation.cyclops.idle", Animation.LoopType.LOOP));
+        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
 
@@ -158,7 +176,7 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
     private PlayState shootingPredicate(AnimationState state) {
         if(this.isShooting() && !this.isSwinging() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
             state.getController().forceAnimationReset();
-            state.getController().setAnimation(RawAnimation.begin().then("animation.cyclops.ranged_attack", Animation.LoopType.PLAY_ONCE));
+            state.getController().setAnimation(RawAnimation.begin().then("ranged_attack", Animation.LoopType.PLAY_ONCE));
         }
 
         return PlayState.CONTINUE;

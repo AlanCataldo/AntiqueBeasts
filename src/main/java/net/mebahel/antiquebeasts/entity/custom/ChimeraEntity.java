@@ -124,7 +124,7 @@ public class ChimeraEntity extends AnimalEntity implements GeoEntity {
         super.initDataTracker();
         this.dataTracker.startTracking(SHOOTING, false);
         this.dataTracker.startTracking(SWINGING, false);
-        this.dataTracker.startTracking(COOLDOWN, 0f);
+        this.dataTracker.startTracking(COOLDOWN, 60f);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(ATTACK_NAME, "lion_shoot");
     }
@@ -151,7 +151,7 @@ public class ChimeraEntity extends AnimalEntity implements GeoEntity {
 
     private PlayState predicate(AnimationState animationState) {
         if(animationState.isMoving()) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
+            animationState.getController().setAnimation(RawAnimation.begin().then("transition_walk", Animation.LoopType.PLAY_ONCE).then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
 

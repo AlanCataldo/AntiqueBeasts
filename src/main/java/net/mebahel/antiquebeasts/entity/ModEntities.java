@@ -56,12 +56,12 @@ public class ModEntities {
     public static final EntityType<CyclopsEntity> CYCLOPS = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "cyclops"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, CyclopsEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.95f, 4.75f)).build());
+                    .dimensions(EntityDimensions.fixed(0.95f, 4f)).build());
 
     public static final EntityType<FrostCyclopsEntity> FROST_CYCLOPS = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "frost-cyclops"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, FrostCyclopsEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.95f, 4.75f)).build());
+                    .dimensions(EntityDimensions.fixed(0.95f, 4f)).build());
 
     public static final EntityType<HersirEntity> HERSIR = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "hersir"),
