@@ -42,7 +42,7 @@ public class HadesShadeMeleeAttackGoal extends Goal {
     }
     public void tick() {
         LivingEntity livingEntity = this.mob.getTarget();
-        if (livingEntity != null) {
+        if (livingEntity != null && livingEntity.isAlive()) {
             Vec3d vec3d = livingEntity.getEyePos();
             Vec3d velo = new Vec3d(livingEntity.getX() - this.mob.getX(), livingEntity.getY() - this.mob.getY(), livingEntity.getZ() - this.mob.getZ());
             if (!this.mob.isSwinging()) {

@@ -1,6 +1,6 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
-import net.mebahel.antiquebeasts.entity.custom.MummyEntity;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.MummyEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;

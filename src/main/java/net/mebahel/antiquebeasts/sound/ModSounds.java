@@ -126,6 +126,6 @@ public class ModSounds {
     }
 
     public static void registerSounds() {
-        System.out.println("Registering Sounds for " + AntiqueBeasts.MOD_ID);
+        AntiqueBeasts.LOGGER.info("[AntiqueBeasts] Registering sounds for" + AntiqueBeasts.MOD_ID + ".");
     }
 }

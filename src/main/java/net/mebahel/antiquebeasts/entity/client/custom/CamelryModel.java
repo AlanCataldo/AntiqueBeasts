@@ -2,8 +2,7 @@ package net.mebahel.antiquebeasts.entity.client.custom;
 
 import com.google.common.collect.Maps;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
-import net.mebahel.antiquebeasts.entity.custom.AxemanEntity;
-import net.mebahel.antiquebeasts.entity.custom.CamelryEntity;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.CamelryEntity;
 import net.mebahel.antiquebeasts.entity.variant.EgyptiantVariant;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;

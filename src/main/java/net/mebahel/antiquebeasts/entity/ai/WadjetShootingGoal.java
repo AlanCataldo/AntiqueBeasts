@@ -1,6 +1,6 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
-import net.mebahel.antiquebeasts.entity.custom.WadjetEntity;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.WadjetEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.VenomEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.VenomSlowEntity;
 import net.mebahel.antiquebeasts.entity.variant.WadjetVariant;

@@ -2,7 +2,7 @@ package net.mebahel.antiquebeasts.entity.client.custom;
 
 import com.google.common.collect.Maps;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
-import net.mebahel.antiquebeasts.entity.custom.ValkyrieEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.ValkyrieEntity;
 import net.mebahel.antiquebeasts.entity.variant.ValkyrieVariant;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;

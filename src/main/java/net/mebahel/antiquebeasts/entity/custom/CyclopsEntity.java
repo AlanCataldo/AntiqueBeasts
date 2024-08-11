@@ -1,8 +1,12 @@
 package net.mebahel.antiquebeasts.entity.custom;
 
+import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
 import net.mebahel.antiquebeasts.entity.ai.CyclopsMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.CyclopsShootingGoal;
 import net.mebahel.antiquebeasts.entity.ai.CyclopsSocializeGoal;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.variant.CyclopsVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.block.BlockState;
@@ -10,7 +14,10 @@ import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
+import net.minecraft.entity.ai.goal.LookAroundGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -107,6 +114,9 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
+        if (shouldDespawnInPeaceful()) {
+            remove(RemovalReason.DISCARDED);
+        }
         if (this.blinkTimer > 0) {
             this.blinkTimer--;
         } else if (this.nextBlink > 0) {
@@ -149,9 +159,11 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
 
-        this.targetSelector.add(1, new RevengeGoal(this));
+        this.targetSelector.add(1, new CustomRevengeGoal(this, GreekEntity.class));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
+        this.targetSelector.add(4, new ActiveTargetGoal<>(this, EgyptianEntity.class, true));
+        this.targetSelector.add(4, new ActiveTargetGoal<>(this, NorseEntity.class, true));
     }
 
     private PlayState predicate(AnimationState animationState) {

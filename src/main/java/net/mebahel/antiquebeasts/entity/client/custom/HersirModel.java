@@ -2,11 +2,8 @@ package net.mebahel.antiquebeasts.entity.client.custom;
 
 import com.google.common.collect.Maps;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
-import net.mebahel.antiquebeasts.entity.custom.HeroHopliteEntity;
-import net.mebahel.antiquebeasts.entity.custom.HersirEntity;
-import net.mebahel.antiquebeasts.entity.custom.ThrowingAxeManEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.HersirEntity;
 import net.mebahel.antiquebeasts.entity.variant.HersirVariant;
-import net.mebahel.antiquebeasts.entity.variant.ThrowingAxeManVariant;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import software.bernie.geckolib.constant.DataTickets;

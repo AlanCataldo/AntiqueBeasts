@@ -2,7 +2,7 @@ package net.mebahel.antiquebeasts.entity.client.custom;
 
 import com.google.common.collect.Maps;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
-import net.mebahel.antiquebeasts.entity.custom.ThrowingAxeManEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.ThrowingAxeManEntity;
 import net.mebahel.antiquebeasts.entity.variant.ThrowingAxeManVariant;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;

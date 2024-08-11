@@ -6,7 +6,7 @@ import net.mebahel.antiquebeasts.entity.ai.HadesShadeMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.HadesShadeMoveControl;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;

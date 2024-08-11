@@ -19,6 +19,7 @@
   "entity.antiquebeasts.elephant_rider": "Chevaucheur d'éléphant",
   "entity.antiquebeasts.chimera": "Chimère",
   "entity.antiquebeasts.pegasus": "Pégase",
+  "entity.antiquebeasts.centaur": "Centaure",
 
   "block.antiquebeasts.amphora": "Amphore",
   "block.antiquebeasts.cursed_gold_block": "Block d'or maudit",
@@ -28,6 +29,7 @@
   "item.antiquebeasts.music_discs.behold_the_great_science_fi_music_disc": "§bDisque de musique",
   "item.antiquebeasts.music_discs.behold_the_great_science_fi_music_disc.desc": "Age Of Mythology - behold the great science fi",
 
+  "item.antiquebeasts.spawn_egg.centaur_spawn_egg": "Oeuf d'apparition de centaure",
   "item.antiquebeasts.spawn_egg.cyclops_spawn_egg": "Oeuf d'apparition de cyclope",
   "item.antiquebeasts.spawn_egg.frost-cyclops_spawn_egg": "Oeuf d'apparition de cyclope de glace",
   "item.antiquebeasts.spawn_egg.champion_hoplite_spawn_egg": "Oeuf d'apparition d'hoplite champion",
@@ -106,6 +108,7 @@
   "item.antiquebeasts.chimera_hair": "Poil de Chimère",
   "item.antiquebeasts.weapon.valkyrie_spear": "Lance de Valkyrie",
 
+  "item.antiquebeasts.weapon.iron_centaur_sword": "Épée de Centaur en fer",
   "item.antiquebeasts.weapon.khopesh.wood_khopesh": "Khopesh en bois",
   "item.antiquebeasts.weapon.khopesh.stone_khopesh": "Khopesh en pierre",
   "item.antiquebeasts.weapon.khopesh.iron_khopesh": "Khopesh en fer",

@@ -1,6 +1,6 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
-import net.mebahel.antiquebeasts.entity.custom.ThrowingAxeManEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.ThrowingAxeManEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.ThrowingAxeEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;

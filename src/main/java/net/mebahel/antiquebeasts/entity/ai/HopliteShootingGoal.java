@@ -1,7 +1,6 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
-import net.mebahel.antiquebeasts.entity.custom.HeroHopliteEntity;
-import net.mebahel.antiquebeasts.entity.custom.HopliteEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.HopliteSpearEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
@@ -12,9 +11,9 @@ import net.minecraft.world.World;
 import java.util.Objects;
 
 public class HopliteShootingGoal extends Goal {
-    private final HopliteEntity hoplite;
+    private final GreekEntity hoplite;
 
-    public HopliteShootingGoal(HopliteEntity hoplite) {
+    public HopliteShootingGoal(GreekEntity hoplite) {
         this.hoplite = hoplite;
     }
 
@@ -91,6 +90,8 @@ public class HopliteShootingGoal extends Goal {
                 this.hoplite.setShooting(false);
                 this.hoplite.setCooldown(81);
             }
+        } else if (this.hoplite.distanceTo(livingEntity) <= 6) {
+            this.hoplite.setCooldown(Math.max(this.hoplite.getCooldown() + 1, 40));
         }
     }
 }

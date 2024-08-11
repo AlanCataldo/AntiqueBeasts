@@ -1,7 +1,6 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
 import net.mebahel.antiquebeasts.entity.custom.HadesChosenEntity;
-import net.mebahel.antiquebeasts.entity.custom.HopliteEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
@@ -65,7 +64,7 @@ public class HadesChosenMeleeAttackGoal extends Goal {
     }
     public void tick() {
         LivingEntity livingEntity = this.mob.getTarget();
-        if (livingEntity != null) {
+        if (livingEntity != null && livingEntity.isAlive()) {
             this.mob.getLookControl().lookAt(livingEntity, 15.0F, 15.0F);
             this.attack(livingEntity);
         } else {

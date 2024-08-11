@@ -1,7 +1,6 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
-import net.mebahel.antiquebeasts.entity.custom.EinherjarEntity;
-import net.mebahel.antiquebeasts.entity.custom.HuskarlEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.EinherjarEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;

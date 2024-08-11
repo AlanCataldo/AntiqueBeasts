@@ -29,6 +29,10 @@ public class ModItems {
     public static final Item BEHOLD_THE_GREAT_SCIENCE_FI_MUSIC_DISC = registerItem("music_disc/behold_the_great_science_fi_music_disc",
             new MusicDiscItem(7, ModSounds.BEHOLD_THE_GREAT_SCIENCE_FI_MUSIC,
                     new FabricItemSettings().maxCount(1), 149));
+
+    public static final Item CENTAUR_SPAWN_EGG = registerItem("spawn_egg/centaur_spawn_egg",
+            new SpawnEggItem(ModEntities.CENTAUR,13342315, 15789267,
+                    new FabricItemSettings()));
     public static final Item PEGASUS_SPAWN_EGG = registerItem("spawn_egg/pegasus_spawn_egg",
             new SpawnEggItem(ModEntities.PEGASUS,15658734, 15066597,
                     new FabricItemSettings()));
@@ -237,6 +241,10 @@ public class ModItems {
             new Item(new FabricItemSettings()));
     public static final Item VALKYRIE_SPEAR = registerItem("weapon/valkyrie_spear",
             new ValkyrieSpear(new FabricItemSettings().maxDamage(600)));
+
+    public static final Item IRON_CENTAUR_SWORD = registerItem("weapon/iron_centaur_sword",
+            new SwordItem(ModToolMaterial.IRON_CENTAUR,3, -2.4f,
+                    new FabricItemSettings()));
     public static <I extends Item> I registerItem(String name, I item) {
         return Registry.register(Registries.ITEM, new Identifier(AntiqueBeasts.MOD_ID, name), item);
     }
@@ -248,6 +256,7 @@ public class ModItems {
         entries.add(MUMMY_SPAWN_EGG);
         entries.add(SERVANT_SPAWN_EGG);
 
+        entries.add(CENTAUR_SPAWN_EGG);
         entries.add(CHIMERA_SPAWN_EGG);
         entries.add(CYCLOPS_SPAWN_EGG);
         entries.add(FROST_CYCLOPS_SPAWN_EGG);
@@ -329,6 +338,7 @@ public class ModItems {
         entries.add(GOLD_HOPLITE_SPEAR);
         entries.add(DIAMOND_HOPLITE_SPEAR);
         entries.add(NETHERITE_HOPLITE_SPEAR);
+        entries.add(IRON_CENTAUR_SWORD);
 
         entries.add(WOOD_KHOPESH);
         entries.add(STONE_KHOPESH);
@@ -346,13 +356,13 @@ public class ModItems {
 
 
     public static void registerModItems() {
-        AntiqueBeasts.LOGGER.debug("Registering Mod Items for " + AntiqueBeasts.MOD_ID);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(ModItems::addItemToSpawnEggItemGroup);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(ModItems::addItemToCombatItemGroup);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(ModItems::addItemToIngredientItemGroup);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(ModItems::addItemToFoodItemGroup);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(ModItems::addItemToFunctionalItemGroup);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(ModItems::addItemToToolsAndUtilitiesGroup);
+        AntiqueBeasts.LOGGER.info("[AntiqueBeasts] Registering items for " + AntiqueBeasts.MOD_ID + ".");
     }
 }
 

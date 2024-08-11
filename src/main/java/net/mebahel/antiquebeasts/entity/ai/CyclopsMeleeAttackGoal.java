@@ -74,8 +74,8 @@ public class CyclopsMeleeAttackGoal extends Goal {
 
     public void tick() {
         LivingEntity livingEntity = this.mob.getTarget();
-        if (livingEntity != null) {
-            this.mob.getLookControl().lookAt(livingEntity, 15.0F, 7.0F);
+        if (livingEntity != null && livingEntity.isAlive()) {
+            this.mob.getLookControl().lookAt(livingEntity, 15.0F, 15.0F);
             this.attack(livingEntity);
         } else {
             this.stop();

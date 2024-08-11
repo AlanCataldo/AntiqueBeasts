@@ -1,6 +1,6 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
-import net.mebahel.antiquebeasts.entity.custom.EinherjarEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.EinherjarEntity;
 import net.mebahel.antiquebeasts.item.CustomShieldItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
@@ -62,7 +62,7 @@ public class EinherjarMeleeAttackGoal extends Goal {
     }
     public void tick() {
         LivingEntity livingEntity = this.mob.getTarget();
-        if (livingEntity != null) {
+        if (livingEntity != null && livingEntity.isAlive()) {
             this.mob.getLookControl().lookAt(livingEntity, 15.0F, 15.0F);
             this.attack(livingEntity);
         } else {

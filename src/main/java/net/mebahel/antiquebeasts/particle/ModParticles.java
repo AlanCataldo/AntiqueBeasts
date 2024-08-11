@@ -25,5 +25,6 @@ public class ModParticles {
                 VENOM_SLOW_PARTICLE);
         Registry.register(Registries.PARTICLE_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "mummy_projectile_particle"),
                 MUMMY_PROJECTILE_PARTICLE);
+        AntiqueBeasts.LOGGER.info("[AntiqueBeasts] Registering particles for " + AntiqueBeasts.MOD_ID + ".");
     }
 }

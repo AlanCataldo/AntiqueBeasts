@@ -1,11 +1,9 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
-import net.mebahel.antiquebeasts.entity.custom.HadesShadeEntity;
-import net.mebahel.antiquebeasts.entity.custom.ThrowingAxeManEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.ThrowingAxeManEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 
 import java.util.EnumSet;
 

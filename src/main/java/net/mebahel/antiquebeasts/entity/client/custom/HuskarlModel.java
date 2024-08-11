@@ -2,8 +2,7 @@ package net.mebahel.antiquebeasts.entity.client.custom;
 
 import com.google.common.collect.Maps;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
-import net.mebahel.antiquebeasts.entity.custom.HersirEntity;
-import net.mebahel.antiquebeasts.entity.custom.HuskarlEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.HuskarlEntity;
 import net.mebahel.antiquebeasts.entity.variant.HersirVariant;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;

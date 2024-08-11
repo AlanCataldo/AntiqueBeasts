@@ -1,8 +1,7 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
 import net.mebahel.antiquebeasts.AntiqueBeasts;
-import net.mebahel.antiquebeasts.entity.custom.CyclopsEntity;
-import net.mebahel.antiquebeasts.entity.custom.HeroHopliteEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.HeroHopliteEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;

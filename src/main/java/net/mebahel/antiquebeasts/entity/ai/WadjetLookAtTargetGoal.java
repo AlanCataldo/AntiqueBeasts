@@ -1,6 +1,6 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
-import net.mebahel.antiquebeasts.entity.custom.WadjetEntity;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.WadjetEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.math.MathHelper;

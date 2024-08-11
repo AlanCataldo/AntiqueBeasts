@@ -5,6 +5,15 @@ import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.custom.*;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.CamelryEntity;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.MummyEntity;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.ServantEntity;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.WadjetEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.CentaurEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.ChampionHopliteEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.EliteHopliteEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.HeroHopliteEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.*;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.world.Difficulty;
@@ -13,6 +22,28 @@ import net.minecraft.world.biome.BiomeKeys;
 
 public class ModEntitySpawn {
     public static void addEntitySpawn() {
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                                BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST,
+                                BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.MEADOW, BiomeKeys.OLD_GROWTH_BIRCH_FOREST,
+                                TerralithBiomeKeys.YELLOWSTONE, TerralithBiomeKeys.AMETHYST_CANYON, TerralithBiomeKeys.TEMPERATE_HIGHLANDS,
+                                TerralithBiomeKeys.GRAVEL_BEACH, TerralithBiomeKeys.HOT_SHRUBLAND, TerralithBiomeKeys.ALPHA_ISLAND,
+                                TerralithBiomeKeys.BLOOMING_VALLEY, TerralithBiomeKeys.LAVENDER_VALLEY, TerralithBiomeKeys.LAVENDER_FOREST,
+                                TerralithBiomeKeys.MIRAGE_ISLES, TerralithBiomeKeys.MOONLIGHT_GROVE, TerralithBiomeKeys.MOONLIGHT_VALLEY,
+                                TerralithBiomeKeys.SAKURA_GROVE, TerralithBiomeKeys.SAKURA_VALLEY, TerralithBiomeKeys.BLOOMING_PLATEAU,
+                                TerralithBiomeKeys.SKYLANDS, TerralithBiomeKeys. SKYLANDS_AUTUMN, TerralithBiomeKeys.SKYLANDS_SPRING,
+                                TerralithBiomeKeys.SKYLANDS_SUMMER, TerralithBiomeKeys.WARM_RIVER, TerralithBiomeKeys.VOLCANIC_PEAKS,
+                                TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.PLAINS)).or(BiomeSelectors.tag(ConventionalBiomeTags.FOREST))
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.CLIMATE_TEMPERATE)),
+                SpawnGroup.CREATURE, ModEntities.CENTAUR, 5, 1, 3);
+        SpawnRestriction.register(ModEntities.CENTAUR, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return CentaurEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                });
+
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST,
                                 BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.MEADOW, BiomeKeys.OLD_GROWTH_BIRCH_FOREST,
@@ -50,7 +81,7 @@ public class ModEntitySpawn {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 BiomeKeys.DESERT, BiomeKeys.BADLANDS)
                         .or(BiomeSelectors.tag(ConventionalBiomeTags.DESERT)).or(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS)),
-                SpawnGroup.CREATURE, ModEntities.SERVANT, 12, 1, 3);
+                SpawnGroup.CREATURE, ModEntities.SERVANT, 12, 2, 3);
         SpawnRestriction.register(ModEntities.SERVANT, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
@@ -340,7 +371,7 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS)
                         .or(BiomeSelectors.tag(ConventionalBiomeTags.PLAINS)).or(BiomeSelectors.tag(ConventionalBiomeTags.FOREST))
                         .or(BiomeSelectors.tag(ConventionalBiomeTags.CLIMATE_TEMPERATE)),
-                SpawnGroup.CREATURE, ModEntities.CHAMPION_HOPLITE, 12, 1, 2);
+                SpawnGroup.CREATURE, ModEntities.CHAMPION_HOPLITE, 12, 2, 2);
         SpawnRestriction.register(ModEntities.CHAMPION_HOPLITE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
@@ -362,7 +393,7 @@ public class ModEntitySpawn {
                         TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS)
                         .or(BiomeSelectors.tag(ConventionalBiomeTags.PLAINS)).or(BiomeSelectors.tag(ConventionalBiomeTags.FOREST))
                         .or(BiomeSelectors.tag(ConventionalBiomeTags.CLIMATE_TEMPERATE)),
-                SpawnGroup.CREATURE, ModEntities.ELITE_HOPLITE, 14, 1, 3);
+                SpawnGroup.CREATURE, ModEntities.ELITE_HOPLITE, 14, 2, 3);
         SpawnRestriction.register(ModEntities.ELITE_HOPLITE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {

@@ -2,10 +2,8 @@ package net.mebahel.antiquebeasts.entity.client.custom;
 
 import com.google.common.collect.Maps;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
-import net.mebahel.antiquebeasts.entity.custom.EinherjarEntity;
-import net.mebahel.antiquebeasts.entity.custom.HuskarlEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.EinherjarEntity;
 import net.mebahel.antiquebeasts.entity.variant.EinherjarVariant;
-import net.mebahel.antiquebeasts.entity.variant.HersirVariant;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import software.bernie.geckolib.constant.DataTickets;

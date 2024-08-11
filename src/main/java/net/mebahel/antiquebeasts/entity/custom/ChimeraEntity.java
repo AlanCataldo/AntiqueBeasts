@@ -2,12 +2,19 @@ package net.mebahel.antiquebeasts.entity.custom;
 
 import net.mebahel.antiquebeasts.entity.ai.ChimeraFlameThrowerGoal;
 import net.mebahel.antiquebeasts.entity.ai.ChimeraMeleeAttackGoal;
+import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.variant.ChimeraVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
+import net.minecraft.entity.ai.goal.LookAroundGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -117,7 +124,7 @@ public class ChimeraEntity extends AnimalEntity implements GeoEntity {
             Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0);
         } else if (Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getValue() == 0
                 && this.getFireBreathingCooldown() >= 36) {
-            Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.72f);
+            Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.65f);
         }
     }
     protected void initDataTracker() {
@@ -140,13 +147,15 @@ public class ChimeraEntity extends AnimalEntity implements GeoEntity {
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new ChimeraFlameThrowerGoal(this));
-        this.goalSelector.add(3, new ChimeraMeleeAttackGoal(this, 0.52f, 8f, 1, 5));
+        this.goalSelector.add(3, new ChimeraMeleeAttackGoal(this, 0.48f, 8f, 1, 5));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
 
-        this.targetSelector.add(1, new RevengeGoal(this));
+        this.targetSelector.add(1, new CustomRevengeGoal(this, GreekEntity.class));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
+        this.targetSelector.add(4, new ActiveTargetGoal<>(this, EgyptianEntity.class, true));
+        this.targetSelector.add(4, new ActiveTargetGoal<>(this, NorseEntity.class, true));
     }
 
     private PlayState predicate(AnimationState animationState) {

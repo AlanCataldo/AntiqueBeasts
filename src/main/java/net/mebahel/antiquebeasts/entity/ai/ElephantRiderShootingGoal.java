@@ -1,8 +1,6 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
-import net.mebahel.antiquebeasts.entity.custom.ElephantRiderEntity;
-import net.mebahel.antiquebeasts.entity.custom.MummyEntity;
-import net.mebahel.antiquebeasts.entity.projectiles.MummyProjectileEntity;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.ElephantRiderEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.projectile.ArrowEntity;

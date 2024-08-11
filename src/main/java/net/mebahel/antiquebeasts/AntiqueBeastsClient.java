@@ -18,6 +18,7 @@ import net.mebahel.antiquebeasts.util.SpearModelPredicate;
 public class AntiqueBeastsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        EntityRendererRegistry.register(ModEntities.CENTAUR, CentaurRenderer::new);
         EntityRendererRegistry.register(ModEntities.EGYPTIAN_CARAVAN, EgyptianCaravanRenderer::new);
         EntityRendererRegistry.register(ModEntities.PEGASUS, PegasusRenderer::new);
         EntityRendererRegistry.register(ModEntities.CHIMERA, ChimeraRenderer::new);

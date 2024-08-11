@@ -1,14 +1,9 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
-import net.mebahel.antiquebeasts.entity.custom.HersirEntity;
-import net.mebahel.antiquebeasts.entity.custom.NorseEntity;
-import net.mebahel.antiquebeasts.entity.custom.ValkyrieEntity;
-import net.mebahel.antiquebeasts.item.CustomShieldItem;
+import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.ValkyrieEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.pathing.Path;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.predicate.entity.EntityPredicates;
 
 import java.util.EnumSet;
@@ -67,7 +62,7 @@ public class ValkyrieMeleeAttackGoal extends Goal {
     }
     public void tick() {
         LivingEntity livingEntity = this.mob.getTarget();
-        if (livingEntity != null) {
+        if (livingEntity != null && livingEntity.isAlive()) {
             this.mob.getLookControl().lookAt(livingEntity, 15.0F, 15.0F);
             this.attack(livingEntity);
         } else {

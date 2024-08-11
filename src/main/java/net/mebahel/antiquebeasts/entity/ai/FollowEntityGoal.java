@@ -1,10 +1,9 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
-import net.mebahel.antiquebeasts.entity.custom.EgyptianCaravanEntity;
-import net.mebahel.antiquebeasts.entity.custom.EgyptianEntity;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianCaravanEntity;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
-import net.minecraft.util.math.Vec3d;
 
 import java.util.EnumSet;
 import java.util.List;

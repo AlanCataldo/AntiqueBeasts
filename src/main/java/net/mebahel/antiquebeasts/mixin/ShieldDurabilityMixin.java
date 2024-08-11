@@ -1,20 +1,14 @@
 package net.mebahel.antiquebeasts.mixin;
 
 import net.mebahel.antiquebeasts.entity.custom.CyclopsEntity;
-import net.mebahel.antiquebeasts.entity.custom.EinherjarEntity;
-import net.mebahel.antiquebeasts.entity.custom.FrostCyclopsEntity;
-import net.mebahel.antiquebeasts.entity.custom.HersirEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.EinherjarEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.HersirEntity;
 import net.mebahel.antiquebeasts.item.CustomShieldItem;
-import net.mebahel.antiquebeasts.item.custom.ModItems;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.ItemCooldownManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;

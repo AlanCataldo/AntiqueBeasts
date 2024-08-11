@@ -30,6 +30,6 @@ public class ModBlocks {
     }
 
     public static void registerModBlocks() {
-        System.out.println("Registering Blocks for " + AntiqueBeasts.MOD_ID + ".");
+        AntiqueBeasts.LOGGER.info("[AntiqueBeasts] Registering blocks for " + AntiqueBeasts.MOD_ID + ".");
     }
 }

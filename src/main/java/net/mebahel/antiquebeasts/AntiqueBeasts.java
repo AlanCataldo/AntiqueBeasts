@@ -1,23 +1,29 @@
 package net.mebahel.antiquebeasts;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.mebahel.antiquebeasts.block.ModBlocks;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.custom.*;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.*;
+import net.mebahel.antiquebeasts.entity.custom.greek.CentaurEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.ChampionHopliteEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.EliteHopliteEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.HeroHopliteEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.*;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.potion.ModPotions;
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.mebahel.antiquebeasts.util.ModConfig;
+import net.mebahel.antiquebeasts.util.PatrolManager;
 import net.mebahel.antiquebeasts.world.gen.ModWorldGen;
-import net.minecraft.registry.Registry;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import software.bernie.geckolib.GeckoLib;
+
+import java.io.File;
 
 public class AntiqueBeasts implements ModInitializer {
 	public static final String MOD_ID = "antiquebeasts";
@@ -26,6 +32,10 @@ public class AntiqueBeasts implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		GeckoLib.initialize();
+		File configDir = new File(FabricLoader.getInstance().getConfigDir().toFile(), "antiquebeasts");
+		ModConfig.loadConfig(configDir);
+
+		FabricDefaultAttributeRegistry.register(ModEntities.CENTAUR, CentaurEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.EGYPTIAN_CARAVAN, EgyptianCaravanEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.PEGASUS, PegasusEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.CHIMERA, ChimeraEntity.setAttributes());
@@ -53,5 +63,6 @@ public class AntiqueBeasts implements ModInitializer {
 		ModItems.registerModItems();
 		ModParticles.registerParticles();
 		ModPotions.registerPotionRecipe();
+		PatrolManager.register();
 	}
 }

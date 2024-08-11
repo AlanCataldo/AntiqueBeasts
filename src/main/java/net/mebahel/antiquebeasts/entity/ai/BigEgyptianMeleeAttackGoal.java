@@ -1,11 +1,13 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
-import net.mebahel.antiquebeasts.entity.custom.EgyptianEntity;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
+import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
 
 import java.util.EnumSet;
+import java.util.List;
 
 import static java.lang.Math.random;
 
@@ -38,17 +40,33 @@ public class BigEgyptianMeleeAttackGoal extends Goal {
     }
     public void start() {
         this.mob.setAttacking(true);
+
+        ModPatrolEntity patrolEntity = this.mob;
+        LivingEntity target = this.mob.getTarget();
+
+        List<ModPatrolEntity> patrolMembers = patrolEntity.getWorld().getEntitiesByClass(ModPatrolEntity.class, patrolEntity.getBoundingBox().expand(32.0), e -> e.isPartOfSamePatrol(patrolEntity));
+        for (ModPatrolEntity member : patrolMembers) {
+            member.setPatrolling(false);
+            member.setTarget(target);
+        }
     }
+    @Override
     public void stop() {
         this.mob.setAttacking(false);
         this.mob.setSwinging(false);
+
+        ModPatrolEntity patrolEntity = this.mob;
+        if (patrolEntity.wasInitiallyInPatrol()) {
+            patrolEntity.checkAndResumePatrolling();
+        }
     }
     public boolean shouldRunEveryTick() {
         return true;
     }
     public void tick() {
         LivingEntity livingEntity = this.mob.getTarget();
-        if (livingEntity != null) {
+        if (livingEntity != null && livingEntity.isAlive()) {
+            this.mob.getLookControl().lookAt(livingEntity, 15.0F, 15.0F);
             this.attack(livingEntity);
         } else {
             this.stop();

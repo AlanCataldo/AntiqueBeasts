@@ -1,14 +1,11 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
 import net.mebahel.antiquebeasts.entity.ModEntities;
-import net.mebahel.antiquebeasts.entity.custom.MummyEntity;
-import net.mebahel.antiquebeasts.entity.custom.ServantEntity;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.MummyEntity;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.ServantEntity;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-
-import java.util.Objects;
 
 public class MummySummonGoal extends Goal {
     private final MummyEntity mummy;
