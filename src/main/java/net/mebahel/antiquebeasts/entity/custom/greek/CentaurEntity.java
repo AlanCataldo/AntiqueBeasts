@@ -135,7 +135,7 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
     }
 
     private PlayState predicate(AnimationState animationState) {
-        if(animationState.isMoving()) {
+        if (animationState.isMoving()) {
             animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
@@ -225,21 +225,19 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
             this.playSound(soundEvent, 0.35f, 0.92f);
         }
     }
-
-    /* VARIANTS */
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
                                  SpawnReason spawnReason, @javax.annotation.Nullable EntityData entityData,
                                  @javax.annotation.Nullable NbtCompound entityNbt) {
         CentaurVariant variant = Util.getRandom(CentaurVariant.values(), this.random);
         setVariant(variant);
+        this.setTarget(null);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
     public CentaurVariant getVariant() {
         return CentaurVariant.byId(this.getTypeVariant() & 255);
     }
-
 
     private void setVariant(CentaurVariant variant) {
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);

@@ -4,6 +4,7 @@ import net.mebahel.antiquebeasts.entity.custom.greek.CentaurEntity;
 import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.pathing.Path;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -11,6 +12,8 @@ import java.util.List;
 import static java.lang.Math.random;
 
 public class CentaurMeleeAttackGoal extends Goal {
+    private long lastUpdateTime;
+
     protected final CentaurEntity mob;
     private final double speed;
     private final double attackRange;
@@ -29,7 +32,25 @@ public class CentaurMeleeAttackGoal extends Goal {
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
     }
     public boolean canStart() {
-        return this.mob.getTarget() != null && !this.mob.isArcher();
+        long l = this.mob.getWorld().getTime();
+        if (l - this.lastUpdateTime < 20L || !this.mob.isArcher()) {
+            return false;
+        } else {
+            this.lastUpdateTime = l;
+            LivingEntity livingEntity = this.mob.getTarget();
+            if (livingEntity == null) {
+                return false;
+            } else if (!livingEntity.isAlive()) {
+                return false;
+            } else {
+                Path path = this.mob.getNavigation().findPathTo(livingEntity, 0);
+                if (path != null) {
+                    return true;
+                } else {
+                    return this.getSquaredMaxAttackDistance(livingEntity) >= this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
+                }
+            }
+        }
     }
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();

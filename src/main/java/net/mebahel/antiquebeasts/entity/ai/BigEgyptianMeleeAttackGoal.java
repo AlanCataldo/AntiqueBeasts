@@ -32,11 +32,29 @@ public class BigEgyptianMeleeAttackGoal extends Goal {
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
     }
     public boolean canStart() {
-        return this.mob.getTarget() != null;
+        long l = this.mob.getWorld().getTime();
+        if (l - this.lastUpdateTime < 20L) {
+            return false;
+        } else {
+            this.lastUpdateTime = l;
+            LivingEntity livingEntity = this.mob.getTarget();
+            if (livingEntity == null) {
+                return false;
+            } else if (!livingEntity.isAlive()) {
+                return false;
+            } else {
+                Path path = this.mob.getNavigation().findPathTo(livingEntity, 0);
+                if (path != null) {
+                    return true;
+                } else {
+                    return this.getSquaredMaxAttackDistance(livingEntity) >= this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
+                }
+            }
+        }
     }
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();
-        return livingEntity != null;
+        return livingEntity != null && livingEntity.isAlive();
     }
     public void start() {
         this.mob.setAttacking(true);
@@ -94,6 +112,6 @@ public class BigEgyptianMeleeAttackGoal extends Goal {
         }
     }
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return attackRange + entity.getWidth();
+        return attackRange;
     }
 }

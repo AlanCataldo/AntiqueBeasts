@@ -5,11 +5,13 @@ import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.pathing.Path;
 
 import java.util.EnumSet;
 import java.util.List;
 
 public class EgyptianMeleeAttackGoal extends Goal {
+
     protected final EgyptianEntity mob;
     private final double speed;
     private final double attackRange;
@@ -29,12 +31,32 @@ public class EgyptianMeleeAttackGoal extends Goal {
         this.cooldown = MAX_COOLDOWN + 8;
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
     }
+
     public boolean canStart() {
-        return this.mob.getTarget() != null;
+        long l = this.mob.getWorld().getTime();
+        if (l - this.lastUpdateTime < 20L) {
+            return false;
+        } else {
+            this.lastUpdateTime = l;
+            LivingEntity livingEntity = this.mob.getTarget();
+            if (livingEntity == null) {
+                return false;
+            } else if (!livingEntity.isAlive()) {
+                return false;
+            } else {
+                Path path = this.mob.getNavigation().findPathTo(livingEntity, 0);
+                if (path != null) {
+                    return true;
+                } else {
+                    return this.getSquaredMaxAttackDistance(livingEntity) >= this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
+                }
+            }
+        }
     }
+
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();
-        return livingEntity != null;
+        return livingEntity != null && livingEntity.isAlive();
     }
     public void start() {
         this.mob.setAttacking(true);
@@ -88,6 +110,6 @@ public class EgyptianMeleeAttackGoal extends Goal {
         }
     }
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return attackRange + entity.getWidth();
+        return 8;
     }
 }
