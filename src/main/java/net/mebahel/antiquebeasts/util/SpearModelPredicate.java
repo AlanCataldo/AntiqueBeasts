@@ -11,6 +11,7 @@ public class SpearModelPredicate {
         registerSpear(ModItems.GOLD_HOPLITE_SPEAR);
         registerSpear(ModItems.DIAMOND_HOPLITE_SPEAR);
         registerSpear(ModItems.NETHERITE_HOPLITE_SPEAR);
+        registerSpear(ModItems.VALKYRIE_SPEAR);
     }
     private static void registerSpear(Item spear) {
         ModelPredicateProviderRegistry.register(

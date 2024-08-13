@@ -56,6 +56,7 @@ public class PatrolManager {
 
     private static void checkAndSpawnPatrol(ServerWorld world) {
         List<ServerPlayerEntity> players = world.getPlayers();
+        System.out.println(players);
 
         if (!players.isEmpty()) {
             Random random = new Random();

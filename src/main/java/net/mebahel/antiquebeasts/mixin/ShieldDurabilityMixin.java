@@ -1,14 +1,13 @@
 package net.mebahel.antiquebeasts.mixin;
 
 import net.mebahel.antiquebeasts.entity.custom.CyclopsEntity;
-import net.mebahel.antiquebeasts.entity.custom.HersirEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.HersirEntity;
 import net.mebahel.antiquebeasts.item.CustomShieldItem;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;

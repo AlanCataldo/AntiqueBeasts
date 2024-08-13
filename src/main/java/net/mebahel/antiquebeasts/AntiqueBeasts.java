@@ -2,13 +2,11 @@ package net.mebahel.antiquebeasts;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.mebahel.antiquebeasts.block.ModBlocks;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.custom.*;
-import net.mebahel.antiquebeasts.entity.custom.egyptian.AxemanEntity;
-import net.mebahel.antiquebeasts.entity.custom.egyptian.MummyEntity;
-import net.mebahel.antiquebeasts.entity.custom.egyptian.ServantEntity;
-import net.mebahel.antiquebeasts.entity.custom.egyptian.WadjetEntity;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.*;
 import net.mebahel.antiquebeasts.entity.custom.greek.CentaurEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.ChampionHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.EliteHopliteEntity;
@@ -18,11 +16,14 @@ import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.potion.ModPotions;
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.mebahel.antiquebeasts.util.ModConfig;
 import net.mebahel.antiquebeasts.util.PatrolManager;
 import net.mebahel.antiquebeasts.world.gen.ModWorldGen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import software.bernie.geckolib3.GeckoLib;
+
+import java.io.File;
 
 public class AntiqueBeasts implements ModInitializer {
 	public static final String MOD_ID = "antiquebeasts";
@@ -31,6 +32,12 @@ public class AntiqueBeasts implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		GeckoLib.initialize();
+		File configDir = new File(FabricLoader.getInstance().getConfigDir().toFile(), "antiquebeasts");
+		ModConfig.loadConfig(configDir);
+
+		FabricDefaultAttributeRegistry.register(ModEntities.EGYPTIAN_CARAVAN, EgyptianCaravanEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.ELEPHANT_RIDER, ElephantRiderEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.CAMELRY, CamelryEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.PEGASUS, PegasusEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.CHIMERA, ChimeraEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.WADJET, WadjetEntity.setAttributes());

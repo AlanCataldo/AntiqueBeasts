@@ -6,15 +6,26 @@ import net.minecraft.recipe.Ingredient;
 import java.util.function.Supplier;
 
 public enum ModToolMaterial implements ToolMaterial {
-
     IRON_CENTAUR(2, 480, 6.0F, 2.5F, 17, () -> {
         return Ingredient.ofItems(Items.IRON_INGOT);
     }),
-    FROST_WEAPON(4, 1600, 4.0F, 0.5F, 15, () -> {
+    FROST_WEAPON(4, 1550, 4.0F, 0.5F, 17, () -> {
         return Ingredient.ofItems(Items.DIAMOND);
     }),
-
     HERSIR_AXE(4, 680, 6.5F, 0.5F, 19, () -> {
+        return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
+    }),
+
+    IRON_KHOPESH(4, 680, 7F, 1F, 15, () -> {
+        return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
+    }),
+    GOLD_KHOPESH(4, 480, 7F, 0.5F, 19, () -> {
+        return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
+    }),
+    DIAMOND_KHOPESH(4, 1280, 7F, 1F, 17, () -> {
+        return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
+    }),
+    NETHERITE_KHOPESH(4, 1580, 7F, 1F, 20, () -> {
         return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
     }),
 

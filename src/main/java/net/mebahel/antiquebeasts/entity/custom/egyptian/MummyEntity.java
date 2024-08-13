@@ -125,8 +125,9 @@ public class MummyEntity extends EgyptianEntity implements IAnimatable, IAnimati
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, NorseEntity.class, true));
     }
     private <E extends IAnimatable> PlayState raisePredicate(AnimationEvent<E> event) {
-        if(this.getSpawn() && this.animationProcedure.equals("empty")) {
-            event.getController().markNeedsReload();
+        if (this.getSpawn()) {
+            System.out.println("JE LANCE L'ANIMAFION");
+            //event.getController().markNeedsReload();
             event.getController().setAnimation(new AnimationBuilder().addAnimation("raise", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
         }
         return PlayState.CONTINUE;
@@ -152,6 +153,8 @@ public class MummyEntity extends EgyptianEntity implements IAnimatable, IAnimati
         }
         return PlayState.STOP;
     }
+
+
     private <E extends IAnimatable> PlayState attackPredicate(AnimationEvent<E> event) {
         if (this.animationProcedure.equals("empty") && this.isSwinging()) {
             if (this.isSwinging() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
@@ -185,8 +188,7 @@ public class MummyEntity extends EgyptianEntity implements IAnimatable, IAnimati
     }
     @Override
     public void registerControllers(AnimationData data) {
-        AnimationController<MummyEntity> controller = new AnimationController<>(this, "controller", 0,
-                this::movementPredicate);
+        AnimationController<MummyEntity> controller = new AnimationController<>(this, "controller", 0, this::movementPredicate);
         AnimationController<MummyEntity> controller1 = new AnimationController<>(this, "attacking", 0, this::attackPredicate);
         AnimationController<MummyEntity> controller2 = new AnimationController<>(this, "procedure", 0, this::procedurePredicate);
         AnimationController<MummyEntity> controller3 = new AnimationController<>(this, "shooting", 0, this::shootingPredicate);
@@ -212,6 +214,7 @@ public class MummyEntity extends EgyptianEntity implements IAnimatable, IAnimati
             if (this.world.isClient) {
                 this.getEntityWorld().playSound(this.getX(), this.getY(), this.getZ(), ModSounds.MUMMY_RAISE,
                         SoundCategory.HOSTILE, 1F, 1F, true);
+                System.out.println("JE RAISE");
             }
         } else if (event.sound.matches("mummy_spawn")) {
             if (this.world.isClient) {
@@ -231,6 +234,7 @@ public class MummyEntity extends EgyptianEntity implements IAnimatable, IAnimati
         if (shouldDespawnInPeaceful() || this.shouldDespawn) {
             remove(RemovalReason.DISCARDED);
         }
+        System.out.println(this.getSpawn() + "ET LE COOLDOWN" + this.getSpawnCooldown());
 
         if (this.age < 40) {
             Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0);

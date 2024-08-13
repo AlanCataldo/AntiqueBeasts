@@ -16,13 +16,10 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import static java.lang.Math.random;
 
-public class GreekEntity extends ModPatrolEntity implements GeoEntity {
+public class GreekEntity extends ModPatrolEntity {
     protected GreekEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -56,12 +53,7 @@ public class GreekEntity extends ModPatrolEntity implements GeoEntity {
     public void setCooldown(float cooldown) {
         this.dataTracker.set(COOLDOWN, cooldown);
     }
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-    }
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return null;
-    }
+
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {

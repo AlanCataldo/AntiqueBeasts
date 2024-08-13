@@ -4,6 +4,8 @@ import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.pathing.Path;
+import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -11,6 +13,8 @@ import java.util.List;
 import static java.lang.Math.random;
 
 public class GreekMeleeAttackGoal extends Goal {
+    private long lastUpdateTime;
+
     protected final GreekEntity mob;
     private final double speed;
     private final int max_cooldown;
@@ -26,14 +30,34 @@ public class GreekMeleeAttackGoal extends Goal {
         this.cooldown = this.max_cooldown + 1;
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
     }
+
     public boolean canStart() {
-        LivingEntity livingEntity = this.mob.getTarget();
-        return livingEntity != null;
+        long l = this.mob.getWorld().getTime();
+        if (l - this.lastUpdateTime < 20L) {
+            return false;
+        } else {
+            this.lastUpdateTime = l;
+            LivingEntity livingEntity = this.mob.getTarget();
+            if (livingEntity == null) {
+                return false;
+            } else if (!livingEntity.isAlive()) {
+                return false;
+            } else {
+                Path path = this.mob.getNavigation().findPathTo(livingEntity, 0);
+                if (path != null) {
+                    return true;
+                } else {
+                    return this.getSquaredMaxAttackDistance(livingEntity) >= this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
+                }
+            }
+        }
     }
+
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();
-        return livingEntity != null;
+        return livingEntity != null && livingEntity.isAlive();
     }
+
     public void start() {
         this.mob.setAttacking(true);
 
@@ -46,6 +70,7 @@ public class GreekMeleeAttackGoal extends Goal {
             member.setTarget(target);
         }
     }
+
     @Override
     public void stop() {
         this.mob.setAttacking(false);
@@ -56,9 +81,11 @@ public class GreekMeleeAttackGoal extends Goal {
             patrolEntity.checkAndResumePatrolling();
         }
     }
+
     public boolean shouldRunEveryTick() {
         return true;
     }
+
     public void tick() {
         LivingEntity livingEntity = this.mob.getTarget();
         if (livingEntity != null && livingEntity.isAlive()) {
@@ -68,6 +95,7 @@ public class GreekMeleeAttackGoal extends Goal {
             this.stop();
         }
     }
+
     protected void attack(LivingEntity target) {
         double squaredDistance = this.mob.squaredDistanceTo(target.getX(), target.getY(), target.getZ());
         double d = 8;
@@ -80,7 +108,6 @@ public class GreekMeleeAttackGoal extends Goal {
         else
             this.mob.setAttackName("attack2");
 
-
         if (this.cooldown == 0) {
             this.cooldown = this.max_cooldown + 2;
             this.mob.setSwinging(false);
@@ -89,5 +116,8 @@ public class GreekMeleeAttackGoal extends Goal {
         } else if (squaredDistance <= d && this.cooldown == this.damage_time && this.mob.isSwinging()) {
             this.mob.tryAttack(target);
         }
+    }
+    protected double getSquaredMaxAttackDistance(LivingEntity entity) {
+        return 8;
     }
 }

@@ -12,8 +12,10 @@ import net.mebahel.antiquebeasts.entity.client.custom.*;
 import net.mebahel.antiquebeasts.entity.client.projectiles.*;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.particle.ModParticles;
+import net.mebahel.antiquebeasts.particle.custom.MummyProjectileParticle;
 import net.mebahel.antiquebeasts.particle.custom.RockSplashParticle;
 import net.mebahel.antiquebeasts.particle.custom.SnowRockSplashParticle;
+import net.mebahel.antiquebeasts.particle.custom.VenomParticle;
 import net.mebahel.antiquebeasts.util.HornModelPredicate;
 import net.mebahel.antiquebeasts.util.ShieldModelPredicate;
 import net.mebahel.antiquebeasts.util.SpearModelPredicate;
@@ -22,6 +24,9 @@ import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 public class AntiqueBeastsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        EntityRendererRegistry.register(ModEntities.EGYPTIAN_CARAVAN, EgyptianCaravanRenderer::new);
+        EntityRendererRegistry.register(ModEntities.ELEPHANT_RIDER, ElephantRiderRenderer::new);
+        EntityRendererRegistry.register(ModEntities.CAMELRY, CamelryRenderer::new);
         EntityRendererRegistry.register(ModEntities.PEGASUS, PegasusRenderer::new);
         EntityRendererRegistry.register(ModEntities.CHIMERA, ChimeraRenderer::new);
         EntityRendererRegistry.register(ModEntities.WADJET, WadjetRenderer::new);
@@ -57,6 +62,9 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.NETHERITE_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "netherite"));
         ParticleFactoryRegistry.getInstance().register(ModParticles.ROCKSPLASH_PARTICLE, RockSplashParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.SNOWROCKSPLASH_PARTICLE, SnowRockSplashParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ModParticles.VENOM_PARTICLE, VenomParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ModParticles.VENOM_SLOW_PARTICLE, VenomParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ModParticles.MUMMY_PROJECTILE_PARTICLE, MummyProjectileParticle.Factory::new);
         GeoArmorRenderer.registerArmorRenderer(new IronPlateArmorRenderer(), ModItems.IRON_PLATE_BOOTS,
                 ModItems.IRON_PLATE_LEGGINGS, ModItems.IRON_PLATE_CHESTPLATE, ModItems.IRON_PLATE_HELMET);
         GeoArmorRenderer.registerArmorRenderer(new GoldPlateArmorRenderer(), ModItems.GOLD_PLATE_BOOTS,

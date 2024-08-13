@@ -3,6 +3,7 @@ package net.mebahel.antiquebeasts.entity.custom.greek;
 import net.mebahel.antiquebeasts.entity.ai.*;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.ThrowingAxeManEntity;
 import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.mebahel.antiquebeasts.entity.variant.CentaurVariant;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
@@ -146,26 +147,20 @@ public class CentaurEntity extends GreekEntity implements IAnimatable, IAnimatio
         this.targetSelector.add(4, new ActiveTargetGoal<>(this, NorseEntity.class, true));
     }
 
-    private <E extends IAnimatable> PlayState movementPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty") && !this.isShooting()) {
-            if (event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", ILoopType.EDefaultLoopTypes.LOOP));
-                return PlayState.CONTINUE;
-            } else if (!this.isSwinging()) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
+    private <E extends IAnimatable> PlayState attackPredicate(AnimationEvent<E> event) {
+        if (this.animationProcedure.equals("empty") && this.isShooting()) {
+            if (event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
+                event.getController().markNeedsReload();
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("ranged_attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
                 return PlayState.CONTINUE;
             }
-        }
-        return PlayState.STOP;
-    }
-    private <E extends IAnimatable> PlayState attackPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty") && this.isSwinging()) {
-            if (this.isSwinging() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
+            return PlayState.CONTINUE;
+        } else if (this.animationProcedure.equals("empty") && this.isSwinging()) {
+            if (event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
                 event.getController().markNeedsReload();
                 event.getController().setAnimation(new AnimationBuilder().addAnimation(this.getAttackName(), ILoopType.EDefaultLoopTypes.PLAY_ONCE));
                 return PlayState.CONTINUE;
             }
-            return PlayState.CONTINUE;
         }
         return PlayState.CONTINUE;
     }
@@ -181,13 +176,18 @@ public class CentaurEntity extends GreekEntity implements IAnimatable, IAnimatio
         return PlayState.CONTINUE;
     }
 
-    private <E extends IAnimatable> PlayState shootingPredicate(AnimationEvent<E> event) {
-        if (this.isShooting() && event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped) && !this.isSwinging()) {
-            event.getController().markNeedsReload();
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("ranged_attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
-            return PlayState.CONTINUE;
+    private <E extends IAnimatable> PlayState movementPredicate(AnimationEvent<E> event) {
+        if (this.animationProcedure.equals("empty")) {
+            if (event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", ILoopType.EDefaultLoopTypes.LOOP));
+                return PlayState.CONTINUE;
+            }
+            if (!this.isShooting() && !event.isMoving()) {
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
+                return PlayState.CONTINUE;
+            }
         }
-        return PlayState.CONTINUE;
+        return PlayState.STOP;
     }
     @Override
     public void registerControllers(AnimationData data) {
@@ -195,13 +195,10 @@ public class CentaurEntity extends GreekEntity implements IAnimatable, IAnimatio
                 this::movementPredicate);
         AnimationController<CentaurEntity> controller1 = new AnimationController<>(this, "attacking", 0, this::attackPredicate);
         AnimationController<CentaurEntity> controller2 = new AnimationController<>(this, "procedure", 0, this::procedurePredicate);
-        AnimationController<CentaurEntity> controller3 = new AnimationController<>(this, "shooting", 0, this::shootingPredicate);
         controller1.registerSoundListener(this::soundListener);
-        controller3.registerSoundListener(this::soundListener);
         data.addAnimationController(controller);
         data.addAnimationController(controller1);
         data.addAnimationController(controller2);
-        data.addAnimationController(controller3);
     }
     private <ENTITY extends IAnimatable> void soundListener(SoundKeyframeEvent<ENTITY> event) {
         if (event.sound.matches("swing1")) {

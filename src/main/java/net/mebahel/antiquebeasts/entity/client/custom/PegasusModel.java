@@ -67,7 +67,7 @@ public class PegasusModel extends AnimatedGeoModel<PegasusEntity> {
     @Override
     public void setCustomAnimations(PegasusEntity animatable, int instanceId, AnimationEvent animationEvent) {
         super.setCustomAnimations(animatable, instanceId, animationEvent);
-        IBone head = this.getAnimationProcessor().getBone("head");
+        IBone head = this.getAnimationProcessor().getBone("horse_head");
         EntityModelData extraData = (EntityModelData) animationEvent.getExtraDataOfType(EntityModelData.class).get(0);
         AnimationData manager = animatable.getFactory().getOrCreateAnimationData(instanceId);
         int unpausedMultiplier = !MinecraftClient.getInstance().isPaused() || manager.shouldPlayWhilePaused ? 1 : 0;

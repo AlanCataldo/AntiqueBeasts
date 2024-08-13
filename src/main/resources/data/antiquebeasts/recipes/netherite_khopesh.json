@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "antiquebeasts:weapon/khopesh/diamond_khopesh"
+  },
+  "addition": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "result": {
+    "item": "antiquebeasts:weapon/khopesh/netherite_khopesh"
+  }
+}

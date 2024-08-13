@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    " I ",
+    " S "
+  ],
+  "key" : {
+    "S": {
+      "item" : "antiquebeasts:iron_plate"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:weapon/iron_centaur_sword"
+  }
+}

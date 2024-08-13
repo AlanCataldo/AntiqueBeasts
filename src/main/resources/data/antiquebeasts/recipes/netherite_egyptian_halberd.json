@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "antiquebeasts:weapon/egyptian_halberd/netherite_egyptian_halberd"
+  },
+  "addition": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "result": {
+    "item": "antiquebeasts:weapon/egyptian_halberd/netherite_egyptian_halberd"
+  }
+}

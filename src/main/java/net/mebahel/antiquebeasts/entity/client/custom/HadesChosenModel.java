@@ -1,9 +1,7 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
 import net.mebahel.antiquebeasts.AntiqueBeasts;
-import net.mebahel.antiquebeasts.entity.custom.ChampionHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.HadesChosenEntity;
-import net.mebahel.antiquebeasts.entity.custom.HadesShadeEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;

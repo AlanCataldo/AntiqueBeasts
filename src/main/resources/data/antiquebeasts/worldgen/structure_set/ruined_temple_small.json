@@ -1,0 +1,19 @@
+{
+  "structures": [
+    {
+      "structure": "antiquebeasts:ruined_temple_small",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 66321406,
+    "exclusion_zone":
+    {
+      "other_set":"antiquebeasts:temple",
+      "chunk_count": 16
+    },
+    "spacing": 46,
+    "separation": 16
+  }
+}

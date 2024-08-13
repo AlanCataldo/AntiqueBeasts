@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:add_features",
+  "biomes": "minecraft:plains",
+  "features": [
+    {
+      "type": "minecraft:music",
+      "music": "",
+      "min_delay": 12000,
+      "max_delay": 24000,
+      "replace_current_music": true
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "s- ",
+    "s #",
+    "s- "
+  ],
+  "key" : {
+    "#": {
+      "item" : "antiquebeasts:iron_plate"
+    },
+    "-": {
+      "item" : "minecraft:stick"
+    },
+    "s": {
+      "item" : "antiquebeasts:chimera_hair"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:bow/greek_composite_bow"
+  }
+}

@@ -55,8 +55,8 @@
       ],
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 5.0,
-        "min": 4.0
+        "max": 4.0,
+        "min": 3.0
       }
     },
     {
@@ -225,12 +225,12 @@
               "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "antiquebeasts:weapon/gold_hoplite_spear",
+          "name": "antiquebeasts:weapon/spear/gold_hoplite_spear",
           "weight": 15
         },
         {
           "type": "minecraft:item",
-          "name": "antiquebeasts:weapon/gold_hoplite_spear",
+          "name": "antiquebeasts:weapon/spear/gold_hoplite_spear",
           "weight": 15
         },
         {
@@ -240,13 +240,62 @@
               "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "antiquebeasts:weapon/diamond_hoplite_spear",
+          "name": "antiquebeasts:weapon/spear/diamond_hoplite_spear",
           "weight": 10
         },
         {
           "type": "minecraft:item",
-          "name": "antiquebeasts:weapon/diamond_hoplite_spear",
+          "name": "antiquebeasts:weapon/spear/diamond_hoplite_spear",
           "weight": 10
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "set_damage",
+              "damage": {
+                "min": 0.8,
+                "max": 1
+              }
+            }
+          ],
+          "name": "antiquebeasts:bow/greek_composite_bow",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 0.0,
+                "min": 0.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "antiquebeasts:bow/greek_composite_bow",
+          "weight": 9
         }
       ],
       "rolls": {

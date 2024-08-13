@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  G",
+    " GG",
+    " S "
+  ],
+  "key" : {
+    "G": {
+      "item" : "antiquebeasts:gold_scarab"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:weapon/khopesh/gold_khopesh"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " DD",
+    " SD",
+    "S  "
+  ],
+  "key" : {
+    "D": {
+      "item" : "antiquebeasts:gold_scarab"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:weapon/egyptian_halberd/gold_egyptian_halberd"
+  }
+}

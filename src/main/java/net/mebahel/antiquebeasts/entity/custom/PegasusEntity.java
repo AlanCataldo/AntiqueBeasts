@@ -23,6 +23,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
@@ -34,6 +35,7 @@ import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.SoundKeyframeEvent;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
@@ -153,9 +155,19 @@ public class PegasusEntity extends HorseEntity implements IAnimatable, IAnimatio
         AnimationController<PegasusEntity> controller = new AnimationController<>(this, "controller", 0,
                 this::predicate);
         AnimationController<PegasusEntity> controller1 = new AnimationController<>(this, "procedure", 0, this::procedurePredicate);
+        controller.registerSoundListener(this::soundListener);
         data.addAnimationController(controller);
         data.addAnimationController(controller1);
 
+    }
+
+    private <ENTITY extends IAnimatable> void soundListener(SoundKeyframeEvent<ENTITY> event) {
+        if (event.sound.matches("pegasus_flap_1")) {
+            if (this.world.isClient) {
+                this.getEntityWorld().playSound(this.getX(), this.getY(), this.getZ(), ModSounds.PEGASUS_FLAP_1,
+                        SoundCategory.HOSTILE, 1F, 1F, true);
+            }
+        }
     }
 
     @Override

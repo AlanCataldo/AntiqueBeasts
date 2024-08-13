@@ -101,7 +101,7 @@ public class CamelryEntity extends EgyptianEntity implements IAnimatable, IAnima
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new ModPatrolGoal(this, 0.37f, 0.4f));
         this.goalSelector.add(3, new DefendLeadEntityGoal(this));
-        this.goalSelector.add(4, new BigEgyptianMeleeAttackGoal(this, 0.45f, 12f, 3, 10));
+        this.goalSelector.add(4, new BigEgyptianMeleeAttackGoal(this, 0.45f, 10f, 3, 10));
         this.goalSelector.add(5, new FollowEntityGoal(this, 0.35f));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.35f, 100f));
         this.goalSelector.add(7, new LookAroundGoal(this));
@@ -129,7 +129,7 @@ public class CamelryEntity extends EgyptianEntity implements IAnimatable, IAnima
         if (this.animationProcedure.equals("empty") && this.isSwinging()) {
             if (event.getController().getAnimationState().equals(software.bernie.geckolib3.core.AnimationState.Stopped)) {
                 event.getController().markNeedsReload();
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("attack2", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
                 return PlayState.CONTINUE;
             }
             return PlayState.CONTINUE;

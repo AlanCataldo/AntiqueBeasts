@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  I",
+    " II",
+    " S "
+  ],
+  "key" : {
+    "I": {
+      "item" : "antiquebeasts:iron_scarab"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:weapon/khopesh/iron_khopesh"
+  }
+}

@@ -29,7 +29,7 @@ public class GreekCompositeBow extends BowItem {
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         if (user instanceof PlayerEntity playerEntity) {
             boolean bl = playerEntity.getAbilities().creativeMode || EnchantmentHelper.getLevel(Enchantments.INFINITY, stack) > 0;
-            ItemStack itemStack = playerEntity.getProjectileType(stack);
+            ItemStack itemStack = playerEntity.getArrowType(stack);
             if (!itemStack.isEmpty() || bl) {
                 if (itemStack.isEmpty()) {
                     itemStack = new ItemStack(Items.ARROW);
@@ -44,13 +44,13 @@ public class GreekCompositeBow extends BowItem {
                         PersistentProjectileEntity persistentProjectileEntity = arrowItem.createArrow(world, itemStack, playerEntity);
                         persistentProjectileEntity.setVelocity(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(), 0.0F, f * 3.0F, 1.0F);
                         persistentProjectileEntity.setVelocity(persistentProjectileEntity.getVelocity().multiply(1.2));
-                        if (f == 1F) {
+                        if (f == 0.75F) {
                             persistentProjectileEntity.setCritical(true);
                         }
 
                         int j = EnchantmentHelper.getLevel(Enchantments.POWER, stack);
                         if (j > 0) {
-                            persistentProjectileEntity.setDamage(persistentProjectileEntity.getDamage() + 1.5f + (double)j * 0.5 + 0.5);
+                            persistentProjectileEntity.setDamage(persistentProjectileEntity.getDamage() + (double)j * 0.5 + 0.5);
                         }
 
                         int k = EnchantmentHelper.getLevel(Enchantments.PUNCH, stack);

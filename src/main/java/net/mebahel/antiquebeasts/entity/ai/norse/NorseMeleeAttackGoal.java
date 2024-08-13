@@ -2,14 +2,15 @@ package net.mebahel.antiquebeasts.entity.ai.norse;
 
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.custom.norse.EinherjarEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.ValkyrieEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.HersirEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
-import net.mebahel.antiquebeasts.entity.custom.norse.ValkyrieEntity;
 import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.mebahel.antiquebeasts.item.CustomShieldItem;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
@@ -19,6 +20,8 @@ import java.util.List;
 import static java.lang.Math.random;
 
 public class NorseMeleeAttackGoal extends Goal {
+    private long lastUpdateTime;
+
     protected final NorseEntity mob;
     private final double speed;
     private final int max_cooldown;
@@ -37,13 +40,30 @@ public class NorseMeleeAttackGoal extends Goal {
     }
 
     public boolean canStart() {
-        LivingEntity livingEntity = this.mob.getTarget();
-        return livingEntity != null;
+        long l = this.mob.getWorld().getTime();
+        if (l - this.lastUpdateTime < 20L) {
+            return false;
+        } else {
+            this.lastUpdateTime = l;
+            LivingEntity livingEntity = this.mob.getTarget();
+            if (livingEntity == null) {
+                return false;
+            } else if (!livingEntity.isAlive()) {
+                return false;
+            } else {
+                Path path = this.mob.getNavigation().findPathTo(livingEntity, 0);
+                if (path != null) {
+                    return true;
+                } else {
+                    return this.getSquaredMaxAttackDistance(livingEntity) >= this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
+                }
+            }
+        }
     }
 
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();
-        return livingEntity != null;
+        return livingEntity != null && livingEntity.isAlive();
     }
 
     public void start() {
@@ -154,5 +174,8 @@ public class NorseMeleeAttackGoal extends Goal {
                 );
             }
         }
+    }
+    protected double getSquaredMaxAttackDistance(LivingEntity entity) {
+        return 8;
     }
 }

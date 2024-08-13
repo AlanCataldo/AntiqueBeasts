@@ -376,5 +376,293 @@
     "sounds": [
       "antiquebeasts:valkyrie_hurt2"
     ]
+  },
+  "wadjet_ambient_1": {
+    "subtitle": "antiquebeasts:wadjet/wadjet_ambient_1",
+    "sounds": [
+      "antiquebeasts:wadjet/wadjet_ambient_1"
+    ]
+  },
+  "wadjet_ambient_2": {
+    "subtitle": "antiquebeasts:wadjet/wadjet_ambient_2",
+    "sounds": [
+      "antiquebeasts:wadjet/wadjet_ambient_2"
+    ]
+  },
+  "wadjet_ambient_3": {
+    "subtitle": "antiquebeasts:wadjet/wadjet_ambient_3",
+    "sounds": [
+      "antiquebeasts:wadjet/wadjet_ambient_3"
+    ]
+  },
+  "wadjet_hurt_1": {
+    "subtitle": "antiquebeasts:wadjet/wadjet_hurt_1",
+    "sounds": [
+      "antiquebeasts:wadjet/wadjet_hurt_1"
+    ]
+  },
+  "wadjet_hurt_2": {
+    "subtitle": "antiquebeasts:wadjet/wadjet_hurt_2",
+    "sounds": [
+      "antiquebeasts:wadjet/wadjet_hurt_2"
+    ]
+  },
+  "wadjet_death_1": {
+    "subtitle": "antiquebeasts:wadjet/wadjet_death_1",
+    "sounds": [
+      "antiquebeasts:wadjet/wadjet_death_1"
+    ]
+  },
+  "wadjet_spit_1": {
+    "subtitle": "antiquebeasts:wadjet/wadjet_spit_1",
+    "sounds": [
+      "antiquebeasts:wadjet/wadjet_spit_1"
+    ]
+  },
+  "egyptian_ambient_1": {
+    "subtitle": "antiquebeasts:egyptian/egyptian_ambient_1",
+    "sounds": [
+      "antiquebeasts:egyptian/egyptian_ambient_1"
+    ]
+  },
+  "egyptian_ambient_2": {
+    "subtitle": "antiquebeasts:egyptian/egyptian_ambient_2",
+    "sounds": [
+      "antiquebeasts:egyptian/egyptian_ambient_2"
+    ]
+  },
+  "egyptian_ambient_3": {
+    "subtitle": "antiquebeasts:egyptian/egyptian_ambient_3",
+    "sounds": [
+      "antiquebeasts:egyptian/egyptian_ambient_3"
+    ]
+  },
+  "egyptian_attack_1": {
+    "subtitle": "antiquebeasts:egyptian/egyptian_attack_1",
+    "sounds": [
+      "antiquebeasts:egyptian/egyptian_attack_1"
+    ]
+  },
+  "egyptian_attack_2": {
+    "subtitle": "antiquebeasts:egyptian/egyptian_attack_2",
+    "sounds": [
+      "antiquebeasts:egyptian/egyptian_attack_2"
+    ]
+  },
+  "egyptian_attack_3": {
+    "subtitle": "antiquebeasts:egyptian/egyptian_attack_3",
+    "sounds": [
+      "antiquebeasts:egyptian/egyptian_attack_3"
+    ]
+  },
+  "camelry_hurt_1": {
+    "subtitle": "antiquebeasts:egyptian/camelry_hurt_1",
+    "sounds": [
+      "antiquebeasts:egyptian/camelry_hurt_1"
+    ]
+  },
+  "camelry_hurt_2": {
+    "subtitle": "antiquebeasts:egyptian/camelry_hurt_2",
+    "sounds": [
+      "antiquebeasts:egyptian/camelry_hurt_2"
+    ]
+  },
+  "camelry_death_1": {
+    "subtitle": "antiquebeasts:egyptian/camelry_death_1",
+    "sounds": [
+      "antiquebeasts:egyptian/camelry_death_1"
+    ]
+  },
+  "mummy_raise": {
+    "subtitle": "antiquebeasts:egyptian/mummy_raise",
+    "sounds": [
+      "antiquebeasts:egyptian/mummy_raise"
+    ]
+  },
+  "mummy_shoot": {
+    "subtitle": "antiquebeasts:egyptian/mummy_shoot",
+    "sounds": [
+      "antiquebeasts:egyptian/mummy_shoot"
+    ]
+  },
+  "mummy_death": {
+    "subtitle": "antiquebeasts:egyptian/mummy_death",
+    "sounds": [
+      "antiquebeasts:egyptian/mummy_death"
+    ]
+  },
+  "mummy_hurt_1": {
+    "subtitle": "antiquebeasts:egyptian/mummy_hurt_1",
+    "sounds": [
+      "antiquebeasts:egyptian/mummy_hurt_1"
+    ]
+  },
+  "mummy_hurt_2": {
+    "subtitle": "antiquebeasts:egyptian/mummy_hurt_2",
+    "sounds": [
+      "antiquebeasts:egyptian/mummy_hurt_2"
+    ]
+  },
+  "mummy_ambient_1": {
+    "subtitle": "antiquebeasts:egyptian/mummy_ambient_1",
+    "sounds": [
+      "antiquebeasts:egyptian/mummy_ambient_1"
+    ]
+  },
+  "mummy_ambient_2": {
+    "subtitle": "antiquebeasts:egyptian/mummy_ambient_2",
+    "sounds": [
+      "antiquebeasts:egyptian/mummy_ambient_2"
+    ]
+  },
+  "servant_death_1": {
+    "subtitle": "antiquebeasts:servant/servant_death_1",
+    "sounds": [
+      "antiquebeasts:servant/servant_death_1"
+    ]
+  },
+  "servant_hurt_1": {
+    "subtitle": "antiquebeasts:servant/servant_hurt_1",
+    "sounds": [
+      "antiquebeasts:servant/servant_hurt_1"
+    ]
+  },
+  "servant_ambient_1": {
+    "subtitle": "antiquebeasts:servant/servant_ambient_1",
+    "sounds": [
+      "antiquebeasts:servant/servant_ambient_1"
+    ]
+  },
+  "servant_ambient_2": {
+    "subtitle": "antiquebeasts:servant/servant_ambient_2",
+    "sounds": [
+      "antiquebeasts:servant/servant_ambient_2"
+    ]
+  },
+  "servant_ambient_3": {
+    "subtitle": "antiquebeasts:servant/servant_ambient_3",
+    "sounds": [
+      "antiquebeasts:servant/servant_ambient_3"
+    ]
+  },
+  "cursed_birth": {
+    "subtitle": "antiquebeasts:egyptian/cursed_birth",
+    "sounds": [
+      "antiquebeasts:egyptian/cursed_birth"
+    ]
+  },
+  "mummy_spawn": {
+    "subtitle": "antiquebeasts:egyptian/mummy_spawn",
+    "sounds": [
+      "antiquebeasts:egyptian/mummy_spawn"
+    ]
+  },
+  "elephant_hurt_1": {
+    "subtitle": "antiquebeasts:elephant/elephant_hurt_1",
+    "sounds": [
+      "antiquebeasts:elephant/elephant_hurt_1"
+    ]
+  },
+  "elephant_hurt_2": {
+    "subtitle": "antiquebeasts:elephant/elephant_hurt_2",
+    "sounds": [
+      "antiquebeasts:elephant/elephant_hurt_2"
+    ]
+  },
+  "elephant_death_1": {
+    "subtitle": "antiquebeasts:elephant/elephant_death_1",
+    "sounds": [
+      "antiquebeasts:elephant/elephant_death_1"
+    ]
+  },
+  "elephant_ambient_1": {
+    "subtitle": "antiquebeasts:elephant/elephant_ambient_1",
+    "sounds": [
+      "antiquebeasts:elephant/elephant_ambient_1"
+    ]
+  },
+  "chimera_hurt_1": {
+    "subtitle": "antiquebeasts:chimera/chimera_hurt_1",
+    "sounds": [
+      "antiquebeasts:chimera/chimera_hurt_1"
+    ]
+  },
+  "chimera_hurt_2": {
+    "subtitle": "antiquebeasts:chimera/chimera_hurt_2",
+    "sounds": [
+      "antiquebeasts:chimera/chimera_hurt_2"
+    ]
+  },
+  "chimera_death_1": {
+    "subtitle": "antiquebeasts:chimera/chimera_death_1",
+    "sounds": [
+      "antiquebeasts:chimera/chimera_death_1"
+    ]
+  },
+  "chimera_ambient_1": {
+    "subtitle": "antiquebeasts:chimera/chimera_ambient_1",
+    "sounds": [
+      "antiquebeasts:chimera/chimera_ambient_1"
+    ]
+  },
+  "chimera_ambient_2": {
+    "subtitle": "antiquebeasts:chimera/chimera_ambient_2",
+    "sounds": [
+      "antiquebeasts:chimera/chimera_ambient_2"
+    ]
+  },
+  "chimera_ambient_3": {
+    "subtitle": "antiquebeasts:chimera/chimera_ambient_3",
+    "sounds": [
+      "antiquebeasts:chimera/chimera_ambient_3"
+    ]
+  },
+  "chimera_flame_1": {
+    "subtitle": "antiquebeasts:chimera/chimera_flame_1",
+    "sounds": [
+      "antiquebeasts:chimera/chimera_flame_1"
+    ]
+  },
+  "chimera_goat_1": {
+    "subtitle": "antiquebeasts:chimera/chimera_goat_1",
+    "sounds": [
+      "antiquebeasts:chimera/chimera_goat_1"
+    ]
+  },
+  "pegasus_flap_1": {
+    "subtitle": "antiquebeasts:pegasus_flap_1",
+    "sounds": [
+      "antiquebeasts:pegasus_flap_1"
+    ]
+  },
+  "n_d_nile": {
+    "subtitle": "antiquebeasts:music/n_d_nile",
+    "sounds": [
+      {
+        "name":"antiquebeasts:music/n_d_nile",
+        "stream": true
+      }
+    ]
+  },
+  "behold_the_great_science_fi": {
+    "subtitle": "antiquebeasts:music/behold_the_great_science_fi",
+    "sounds": [
+      {
+        "name":"antiquebeasts:music/behold_the_great_science_fi",
+        "stream": true
+      }
+    ]
+  },
+  "military_create": {
+    "subtitle": "antiquebeasts:infantry/military_create",
+    "sounds": [
+      "antiquebeasts:infantry/military_create"
+    ]
+  },
+  "mythical_unit": {
+    "subtitle": "antiquebeasts:mythical_unit/myth_create",
+    "sounds": [
+      "antiquebeasts:mythical_unit/myth_create"
+    ]
   }
 }
