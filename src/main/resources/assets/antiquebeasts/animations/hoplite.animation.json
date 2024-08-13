@@ -2,7 +2,6 @@
 	"format_version": "1.8.0",
 	"animations": {
 		"idle": {
-			"loop": true,
 			"animation_length": 3,
 			"bones": {
 				"torso": {
@@ -125,7 +124,6 @@
 			}
 		},
 		"walk": {
-			"loop": true,
 			"animation_length": 3,
 			"bones": {
 				"leftarm": {
@@ -438,7 +436,6 @@
 			}
 		},
 		"target_transition": {
-			"loop": true,
 			"animation_length": 0.3333,
 			"bones": {
 				"torso": {
@@ -520,15 +517,14 @@
 			}
 		},
 		"no_target_transition": {
-			"loop": true,
-			"animation_length": 0.3333,
+			"animation_length": 0.5,
 			"bones": {
 				"torso": {
 					"rotation": {
 						"0.0": {
 							"vector": [2.5, 0, 0]
 						},
-						"0.3333": {
+						"0.5": {
 							"vector": [0, 0, 0]
 						}
 					}
@@ -538,7 +534,7 @@
 						"0.0": {
 							"vector": [3.5, 0, 0]
 						},
-						"0.3333": {
+						"0.5": {
 							"vector": [0, 0, 0]
 						}
 					}
@@ -548,7 +544,7 @@
 						"0.0": {
 							"vector": [-75.88918, 24.36037, -55.24829]
 						},
-						"0.3333": {
+						"0.5": {
 							"vector": [0, 0, 0]
 						}
 					},
@@ -556,7 +552,7 @@
 						"0.0": {
 							"vector": [0, -1, 0]
 						},
-						"0.3333": {
+						"0.5": {
 							"vector": [0, 0, 0]
 						}
 					}
@@ -566,7 +562,7 @@
 						"0.0": {
 							"vector": [0, 17.5, 17.5]
 						},
-						"0.3333": {
+						"0.5": {
 							"vector": [0, 0, 0]
 						}
 					},
@@ -574,7 +570,7 @@
 						"0.0": {
 							"vector": [0, -2, 0]
 						},
-						"0.3333": {
+						"0.5": {
 							"vector": [0, 0, 0]
 						}
 					}
@@ -584,7 +580,7 @@
 						"0.0": {
 							"vector": [-10, 0, 0]
 						},
-						"0.3333": {
+						"0.5": {
 							"vector": [0, 0, 0]
 						}
 					}
@@ -602,7 +598,6 @@
 			}
 		},
 		"walk2": {
-			"loop": true,
 			"animation_length": 3,
 			"bones": {
 				"leftarm": {
@@ -880,7 +875,6 @@
 			}
 		},
 		"walk3": {
-			"loop": true,
 			"animation_length": 3,
 			"bones": {
 				"leftarm": {
@@ -1164,16 +1158,25 @@
 				},
 				"shield": {
 					"rotation": {
-						"vector": [0, 17.5, 17.5]
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.5": {
+							"vector": [0, 17.5, 17.5]
+						}
 					},
 					"position": {
-						"vector": [0, -2, 0]
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.5": {
+							"vector": [0, -2, 0]
+						}
 					}
 				}
 			}
 		},
 		"attack": {
-			"loop": true,
 			"animation_length": 1,
 			"bones": {
 				"head": {
@@ -1379,7 +1382,6 @@
 			}
 		},
 		"attack2": {
-			"loop": true,
 			"animation_length": 1,
 			"bones": {
 				"visor": {
@@ -1556,7 +1558,6 @@
 			}
 		},
 		"throwing": {
-			"loop": true,
 			"animation_length": 1,
 			"bones": {
 				"leftarm": {
