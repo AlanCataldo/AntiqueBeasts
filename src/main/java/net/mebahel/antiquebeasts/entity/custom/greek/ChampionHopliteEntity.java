@@ -18,9 +18,6 @@ import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -38,7 +35,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
 import javax.annotation.Nullable;
-import java.util.Objects;
 
 
 public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
@@ -53,36 +49,11 @@ public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
         return factory;
     }
 
-    public static final TrackedData<Integer> TICKCOUNTER = DataTracker.registerData(ChampionHopliteEntity.class,
-            TrackedDataHandlerRegistry.INTEGER);
-
-    public void setTickCounter(Integer counter) {
-        this.dataTracker.set(TICKCOUNTER, counter);
-    }
-
-    public int getTickCounter() {
-        return this.dataTracker.get(TICKCOUNTER);
-    }
-
-    public boolean isTransitionning = false;
-
     @Override
     public void tick() {
         super.tick();
         if (shouldDespawnInPeaceful()) {
             remove(RemovalReason.DISCARDED);
-        }
-        if (this.getTickCounter() > 0) {
-            this.setTickCounter(Math.max(this.getTickCounter() - 1, 0));
-        }
-        if (this.getTarget() != null) {
-            this.setTickCounter(14);
-        }
-        if (this.getTickCounter() < 13 && this.getTickCounter() > 0) {
-            this.isTransitionning = true;
-        }
-        if (this.getTickCounter() == 0) {
-            this.isTransitionning = false;
         }
     }
 
@@ -92,7 +63,6 @@ public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
-        this.dataTracker.startTracking(TICKCOUNTER, 0);
         this.dataTracker.startTracking(PATROL_UUID, "");
     }
 
@@ -119,30 +89,17 @@ public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
         this.targetSelector.add(4, new ActiveTargetGoal<>(this, EgyptianEntity.class, true));
         this.targetSelector.add(4, new ActiveTargetGoal<>(this, NorseEntity.class, true));
     }
+
     private PlayState predicate(AnimationState animationState) {
-        if (this.age < 5) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
-        if (!this.isAttacking() && this.isTransitionning && this.getTickCounter() != 0
-                && !this.isSwinging()) {
-            animationState.getController().forceAnimationReset();
-            animationState.getController().setAnimation(RawAnimation.begin().then("no_target_transition", Animation.LoopType.PLAY_ONCE));
-            return PlayState.CONTINUE;
-        } else if (animationState.isMoving() && this.isAttacking()) {
+        if (animationState.isMoving() && this.isAttacking()) {
             animationState.getController().setAnimation(RawAnimation.begin().then("walk3", Animation.LoopType.PLAY_ONCE).then("walk2", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
-        } else if (animationState.isMoving() && !this.isAttacking() && this.getTickCounter() == 0) {
+        } else if (animationState.isMoving() && !this.isAttacking()) {
             animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
-        }
-        var test = animationState.getController().getCurrentAnimation();
-        if (test != null) {
-            if (!Objects.equals(test.animation().name(), "no_target_transition") ||
-                    (Objects.equals(test.animation().name(), "no_target_transition") && animationState.getController().getAnimationState().equals(AnimationController.State.STOPPED))) {
-                animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-                return PlayState.CONTINUE;
-            }
+        } else if (!animationState.isMoving() && !this.isAttacking()) {
+            animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
         }
         return PlayState.CONTINUE;
     }
@@ -168,7 +125,6 @@ public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
     public boolean damage(DamageSource source, float amount) {
         return super.damage(source, amount);
     }
-    /* VARIANTS */
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
@@ -177,6 +133,7 @@ public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
         ChampionHopliteVariant variant = Util.getRandom(ChampionHopliteVariant.values(), this.random);
         setVariant(variant);
         ModSoundUtil.InfantryPlaySound(spawnReason, this);
+        this.setTarget(null);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 

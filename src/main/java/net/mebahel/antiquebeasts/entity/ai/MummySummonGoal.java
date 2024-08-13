@@ -35,9 +35,11 @@ public class MummySummonGoal extends Goal {
     }
 
     public void tick() {
-        if (!this.mummy.isSwinging())
+        if (!this.mummy.isSwinging()) {
             this.mummy.setSpawnCooldown(this.mummy.getSpawnCooldown() - 1);
-        else {
+        } else if (this.mummy.getSpawnCooldown() < 30) {
+            this.mummy.setCooldown(60);
+        } else {
             this.mummy.setSpawnCooldown(120);
             this.mummy.setCooldown(60);
         }

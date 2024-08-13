@@ -42,16 +42,6 @@ import java.util.Objects;
 public class HeroHopliteEntity extends GreekEntity implements GeoEntity {
     public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(HeroHopliteEntity.class,
             TrackedDataHandlerRegistry.FLOAT);
-    public static final TrackedData<Integer> TICKCOUNTER = DataTracker.registerData(HeroHopliteEntity.class,
-            TrackedDataHandlerRegistry.INTEGER);
-
-    public void setTickCounter(Integer counter) {
-        this.dataTracker.set(TICKCOUNTER, counter);
-    }
-    public boolean isTransitionning = false;
-    public int getTickCounter() {
-        return this.dataTracker.get(TICKCOUNTER);
-    }
     private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
@@ -68,7 +58,6 @@ public class HeroHopliteEntity extends GreekEntity implements GeoEntity {
         this.dataTracker.startTracking(SHOOTING, false);
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(COOLDOWN, 0f);
-        this.dataTracker.startTracking(TICKCOUNTER, 0);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
         this.dataTracker.startTracking(PATROL_UUID, "");
@@ -111,44 +100,18 @@ public class HeroHopliteEntity extends GreekEntity implements GeoEntity {
         if (shouldDespawnInPeaceful()) {
             remove(RemovalReason.DISCARDED);
         }
-        if (this.getTickCounter() > 0) {
-            this.setTickCounter(Math.max(this.getTickCounter() - 1, 0));
-        }
-        if (this.getTarget() != null) {
-            this.setTickCounter(14);
-        }
-        if (this.getTickCounter() < 13 && this.getTickCounter() > 0) {
-            this.isTransitionning = true;
-        }
-        if (this.getTickCounter() == 0) {
-            this.isTransitionning = false;
-        }
     }
 
     private PlayState predicate(AnimationState animationState) {
-        if (this.age < 5) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
-        if (!this.isAttacking() && this.isTransitionning && this.getTickCounter() != 0
-                && !this.isSwinging()) {
-            animationState.getController().forceAnimationReset();
-            animationState.getController().setAnimation(RawAnimation.begin().then("no_target_transition", Animation.LoopType.PLAY_ONCE));
-            return PlayState.CONTINUE;
-        } else if (animationState.isMoving() && this.isAttacking()) {
+        if (animationState.isMoving() && this.isAttacking()) {
             animationState.getController().setAnimation(RawAnimation.begin().then("walk3", Animation.LoopType.PLAY_ONCE).then("walk2", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
-        } else if (animationState.isMoving() && !this.isAttacking() && this.getTickCounter() == 0) {
+        } else if (animationState.isMoving() && !this.isAttacking()) {
             animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
-        }
-        var test = animationState.getController().getCurrentAnimation();
-        if (test != null) {
-            if (!Objects.equals(test.animation().name(), "no_target_transition") ||
-                    (Objects.equals(test.animation().name(), "no_target_transition") && animationState.getController().getAnimationState().equals(AnimationController.State.STOPPED))) {
-                animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-                return PlayState.CONTINUE;
-            }
+        } else if (!animationState.isMoving() && !this.isAttacking()) {
+            animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
         }
         return PlayState.CONTINUE;
     }
@@ -190,6 +153,7 @@ public class HeroHopliteEntity extends GreekEntity implements GeoEntity {
         HeroHopliteVariant variant = Util.getRandom(HeroHopliteVariant.values(), this.random);
         setVariant(variant);
         ModSoundUtil.InfantryPlaySound(spawnReason, this);
+        this.setTarget(null);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
