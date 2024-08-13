@@ -1,6 +1,6 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
-import net.mebahel.antiquebeasts.entity.custom.HopliteEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.HopliteSpearEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
@@ -11,9 +11,9 @@ import net.minecraft.world.World;
 import java.util.Objects;
 
 public class HopliteShootingGoal extends Goal {
-    private final HopliteEntity hoplite;
+    private final GreekEntity hoplite;
 
-    public HopliteShootingGoal(HopliteEntity hoplite) {
+    public HopliteShootingGoal(GreekEntity hoplite) {
         this.hoplite = hoplite;
     }
 
@@ -41,10 +41,9 @@ public class HopliteShootingGoal extends Goal {
         } else {
             Objects.requireNonNull(this.hoplite.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.72f);
         }
-        System.out.print(this.hoplite.getCooldown() + " COOLDOWN");
         if (this.hoplite.distanceTo(livingEntity) > 6) {
             if (this.hoplite.canSee(livingEntity)) {
-                World world = this.hoplite.world;
+                World world = this.hoplite.getWorld();
                 this.hoplite.setCooldown(Math.max(this.hoplite.getCooldown() - 1, 0));
                 if (this.hoplite.getCooldown() == 7) {
                     ProjectileEntity hopliteSpearEntity;
@@ -91,6 +90,8 @@ public class HopliteShootingGoal extends Goal {
                 this.hoplite.setShooting(false);
                 this.hoplite.setCooldown(81);
             }
+        } else if (this.hoplite.distanceTo(livingEntity) <= 6) {
+            this.hoplite.setCooldown(Math.max(this.hoplite.getCooldown() + 1, 40));
         }
     }
 }

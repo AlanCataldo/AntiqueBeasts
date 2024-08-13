@@ -6,6 +6,10 @@ import net.minecraft.recipe.Ingredient;
 import java.util.function.Supplier;
 
 public enum ModToolMaterial implements ToolMaterial {
+
+    IRON_CENTAUR(2, 480, 6.0F, 2.5F, 17, () -> {
+        return Ingredient.ofItems(Items.IRON_INGOT);
+    }),
     FROST_WEAPON(4, 1600, 4.0F, 0.5F, 15, () -> {
         return Ingredient.ofItems(Items.DIAMOND);
     }),

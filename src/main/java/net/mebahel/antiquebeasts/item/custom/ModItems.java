@@ -189,6 +189,25 @@ public class ModItems {
     public static final Item EINHERJAR_HORN = registerItem("einherjar_horn",
             new EinherjarHorn(new FabricItemSettings().maxDamage(7).group(ItemGroup.COMBAT), SCREAMING_GOAT_HORNS));
 
+    public static final Item GOLD_SCARAB = registerItem("gold_scarab",
+            new Item(new FabricItemSettings()));
+    public static final Item IRON_SCARAB = registerItem("iron_scarab",
+            new Item(new FabricItemSettings()));
+    public static final Item DIAMOND_SHARD = registerItem("diamond_scarab",
+            new Item(new FabricItemSettings()));
+    public static final Item EGYPTIAN_RECURVE_BOW = registerItem("bow/egyptian_recurve_bow",
+            new EgyptianRecurveBow(new FabricItemSettings().maxDamage(640)));
+    public static final Item GREEK_COMPOSITE_BOW = registerItem("bow/greek_composite_bow",
+            new GreekCompositeBow(new FabricItemSettings().maxDamage(640)));
+    public static final Item CHIMERA_HAIR = registerItem("chimera_hair",
+            new Item(new FabricItemSettings()));
+    public static final Item VALKYRIE_SPEAR = registerItem("weapon/valkyrie_spear",
+            new ValkyrieSpear(new FabricItemSettings().maxDamage(600)));
+
+    public static final Item IRON_CENTAUR_SWORD = registerItem("weapon/iron_centaur_sword",
+            new SwordItem(ModToolMaterial.IRON_CENTAUR,3, -2.4f,
+                    new FabricItemSettings()));
+
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(AntiqueBeasts.MOD_ID, name), item);
     }

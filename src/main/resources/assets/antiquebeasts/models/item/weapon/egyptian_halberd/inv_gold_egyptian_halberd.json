@@ -1,0 +1,6 @@
+{
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "antiquebeasts:item/weapon/egyptian_halberd/inv_gold_egyptian_halberd"
+	}
+}

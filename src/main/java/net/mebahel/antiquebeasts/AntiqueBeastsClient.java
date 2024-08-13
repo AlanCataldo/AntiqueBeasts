@@ -22,6 +22,13 @@ import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 public class AntiqueBeastsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        EntityRendererRegistry.register(ModEntities.PEGASUS, PegasusRenderer::new);
+        EntityRendererRegistry.register(ModEntities.CHIMERA, ChimeraRenderer::new);
+        EntityRendererRegistry.register(ModEntities.WADJET, WadjetRenderer::new);
+        EntityRendererRegistry.register(ModEntities.SERVANT, ServantRenderer::new);
+        EntityRendererRegistry.register(ModEntities.MUMMY, MummyRenderer::new);
+        EntityRendererRegistry.register(ModEntities.CENTAUR, CentaurRenderer::new);
+        EntityRendererRegistry.register(ModEntities.AXEMAN, AxemanRenderer::new);
         EntityRendererRegistry.register(ModEntities.CYCLOPS, CyclopsRenderer::new);
         EntityRendererRegistry.register(ModEntities.FROST_CYCLOPS, FrostCyclopsRenderer::new);
         EntityRendererRegistry.register(ModEntities.CHAMPION_HOPLITE, ChampionHopliteRenderer::new);
@@ -39,6 +46,11 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.THROWING_AXE, ThrowingAxeRenderer::new);
         EntityRendererRegistry.register(ModEntities.EINHERJAR, EinherjarRenderer::new);
         EntityRendererRegistry.register(ModEntities.VALKYRIE, ValkyrieRenderer::new);
+        EntityRendererRegistry.register(ModEntities.VENOM, VenomRenderer::new);
+        EntityRendererRegistry.register(ModEntities.VENOM_SLOW, VenomSlowRenderer::new);
+        EntityRendererRegistry.register(ModEntities.MUMMY_PROJECTILE, MummyProjectileRenderer::new);
+        EntityRendererRegistry.register(ModEntities.CHIMERA_PROJECTILE, ChimeraProjectileRenderer::new);
+        EntityRendererRegistry.register(ModEntities.VALKYRIE_SPEAR, ValkyrieSpearRenderer::new);
         EntityRendererRegistry.register(ModEntities.IRON_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "iron"));
         EntityRendererRegistry.register(ModEntities.DIAMOND_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "diamond"));
         EntityRendererRegistry.register(ModEntities.GOLD_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "gold"));

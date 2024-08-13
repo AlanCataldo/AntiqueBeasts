@@ -2,9 +2,9 @@ package net.mebahel.antiquebeasts.entity.client.custom;
 
 import com.google.common.collect.Maps;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
-import net.mebahel.antiquebeasts.entity.custom.EinherjarEntity;
+
+import net.mebahel.antiquebeasts.entity.custom.norse.EinherjarEntity;
 import net.mebahel.antiquebeasts.entity.variant.EinherjarVariant;
-import net.mebahel.antiquebeasts.entity.variant.EliteHopliteVariant;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;

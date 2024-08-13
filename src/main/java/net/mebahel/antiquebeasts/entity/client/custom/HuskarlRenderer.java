@@ -1,6 +1,6 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
-import net.mebahel.antiquebeasts.entity.custom.HuskarlEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.HuskarlEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -20,8 +20,6 @@ public class HuskarlRenderer extends GeoEntityRenderer<HuskarlEntity> {
                                      @Nullable VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer,
                                      int packedLight, Identifier texture) {
 
-        poseStack.scale(1f, 1f, 1f);
         return super.getRenderType(animatable, partialTick, poseStack, bufferSource, buffer, packedLight, texture);
     }
-
 }

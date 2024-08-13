@@ -1,7 +1,7 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
-import net.mebahel.antiquebeasts.entity.custom.EinherjarEntity;
-import net.mebahel.antiquebeasts.entity.custom.NorseEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.EinherjarEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
@@ -17,7 +17,6 @@ public class EinherjarHornGoal extends Goal {
         this.einherjar = einherjar;
         this.potionEffect = effect;
     }
-
     public boolean canStart() {
         return this.einherjar.getTarget() != null;
     }

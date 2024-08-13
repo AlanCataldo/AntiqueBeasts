@@ -1,7 +1,7 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
 import net.mebahel.antiquebeasts.entity.custom.NorseEntity;
-import net.mebahel.antiquebeasts.entity.custom.ValkyrieEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.ValkyrieEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.predicate.entity.EntityPredicates;

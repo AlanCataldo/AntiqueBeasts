@@ -3,6 +3,12 @@ package net.mebahel.antiquebeasts.entity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.entity.custom.*;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.*;
+import net.mebahel.antiquebeasts.entity.custom.greek.CentaurEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.ChampionHopliteEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.EliteHopliteEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.HeroHopliteEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.*;
 import net.mebahel.antiquebeasts.entity.projectiles.*;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
@@ -11,6 +17,49 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class ModEntities {
+    public static final EntityType<PegasusEntity> PEGASUS = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "pegasus"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, PegasusEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 1.7f)).build());
+
+    public static final EntityType<ChimeraEntity> CHIMERA = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "chimera"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ChimeraEntity::new)
+                    .dimensions(EntityDimensions.fixed(1.49f, 1.99f)).build());
+    public static final EntityType<WadjetEntity> WADJET = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "wadjet"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, WadjetEntity::new)
+                    .dimensions(EntityDimensions.fixed(1.49f, 2.49f)).build());
+    public static final EntityType<ServantEntity> SERVANT = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "servant"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ServantEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
+    public static final EntityType<MummyEntity> MUMMY = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "mummy"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, MummyEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.75f, 2.49f)).build());
+    public static final EntityType<ElephantRiderEntity> ELEPHANT_RIDER = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "elephant_rider"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ElephantRiderEntity::create)
+                    .dimensions(EntityDimensions.fixed(1.49f, 3.99f)).build());
+    public static final EntityType<EgyptianCaravanEntity> EGYPTIAN_CARAVAN = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "egyptian_caravan"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, EgyptianCaravanEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 2.99f)).build());
+    public static final EntityType<CamelryEntity> CAMELRY = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "camelry"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, CamelryEntity::create)
+                    .dimensions(EntityDimensions.fixed(0.85f, 2.99f)).build());
+
+    public static final EntityType<AxemanEntity> AXEMAN = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "axeman"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, AxemanEntity::create)
+                    .dimensions(EntityDimensions.fixed(0.6f, 1.99f)).build());
+
+    public static final EntityType<CentaurEntity> CENTAUR = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "centaur"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, CentaurEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 2.99f)).build());
     public static final EntityType<CyclopsEntity> CYCLOPS = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "cyclops"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, CyclopsEntity::new)
@@ -114,4 +163,29 @@ public class ModEntities {
             Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "valkyrie"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ValkyrieEntity::new)
                     .dimensions(EntityDimensions.fixed(0.85f, 2.49f)).build());
+    public static final EntityType<ChimeraProjectileEntity> CHIMERA_PROJECTILE = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "chimera_projectile"),
+            FabricEntityTypeBuilder.<ChimeraProjectileEntity>create(SpawnGroup.MISC, ChimeraProjectileEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+
+    public static final EntityType<MummyProjectileEntity> MUMMY_PROJECTILE = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "mummy_projectile"),
+            FabricEntityTypeBuilder.<MummyProjectileEntity>create(SpawnGroup.MISC, MummyProjectileEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+
+    public static final EntityType<VenomEntity> VENOM = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "venom"),
+            FabricEntityTypeBuilder.<VenomEntity>create(SpawnGroup.MISC, VenomEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+
+    public static final EntityType<VenomSlowEntity> VENOM_SLOW = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "venom_slow"),
+            FabricEntityTypeBuilder.<VenomSlowEntity>create(SpawnGroup.MISC, VenomSlowEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+
+    public static final EntityType<ValkyrieSpearEntity> VALKYRIE_SPEAR = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "valkyrie_spear"),
+            FabricEntityTypeBuilder.<ValkyrieSpearEntity>create(SpawnGroup.MISC, ValkyrieSpearEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.9f, 0.9f)).build());
+
 }
