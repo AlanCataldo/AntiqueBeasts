@@ -484,6 +484,11 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"0.3333": {
+					"effect": "swing1"
+				}
 			}
 		},
 		"attack2": {
@@ -628,6 +633,11 @@
 							"vector": [0, 0, 0]
 						}
 					}
+				}
+			},
+			"sound_effects": {
+				"0.3333": {
+					"effect": "swing1"
 				}
 			}
 		},

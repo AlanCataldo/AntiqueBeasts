@@ -2,6 +2,8 @@ package net.mebahel.antiquebeasts.item;
 
 import net.mebahel.antiquebeasts.entity.projectiles.ThrowingAxeEntity;
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
@@ -21,11 +23,12 @@ public class ThrowingAxeItem extends AxeItem {
         world.playSound(null, user.getX(), user.getY(), user.getZ(), ModSounds.SWING, SoundCategory.NEUTRAL, 0.5F, 1.1F);
 
         if (!world.isClient) {
-            ThrowingAxeEntity throwingAxeEntity = new ThrowingAxeEntity(world, user, 8);
+            int sharpnessLevel = EnchantmentHelper.getLevel(Enchantments.SHARPNESS, itemStack);
+            ThrowingAxeEntity throwingAxeEntity = new ThrowingAxeEntity(world, user, 8f + (0.5f * sharpnessLevel));
             throwingAxeEntity.setItem(itemStack);
-            throwingAxeEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 0.85F, 0F);
+            throwingAxeEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 1F, 0F);
             world.spawnEntity(throwingAxeEntity);
-            user.getItemCooldownManager().set(this, 60);
+            user.getItemCooldownManager().set(this, 40);
             itemStack.damage(2, user, (p) -> p.sendToolBreakStatus(hand));
         }
 

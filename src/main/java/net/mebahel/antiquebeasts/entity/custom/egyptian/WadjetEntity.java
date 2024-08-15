@@ -86,8 +86,8 @@ public class WadjetEntity extends EgyptianEntity implements IAnimatable, IAnimat
     }
     public void tick() {
         super.tick();
-        if (shouldDespawnInPeaceful() || this.shouldDespawn) {
-            remove(RemovalReason.DISCARDED);
+        if (shouldDespawnInPeaceful()) {
+            this.remove(RemovalReason.DISCARDED);
         }
         if (isShooting())
             Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0f);
@@ -95,16 +95,14 @@ public class WadjetEntity extends EgyptianEntity implements IAnimatable, IAnimat
             Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.63f);
     }
     private <E extends IAnimatable> PlayState movementPredicate(AnimationEvent<E> event) {
-        if (this.animationProcedure.equals("empty") && !this.isShooting()) {
-            if (event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", ILoopType.EDefaultLoopTypes.LOOP));
-                return PlayState.CONTINUE;
-            } else if (!this.isSwinging()) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
-                return PlayState.CONTINUE;
-            }
+        if (event.isMoving() && !this.isShooting()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("walk2", ILoopType.EDefaultLoopTypes.LOOP));
+            return PlayState.CONTINUE;
+        } else if (!this.isShooting() && !event.isMoving() && !this.isAttacking()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
+            return PlayState.CONTINUE;
         }
-        return PlayState.STOP;
+        return PlayState.CONTINUE;
     }
 
     private <E extends IAnimatable> PlayState procedurePredicate(AnimationEvent<E> event) {
@@ -141,8 +139,8 @@ public class WadjetEntity extends EgyptianEntity implements IAnimatable, IAnimat
     private <ENTITY extends IAnimatable> void soundListener(SoundKeyframeEvent<ENTITY> event) {
         if (event.sound.matches("wadjet_spit_1")) {
             if (this.world.isClient) {
-                this.getEntityWorld().playSound(this.getX(), this.getY(), this.getZ(), ModSounds.SWING,
-                        SoundCategory.HOSTILE, 1F, 1.5F, true);
+                this.getEntityWorld().playSound(this.getX(), this.getY(), this.getZ(), ModSounds.WADJET_SPIT_1,
+                        SoundCategory.HOSTILE, 1F, 1F, true);
             }
         }
     }
@@ -210,8 +208,8 @@ public class WadjetEntity extends EgyptianEntity implements IAnimatable, IAnimat
                 spawnReason != SpawnReason.SPAWNER &&
                 spawnReason != SpawnReason.EVENT) {
             int randomValue = this.random.nextInt(11);
-            if (randomValue >= 0 && randomValue <= 7) {
-                this.shouldDespawn = true;
+            if (randomValue >= 0 && randomValue <= 6) {
+                this.remove(RemovalReason.DISCARDED);
             }
         }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);

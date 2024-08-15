@@ -55,6 +55,13 @@ public class GreekMeleeAttackGoal extends Goal {
 
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
         return livingEntity != null && livingEntity.isAlive();
     }
 

@@ -14,7 +14,6 @@ public class CustomRevengeGoal extends RevengeGoal {
 
     @Override
     public boolean canStart() {
-
         LivingEntity revengeTarget = this.mob.getAttacker();
         if (revengeTarget != null && classToIgnore.isInstance(revengeTarget)) {
             return false;

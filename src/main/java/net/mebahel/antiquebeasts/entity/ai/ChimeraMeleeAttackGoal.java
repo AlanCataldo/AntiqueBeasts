@@ -4,6 +4,7 @@ import net.mebahel.antiquebeasts.entity.custom.ChimeraEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
+import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.EnumSet;
 
@@ -33,7 +34,14 @@ public class ChimeraMeleeAttackGoal extends Goal {
     }
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();
-        return livingEntity != null;
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive();
     }
     public void start() {
         this.mob.setAttacking(true);

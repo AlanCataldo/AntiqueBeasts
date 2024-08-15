@@ -16,6 +16,9 @@ public class ModBlocks {
     public static final Block AMPHORA = registerBlock("amphora",
             new Block(FabricBlockSettings.copyOf(Blocks.ACACIA_LEAVES).sounds(BlockSoundGroup.TUFF)));
 
+    public static final Block CURSED_GOLD_BLOCK = registerBlock("cursed_gold_block",
+            new CursedGoldBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK)));
+
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);
         return Registry.register(Registry.BLOCK, new Identifier(AntiqueBeasts.MOD_ID, name), block);

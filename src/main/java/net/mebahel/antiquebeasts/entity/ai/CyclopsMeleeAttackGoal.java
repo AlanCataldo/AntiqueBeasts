@@ -55,7 +55,14 @@ public class CyclopsMeleeAttackGoal extends Goal {
 
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();
-        return livingEntity != null;
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive();
     }
 
     public void start() {
@@ -89,18 +96,18 @@ public class CyclopsMeleeAttackGoal extends Goal {
         double rand = random();
 
         if (rand < 0.5)
-            this.mob.setAttackName("animation.cyclops.attack");
+            this.mob.setAttackName("attack");
         else
-            this.mob.setAttackName("animation.cyclops.attack2");
+            this.mob.setAttackName("attack2");
 
         if (this.cooldown == 0) {
             this.cooldown = MAX_COOLDOWN + 2;
             this.mob.setSwinging(false);
         } else if (squaredDistance <= d && this.cooldown == 20) {
-            if (Objects.equals(this.mob.getAttackName(), "animation.cyclops.attack")) {
+            if (Objects.equals(this.mob.getAttackName(), "attack")) {
                 Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(1.5f);
                 Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(6f);
-            } else if (Objects.equals(this.mob.getAttackName(), "animation.cyclops.attack2")) {
+            } else if (Objects.equals(this.mob.getAttackName(), "attack2")) {
                 Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_KNOCKBACK)).setBaseValue(3f);
                 Objects.requireNonNull(this.mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(8f);
             }

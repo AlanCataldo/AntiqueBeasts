@@ -6,6 +6,7 @@ import net.mebahel.antiquebeasts.entity.projectiles.ThrowingSnowRockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.world.World;
 
@@ -26,6 +27,17 @@ public class CyclopsShootingGoal extends Goal {
 
     public void start() {
         this.cyclops.setCooldown(100);
+    }
+    public boolean shouldContinue() {
+        LivingEntity livingEntity = this.cyclops.getTarget();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive();
     }
 
     public void stop() {

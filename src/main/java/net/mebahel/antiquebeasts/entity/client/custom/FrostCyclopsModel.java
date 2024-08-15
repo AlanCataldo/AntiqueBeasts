@@ -17,12 +17,12 @@ public class FrostCyclopsModel extends AnimatedGeoModel<FrostCyclopsEntity> {
 
     @Override
     public Identifier getModelResource(FrostCyclopsEntity object) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "geo/frost-cyclops.geo.json");
+        return new Identifier(AntiqueBeasts.MOD_ID, "geo/frost_cyclops.geo.json");
     }
 
     @Override
     public Identifier getTextureResource(FrostCyclopsEntity object) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/frost-cyclops_texture.png");
+        return new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/frost_cyclops_texture.png");
     }
 
     @Override

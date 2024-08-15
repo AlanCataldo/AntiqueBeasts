@@ -4,24 +4,54 @@ import net.mebahel.antiquebeasts.entity.custom.egyptian.MummyEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.MummyProjectileEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.pathing.Path;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.world.World;
 
 public class MummyShootingGoal extends Goal {
     private final MummyEntity cyclops;
     private float speed;
+    private long lastUpdateTime;
 
     public MummyShootingGoal(MummyEntity cyclops, float speed) {
         this.cyclops = cyclops;
         this.speed = speed;
     }
 
+
     public boolean canStart() {
-        return this.cyclops.getTarget() != null && this.cyclops.getSpawnCooldown() > 60;
+        long l = this.cyclops.getWorld().getTime();
+        if (l - this.lastUpdateTime < 20L || this.cyclops.getSpawnCooldown() > 60) {
+            return false;
+        } else {
+            this.lastUpdateTime = l;
+            LivingEntity livingEntity = this.cyclops.getTarget();
+            if (livingEntity == null) {
+                return false;
+            } else if (!livingEntity.isAlive()) {
+                return false;
+            } else {
+                Path path = this.cyclops.getNavigation().findPathTo(livingEntity, 0);
+                if (path != null) {
+                    return true;
+                } else {
+                    return this.getSquaredMaxAttackDistance(livingEntity) >= this.cyclops.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
+                }
+            }
+        }
     }
 
     public boolean shouldContinue() {
-        return this.cyclops.getTarget() != null && this.cyclops.getSpawnCooldown() > 60;
+        LivingEntity livingEntity = this.cyclops.getTarget();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive() && this.cyclops.getSpawnCooldown() > 60 && livingEntity.isAlive();
     }
 
     public void start() {
@@ -86,5 +116,9 @@ public class MummyShootingGoal extends Goal {
             }
         } else
             this.cyclops.setShooting(false);
+    }
+
+    protected double getSquaredMaxAttackDistance(LivingEntity entity) {
+        return 8;
     }
 }

@@ -19,13 +19,13 @@ public class DefendLeadEntityGoal extends Goal {
 
     @Override
     public boolean canStart() {
-        if (this.defender.getLeadEntity() != null) {
+        if (this.defender.getLeadEntity() != null && this.defender.isInCaravan()) {
             LivingEntity leadEntity = this.defender.getLeadEntity();
             DamageSource lastDamageSource = leadEntity.getRecentDamageSource();
             if (lastDamageSource != null && lastDamageSource.getAttacker() instanceof LivingEntity) {
                 LivingEntity attacker = (LivingEntity) lastDamageSource.getAttacker();
                 if (attacker instanceof PlayerEntity && ((PlayerEntity) attacker).isCreative()) {
-                    return false; // Do not engage if the attacker is a player in creative mode
+                    return false;
                 }
                 lastAttacker = attacker;
                 return true;
@@ -40,8 +40,15 @@ public class DefendLeadEntityGoal extends Goal {
         super.start();
     }
 
-    @Override
     public boolean shouldContinue() {
-        return this.defender.getTarget() != null && this.defender.getTarget().isAlive();
+        LivingEntity livingEntity = this.defender.getTarget();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive() && this.defender.getTarget() != null;
     }
 }

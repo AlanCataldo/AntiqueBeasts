@@ -3,6 +3,7 @@ package net.mebahel.antiquebeasts.entity.ai;
 import net.mebahel.antiquebeasts.entity.custom.HadesShadeEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.EnumSet;
@@ -22,7 +23,14 @@ public class HadesShadeMeleeAttackGoal extends Goal {
     }
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();
-        return livingEntity != null;
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive();
     }
     public void start() {
         LivingEntity livingEntity = this.mob.getTarget();

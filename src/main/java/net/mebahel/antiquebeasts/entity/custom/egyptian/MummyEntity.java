@@ -126,8 +126,6 @@ public class MummyEntity extends EgyptianEntity implements IAnimatable, IAnimati
     }
     private <E extends IAnimatable> PlayState raisePredicate(AnimationEvent<E> event) {
         if (this.getSpawn()) {
-            System.out.println("JE LANCE L'ANIMAFION");
-            //event.getController().markNeedsReload();
             event.getController().setAnimation(new AnimationBuilder().addAnimation("raise", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
         }
         return PlayState.CONTINUE;
@@ -214,7 +212,6 @@ public class MummyEntity extends EgyptianEntity implements IAnimatable, IAnimati
             if (this.world.isClient) {
                 this.getEntityWorld().playSound(this.getX(), this.getY(), this.getZ(), ModSounds.MUMMY_RAISE,
                         SoundCategory.HOSTILE, 1F, 1F, true);
-                System.out.println("JE RAISE");
             }
         } else if (event.sound.matches("mummy_spawn")) {
             if (this.world.isClient) {
@@ -231,10 +228,9 @@ public class MummyEntity extends EgyptianEntity implements IAnimatable, IAnimati
     @Override
     public void tick() {
         super.tick();
-        if (shouldDespawnInPeaceful() || this.shouldDespawn) {
-            remove(RemovalReason.DISCARDED);
+        if (shouldDespawnInPeaceful()) {
+            this.remove(RemovalReason.DISCARDED);
         }
-        System.out.println(this.getSpawn() + "ET LE COOLDOWN" + this.getSpawnCooldown());
 
         if (this.age < 40) {
             Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0);
@@ -274,8 +270,8 @@ public class MummyEntity extends EgyptianEntity implements IAnimatable, IAnimati
                 spawnReason != SpawnReason.SPAWNER &&
                 spawnReason != SpawnReason.EVENT) {
             int randomValue = this.random.nextInt(11);
-            if (randomValue >= 0 && randomValue <= 5) {
-                this.shouldDespawn = true;
+            if (randomValue >= 0 && randomValue <= 6) {
+                this.remove(RemovalReason.DISCARDED);
             }
         }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);

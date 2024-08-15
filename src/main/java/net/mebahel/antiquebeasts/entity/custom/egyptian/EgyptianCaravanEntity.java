@@ -19,6 +19,9 @@ import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
@@ -45,6 +48,7 @@ import javax.annotation.Nullable;
 import static java.lang.Math.random;
 
 public class EgyptianCaravanEntity extends EgyptianEntity implements IAnimatable, IAnimationTickable {
+
     public EgyptianCaravanEntity(EntityType<? extends ModPatrolEntity> entityType, World world) {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
@@ -199,29 +203,29 @@ public class EgyptianCaravanEntity extends EgyptianEntity implements IAnimatable
                 spawnReason != SpawnReason.EVENT) {
             int randomValue = this.random.nextInt(11);
             if (randomValue >= 0 && randomValue <= 8) {
-                this.shouldDespawn = true;
+                this.remove(RemovalReason.DISCARDED);
+            } else {
+                for (int i = 0; i < numAxemen; i++) {
+                    AxemanEntity newAxeman = new AxemanEntity(ModEntities.AXEMAN, this.getWorld(), true, this);
+                    Vec3d offsetPosition = getOffsetPosition(4 * this.random.nextDouble(), 4 * this.random.nextDouble());
+                    newAxeman.refreshPositionAndAngles(offsetPosition.x, offsetPosition.y, offsetPosition.z, this.getYaw(), this.getPitch());
+                    this.getWorld().spawnEntity(newAxeman);
+                }
+                if (this.random.nextInt(3) == 0) {
+                    ElephantRiderEntity newElephantRider = new ElephantRiderEntity(ModEntities.ELEPHANT_RIDER, this.getWorld(), true, this);
+                    Vec3d offsetPosition = getOffsetPosition(4 * this.random.nextDouble(), 4 * this.random.nextDouble());
+                    newElephantRider.refreshPositionAndAngles(offsetPosition.x, offsetPosition.y, offsetPosition.z, this.getYaw(), this.getPitch());
+                    this.getWorld().spawnEntity(newElephantRider);
+                }
+                if (this.random.nextInt(2) == 0) {
+                    CamelryEntity newCamelryRider = new CamelryEntity(ModEntities.CAMELRY, this.getWorld(), true, this);
+                    Vec3d offsetPosition = getOffsetPosition(4 * this.random.nextDouble(), 4 * this.random.nextDouble());
+                    newCamelryRider.refreshPositionAndAngles(offsetPosition.x, offsetPosition.y, offsetPosition.z, this.getYaw(), this.getPitch());
+                    this.getWorld().spawnEntity(newCamelryRider);
+                }
             }
         }
-        if (spawnReason != SpawnReason.EVENT) {
-            for (int i = 0; i < numAxemen; i++) {
-                AxemanEntity newAxeman = new AxemanEntity(ModEntities.AXEMAN, this.getWorld(), true, this);
-                Vec3d offsetPosition = getOffsetPosition(4 * this.random.nextDouble(), 4 * this.random.nextDouble());
-                newAxeman.refreshPositionAndAngles(offsetPosition.x, offsetPosition.y, offsetPosition.z, this.getYaw(), this.getPitch());
-                this.getWorld().spawnEntity(newAxeman);
-            }
-            if (this.random.nextInt(3) == 0) {
-                ElephantRiderEntity newElephantRider = new ElephantRiderEntity(ModEntities.ELEPHANT_RIDER, this.getWorld(), true, this);
-                Vec3d offsetPosition = getOffsetPosition(4 * this.random.nextDouble(), 4 * this.random.nextDouble());
-                newElephantRider.refreshPositionAndAngles(offsetPosition.x, offsetPosition.y, offsetPosition.z, this.getYaw(), this.getPitch());
-                this.getWorld().spawnEntity(newElephantRider);
-            }
-            if (this.random.nextInt(2) == 0) {
-                CamelryEntity newCamelryRider = new CamelryEntity(ModEntities.CAMELRY, this.getWorld(), true, this);
-                Vec3d offsetPosition = getOffsetPosition(4 * this.random.nextDouble(), 4 * this.random.nextDouble());
-                newCamelryRider.refreshPositionAndAngles(offsetPosition.x, offsetPosition.y, offsetPosition.z, this.getYaw(), this.getPitch());
-                this.getWorld().spawnEntity(newCamelryRider);
-            }
-        }
+
 
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
@@ -244,8 +248,8 @@ public class EgyptianCaravanEntity extends EgyptianEntity implements IAnimatable
     @Override
     public void tick() {
         super.tick();
-        if (shouldDespawnInPeaceful() && this.shouldDespawn) {
-            remove(RemovalReason.DISCARDED);
+        if (shouldDespawnInPeaceful()) {
+            this.remove(RemovalReason.DISCARDED);
         }
     }
 }

@@ -1,15 +1,12 @@
 {
-  "type": "minecraft:smithing_transform",
+  "type": "minecraft:smithing",
   "base": {
     "item": "antiquebeasts:frost_sword"
   },
   "addition": {
-  "item": "antiquebeasts:concentrated_cyclops_blood"
+    "item": "minecraft:netherite_ingot"
 },
   "result": {
     "item": "antiquebeasts:blood_stained_frost_sword"
-  },
-  "template": {
-    "item": "minecraft:netherite_upgrade_smithing_template"
   }
 }

@@ -120,7 +120,6 @@ public class ElephantRiderEntity extends EgyptianEntity implements IAnimatable, 
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new DefendLeadEntityGoal(this));
         this.goalSelector.add(3, new ElephantRiderShootingGoal(this, 0.51f));
         this.goalSelector.add(4, new BigEgyptianMeleeAttackGoal(this, 0.45f, 12f, 3, 6));
         this.goalSelector.add(5, new FollowEntityGoal(this, 0.35f));

@@ -46,7 +46,14 @@ public class EinherjarMeleeAttackGoal extends Goal {
     }
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();
-        return livingEntity != null;
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive();
     }
     public void start() {
         this.mob.setAttacking(true);

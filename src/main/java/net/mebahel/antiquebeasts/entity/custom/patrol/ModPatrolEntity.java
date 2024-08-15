@@ -86,7 +86,6 @@ public class ModPatrolEntity extends AnimalEntity {
     }
 
     public void checkAndResumePatrolling() {
-        System.out.println(this.wasInitiallyInPatrol());
         if (!this.isAnyMemberAttacking()) {
             this.setPatrolling(true);
         }

@@ -20,7 +20,7 @@ public class FrostCyclopsRenderer extends GeoEntityRenderer<FrostCyclopsEntity> 
 
     @Override
     public Identifier getTextureResource(FrostCyclopsEntity animatable) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/frost-cyclops_texture.png");
+        return new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/frost_cyclops_texture.png");
     }
 
     @Override
@@ -28,7 +28,7 @@ public class FrostCyclopsRenderer extends GeoEntityRenderer<FrostCyclopsEntity> 
                                      @Nullable VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer,
                                      int packedLight, Identifier texture) {
 
-        poseStack.scale(1f, 1f, 1f);
+        poseStack.scale(1.5f, 1.5f, 1.5f);
         return super.getRenderType(animatable, partialTick, poseStack, bufferSource, buffer, packedLight, texture);
     }
 

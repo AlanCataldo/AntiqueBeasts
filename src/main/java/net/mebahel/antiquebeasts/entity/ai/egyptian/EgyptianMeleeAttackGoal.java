@@ -6,6 +6,7 @@ import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
+import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -56,8 +57,16 @@ public class EgyptianMeleeAttackGoal extends Goal {
 
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
         return livingEntity != null && livingEntity.isAlive();
     }
+
     public void start() {
         this.mob.setAttacking(true);
 
@@ -66,7 +75,7 @@ public class EgyptianMeleeAttackGoal extends Goal {
 
         List<ModPatrolEntity> patrolMembers = patrolEntity.getWorld().getEntitiesByClass(ModPatrolEntity.class, patrolEntity.getBoundingBox().expand(32.0), e -> e.isPartOfSamePatrol(patrolEntity));
         for (ModPatrolEntity member : patrolMembers) {
-            if (!(member instanceof EgyptianCaravanEntity)) {
+            if (!(member instanceof EgyptianCaravanEntity) && member.isPatrolling()) {
                 member.setPatrolling(false);
                 member.setTarget(target);
             }

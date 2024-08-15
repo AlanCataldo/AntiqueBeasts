@@ -51,6 +51,7 @@ public class ServantEntity extends EgyptianEntity implements IAnimatable, IAnima
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
     }
+
     public String animationProcedure = "empty";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     @Override
@@ -175,8 +176,8 @@ public class ServantEntity extends EgyptianEntity implements IAnimatable, IAnima
     @Override
     public void tick() {
         super.tick();
-        if (shouldDespawnInPeaceful() || this.shouldDespawn) {
-            remove(RemovalReason.DISCARDED);
+        if (shouldDespawnInPeaceful()) {
+            this.remove(RemovalReason.DISCARDED);
         }
 
         if (this.age < 40) {
@@ -214,8 +215,8 @@ public class ServantEntity extends EgyptianEntity implements IAnimatable, IAnima
                 spawnReason != SpawnReason.SPAWNER &&
                 spawnReason != SpawnReason.EVENT) {
             int randomValue = this.random.nextInt(11);
-            if (randomValue >= 0 && randomValue <= 7) {
-                this.shouldDespawn = true;
+            if (randomValue >= 0 && randomValue <= 6) {
+                this.remove(RemovalReason.DISCARDED);
             }
         }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);

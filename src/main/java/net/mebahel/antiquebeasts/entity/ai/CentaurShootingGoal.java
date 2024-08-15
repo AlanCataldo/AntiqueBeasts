@@ -5,6 +5,7 @@ import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -60,8 +61,15 @@ public class CentaurShootingGoal extends Goal {
     }
 
     public boolean shouldContinue() {
-        LivingEntity target = this.actor.getTarget();
-        return target != null && target.isAlive() && this.actor.isArcher();
+        LivingEntity livingEntity = this.actor.getTarget();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive() && this.actor.isArcher();
     }
 
     public void tick() {

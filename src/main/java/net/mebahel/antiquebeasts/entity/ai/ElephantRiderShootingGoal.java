@@ -3,6 +3,7 @@ package net.mebahel.antiquebeasts.entity.ai;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.ElephantRiderEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.world.World;
@@ -21,7 +22,15 @@ public class ElephantRiderShootingGoal extends Goal {
     }
 
     public boolean shouldContinue() {
-        return this.cyclops.getTarget() != null;
+        LivingEntity livingEntity = this.cyclops.getTarget();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive();
     }
 
     public void start() {}

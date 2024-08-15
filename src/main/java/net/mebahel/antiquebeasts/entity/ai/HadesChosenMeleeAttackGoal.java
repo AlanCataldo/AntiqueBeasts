@@ -7,6 +7,7 @@ import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.EnumSet;
 import java.util.Objects;
@@ -49,7 +50,14 @@ public class HadesChosenMeleeAttackGoal extends Goal {
     }
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();
-        return livingEntity != null;
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive();
     }
     public void start() {
         this.mob.setAttacking(true);

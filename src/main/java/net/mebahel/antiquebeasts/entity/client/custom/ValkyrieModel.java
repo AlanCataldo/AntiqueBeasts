@@ -31,7 +31,7 @@ public class ValkyrieModel extends AnimatedGeoModel<ValkyrieEntity> {
     @Override
     public void setCustomAnimations(ValkyrieEntity animatable, int instanceId, AnimationEvent animationEvent) {
         super.setCustomAnimations(animatable, instanceId, animationEvent);
-        IBone head = this.getAnimationProcessor().getBone("head2");
+        IBone head = this.getAnimationProcessor().getBone("head");
         EntityModelData extraData = (EntityModelData) animationEvent.getExtraDataOfType(EntityModelData.class).get(0);
         AnimationData manager = animatable.getFactory().getOrCreateAnimationData(instanceId);
         int unpausedMultiplier = !MinecraftClient.getInstance().isPaused() || manager.shouldPlayWhilePaused ? 1 : 0;

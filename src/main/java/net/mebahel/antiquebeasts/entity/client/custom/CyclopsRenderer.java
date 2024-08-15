@@ -22,7 +22,7 @@ public class CyclopsRenderer extends GeoEntityRenderer<CyclopsEntity> {
                 map.put(CyclopsVariant.DEFAULT,
                         new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/cyclops_texture.png"));
                 map.put(CyclopsVariant.CLOAK,
-                        new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/cyclops_texture1.png"));
+                        new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/cyclops_texture.png"));
             });
 
     public CyclopsRenderer(EntityRendererFactory.Context renderManager) {
@@ -35,7 +35,7 @@ public class CyclopsRenderer extends GeoEntityRenderer<CyclopsEntity> {
                                      @Nullable VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer,
                                      int packedLight, Identifier texture) {
 
-        poseStack.scale(1f, 1f, 1f);
+        poseStack.scale(1.5f, 1.5f, 1.5f);
         return super.getRenderType(animatable, partialTick, poseStack, bufferSource, buffer, packedLight, texture);
     }
 

@@ -40,32 +40,4 @@ public class WadjetModel extends AnimatedGeoModel<WadjetEntity> {
     public Identifier getAnimationResource(WadjetEntity animatable) {
         return new Identifier(AntiqueBeasts.MOD_ID, "animations/wajdet.animation.json");
     }
-    @Override
-    public void setCustomAnimations(WadjetEntity animatable, int instanceId, AnimationEvent animationEvent) {
-        super.setCustomAnimations(animatable, instanceId, animationEvent);
-        IBone head = this.getAnimationProcessor().getBone("head");
-        EntityModelData extraData = (EntityModelData) animationEvent.getExtraDataOfType(EntityModelData.class).get(0);
-        AnimationData manager = animatable.getFactory().getOrCreateAnimationData(instanceId);
-        int unpausedMultiplier = !MinecraftClient.getInstance().isPaused() || manager.shouldPlayWhilePaused ? 1 : 0;
-
-
-        if (head.getRotationY() > max_rotation_x) {
-            head_x = max_rotation_x;
-        } else if (head.getRotationY() < -max_rotation_x) {
-            head_x = -max_rotation_x;
-        } else {
-            head_x = head.getRotationY() + (extraData.netHeadYaw * ((float) Math.PI / 340F)) * unpausedMultiplier;
-        }
-
-        head_y = head.getRotationZ() + (extraData.headPitch * ((float) Math.PI / 170F)) * unpausedMultiplier;
-
-        if (head_x > 1.3f) {
-            head_x = 1.3f;
-        } else if (head_x < -1.3f) {
-            head_x = -1.3f;
-        }
-
-        head.setRotationY(head_x);
-        head.setRotationX(head_y);
-    }
 }
