@@ -7,6 +7,7 @@ import net.mebahel.antiquebeasts.entity.variant.WadjetVariant;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -28,10 +29,24 @@ public class WadjetShootingGoal extends Goal {
         return this.actor.getTarget() != null;
     }
     public void start() {
+        this.actor.setAttacking(true);
         this.actor.setCooldown(61);
     }
 
+    public boolean shouldContinue() {
+        LivingEntity livingEntity = this.actor.getTarget();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive();
+    }
+
     public void stop() {
+        this.actor.setAttacking(false);
         this.actor.setCooldown(61);
         this.actor.setShooting(false);
     }
@@ -143,7 +158,7 @@ public class WadjetShootingGoal extends Goal {
                 } else if (this.actor.getCooldown() == 0) {
                     this.actor.setCooldown(81);
                     this.actor.setShooting(false);
-                } else if (this.actor.getCooldown() > 20 && this.actor.getCooldown() < 81) {
+                } else if (this.actor.getCooldown() > 19 && this.actor.getCooldown() < 81) {
                     this.actor.setShooting(false);
                 }
             } else {

@@ -3,7 +3,9 @@ package net.mebahel.antiquebeasts.entity.ai;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.MummyEntity;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.ServantEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -31,7 +33,15 @@ public class MummySummonGoal extends Goal {
     }
 
     public boolean shouldContinue() {
-        return this.mummy.getSpawnCooldown() != 0 && this.mummy.getTarget() != null;
+        LivingEntity livingEntity = this.mummy.getTarget();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive() && this.mummy.getSpawnCooldown() != 0 && livingEntity.isAlive();
     }
 
     public void tick() {

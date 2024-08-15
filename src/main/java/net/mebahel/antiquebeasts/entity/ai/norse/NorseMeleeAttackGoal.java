@@ -2,9 +2,9 @@ package net.mebahel.antiquebeasts.entity.ai.norse;
 
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.custom.norse.EinherjarEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.ValkyrieEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.HersirEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
-import net.mebahel.antiquebeasts.entity.custom.norse.ValkyrieEntity;
 import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.mebahel.antiquebeasts.item.CustomShieldItem;
 import net.mebahel.antiquebeasts.sound.ModSounds;
@@ -63,6 +63,13 @@ public class NorseMeleeAttackGoal extends Goal {
 
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
         return livingEntity != null && livingEntity.isAlive();
     }
 

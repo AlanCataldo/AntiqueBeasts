@@ -5,6 +5,7 @@ import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
+import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -54,7 +55,14 @@ public class CentaurMeleeAttackGoal extends Goal {
     }
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();
-        return livingEntity != null && !this.mob.isArcher();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive() && !this.mob.isArcher();
     }
     @Override
     public void start() {

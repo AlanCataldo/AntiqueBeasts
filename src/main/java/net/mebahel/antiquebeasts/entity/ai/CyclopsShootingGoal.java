@@ -6,6 +6,7 @@ import net.mebahel.antiquebeasts.entity.projectiles.ThrowingSnowRockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.world.World;
 
@@ -25,12 +26,23 @@ public class CyclopsShootingGoal extends Goal {
     }
 
     public void start() {
-        this.cyclops.setCooldown(101);
+        this.cyclops.setCooldown(100);
+    }
+    public boolean shouldContinue() {
+        LivingEntity livingEntity = this.cyclops.getTarget();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive();
     }
 
     public void stop() {
         this.cyclops.setShooting(false);
-        this.cyclops.setCooldown(101);
+        this.cyclops.setCooldown(100);
     }
 
     public boolean shouldRunEveryTick() {
@@ -44,7 +56,7 @@ public class CyclopsShootingGoal extends Goal {
         } else {
             Objects.requireNonNull(this.cyclops.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.72f);
         }
-        if (this.cyclops.distanceTo(livingEntity) > 6) {
+        if (this.cyclops.distanceTo(livingEntity) > 8) {
             if (this.cyclops.canSee(livingEntity)) {
                 World world = this.cyclops.getWorld();
                 this.cyclops.setCooldown(Math.max(this.cyclops.getCooldown() - 1, 0));
@@ -73,14 +85,14 @@ public class CyclopsShootingGoal extends Goal {
                     float distance;
                     float speed;
                     if (this.cyclops.distanceTo(livingEntity) > 25) {
-                        distance = 1.5f;
-                        speed = 1.25f;
+                        distance = 2.5f;
+                        speed = 0.85f;
                     } else if (this.cyclops.distanceTo(livingEntity) >= 12 && this.cyclops.distanceTo(livingEntity) <= 17) {
-                        distance = 0.85f;
-                        speed = 0.85f;
+                        distance = 0.65f;
+                        speed = 0.90f;
                     } else {
-                        distance = 0.60f;
-                        speed = 0.85f;
+                        distance = 0.40f;
+                        speed = 0.80f;
                     }
                     throwingRockEntity.setVelocity(e, f + h * distance, g, speed, 1.5F);
                     throwingRockEntity.setPosition(xProjectile, this.cyclops.getBodyY(1.1), zProjectile);
@@ -90,15 +102,13 @@ public class CyclopsShootingGoal extends Goal {
                 } else if (this.cyclops.getCooldown() == 0) {
                     this.cyclops.setCooldown(101);
                     this.cyclops.setShooting(false);
-                }
-                if (this.cyclops.getCooldown() <= 100 && this.cyclops.getCooldown() > 24) {
+                } else if (this.cyclops.getCooldown() <= 100 && this.cyclops.getCooldown() > 24) {
                     this.cyclops.setShooting(false);
                 }
             } else {
-                this.cyclops.setCooldown(101);
                 this.cyclops.setShooting(false);
+                this.cyclops.setCooldown(101);
             }
-        } else
-            this.cyclops.setShooting(false);
+        }
     }
 }

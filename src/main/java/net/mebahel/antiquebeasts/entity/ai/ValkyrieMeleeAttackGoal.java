@@ -1,9 +1,10 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
-import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.ValkyrieEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.predicate.entity.EntityPredicates;
 
 import java.util.EnumSet;
@@ -35,7 +36,7 @@ public class ValkyrieMeleeAttackGoal extends Goal {
                 return false;
             } else {
                 double distance = this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
-                Optional<NorseEntity> entityToHeal = this.mob.getWorld().getEntitiesByClass(NorseEntity.class, this.mob.getBoundingBox().expand(16f), EntityPredicates.VALID_LIVING_ENTITY).stream()
+                Optional<AnimalEntity> entityToHeal = this.mob.getWorld().getEntitiesByClass(AnimalEntity.class, this.mob.getBoundingBox().expand(16f), EntityPredicates.VALID_LIVING_ENTITY).stream()
                         .filter(entity -> entity.getHealth() < entity.getMaxHealth())
                         .findFirst();
                 if (entityToHeal.isEmpty())
@@ -46,7 +47,14 @@ public class ValkyrieMeleeAttackGoal extends Goal {
     }
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();
-        return livingEntity != null && !this.mob.isHealing();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive() && !this.mob.isHealing();
     }
     public void start() {
         this.mob.setAttacking(true);
@@ -62,7 +70,7 @@ public class ValkyrieMeleeAttackGoal extends Goal {
     }
     public void tick() {
         LivingEntity livingEntity = this.mob.getTarget();
-        if (livingEntity != null && livingEntity.isAlive()) {
+        if (livingEntity != null) {
             this.mob.getLookControl().lookAt(livingEntity, 15.0F, 15.0F);
             this.attack(livingEntity);
         } else {
@@ -86,6 +94,6 @@ public class ValkyrieMeleeAttackGoal extends Goal {
         }
     }
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return 6f + entity.getWidth();
+        return 7f + entity.getWidth();
     }
 }
