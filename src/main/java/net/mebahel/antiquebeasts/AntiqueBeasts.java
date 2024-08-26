@@ -12,6 +12,7 @@ import net.mebahel.antiquebeasts.entity.custom.greek.ChampionHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.EliteHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.HeroHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.*;
+import net.mebahel.antiquebeasts.item.custom.ModItemGroups;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.potion.ModPotions;
@@ -34,6 +35,7 @@ public class AntiqueBeasts implements ModInitializer {
 		GeckoLib.initialize();
 		File configDir = new File(FabricLoader.getInstance().getConfigDir().toFile(), "antiquebeasts");
 		ModConfig.loadConfig(configDir);
+		ModItemGroups.registerItemGroups();
 
 		FabricDefaultAttributeRegistry.register(ModEntities.CENTAUR, CentaurEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.EGYPTIAN_CARAVAN, EgyptianCaravanEntity.setAttributes());

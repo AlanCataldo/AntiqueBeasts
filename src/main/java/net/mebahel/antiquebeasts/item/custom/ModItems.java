@@ -231,7 +231,7 @@ public class ModItems {
             new Item(new FabricItemSettings()));
     public static final Item IRON_SCARAB = registerItem("iron_scarab",
             new Item(new FabricItemSettings()));
-    public static final Item DIAMOND_SHARD = registerItem("diamond_scarab",
+    public static final Item DIAMOND_SCARAB = registerItem("diamond_scarab",
             new Item(new FabricItemSettings()));
     public static final Item EGYPTIAN_RECURVE_BOW = registerItem("bow/egyptian_recurve_bow",
             new EgyptianRecurveBow(new FabricItemSettings().maxDamage(640)));
@@ -282,7 +282,7 @@ public class ModItems {
         entries.add(HIGH_IRON_INGOT);
         entries.add(IRON_SCARAB);
         entries.add(GOLD_SCARAB);
-        entries.add(DIAMOND_SHARD);
+        entries.add(DIAMOND_SCARAB);
         entries.add(CHIMERA_HAIR);
     }
     public static void addItemToFoodItemGroup(FabricItemGroupEntries entries) {

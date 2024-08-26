@@ -14,7 +14,7 @@ public class ModConfig {
 
     // Configuration properties with defaults
     public static boolean patrolSpawning = true;
-    public static int patrolSpawnDelay = 20;
+    public static int patrolSpawnDelay = 15;
 
     public static void loadConfig(File configDir) {
         if (!configDir.exists()) {
@@ -34,7 +34,7 @@ public class ModConfig {
                     updated = true;
                 }
                 if (data.patrolSpawnDelay == null || data.patrolSpawnDelay < 1 || data.patrolSpawnDelay > 60) {
-                    data.patrolSpawnDelay = 20;  // Valeur par défaut
+                    data.patrolSpawnDelay = 15;  // Valeur par défaut
                     updated = true;
                 }
 

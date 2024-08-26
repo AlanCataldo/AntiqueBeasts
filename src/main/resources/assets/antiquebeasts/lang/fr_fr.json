@@ -1,4 +1,6 @@
 {
+  "itemgroup.antiquebeasts": "Antique Beasts",
+
   "entity.antiquebeasts.elite_hoplite": "Hoplite élite",
   "entity.antiquebeasts.champion_hoplite": "Hoplite champion",
   "entity.antiquebeasts.hero_hoplite": "Hoplite héro",

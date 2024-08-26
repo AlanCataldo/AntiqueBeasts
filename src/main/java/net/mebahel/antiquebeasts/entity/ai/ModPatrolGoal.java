@@ -3,6 +3,8 @@ package net.mebahel.antiquebeasts.entity.ai;
 import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
+import net.minecraft.entity.ai.pathing.Path;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
@@ -46,13 +48,22 @@ public class ModPatrolGoal extends Goal {
 
         if (entityNavigation.isIdle()) {
             if (this.entity.isPatrolLeader()) {
-                // Le leader se déplace vers la cible de patrouille
-                BlockPos leaderTargetPos = this.entity.getPatrolTarget();
-                if (leaderTargetPos == null || !entityNavigation.startMovingTo(leaderTargetPos.getX(), leaderTargetPos.getY(), leaderTargetPos.getZ(), this.leaderSpeed)) {
+                BlockPos targetPos = this.assignedLeader != null ? this.assignedLeader.getPatrolTarget() : null;
+                if (targetPos != null) {
+                    Path path = entityNavigation.findPathTo(targetPos, 0);
+
+                    if (path != null) {
+                        entityNavigation.startMovingAlong(path, this.entity.isPatrolLeader() ? leaderSpeed : followSpeed);
+                    } else {
+                        if (this.entity.isPatrolLeader()) {
+                            BlockPos newTarget = setRandomPatrolTarget((ServerWorld) this.entity.getWorld(), this.entity.getBlockPos());
+                            this.entity.setPatrolTarget(newTarget);
+                        }
+                    }
+                } else {
                     this.wander();
                 }
             } else if (this.assignedLeader != null && !this.assignedLeader.isDead()) {
-                // Les autres membres suivent le leader
                 Vec3d leaderPos = this.assignedLeader.getPos();
                 Vec3d direction = this.entity.getPos().subtract(leaderPos).normalize();
                 Vec3d offsetPosition = leaderPos.add(direction.multiply(2.0)); // Décalage de 2 blocs
@@ -91,5 +102,27 @@ public class ModPatrolGoal extends Goal {
         BlockPos blockPos = this.entity.getWorld().getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, this.entity.getBlockPos().add(-8 + random.nextInt(16), 0, -8 + random.nextInt(16)));
 
         this.entity.getNavigation().startMovingTo(blockPos.getX(), blockPos.getY(), blockPos.getZ(), this.leaderSpeed);
+    }
+
+    public static BlockPos setRandomPatrolTarget(ServerWorld world, BlockPos pos) {
+        int x = 150 + world.random.nextInt(150);
+        int z = 150 + world.random.nextInt(150);
+
+        if (world.random.nextBoolean()) x = -x;
+        if (world.random.nextBoolean()) z = -z;
+
+        BlockPos roughTargetPos = new BlockPos(pos.getX() + x, world.getHeight(), pos.getZ() + z);
+
+        BlockPos finalTargetPos = findTopSolidBlock(world, roughTargetPos);
+
+        // Validate the final position to ensure it is within world bounds
+        if (finalTargetPos.getY() < world.getBottomY() || finalTargetPos.getY() > world.getTopY()) {
+            finalTargetPos = world.getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, pos);
+        }
+
+        return finalTargetPos;
+    }
+    private static BlockPos findTopSolidBlock(ServerWorld world, BlockPos pos) {
+        return world.getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, pos);
     }
 }

@@ -37,10 +37,10 @@ public class PatrolManager {
 
     public static void register() {
         if (!ModConfig.patrolSpawning) {
-            AntiqueBeasts.LOGGER.info("[AntiqueBeasts] Patrol spawning is disabled in config file.");
+            AntiqueBeasts.LOGGER.info("[Mebahel's Antique Beasts] Patrol spawning is disabled in config file.");
             return;
         }
-        AntiqueBeasts.LOGGER.info("[AntiqueBeasts] Registering patrol spawning for " + AntiqueBeasts.MOD_ID + ".");
+        AntiqueBeasts.LOGGER.info("[Mebahel's Antique Beasts] Registering patrol spawning for " + AntiqueBeasts.MOD_ID + ".");
         ServerWorldEvents.LOAD.register((server, world) -> {
             if (world.getRegistryKey() == World.OVERWORLD) {
                 ServerTickEvents.START_SERVER_TICK.register(serverTick -> {
@@ -80,15 +80,21 @@ public class PatrolManager {
         int x = 150 + world.random.nextInt(150);
         int z = 150 + world.random.nextInt(150);
 
-        if (world.random.nextBoolean())
-            x = -x;
-        if (world.random.nextBoolean())
-            z = -z;
+        if (world.random.nextBoolean()) x = -x;
+        if (world.random.nextBoolean()) z = -z;
 
-        BlockPos distantTarget = pos.add(x, 0, z);
-        distantTarget = world.getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, distantTarget);
+        BlockPos roughTargetPos = new BlockPos(pos.getX() + x, world.getHeight(), pos.getZ() + z);
 
-        return distantTarget;
+        BlockPos finalTargetPos = findTopSolidBlock(world, roughTargetPos);
+
+        if (finalTargetPos.getY() < world.getBottomY() || finalTargetPos.getY() > world.getTopY()) {
+            finalTargetPos = world.getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, pos);
+        }
+
+        return finalTargetPos;
+    }
+    private static BlockPos findTopSolidBlock(ServerWorld world, BlockPos pos) {
+        return world.getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, pos);
     }
 
     private static BlockPos findGroundPosition(ServerWorld world, BlockPos pos) {
@@ -148,6 +154,7 @@ public class PatrolManager {
 
             member.setPatrolId(patrolId.toString());
             BlockPos memberPos = getOffsetPosition(groundPos, random);
+            memberPos = findSafeSpawnPosition(world, memberPos);
             member.setPosition(memberPos.getX() + 0.5, memberPos.getY(), memberPos.getZ() + 0.5);
             member.setPatrolTarget(distantTarget);
             member.setWasInitiallyInPatrol(true);
@@ -163,6 +170,7 @@ public class PatrolManager {
 
         leader.setPatrolId(patrolId.toString());
         BlockPos leaderPos = getOffsetPosition(groundPos, random);
+        leaderPos = findSafeSpawnPosition(world, leaderPos);
         leader.setPosition(leaderPos.getX() + 0.5, leaderPos.getY(), leaderPos.getZ() + 0.5);
         leader.setPatrolLeader(true);
         leader.setPatrolTarget(distantTarget);
@@ -184,5 +192,10 @@ public class PatrolManager {
             case "entity.antiquebeasts.egyptian_caravan" -> new EgyptianCaravanEntity(ModEntities.EGYPTIAN_CARAVAN, world);
             default -> new EliteHopliteEntity(ModEntities.ELITE_HOPLITE, world);
         };
+    }
+
+    private static BlockPos findSafeSpawnPosition(ServerWorld world, BlockPos pos) {
+        BlockPos safePos = world.getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, pos);
+        return safePos;
     }
 }
