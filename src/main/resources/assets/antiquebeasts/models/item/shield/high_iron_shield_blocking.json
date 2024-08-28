@@ -1,5 +1,5 @@
 {
-	"credit": "Made with Blockbench",
+	"gui_light": "front",
 	"texture_size": [128, 128],
 	"textures": {
 		"0": "antiquebeasts:item/shield/high_iron_shield_redone_texture",
@@ -290,8 +290,8 @@
 			"translation": [10, -2.25, -0.25]
 		},
 		"gui": {
-			"rotation": [-90, 0, -90],
-			"translation": [-7, 0, 0],
+			"rotation": [0, -90, 0],
+			"translation": [0, -7, 0],
 			"scale": [0.7, 0.7, 0.7]
 		},
 		"fixed": {
