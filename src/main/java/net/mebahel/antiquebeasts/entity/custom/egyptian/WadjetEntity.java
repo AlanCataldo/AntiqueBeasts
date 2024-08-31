@@ -20,8 +20,10 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
@@ -129,8 +131,10 @@ public class WadjetEntity extends EgyptianEntity implements GeoEntity {
         this.targetSelector.add(1, new CustomRevengeGoal(this, EgyptianEntity.class));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
-        this.targetSelector.add(4, new ActiveTargetGoal<>(this, GreekEntity.class, true));
-        this.targetSelector.add(4, new ActiveTargetGoal<>(this, NorseEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, PillagerEntity.class, true));
+        this.targetSelector.add(5, new ActiveTargetGoal<>(this, GreekEntity.class, true));
+        this.targetSelector.add(5, new ActiveTargetGoal<>(this, NorseEntity.class, true));
     }
 
     @Override

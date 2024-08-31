@@ -27,13 +27,12 @@ import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class PatrolManager {
     private static final int CHECK_INTERVAL = 20 * 60 * ModConfig.patrolSpawnDelay;
     private static int patrolCheckCounter = 0;
+    private static final Map<ServerWorld, ServerTickEvents.EndTick> registeredListeners = new HashMap<>();
 
     public static void register() {
         if (!ModConfig.patrolSpawning) {
@@ -43,13 +42,23 @@ public class PatrolManager {
         AntiqueBeasts.LOGGER.info("[Mebahel's Antique Beasts] Registering patrol spawning for " + AntiqueBeasts.MOD_ID + ".");
         ServerWorldEvents.LOAD.register((server, world) -> {
             if (world.getRegistryKey() == World.OVERWORLD) {
-                ServerTickEvents.START_SERVER_TICK.register(serverTick -> {
-                    patrolCheckCounter++;
-                    if (patrolCheckCounter >= CHECK_INTERVAL) {
-                        patrolCheckCounter = 0;
-                        checkAndSpawnPatrol(world);
+                ServerTickEvents.EndTick listener = serverTick -> {
+                    if (serverTick.getWorld(World.OVERWORLD) == world) {
+                        patrolCheckCounter++;
+                        if (patrolCheckCounter >= CHECK_INTERVAL) {
+                            patrolCheckCounter = 0;
+                            checkAndSpawnPatrol(world);
+                        }
                     }
-                });
+                };
+                ServerTickEvents.END_SERVER_TICK.register(listener);
+                registeredListeners.put(world, listener);
+            }
+        });
+        ServerWorldEvents.UNLOAD.register((server, world) -> {
+            if (world.getRegistryKey() == World.OVERWORLD) {
+                registeredListeners.remove(world);
+                AntiqueBeasts.LOGGER.info("[Mebahel's Antique Beasts] World unloaded, event listener removed.");
             }
         });
     }

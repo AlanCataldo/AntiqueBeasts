@@ -18,8 +18,10 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
@@ -68,8 +70,10 @@ public class FrostCyclopsEntity extends CyclopsEntity implements GeoEntity {
         this.targetSelector.add(1, new CustomRevengeGoal(this, GreekEntity.class));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
-        this.targetSelector.add(4, new ActiveTargetGoal<>(this, EgyptianEntity.class, true));
-        this.targetSelector.add(4, new ActiveTargetGoal<>(this, NorseEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, PillagerEntity.class, true));
+        this.targetSelector.add(5, new ActiveTargetGoal<>(this, EgyptianEntity.class, true));
+        this.targetSelector.add(5, new ActiveTargetGoal<>(this, NorseEntity.class, true));
     }
 
     private PlayState predicate(AnimationState animationState) {

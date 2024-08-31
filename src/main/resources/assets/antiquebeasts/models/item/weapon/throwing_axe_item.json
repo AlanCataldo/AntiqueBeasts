@@ -2,5 +2,17 @@
 	"parent": "item/handheld",
 	"textures": {
 		"layer0": "antiquebeasts:item/weapon/throwing_axe_texture_1"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, -90, 45],
+			"translation": [0, 2, 1],
+			"scale": [0.9, 0.9, 0.9]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, 90, -45],
+			"translation": [0, 2, 1],
+			"scale": [0.9, 0.9, 0.9]
+		}
 	}
 }

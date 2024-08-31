@@ -191,7 +191,7 @@ public class ModItems {
     public static final ThrowingAxeItem THROWING_AXE_ITEM = registerItem("weapon/throwing_axe_item",
             new ThrowingAxeItem(ModToolMaterial.THROWING_AXE,4.5f, -2.8f, new FabricItemSettings()));
     public static final Item HERSIR_AXE = registerItem("weapon/hersir_axe",
-            new HersirAxe(ModToolMaterial.HERSIR_AXE,8, -3.25f,
+            new HersirAxe(ModToolMaterial.HERSIR_AXE,8, -3.1f,
                     new FabricItemSettings()));
 
     public static final Item HIGH_IRON_SWORD = registerItem("weapon/high_iron_sword",

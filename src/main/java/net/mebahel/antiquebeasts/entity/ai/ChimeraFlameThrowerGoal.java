@@ -48,7 +48,7 @@ public class ChimeraFlameThrowerGoal extends Goal {
 
     private void chooseRandomAttack() {
         Random random = new Random();
-        int attackChoice = random.nextInt(3);
+        int attackChoice = random.nextInt(4);
         if (attackChoice == 0) {
             this.chimera.setAttackName("goat_shoot");
         } else if (attackChoice == 1) {

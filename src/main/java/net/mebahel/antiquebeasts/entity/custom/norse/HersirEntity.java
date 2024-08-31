@@ -6,6 +6,7 @@ import net.mebahel.antiquebeasts.entity.ai.norse.NorseMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.variant.HersirVariant;
+import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.ModSoundUtil;
 import net.minecraft.entity.*;
@@ -17,9 +18,12 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Util;
@@ -85,8 +89,10 @@ public class HersirEntity extends NorseEntity implements GeoEntity {
         this.targetSelector.add(1, new CustomRevengeGoal(this, NorseEntity.class));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
-        this.targetSelector.add(4, new ActiveTargetGoal<>(this, EgyptianEntity.class, true));
-        this.targetSelector.add(4, new ActiveTargetGoal<>(this, GreekEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, PillagerEntity.class, true));
+        this.targetSelector.add(5, new ActiveTargetGoal<>(this, GreekEntity.class, true));
+        this.targetSelector.add(5, new ActiveTargetGoal<>(this, EgyptianEntity.class, true));
     }
     private PlayState predicate(AnimationState animationState) {
         if(animationState.isMoving()) {
@@ -172,5 +178,30 @@ public class HersirEntity extends NorseEntity implements GeoEntity {
 
     private void setVariant(HersirVariant variant) {
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
+    }
+    @Override
+    public void onDeath(DamageSource source) {
+        super.onDeath(source);
+
+        if (source.getAttacker() instanceof ZombieEntity) {
+            if (this.random.nextFloat() < 0.5f) {
+                ZombieEntity newZombie = EntityType.ZOMBIE.create(this.getWorld());
+                if (newZombie != null) {
+                    newZombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+
+                    newZombie.equipStack(EquipmentSlot.MAINHAND, new ItemStack(ModItems.HERSIR_AXE));
+
+                    for (ItemStack stack : newZombie.getItemsEquipped()) {
+                        if (!stack.isEmpty()) {
+                            stack.setDamage(this.random.nextInt(stack.getMaxDamage()));
+                        }
+                    }
+
+                    newZombie.setEquipmentDropChance(EquipmentSlot.MAINHAND, 0.0f);
+
+                    this.getWorld().spawnEntity(newZombie);
+                }
+            }
+        }
     }
 }

@@ -6,10 +6,12 @@ import net.mebahel.antiquebeasts.entity.ai.greek.GreekMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.variant.EliteHopliteVariant;
+import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.ModSoundUtil;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
@@ -22,9 +24,12 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Util;
 import net.minecraft.world.LocalDifficulty;
@@ -97,8 +102,10 @@ public class EliteHopliteEntity extends GreekEntity implements GeoEntity {
         this.targetSelector.add(1, new CustomRevengeGoal(this, GreekEntity.class));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
-        this.targetSelector.add(4, new ActiveTargetGoal<>(this, EgyptianEntity.class, true));
-        this.targetSelector.add(4, new ActiveTargetGoal<>(this, NorseEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, PillagerEntity.class, true));
+        this.targetSelector.add(5, new ActiveTargetGoal<>(this, EgyptianEntity.class, true));
+        this.targetSelector.add(5, new ActiveTargetGoal<>(this, NorseEntity.class, true));
 
     }
     private PlayState predicate(AnimationState animationState) {
@@ -160,5 +167,39 @@ public class EliteHopliteEntity extends GreekEntity implements GeoEntity {
 
     private void setVariant(EliteHopliteVariant variant) {
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
+    }
+    @Override
+    public void onDeath(DamageSource source) {
+        super.onDeath(source);
+
+        if (source.getAttacker() instanceof ZombieEntity) {
+            if (this.random.nextFloat() < 0.5f) {
+                ZombieEntity newZombie = EntityType.ZOMBIE.create(this.getWorld());
+                if (newZombie != null) {
+                    newZombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+
+                    newZombie.equipStack(EquipmentSlot.HEAD, new ItemStack(ModItems.IRON_PLATE_HELMET));
+                    newZombie.equipStack(EquipmentSlot.CHEST, new ItemStack(ModItems.IRON_PLATE_CHESTPLATE));
+                    newZombie.equipStack(EquipmentSlot.LEGS, new ItemStack(ModItems.IRON_PLATE_LEGGINGS));
+                    newZombie.equipStack(EquipmentSlot.FEET, new ItemStack(ModItems.IRON_PLATE_BOOTS));
+                    newZombie.equipStack(EquipmentSlot.MAINHAND, new ItemStack(ModItems.IRON_HOPLITE_SPEAR));
+                    newZombie.equipStack(EquipmentSlot.OFFHAND, new ItemStack(ModItems.IRON_PLATE_SHIELD));
+
+                    for (ItemStack stack : newZombie.getItemsEquipped()) {
+                        if (!stack.isEmpty()) {
+                            stack.setDamage(this.random.nextInt(stack.getMaxDamage()));
+                        }
+                    }
+                    newZombie.setEquipmentDropChance(EquipmentSlot.HEAD, 0.0f);
+                    newZombie.setEquipmentDropChance(EquipmentSlot.CHEST, 0.0f);
+                    newZombie.setEquipmentDropChance(EquipmentSlot.LEGS, 0.0f);
+                    newZombie.setEquipmentDropChance(EquipmentSlot.FEET, 0.0f);
+                    newZombie.setEquipmentDropChance(EquipmentSlot.MAINHAND, 0.0f);
+                    newZombie.setEquipmentDropChance(EquipmentSlot.OFFHAND, 0.0f);
+
+                    this.getWorld().spawnEntity(newZombie);
+                }
+            }
+        }
     }
 }

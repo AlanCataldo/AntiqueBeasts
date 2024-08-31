@@ -1,0 +1,6 @@
+{
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "antiquebeasts:item/weapon/inv_hersir_axe"
+	}
+}
