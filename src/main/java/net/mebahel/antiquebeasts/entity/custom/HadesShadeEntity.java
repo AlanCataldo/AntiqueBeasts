@@ -5,6 +5,7 @@ import net.mebahel.antiquebeasts.entity.ai.HadesShadeLookAtTargetGoal;
 import net.mebahel.antiquebeasts.entity.ai.HadesShadeMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.HadesShadeMoveControl;
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.mebahel.antiquebeasts.util.ModConfig;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -76,8 +77,9 @@ public class HadesShadeEntity extends FlyingEntity implements GeoEntity {
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 22.0D)
-                .add(EntityAttributes.GENERIC_ARMOR, 2f)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 40)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 22.0D + ModConfig.mythUnitBonusHealth)
+                .add(EntityAttributes.GENERIC_ARMOR, 4f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.5f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.3f)
                 .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.6000000238418579)

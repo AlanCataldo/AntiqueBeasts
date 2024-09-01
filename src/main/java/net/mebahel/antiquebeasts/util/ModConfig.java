@@ -15,6 +15,8 @@ public class ModConfig {
     // Configuration properties with defaults
     public static boolean patrolSpawning = true;
     public static int patrolSpawnDelay = 15;
+    public static int infantryBonusHealth = 0;
+    public static int mythUnitBonusHealth = 0;
 
     public static void loadConfig(File configDir) {
         if (!configDir.exists()) {
@@ -38,9 +40,21 @@ public class ModConfig {
                     updated = true;
                 }
 
+                if (data.infantryBonusHealth == null || data.infantryBonusHealth < 0 || data.infantryBonusHealth > 40) {
+                    data.infantryBonusHealth = 0;  // Valeur par défaut
+                    updated = true;
+                }
+
+                if (data.mythUnitBonusHealth == null || data.mythUnitBonusHealth < 0 || data.mythUnitBonusHealth > 40) {
+                    data.mythUnitBonusHealth = 0;  // Valeur par défaut
+                    updated = true;
+                }
+
                 // Mettre à jour les valeurs de la classe
                 patrolSpawning = data.patrolSpawning;
                 patrolSpawnDelay = data.patrolSpawnDelay;
+                infantryBonusHealth = data.infantryBonusHealth;
+                mythUnitBonusHealth = data.mythUnitBonusHealth;
 
                 // Sauvegarder la configuration si elle a été mise à jour
                 if (updated) {
@@ -56,7 +70,7 @@ public class ModConfig {
 
     public static void saveConfig(File configDir) {
         File configFile = new File(configDir, CONFIG_FILE_NAME);
-        ConfigData data = new ConfigData(patrolSpawning, patrolSpawnDelay);
+        ConfigData data = new ConfigData(patrolSpawning, patrolSpawnDelay, infantryBonusHealth, mythUnitBonusHealth);
         try (FileWriter writer = new FileWriter(configFile)) {
             GSON.toJson(data, writer);
         } catch (IOException e) {
@@ -65,12 +79,16 @@ public class ModConfig {
     }
 
     private static class ConfigData {
-        Boolean patrolSpawning;  // Utilisation de Boolean pour permettre la vérification de null
-        Integer patrolSpawnDelay;  // Utilisation de Integer pour permettre la vérification de null
+        Boolean patrolSpawning;
+        Integer patrolSpawnDelay;
+        Integer infantryBonusHealth;
+        Integer mythUnitBonusHealth;
 
-        ConfigData(boolean patrolSpawning, int patrolSpawnDelay) {
+        ConfigData(boolean patrolSpawning, int patrolSpawnDelay, int infantryBonusHealth, int mythUnitBonusHealth) {
             this.patrolSpawning = patrolSpawning;
             this.patrolSpawnDelay = patrolSpawnDelay;
+            this.infantryBonusHealth = infantryBonusHealth;
+            this.mythUnitBonusHealth = mythUnitBonusHealth;
         }
     }
 }

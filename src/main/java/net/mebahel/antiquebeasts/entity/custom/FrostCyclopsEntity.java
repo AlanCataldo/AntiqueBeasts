@@ -8,6 +8,7 @@ import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.mebahel.antiquebeasts.util.ModConfig;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
@@ -52,7 +53,8 @@ public class FrostCyclopsEntity extends CyclopsEntity implements GeoEntity {
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 56.0D)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 56.0D + ModConfig.mythUnitBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 8f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.6f)
@@ -61,7 +63,7 @@ public class FrostCyclopsEntity extends CyclopsEntity implements GeoEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new CyclopsMeleeAttackGoal(this, 0.42f, "frost"));
+        this.goalSelector.add(2, new CyclopsMeleeAttackGoal(this, 0.45f, "frost"));
         this.goalSelector.add(3, new CyclopsShootingGoal(this, "frost"));
         this.goalSelector.add(4, new CyclopsSocializeGoal(this, StatusEffects.STRENGTH));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));

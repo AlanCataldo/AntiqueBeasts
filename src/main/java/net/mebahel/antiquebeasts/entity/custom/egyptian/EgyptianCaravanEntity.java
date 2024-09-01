@@ -2,7 +2,7 @@ package net.mebahel.antiquebeasts.entity.custom.egyptian;
 
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.ai.CaravanEscapeDangerGoal;
-import net.mebahel.antiquebeasts.entity.ai.ModPatrolGoal;
+import net.mebahel.antiquebeasts.entity.ai.util.ModPatrolGoal;
 import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.mebahel.antiquebeasts.entity.variant.EgyptiantVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;

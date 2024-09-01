@@ -1,4 +1,4 @@
-package net.mebahel.antiquebeasts.entity.ai;
+package net.mebahel.antiquebeasts.entity.ai.util;
 
 import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.minecraft.entity.ai.goal.Goal;
@@ -47,27 +47,30 @@ public class ModPatrolGoal extends Goal {
         EntityNavigation entityNavigation = this.entity.getNavigation();
 
         if (entityNavigation.isIdle()) {
-            if (this.assignedLeader == null || this.assignedLeader.isDead()) {
-                this.assignedLeader = findNewLeader();
-            }
+            if (this.entity.isPatrolLeader()) {
 
-            BlockPos targetPos = this.assignedLeader != null ? this.assignedLeader.getPatrolTarget() : null;
+                BlockPos targetPos = this.assignedLeader != null ? this.assignedLeader.getPatrolTarget() : null;
 
-            if (!this.entity.isPatrolLeader() && targetPos != null && !targetPos.equals(this.entity.getPatrolTarget())) {
-                this.entity.setPatrolTarget(targetPos);
-            }
+                if (targetPos != null) {
+                    Path path = entityNavigation.findPathTo(targetPos, 0);
 
-            if (targetPos != null) {
-                Path path = entityNavigation.findPathTo(targetPos, 0);
-
-                if (path != null) {
-                    entityNavigation.startMovingAlong(path, this.entity.isPatrolLeader() ? leaderSpeed : followSpeed);
-                } else {
-                    if (this.entity.isPatrolLeader()) {
-                        BlockPos newTarget = setRandomPatrolTarget((ServerWorld) this.entity.getWorld(), this.entity.getBlockPos());
-                        this.entity.setPatrolTarget(newTarget);
+                    if (path != null) {
+                        entityNavigation.startMovingAlong(path, this.entity.isPatrolLeader() ? leaderSpeed : followSpeed);
+                    } else {
+                        if (this.entity.isPatrolLeader()) {
+                            BlockPos newTarget = setRandomPatrolTarget((ServerWorld) this.entity.getWorld(), this.entity.getBlockPos());
+                            this.entity.setPatrolTarget(newTarget);
+                        }
                     }
+                } else {
+                    this.wander();
                 }
+            } else if (this.assignedLeader != null && !this.assignedLeader.isDead()) {
+                Vec3d leaderPos = this.assignedLeader.getPos();
+                Vec3d direction = this.entity.getPos().subtract(leaderPos).normalize();
+                Vec3d offsetPosition = leaderPos.add(direction.multiply(2.0));
+
+                entityNavigation.startMovingTo(offsetPosition.x, offsetPosition.y, offsetPosition.z, this.followSpeed);
             } else {
                 this.wander();
             }
@@ -114,6 +117,7 @@ public class ModPatrolGoal extends Goal {
 
         BlockPos finalTargetPos = findTopSolidBlock(world, roughTargetPos);
 
+        // Validate the final position to ensure it is within world bounds
         if (finalTargetPos.getY() < world.getBottomY() || finalTargetPos.getY() > world.getTopY()) {
             finalTargetPos = world.getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, pos);
         }

@@ -6,6 +6,7 @@ import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.mebahel.antiquebeasts.entity.variant.EgyptiantVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.mebahel.antiquebeasts.util.ModConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
@@ -103,8 +104,9 @@ public class ElephantRiderEntity extends EgyptianEntity implements GeoEntity {
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.78f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 48.0D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 48.0D + ModConfig.infantryBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 6f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 7.0f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.7f)
@@ -115,7 +117,7 @@ public class ElephantRiderEntity extends EgyptianEntity implements GeoEntity {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new DefendLeadEntityGoal(this));
         this.goalSelector.add(3, new ElephantRiderShootingGoal(this, 0.51f));
-        this.goalSelector.add(4, new BigEgyptianMeleeAttackGoal(this, 0.45f, 12f, 3, 6));
+        this.goalSelector.add(4, new BigEgyptianMeleeAttackGoal(this, 0.53f, 12f, 3, 6));
         this.goalSelector.add(5, new FollowEntityGoal(this, 0.35f));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(7, new LookAroundGoal(this));

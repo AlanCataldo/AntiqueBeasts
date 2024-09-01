@@ -6,6 +6,7 @@ import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.variant.EgyptiantVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.mebahel.antiquebeasts.util.ModConfig;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -71,8 +72,9 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.57f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 18.0D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 18.0D + ModConfig.infantryBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 1f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2f)
@@ -82,7 +84,7 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new EgyptianMeleeAttackGoal(this, 0.57f, 6f, 1, 10));
-        this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.45f, 1f));
+        this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.5f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
 
         this.targetSelector.add(1, new CustomRevengeGoal(this, EgyptianEntity.class));

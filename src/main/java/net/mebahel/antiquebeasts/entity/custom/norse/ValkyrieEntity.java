@@ -7,6 +7,7 @@ import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.variant.ValkyrieVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.mebahel.antiquebeasts.util.ModConfig;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -83,8 +84,9 @@ public class ValkyrieEntity extends NorseEntity implements GeoEntity {
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.76f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 34.0D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 34.0D + ModConfig.mythUnitBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 6f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.35f)
@@ -94,7 +96,7 @@ public class ValkyrieEntity extends NorseEntity implements GeoEntity {
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new ValkyrieHealingGoal(this, 16f));
-        this.goalSelector.add(3, new ValkyrieMeleeAttackGoal(this, 0.45f));
+        this.goalSelector.add(3, new ValkyrieMeleeAttackGoal(this, 0.53f));
         if (!this.isHealing()) {
             this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
             this.goalSelector.add(6, new LookAroundGoal(this));

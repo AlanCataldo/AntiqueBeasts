@@ -1,12 +1,14 @@
 package net.mebahel.antiquebeasts.entity.custom.greek;
 
 import net.mebahel.antiquebeasts.entity.ai.*;
+import net.mebahel.antiquebeasts.entity.ai.util.ModPatrolGoal;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.mebahel.antiquebeasts.entity.variant.CentaurVariant;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.mebahel.antiquebeasts.util.ModConfig;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -113,7 +115,7 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 34.0D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 34.0D + ModConfig.mythUnitBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 4f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.6f)
@@ -125,7 +127,7 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
         this.goalSelector.add(2, new ModPatrolGoal(this, 0.37f, 0.4f));
         this.goalSelector.add(3, new CentaurShootingGoal(this, 80F));
         this.goalSelector.add(4, new CentaurLookAtTargetGoal(this));
-        this.goalSelector.add(5, new CentaurMeleeAttackGoal(this, 0.5f, 8f, 1, 7));
+        this.goalSelector.add(5, new CentaurMeleeAttackGoal(this, 0.55f, 8f, 1, 7));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(7, new LookAroundGoal(this));
 

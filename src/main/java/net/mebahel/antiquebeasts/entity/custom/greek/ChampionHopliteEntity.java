@@ -1,13 +1,14 @@
 package net.mebahel.antiquebeasts.entity.custom.greek;
 
 import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
-import net.mebahel.antiquebeasts.entity.ai.ModPatrolGoal;
+import net.mebahel.antiquebeasts.entity.ai.util.ModPatrolGoal;
 import net.mebahel.antiquebeasts.entity.ai.greek.GreekMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.variant.ChampionHopliteVariant;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.mebahel.antiquebeasts.util.ModConfig;
 import net.mebahel.antiquebeasts.util.ModSoundUtil;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
@@ -73,8 +74,9 @@ public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.72f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 28.0D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 28.0D + ModConfig.infantryBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 6f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.35f)
@@ -84,7 +86,7 @@ public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new ModPatrolGoal(this, 0.37f, 0.4f));
-        this.goalSelector.add(3, new GreekMeleeAttackGoal(this, 0.45f, 21, 10));
+        this.goalSelector.add(3, new GreekMeleeAttackGoal(this, 0.5f, 21, 10));
         this.goalSelector.add(4, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(5, new LookAroundGoal(this));
 

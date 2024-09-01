@@ -8,6 +8,7 @@ import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.variant.ChimeraVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.mebahel.antiquebeasts.util.ModConfig;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -139,7 +140,8 @@ public class ChimeraEntity extends AnimalEntity implements GeoEntity {
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 78.0D)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 78.0D + ModConfig.mythUnitBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 6f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 7.5f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.6f)
@@ -149,7 +151,7 @@ public class ChimeraEntity extends AnimalEntity implements GeoEntity {
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new ChimeraFlameThrowerGoal(this));
-        this.goalSelector.add(3, new ChimeraMeleeAttackGoal(this, 0.48f, 8f, 1, 5));
+        this.goalSelector.add(3, new ChimeraMeleeAttackGoal(this, 0.5f, 8f, 1, 5));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
 

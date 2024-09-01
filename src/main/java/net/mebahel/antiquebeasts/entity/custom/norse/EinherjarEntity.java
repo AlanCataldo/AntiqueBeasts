@@ -2,12 +2,13 @@ package net.mebahel.antiquebeasts.entity.custom.norse;
 
 import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
 import net.mebahel.antiquebeasts.entity.ai.EinherjarHornGoal;
-import net.mebahel.antiquebeasts.entity.ai.ModPatrolGoal;
+import net.mebahel.antiquebeasts.entity.ai.util.ModPatrolGoal;
 import net.mebahel.antiquebeasts.entity.ai.norse.NorseMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.variant.EinherjarVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.mebahel.antiquebeasts.util.ModConfig;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -101,8 +102,9 @@ public class EinherjarEntity extends NorseEntity implements GeoEntity {
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.65f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0D + ModConfig.mythUnitBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 7f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.5f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.45f)
@@ -113,7 +115,7 @@ public class EinherjarEntity extends NorseEntity implements GeoEntity {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new EinherjarHornGoal(this, StatusEffects.STRENGTH));
         this.goalSelector.add(3, new ModPatrolGoal(this, 0.37f, 0.4f));
-        this.goalSelector.add(4, new NorseMeleeAttackGoal(this, 0.45f, 21, 10));
+        this.goalSelector.add(4, new NorseMeleeAttackGoal(this, 0.5f, 21, 10));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
 

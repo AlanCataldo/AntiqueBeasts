@@ -5,6 +5,7 @@ import net.mebahel.antiquebeasts.entity.ai.HadesChosenMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.HadesChosenShootingGoal;
 import net.mebahel.antiquebeasts.entity.custom.greek.EliteHopliteEntity;
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.mebahel.antiquebeasts.util.ModConfig;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -127,17 +128,18 @@ public class HadesChosenEntity extends HostileEntity implements GeoEntity {
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.72f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0D + ModConfig.infantryBonusHealth)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5.5f)
-                .add(EntityAttributes.GENERIC_ARMOR, 8f)
+                .add(EntityAttributes.GENERIC_ARMOR, 10f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.3f)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5f);
     }
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new HadesChosenMeleeAttackGoal(this, 0.45f));
+        this.goalSelector.add(2, new HadesChosenMeleeAttackGoal(this, 0.5f));
         this.goalSelector.add(3, new HadesChosenShootingGoal(this));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
