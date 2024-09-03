@@ -6,6 +6,7 @@ import net.mebahel.antiquebeasts.entity.custom.FrostCyclopsEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
+import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.mob.MobEntity;
@@ -33,5 +34,6 @@ public abstract class IronGolemMixin extends MobEntity {
         targetSelector.add(3, new ActiveTargetGoal<>(this, ChimeraEntity.class, true));
         targetSelector.add(3, new ActiveTargetGoal<>(this, CyclopsEntity.class, true));
         targetSelector.add(3, new ActiveTargetGoal<>(this, FrostCyclopsEntity.class, true));
+        targetSelector.add(3, new ActiveTargetGoal<>(this, DraugrEntity.class, true));
     }
 }

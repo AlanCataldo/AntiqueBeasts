@@ -3,6 +3,8 @@ package net.mebahel.antiquebeasts.entity.custom.other;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
 import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
 import net.mebahel.antiquebeasts.entity.ai.other.DraugrMeleeAttackGoal;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.variant.DraugrVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
@@ -11,10 +13,7 @@ import net.mebahel.antiquebeasts.util.ModSoundUtil;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.ActiveTargetGoal;
-import net.minecraft.entity.ai.goal.LookAroundGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -23,6 +22,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.PillagerEntity;
+import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -81,10 +81,14 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
         this.goalSelector.add(3, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(4, new LookAroundGoal(this));
 
-        this.targetSelector.add(1, new CustomRevengeGoal(this, NorseEntity.class));
+        this.targetSelector.add(1, new RevengeGoal(this));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, PillagerEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, GreekEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, EgyptianEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, NorseEntity.class, true));
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {

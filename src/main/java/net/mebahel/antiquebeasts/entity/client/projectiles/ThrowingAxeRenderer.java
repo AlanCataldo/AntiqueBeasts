@@ -24,7 +24,7 @@ public class ThrowingAxeRenderer extends GeoEntityRenderer<ThrowingAxeEntity> {
     @Override
     public void preRender(MatrixStack poseStack, ThrowingAxeEntity animatable, BakedGeoModel model, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue,
                           float alpha) {
-        poseStack.scale(0.7f, 0.7f, 0.7f);
+        poseStack.scale(0.55f, 0.55f, 0.55f);
         RenderUtils.faceRotation(poseStack, animatable, partialTick);
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }
