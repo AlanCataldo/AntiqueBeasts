@@ -30,6 +30,9 @@ public class ModItems {
             new MusicDiscItem(7, ModSounds.BEHOLD_THE_GREAT_SCIENCE_FI_MUSIC,
                     new FabricItemSettings().maxCount(1), 149));
 
+    public static final Item DRAUGR_SPAWN_EGG = registerItem("spawn_egg/draugr_spawn_egg",
+            new SpawnEggItem(ModEntities.DRAUGR,4399360, 526344,
+                    new FabricItemSettings()));
     public static final Item CENTAUR_SPAWN_EGG = registerItem("spawn_egg/centaur_spawn_egg",
             new SpawnEggItem(ModEntities.CENTAUR,13342315, 15789267,
                     new FabricItemSettings()));
@@ -272,6 +275,8 @@ public class ModItems {
         entries.add(THROWING_AXEMAN_SPAWN_EGG);
         entries.add(EINHERJAR_SPAWN_EGG);
         entries.add(VALKYRIE_SPAWN_EGG);
+
+        entries.add(DRAUGR_SPAWN_EGG);
     }
     public static void addItemToIngredientItemGroup(FabricItemGroupEntries entries) {
         entries.add(IRON_PLATE);

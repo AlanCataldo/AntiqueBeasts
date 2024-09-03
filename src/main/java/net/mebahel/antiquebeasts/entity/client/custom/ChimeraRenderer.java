@@ -11,7 +11,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class ChimeraRenderer extends GeoEntityRenderer<ChimeraEntity> {
     public ChimeraRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new ChimeraModel());
-        this.shadowRadius = 0.55f;
+        this.shadowRadius = 0.85f;
     }
     @Override
     public RenderLayer getRenderType(ChimeraEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {

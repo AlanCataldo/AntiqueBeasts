@@ -120,6 +120,12 @@ public class ModSounds {
     public static SoundEvent BEHOLD_THE_GREAT_SCIENCE_FI_MUSIC = registerSoundEvent("behold_the_great_science_fi");
     public static SoundEvent MILITARY_CREATE = registerSoundEvent("military_create");
     public static SoundEvent MYTH_CREATE = registerSoundEvent("mythical_unit");
+    public static SoundEvent DRAUGR_AMBIENT_1 = registerSoundEvent("draugr_ambient_1");
+    public static SoundEvent DRAUGR_AMBIENT_2 = registerSoundEvent("draugr_ambient_2");
+    public static SoundEvent DRAUGR_AMBIENT_3 = registerSoundEvent("draugr_ambient_3");
+    public static SoundEvent DRAUGR_DEATH_1 = registerSoundEvent("draugr_death_1");
+    public static SoundEvent DRAUGR_HURT_1 = registerSoundEvent("draugr_hurt_1");
+    public static SoundEvent DRAUGR_HURT_2 = registerSoundEvent("draugr_hurt_2");
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));

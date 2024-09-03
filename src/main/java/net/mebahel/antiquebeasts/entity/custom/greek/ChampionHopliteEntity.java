@@ -10,10 +10,7 @@ import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.ModConfig;
 import net.mebahel.antiquebeasts.util.ModSoundUtil;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -37,6 +34,7 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
@@ -86,7 +84,7 @@ public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new ModPatrolGoal(this, 0.37f, 0.4f));
-        this.goalSelector.add(3, new GreekMeleeAttackGoal(this, 0.5f, 21, 10));
+        this.goalSelector.add(3, new GreekMeleeAttackGoal(this, 0.47f, 21, 10));
         this.goalSelector.add(4, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(5, new LookAroundGoal(this));
 
@@ -143,6 +141,13 @@ public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
         setVariant(variant);
         ModSoundUtil.InfantryPlaySound(spawnReason, this);
         this.setTarget(null);
+        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
+                && spawnReason != SpawnReason.EVENT ) {
+            int randomValue = this.random.nextInt(11);
+            if (randomValue >= 0 && randomValue <= 4) {
+                this.remove(Entity.RemovalReason.DISCARDED);
+            }
+        }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 

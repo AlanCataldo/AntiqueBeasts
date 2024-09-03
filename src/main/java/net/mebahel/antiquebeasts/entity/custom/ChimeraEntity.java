@@ -9,6 +9,7 @@ import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.variant.ChimeraVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.ModConfig;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -277,6 +278,13 @@ public class ChimeraEntity extends AnimalEntity implements GeoEntity {
                                  @javax.annotation.Nullable NbtCompound entityNbt) {
         ChimeraVariant variant = Util.getRandom(ChimeraVariant.values(), this.random);
         setVariant(variant);
+        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
+                && spawnReason != SpawnReason.EVENT ) {
+            int randomValue = this.random.nextInt(11);
+            if (randomValue >= 0 && randomValue <= 4) {
+                this.remove(Entity.RemovalReason.DISCARDED);
+            }
+        }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 

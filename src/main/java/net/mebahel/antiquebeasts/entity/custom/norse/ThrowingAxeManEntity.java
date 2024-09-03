@@ -195,6 +195,13 @@ public class ThrowingAxeManEntity extends NorseEntity implements GeoEntity {
         ThrowingAxeManVariant variant = Util.getRandom(ThrowingAxeManVariant.values(), this.random);
         setVariant(variant);
         ModSoundUtil.InfantryPlaySound(spawnReason, this);
+        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
+                && spawnReason != SpawnReason.EVENT ) {
+            int randomValue = this.random.nextInt(11);
+            if (randomValue >= 0 && randomValue <= 4) {
+                this.remove(Entity.RemovalReason.DISCARDED);
+            }
+        }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 

@@ -9,10 +9,7 @@ import net.mebahel.antiquebeasts.entity.variant.CentaurVariant;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.ModConfig;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -39,6 +36,7 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
@@ -127,7 +125,7 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
         this.goalSelector.add(2, new ModPatrolGoal(this, 0.37f, 0.4f));
         this.goalSelector.add(3, new CentaurShootingGoal(this, 80F));
         this.goalSelector.add(4, new CentaurLookAtTargetGoal(this));
-        this.goalSelector.add(5, new CentaurMeleeAttackGoal(this, 0.55f, 8f, 1, 7));
+        this.goalSelector.add(5, new CentaurMeleeAttackGoal(this, 0.52f, 8f, 1, 7));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(7, new LookAroundGoal(this));
 
@@ -238,6 +236,13 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
         CentaurVariant variant = Util.getRandom(CentaurVariant.values(), this.random);
         setVariant(variant);
         this.setTarget(null);
+        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
+                && spawnReason != SpawnReason.EVENT ) {
+            int randomValue = this.random.nextInt(11);
+            if (randomValue >= 0 && randomValue <= 4) {
+                this.remove(Entity.RemovalReason.DISCARDED);
+            }
+        }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 

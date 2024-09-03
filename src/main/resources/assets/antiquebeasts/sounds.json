@@ -664,5 +664,41 @@
     "sounds": [
       "antiquebeasts:mythical_unit/myth_create"
     ]
+  },
+  "draugr_ambient_1": {
+    "subtitle": "antiquebeasts:draugr/draugr_ambient_1",
+    "sounds": [
+      "antiquebeasts:draugr/draugr_ambient_1"
+    ]
+  },
+  "draugr_ambient_2": {
+    "subtitle": "antiquebeasts:draugr/draugr_ambient_2",
+    "sounds": [
+      "antiquebeasts:draugr/draugr_ambient_2"
+    ]
+  },
+  "draugr_ambient_3": {
+    "subtitle": "antiquebeasts:draugr/draugr_ambient_3",
+    "sounds": [
+      "antiquebeasts:draugr/draugr_ambient_3"
+    ]
+  },
+  "draugr_death_1": {
+    "subtitle": "antiquebeasts:draugr/draugr_death_1",
+    "sounds": [
+      "antiquebeasts:draugr/draugr_death_1"
+    ]
+  },
+  "draugr_hurt_1": {
+    "subtitle": "antiquebeasts:draugr/draugr_hurt_1",
+    "sounds": [
+      "antiquebeasts:draugr/draugr_hurt_1"
+    ]
+  },
+  "draugr_hurt_2": {
+    "subtitle": "antiquebeasts:draugr/draugr_hurt_2",
+    "sounds": [
+      "antiquebeasts:draugr/draugr_hurt_2"
+    ]
   }
 }

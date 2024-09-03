@@ -13,6 +13,7 @@ import net.mebahel.antiquebeasts.entity.custom.greek.ChampionHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.EliteHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.HeroHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.*;
+import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.world.Difficulty;
@@ -21,6 +22,16 @@ import net.minecraft.world.biome.BiomeKeys;
 
 public class ModEntitySpawn {
     public static void addEntitySpawn() {
+        BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(),
+                SpawnGroup.MONSTER, ModEntities.DRAUGR, 20, 1, 2);
+        SpawnRestriction.register(ModEntities.DRAUGR, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return DraugrEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                });
+
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST,
                                 BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.MEADOW, BiomeKeys.OLD_GROWTH_BIRCH_FOREST,

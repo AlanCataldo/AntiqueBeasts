@@ -101,7 +101,7 @@ public class CamelryEntity extends EgyptianEntity implements GeoEntity {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new ModPatrolGoal(this, 0.37f, 0.4f));
         this.goalSelector.add(3, new DefendLeadEntityGoal(this));
-        this.goalSelector.add(4, new BigEgyptianMeleeAttackGoal(this, 0.55f, 12f, 3, 10));
+        this.goalSelector.add(4, new BigEgyptianMeleeAttackGoal(this, 0.52f, 12f, 3, 10));
         this.goalSelector.add(5, new FollowEntityGoal(this, 0.35f));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.35f, 100f));
         this.goalSelector.add(7, new LookAroundGoal(this));

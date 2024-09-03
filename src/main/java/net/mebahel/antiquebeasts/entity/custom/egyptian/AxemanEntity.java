@@ -119,7 +119,7 @@ public class AxemanEntity extends EgyptianEntity implements GeoEntity {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new ModPatrolGoal(this, 0.37f, 0.4f));
         this.goalSelector.add(3, new DefendLeadEntityGoal(this));
-        this.goalSelector.add(4, new EgyptianMeleeAttackGoal(this, 0.5f, 6f, 1, 10));
+        this.goalSelector.add(4, new EgyptianMeleeAttackGoal(this, 0.47f, 6f, 1, 10));
         this.goalSelector.add(5, new FollowEntityGoal(this, 0.35f));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(7, new LookAroundGoal(this));
@@ -144,7 +144,7 @@ public class AxemanEntity extends EgyptianEntity implements GeoEntity {
     private PlayState attackPredicate(AnimationState state) {
         if(this.isSwinging() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
             state.getController().forceAnimationReset();
-            state.getController().setAnimation(RawAnimation.begin().then(this.getAttackName(), Animation.LoopType.PLAY_ONCE));
+            state.getController().setAnimation(RawAnimation.begin().then("attack2", Animation.LoopType.PLAY_ONCE));
         }
 
         return PlayState.CONTINUE;

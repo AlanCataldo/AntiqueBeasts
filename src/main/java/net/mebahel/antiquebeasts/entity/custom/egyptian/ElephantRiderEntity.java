@@ -117,7 +117,7 @@ public class ElephantRiderEntity extends EgyptianEntity implements GeoEntity {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new DefendLeadEntityGoal(this));
         this.goalSelector.add(3, new ElephantRiderShootingGoal(this, 0.51f));
-        this.goalSelector.add(4, new BigEgyptianMeleeAttackGoal(this, 0.53f, 12f, 3, 6));
+        this.goalSelector.add(4, new BigEgyptianMeleeAttackGoal(this, 0.5f, 12f, 3, 6));
         this.goalSelector.add(5, new FollowEntityGoal(this, 0.35f));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(7, new LookAroundGoal(this));

@@ -107,6 +107,7 @@ public class ModItemGroups {
                         entries.add(ModItems.THROWING_AXEMAN_SPAWN_EGG);
                         entries.add(ModItems.EINHERJAR_SPAWN_EGG);
                         entries.add(ModItems.VALKYRIE_SPAWN_EGG);
+                        entries.add(ModItems.DRAUGR_SPAWN_EGG);
 
                     }).build());
     public static void registerItemGroups() {
