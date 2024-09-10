@@ -34,7 +34,7 @@ public class CentaurMeleeAttackGoal extends Goal {
     }
     public boolean canStart() {
         long l = this.mob.getWorld().getTime();
-        if (l - this.lastUpdateTime < 20L || !this.mob.isArcher()) {
+        if (l - this.lastUpdateTime < 20L || this.mob.isArcher()) {
             return false;
         } else {
             this.lastUpdateTime = l;

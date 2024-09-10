@@ -30,6 +30,9 @@ public class ModItems {
             new MusicDiscItem(7, ModSounds.BEHOLD_THE_GREAT_SCIENCE_FI_MUSIC,
                     new FabricItemSettings().maxCount(1), 149));
 
+    public static final Item HARPY_SPAWN_EGG = registerItem("spawn_egg/harpy_spawn_egg",
+            new SpawnEggItem(ModEntities.HARPY,2699360, 866344,
+                    new FabricItemSettings()));
     public static final Item DRAUGR_SPAWN_EGG = registerItem("spawn_egg/draugr_spawn_egg",
             new SpawnEggItem(ModEntities.DRAUGR,4399360, 526344,
                     new FabricItemSettings()));
@@ -193,6 +196,10 @@ public class ModItems {
     });
     public static final ThrowingAxeItem THROWING_AXE_ITEM = registerItem("weapon/throwing_axe_item",
             new ThrowingAxeItem(ModToolMaterial.THROWING_AXE,4.5f, -2.8f, new FabricItemSettings()));
+
+    public static final HarpyFeatherItem HARPY_FEATHER = registerItem("weapon/harpy_feather",
+            new HarpyFeatherItem(new FabricItemSettings().maxCount(64)));
+
     public static final Item HERSIR_AXE = registerItem("weapon/hersir_axe",
             new HersirAxe(ModToolMaterial.HERSIR_AXE,8, -3.1f,
                     new FabricItemSettings()));
@@ -277,6 +284,7 @@ public class ModItems {
         entries.add(VALKYRIE_SPAWN_EGG);
 
         entries.add(DRAUGR_SPAWN_EGG);
+        entries.add(HARPY_SPAWN_EGG);
     }
     public static void addItemToIngredientItemGroup(FabricItemGroupEntries entries) {
         entries.add(IRON_PLATE);
@@ -338,6 +346,8 @@ public class ModItems {
         entries.add(HERSIR_AXE);
         entries.add(THROWING_AXE_ITEM);
         entries.add(EINHERJAR_HORN);
+
+        entries.add(HARPY_FEATHER);
 
         entries.add(IRON_HOPLITE_SPEAR);
         entries.add(GOLD_HOPLITE_SPEAR);

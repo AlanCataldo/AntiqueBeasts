@@ -10,6 +10,7 @@ import net.mebahel.antiquebeasts.entity.custom.greek.EliteHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.HeroHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.*;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
+import net.mebahel.antiquebeasts.entity.custom.other.HarpyEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.*;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
@@ -19,6 +20,11 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModEntities {
+
+    public static final EntityType<HarpyEntity> HARPY = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "harpy"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HarpyEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
     public static final EntityType<DraugrEntity> DRAUGR = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "draugr"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DraugrEntity::new)
@@ -136,6 +142,11 @@ public class ModEntities {
     public static final EntityType<ThrowingAxeEntity> THROWING_AXE = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "throwing_axe"),
             FabricEntityTypeBuilder.<ThrowingAxeEntity>create(SpawnGroup.MISC, ThrowingAxeEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+
+    public static final EntityType<HarpyFeatherEntity> HARPY_FEATHER = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "harpy_feather"),
+            FabricEntityTypeBuilder.<HarpyFeatherEntity>create(SpawnGroup.MISC, HarpyFeatherEntity::new)
                     .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
 
     public static final EntityType<VenomEntity> VENOM = Registry.register(

@@ -6,7 +6,9 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.client.custom.*;
 import net.mebahel.antiquebeasts.entity.client.custom.draugr.DraugrRenderer;
+import net.mebahel.antiquebeasts.entity.client.custom.harpy.HarpyRenderer;
 import net.mebahel.antiquebeasts.entity.client.projectiles.*;
+import net.mebahel.antiquebeasts.entity.client.projectiles.harpy.HarpyFeatherRenderer;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.particle.custom.MummyProjectileParticle;
 import net.mebahel.antiquebeasts.particle.custom.RockSplashParticle;
@@ -19,6 +21,7 @@ import net.mebahel.antiquebeasts.util.SpearModelPredicate;
 public class AntiqueBeastsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        EntityRendererRegistry.register(ModEntities.HARPY, HarpyRenderer::new);
         EntityRendererRegistry.register(ModEntities.DRAUGR, DraugrRenderer::new);
         EntityRendererRegistry.register(ModEntities.CENTAUR, CentaurRenderer::new);
         EntityRendererRegistry.register(ModEntities.EGYPTIAN_CARAVAN, EgyptianCaravanRenderer::new);
@@ -47,6 +50,7 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.HADES_CHOSEN_SPEAR, HadesChosenSpearRenderer::new);
         EntityRendererRegistry.register(ModEntities.THROWINGSNOWROCK, ThrowingSnowRockRenderer::new);
         EntityRendererRegistry.register(ModEntities.THROWING_AXE, ThrowingAxeRenderer::new);
+        EntityRendererRegistry.register(ModEntities.HARPY_FEATHER, HarpyFeatherRenderer::new);
         EntityRendererRegistry.register(ModEntities.VENOM, VenomRenderer::new);
         EntityRendererRegistry.register(ModEntities.VENOM_SLOW, VenomSlowRenderer::new);
         EntityRendererRegistry.register(ModEntities.MUMMY_PROJECTILE, MummyProjectileRenderer::new);

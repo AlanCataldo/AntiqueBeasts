@@ -126,6 +126,12 @@ public class ModSounds {
     public static SoundEvent DRAUGR_DEATH_1 = registerSoundEvent("draugr_death_1");
     public static SoundEvent DRAUGR_HURT_1 = registerSoundEvent("draugr_hurt_1");
     public static SoundEvent DRAUGR_HURT_2 = registerSoundEvent("draugr_hurt_2");
+    public static SoundEvent HARPY_AMBIENT_1 = registerSoundEvent("harpy_ambient_1");
+    public static SoundEvent HARPY_AMBIENT_2 = registerSoundEvent("harpy_ambient_2");
+    public static SoundEvent HARPY_DEATH_1 = registerSoundEvent("harpy_death_1");
+    public static SoundEvent HARPY_HURT_1 = registerSoundEvent("harpy_hurt_1");
+    public static SoundEvent HARPY_HURT_2 = registerSoundEvent("harpy_hurt_2");
+    public static SoundEvent HARPY_FEATHER_HIT = registerSoundEvent("harpy_feather_hit");
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));

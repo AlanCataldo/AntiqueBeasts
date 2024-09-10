@@ -26,7 +26,7 @@ public class HadesChosenModel extends GeoModel<HadesChosenEntity> {
     }
 
     public void setCustomAnimations(HadesChosenEntity entity, long uniqueID, AnimationState<HadesChosenEntity> customPredicate) {
-        CoreGeoBone head = this.getBone("head").orElse(null);
+        CoreGeoBone head = this.getBone("Head").orElse(null);
         EntityModelData extraData = customPredicate.getData(DataTickets.ENTITY_MODEL_DATA);
         float yawAngle = 0.125F * extraData.netHeadYaw() * 0.017453292F;
         float pitchAngle = 0.125F * extraData.headPitch() * 0.017453292F;

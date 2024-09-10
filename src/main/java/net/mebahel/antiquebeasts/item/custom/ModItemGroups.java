@@ -81,6 +81,8 @@ public class ModItemGroups {
                         entries.add(ModItems.RAW_CYCLOPS_MEAT);
                         entries.add(ModItems.COOKED_CYCLOPS_MEAT);
 
+                        entries.add(ModItems.HARPY_FEATHER);
+
                         entries.add(ModItems.N_D_NILE_MUSIC_DISC);
                         entries.add(ModItems.BEHOLD_THE_GREAT_SCIENCE_FI_MUSIC_DISC);
 
@@ -108,6 +110,7 @@ public class ModItemGroups {
                         entries.add(ModItems.EINHERJAR_SPAWN_EGG);
                         entries.add(ModItems.VALKYRIE_SPAWN_EGG);
                         entries.add(ModItems.DRAUGR_SPAWN_EGG);
+                        entries.add(ModItems.HARPY_SPAWN_EGG);
 
                     }).build());
     public static void registerItemGroups() {

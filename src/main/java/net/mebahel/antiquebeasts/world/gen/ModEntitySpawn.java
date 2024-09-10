@@ -14,6 +14,7 @@ import net.mebahel.antiquebeasts.entity.custom.greek.EliteHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.HeroHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.*;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
+import net.mebahel.antiquebeasts.entity.custom.other.HarpyEntity;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.world.Difficulty;
@@ -22,6 +23,18 @@ import net.minecraft.world.biome.BiomeKeys;
 
 public class ModEntitySpawn {
     public static void addEntitySpawn() {
+
+        BiomeModifications.addSpawn((BiomeSelectors.tag(ConventionalBiomeTags.MOUNTAIN)).or(BiomeSelectors.tag(ConventionalBiomeTags.MOUNTAIN_PEAK))
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.MOUNTAIN_SLOPE)),
+                SpawnGroup.CREATURE, ModEntities.HARPY, 6, 1, 3);
+        SpawnRestriction.register(ModEntities.HARPY, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return HarpyEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                });
+
         BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(),
                 SpawnGroup.MONSTER, ModEntities.DRAUGR, 20, 1, 2);
         SpawnRestriction.register(ModEntities.DRAUGR, SpawnRestriction.Location.ON_GROUND,

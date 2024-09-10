@@ -90,4 +90,9 @@ public class BloodStainedFrostSword extends SwordItem {
         tooltip.add(Text.translatable("item.antiquebeasts.blood_stained_frost_sword.tooltip1").formatted(Formatting.GRAY, Formatting.ITALIC));
         tooltip.add(Text.translatable("item.antiquebeasts.blood_stained_frost_sword.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
     }
+
+    @Override
+    public boolean hasGlint(ItemStack stack) {
+        return true;
+    }
 }

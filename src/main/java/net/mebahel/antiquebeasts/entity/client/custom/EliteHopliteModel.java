@@ -24,7 +24,7 @@ public class EliteHopliteModel extends GeoModel<EliteHopliteEntity> {
     }
     @Override
     public void setCustomAnimations(EliteHopliteEntity entity, long uniqueID, AnimationState<EliteHopliteEntity> customPredicate) {
-        CoreGeoBone head = this.getBone("head").orElse(null);
+        CoreGeoBone head = this.getBone("Head").orElse(null);
         EntityModelData extraData = customPredicate.getData(DataTickets.ENTITY_MODEL_DATA);
         float yawAngle = 0.125F * extraData.netHeadYaw() * 0.017453292F;
         float pitchAngle = 0.125F * extraData.headPitch() * 0.017453292F;

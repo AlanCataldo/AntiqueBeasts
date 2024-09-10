@@ -700,5 +700,41 @@
     "sounds": [
       "antiquebeasts:draugr/draugr_hurt_2"
     ]
+  },
+  "harpy_ambient_1": {
+    "subtitle": "antiquebeasts:draugr/harpy_ambient_1",
+    "sounds": [
+      "antiquebeasts:harpy/harpy_ambient_1"
+    ]
+  },
+  "harpy_ambient_2": {
+    "subtitle": "antiquebeasts:draugr/harpy_ambient_2",
+    "sounds": [
+      "antiquebeasts:harpy/harpy_ambient_2"
+    ]
+  },
+  "harpy_death_1": {
+    "subtitle": "antiquebeasts:draugr/harpy_death_1",
+    "sounds": [
+      "antiquebeasts:harpy/harpy_death_1"
+    ]
+  },
+  "harpy_hurt_1": {
+    "subtitle": "antiquebeasts:draugr/harpy_hurt_1",
+    "sounds": [
+      "antiquebeasts:harpy/harpy_hurt_1"
+    ]
+  },
+  "harpy_hurt_2": {
+    "subtitle": "antiquebeasts:draugr/harpy_hurt_2",
+    "sounds": [
+      "antiquebeasts:harpy/harpy_hurt_2"
+    ]
+  },
+  "harpy_feather_hit": {
+    "subtitle": "antiquebeasts:draugr/harpy_feather_hit",
+    "sounds": [
+      "antiquebeasts:harpy/harpy_feather_hit"
+    ]
   }
 }

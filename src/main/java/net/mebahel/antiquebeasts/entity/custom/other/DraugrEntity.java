@@ -1,7 +1,6 @@
 package net.mebahel.antiquebeasts.entity.custom.other;
 
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
-import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
 import net.mebahel.antiquebeasts.entity.ai.other.DraugrMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;

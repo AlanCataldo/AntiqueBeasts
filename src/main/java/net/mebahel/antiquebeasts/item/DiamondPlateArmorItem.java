@@ -1,16 +1,16 @@
 package net.mebahel.antiquebeasts.item;
 
 import net.mebahel.antiquebeasts.entity.armor.DiamondPlateArmorRenderer;
-import net.mebahel.antiquebeasts.entity.armor.IronPlateArmorRenderer;
-import net.mebahel.antiquebeasts.item.custom.ModArmorMaterials;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.client.RenderProvider;
+import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
@@ -22,19 +22,46 @@ import java.util.function.Supplier;
 public class DiamondPlateArmorItem extends ArmorItem implements GeoItem {
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
+
     public DiamondPlateArmorItem(ArmorMaterial materialIn, ArmorItem.Type type, Settings builder) {
         super(materialIn, type, builder);
     }
+
     @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {return this.cache;}
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.cache;
+    }
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller", 20, this::predicate));
+        controllers.add(new AnimationController<>(this, "controller", 0, this::predicate));
     }
-    private PlayState predicate(AnimationState animationState) {
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-        return PlayState.CONTINUE;
+
+    // Gestion des animations en fonction du mouvement de l'entité
+    private PlayState predicate(AnimationState<GeoItem> animationState) {
+        // Récupérer l'entité qui porte l'armure
+        Entity entity = animationState.getData(DataTickets.ENTITY);
+
+        // Vérifier que c'est bien une LivingEntity (joueur, créature, etc.)
+        if (entity instanceof LivingEntity livingEntity) {
+            // Si l'entité est en train de bouger (marche ou course)
+            boolean isMoving = livingEntity.forwardSpeed > 0 || livingEntity.sidewaysSpeed > 0;
+
+            // Si l'entité est en mouvement
+            if (isMoving) {
+                animationState.getController().setAnimation(RawAnimation.begin()
+                        .then("transition_walk", Animation.LoopType.PLAY_ONCE)
+                        .then("walk", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            }
+
+            animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
+
+        return PlayState.STOP;
     }
+
     @Override
     public void createRenderer(Consumer<Object> consumer) {
         consumer.accept(new RenderProvider() {
@@ -50,6 +77,7 @@ public class DiamondPlateArmorItem extends ArmorItem implements GeoItem {
             }
         });
     }
+
     @Override
     public Supplier<Object> getRenderProvider() {
         return this.renderProvider;

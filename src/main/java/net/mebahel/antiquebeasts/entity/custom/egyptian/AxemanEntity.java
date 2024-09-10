@@ -148,7 +148,7 @@ public class AxemanEntity extends EgyptianEntity implements GeoEntity {
     private PlayState attackPredicate(AnimationState state) {
         if(this.isSwinging() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
             state.getController().forceAnimationReset();
-            state.getController().setAnimation(RawAnimation.begin().then("attack2", Animation.LoopType.PLAY_ONCE));
+            state.getController().setAnimation(RawAnimation.begin().then("attack", Animation.LoopType.PLAY_ONCE));
         }
 
         return PlayState.CONTINUE;

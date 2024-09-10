@@ -33,11 +33,11 @@ public class AxemanModel extends GeoModel<AxemanEntity> {
     }
     @Override
     public Identifier getAnimationResource(AxemanEntity animatable) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "animations/huskarl.animation.json");
+        return new Identifier(AntiqueBeasts.MOD_ID, "animations/axeman.animation.json");
     }
     @Override
     public void setCustomAnimations(AxemanEntity entity, long uniqueID, AnimationState<AxemanEntity> customPredicate) {
-        CoreGeoBone head = this.getBone("head").orElse(null);
+        CoreGeoBone head = this.getBone("Head").orElse(null);
         EntityModelData extraData = customPredicate.getData(DataTickets.ENTITY_MODEL_DATA);
         float yawAngle = 0.125F * extraData.netHeadYaw() * 0.017453292F;
         float pitchAngle = 0.125F * extraData.headPitch() * 0.017453292F;

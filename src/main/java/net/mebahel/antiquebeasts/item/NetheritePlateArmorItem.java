@@ -3,6 +3,7 @@ package net.mebahel.antiquebeasts.item;
 import net.mebahel.antiquebeasts.entity.armor.DiamondPlateArmorRenderer;
 import net.mebahel.antiquebeasts.entity.armor.NetheritePlateArmorRenderer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ArmorItem;
@@ -10,6 +11,7 @@ import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.client.RenderProvider;
+import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
@@ -30,9 +32,28 @@ public class NetheritePlateArmorItem extends ArmorItem implements GeoItem {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController(this, "controller", 20, this::predicate));
     }
-    private PlayState predicate(AnimationState animationState) {
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-        return PlayState.CONTINUE;
+    private PlayState predicate(AnimationState<GeoItem> animationState) {
+        // Récupérer l'entité qui porte l'armure
+        Entity entity = animationState.getData(DataTickets.ENTITY);
+
+        // Vérifier que c'est bien une LivingEntity (joueur, créature, etc.)
+        if (entity instanceof LivingEntity livingEntity) {
+            // Si l'entité est en train de bouger (marche ou course)
+            boolean isMoving = livingEntity.forwardSpeed > 0 || livingEntity.sidewaysSpeed > 0;
+
+            // Si l'entité est en mouvement
+            if (isMoving) {
+                animationState.getController().setAnimation(RawAnimation.begin()
+                        .then("transition_walk", Animation.LoopType.PLAY_ONCE)
+                        .then("walk", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            }
+
+            animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
+
+        return PlayState.STOP;
     }
     @Override
     public void createRenderer(Consumer<Object> consumer) {

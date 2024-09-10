@@ -23,6 +23,7 @@
   "entity.antiquebeasts.pegasus": "Pegasus",
   "entity.antiquebeasts.centaur": "Centaur",
   "entity.antiquebeasts.draugr": "Draugr",
+  "entity.antiquebeasts.harpy": "Harpy",
 
   "block.antiquebeasts.amphora": "Amphora",
   "block.antiquebeasts.cursed_gold_block": "Cursed Gold Block",
@@ -32,6 +33,7 @@
   "item.antiquebeasts.music_disc.behold_the_great_science_fi_music_disc": "§bMusic Disc",
   "item.antiquebeasts.music_disc.behold_the_great_science_fi_music_disc.desc": "Age Of Mythology - behold the great science fi",
 
+  "item.antiquebeasts.spawn_egg.harpy_spawn_egg": "Harpy Spawn Egg",
   "item.antiquebeasts.spawn_egg.draugr_spawn_egg": "Draugr Spawn Egg",
   "item.antiquebeasts.spawn_egg.centaur_spawn_egg": "Centaur Spawn Egg",
   "item.antiquebeasts.spawn_egg.cyclops_spawn_egg": "Cyclops Spawn Egg",
@@ -111,6 +113,7 @@
   "item.antiquebeasts.diamond_scarab": "Diamond Scarab",
   "item.antiquebeasts.chimera_hair": "Chimera Hair",
   "item.antiquebeasts.weapon.valkyrie_spear": "Valkyrie Spear",
+  "item.antiquebeasts.weapon.harpy_feather": "Harpy Feather",
 
   "item.antiquebeasts.weapon.iron_centaur_sword": "Iron Centaur Sword",
   "item.antiquebeasts.weapon.khopesh.wood_khopesh": "Wood Khopesh",
