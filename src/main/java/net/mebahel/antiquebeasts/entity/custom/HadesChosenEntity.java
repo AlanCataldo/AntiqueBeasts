@@ -102,6 +102,9 @@ public class HadesChosenEntity extends HostileEntity implements GeoEntity {
     }
     public HadesChosenEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
+        this.setPathfindingPenalty(PathNodeType.LAVA, 0.0F);
+        this.setPathfindingPenalty(PathNodeType.DANGER_FIRE, 0.0F);
+        this.setPathfindingPenalty(PathNodeType.DAMAGE_FIRE, 0.0F);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
     }
     protected void initDataTracker() {
@@ -111,6 +114,10 @@ public class HadesChosenEntity extends HostileEntity implements GeoEntity {
         this.dataTracker.startTracking(COOLDOWN, 0f);
         this.dataTracker.startTracking(TICKCOUNTER, 0);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
+    }
+    @Override
+    public boolean isOnFire() {
+        return false;
     }
     public float getCooldown() { return this.dataTracker.get(COOLDOWN);}
     public void setCooldown(float cooldown) {
@@ -202,22 +209,10 @@ public class HadesChosenEntity extends HostileEntity implements GeoEntity {
                 this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.SWING, this.getSoundCategory(), 0.5f, 1f);
         }));
     }
-    protected EntityNavigation createNavigation(World world) {
-        return new MobNavigation(this, world) {
-            protected PathNodeNavigator createPathNodeNavigator(int range) {
-                this.nodeMaker = new LandPathNodeMaker();
-                this.nodeMaker.setCanEnterOpenDoors(true);
-                return new PathNodeNavigator(this.nodeMaker, range) {
-                    protected float getDistance(PathNode a, PathNode b) {
-                        return a.getHorizontalDistance(b);
-                    }
-                };
-            }
-        };
-    }
     @Override
     public boolean damage(DamageSource source, float amount) {
-        if (source.isOf(DamageTypes.IN_FIRE) || source.isOf(DamageTypes.ON_FIRE) || source.isOf(DamageTypes.WITHER)) {
+        if (source.isOf(DamageTypes.IN_FIRE) || source.isOf(DamageTypes.ON_FIRE) || source.isOf(DamageTypes.WITHER)
+        || source.isOf(DamageTypes.LAVA)) {
             return false;
         }
         return super.damage(source, amount);
