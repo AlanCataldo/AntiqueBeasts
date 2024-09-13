@@ -27,7 +27,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "antiquebeasts:weapon/khopesh/iron_khopesh",
+          "name": "antiquebeasts:weapon/khopesh/gold_khopesh_sickle",
           "weight": 1,
           "functions": [
             {
@@ -51,7 +51,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "antiquebeasts:weapon/khopesh/iron_khopesh",
+          "name": "antiquebeasts:weapon/khopesh/gold_khopesh_sickle",
           "weight": 49,
           "functions": [
             {
