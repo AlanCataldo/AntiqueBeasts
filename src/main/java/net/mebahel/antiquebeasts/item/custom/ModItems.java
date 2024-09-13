@@ -207,22 +207,22 @@ public class ModItems {
     public static final Item HIGH_IRON_SWORD = registerItem("weapon/high_iron_sword",
             new SwordItem(ModToolMaterial.HIGH_IRON,4, -2.4f,
                     new FabricItemSettings()));
-    public static final Item WOOD_KHOPESH = registerItem("weapon/khopesh/wood_khopesh",
+    public static final Item WOOD_KHOPESH = registerItem("weapon/khopesh/wood_khopesh_sickle",
             new SwordItem(ToolMaterials.WOOD,3, -2.2f,
                     new FabricItemSettings()));
-    public static final Item STONE_KHOPESH = registerItem("weapon/khopesh/stone_khopesh",
+    public static final Item STONE_KHOPESH = registerItem("weapon/khopesh/stone_khopesh_sickle",
             new SwordItem(ToolMaterials.STONE,3, -2.2f,
                     new FabricItemSettings()));
-    public static final Item IRON_KHOPESH = registerItem("weapon/khopesh/iron_khopesh",
+    public static final Item IRON_KHOPESH = registerItem("weapon/khopesh/iron_khopesh_sickle",
             new SwordItem(ModToolMaterial.IRON_KHOPESH,4, -2.2f,
                     new FabricItemSettings()));
-    public static final Item GOLD_KHOPESH = registerItem("weapon/khopesh/gold_khopesh",
+    public static final Item GOLD_KHOPESH = registerItem("weapon/khopesh/gold_khopesh_sickle",
             new SwordItem(ModToolMaterial.GOLD_KHOPESH,5, -2.2f,
                     new FabricItemSettings()));
-    public static final Item DIAMOND_KHOPESH = registerItem("weapon/khopesh/diamond_khopesh",
+    public static final Item DIAMOND_KHOPESH = registerItem("weapon/khopesh/diamond_khopesh_sickle",
             new SwordItem(ModToolMaterial.DIAMOND_KHOPESH,5, -2.2f,
                     new FabricItemSettings()));
-    public static final Item NETHERITE_KHOPESH = registerItem("weapon/khopesh/netherite_khopesh",
+    public static final Item NETHERITE_KHOPESH = registerItem("weapon/khopesh/netherite_khopesh_sickle",
             new SwordItem(ModToolMaterial.NETHERITE_KHOPESH,6, -2.2f,
                     new FabricItemSettings()));
     public static final Item IRON_EGYPTIAN_HALBERD = registerItem("weapon/egyptian_halberd/iron_egyptian_halberd",

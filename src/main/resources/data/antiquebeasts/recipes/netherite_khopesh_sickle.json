@@ -1,13 +1,13 @@
 {
   "type": "minecraft:smithing_transform",
   "base": {
-    "item": "antiquebeasts:weapon/khopesh/diamond_khopesh"
+    "item": "antiquebeasts:weapon/khopesh/diamond_khopesh_sickle"
   },
   "addition": {
     "item": "minecraft:netherite_ingot"
   },
   "result": {
-    "item": "antiquebeasts:weapon/khopesh/netherite_khopesh"
+    "item": "antiquebeasts:weapon/khopesh/netherite_khopesh_sickle"
   },
   "template": {
     "item": "minecraft:netherite_upgrade_smithing_template"

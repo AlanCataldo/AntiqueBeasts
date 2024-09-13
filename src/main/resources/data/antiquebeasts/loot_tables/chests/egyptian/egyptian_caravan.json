@@ -117,7 +117,7 @@
               "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "antiquebeasts:weapon/khopesh/gold_khopesh",
+          "name": "antiquebeasts:weapon/khopesh/gold_khopesh_sickle",
           "weight": 10
         },
         {
@@ -127,7 +127,7 @@
               "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "antiquebeasts:weapon/khopesh/diamond_khopesh",
+          "name": "antiquebeasts:weapon/khopesh/diamond_khopesh_sickle",
           "weight": 10
         },
         {
@@ -157,7 +157,7 @@
               "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "antiquebeasts:weapon/khopesh/diamond_khopesh",
+          "name": "antiquebeasts:weapon/khopesh/diamond_khopesh_sickle",
           "weight": 15
         },
         {
@@ -167,7 +167,7 @@
               "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "antiquebeasts:weapon/khopesh/diamond_khopesh",
+          "name": "antiquebeasts:weapon/khopesh/diamond_khopesh_sickle",
           "weight": 15
         },
         {

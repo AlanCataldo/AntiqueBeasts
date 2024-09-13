@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "  G",
-    " GG",
+    "  D",
+    " DD",
     " S "
   ],
   "key" : {
-    "G": {
-      "tag" : "minecraft:planks"
+    "D": {
+      "item" : "antiquebeasts:diamond_scarab"
     },
     "S": {
       "item": "minecraft:stick"
     }
   },
   "result": {
-    "item": "antiquebeasts:weapon/khopesh/wood_khopesh"
+    "item": "antiquebeasts:weapon/khopesh/diamond_khopesh_sickle"
   }
 }

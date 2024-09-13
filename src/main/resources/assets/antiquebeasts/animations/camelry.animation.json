@@ -67,7 +67,7 @@
 						}
 					}
 				},
-				"head2": {
+				"Head2": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -98,7 +98,7 @@
 						}
 					}
 				},
-				"leftarm": {
+				"LeftArm": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -129,7 +129,7 @@
 						}
 					}
 				},
-				"rightarm": {
+				"RightArm": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -611,7 +611,7 @@
 						}
 					}
 				},
-				"head2": {
+				"Head2": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -661,7 +661,7 @@
 						}
 					}
 				},
-				"leftarm": {
+				"LeftArm": {
 					"position": {
 						"0.0": {
 							"vector": [0, 0.25, 0]
@@ -680,7 +680,7 @@
 						}
 					}
 				},
-				"rightarm": {
+				"RightArm": {
 					"position": {
 						"0.0": {
 							"vector": [0, 0.25, 0]
@@ -994,7 +994,7 @@
 						}
 					}
 				},
-				"head2": {
+				"Head2": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -1010,7 +1010,7 @@
 						}
 					}
 				},
-				"leftarm": {
+				"LeftArm": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -1026,7 +1026,7 @@
 						}
 					}
 				},
-				"rightarm": {
+				"RightArm": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
