@@ -26,6 +26,7 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Util;
@@ -96,7 +97,7 @@ public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, DraugrEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, PillagerEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, RaiderEntity.class, true));
         this.targetSelector.add(5, new ActiveTargetGoal<>(this, EgyptianEntity.class, true));
         this.targetSelector.add(5, new ActiveTargetGoal<>(this, NorseEntity.class, true));
     }

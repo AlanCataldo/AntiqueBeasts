@@ -68,11 +68,12 @@ public class GreekMeleeAttackGoal extends Goal {
     public void start() {
         this.mob.setAttacking(true);
 
-        ModPatrolEntity patrolEntity = this.mob;
+        GreekEntity patrolEntity = this.mob;
         LivingEntity target = this.mob.getTarget();
 
-        List<ModPatrolEntity> patrolMembers = patrolEntity.getWorld().getEntitiesByClass(ModPatrolEntity.class, patrolEntity.getBoundingBox().expand(32.0), e -> e.isPartOfSamePatrol(patrolEntity));
-        for (ModPatrolEntity member : patrolMembers) {
+        List<GreekEntity> patrolMembers = patrolEntity.getWorld().getEntitiesByClass(GreekEntity.class, patrolEntity.getBoundingBox().expand(32.0), e -> e.isPartOfSamePatrol(patrolEntity)
+                && e.isPatrolling());
+        for (GreekEntity member : patrolMembers) {
             member.setPatrolling(false);
             member.setTarget(target);
         }

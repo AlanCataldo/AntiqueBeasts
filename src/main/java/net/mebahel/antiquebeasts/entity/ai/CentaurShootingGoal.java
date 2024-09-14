@@ -1,6 +1,7 @@
 package net.mebahel.antiquebeasts.entity.ai;
 
 import net.mebahel.antiquebeasts.entity.custom.greek.CentaurEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -33,12 +34,13 @@ public class CentaurShootingGoal extends Goal {
     }
 
     public void start() {
-        ModPatrolEntity patrolEntity = this.actor;
+        GreekEntity patrolEntity = this.actor;
         LivingEntity target = this.actor.getTarget();
 
-        List<ModPatrolEntity> patrolMembers = patrolEntity.getWorld().getEntitiesByClass(ModPatrolEntity.class, patrolEntity.getBoundingBox().expand(32.0), e -> e.isPartOfSamePatrol(patrolEntity));
+        List<GreekEntity> patrolMembers = patrolEntity.getWorld().getEntitiesByClass(GreekEntity.class, patrolEntity.getBoundingBox().expand(32.0), e -> e.isPartOfSamePatrol(patrolEntity)
+                && e.isPatrolling());
 
-        for (ModPatrolEntity member : patrolMembers) {
+        for (GreekEntity member : patrolMembers) {
             member.setPatrolling(false);
             member.setTarget(target);
         }

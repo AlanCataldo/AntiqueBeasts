@@ -24,6 +24,7 @@ import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.LocalDifficulty;
@@ -84,7 +85,7 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, PillagerEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, RaiderEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, GreekEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, EgyptianEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, NorseEntity.class, true));

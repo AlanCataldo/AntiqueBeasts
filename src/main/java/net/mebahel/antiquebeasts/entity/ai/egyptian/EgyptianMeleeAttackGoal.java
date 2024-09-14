@@ -73,7 +73,8 @@ public class EgyptianMeleeAttackGoal extends Goal {
         ModPatrolEntity patrolEntity = this.mob;
         LivingEntity target = this.mob.getTarget();
 
-        List<ModPatrolEntity> patrolMembers = patrolEntity.getWorld().getEntitiesByClass(ModPatrolEntity.class, patrolEntity.getBoundingBox().expand(32.0), e -> e.isPartOfSamePatrol(patrolEntity));
+        List<ModPatrolEntity> patrolMembers = patrolEntity.getWorld().getEntitiesByClass(ModPatrolEntity.class, patrolEntity.getBoundingBox().expand(32.0), e -> e.isPartOfSamePatrol(patrolEntity)
+                && e.isPatrolling());
         for (ModPatrolEntity member : patrolMembers) {
             if (!(member instanceof EgyptianCaravanEntity) && member.isPatrolling()) {
                 member.setPatrolling(false);
