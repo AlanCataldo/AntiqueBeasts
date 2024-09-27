@@ -1,0 +1,27 @@
+{
+  "display": {
+    "icon": {
+      "item": "antiquebeasts:gold_plate_helmet"
+    },
+    "title": {
+      "translate": "advancement.antiquebeasts.root.title"
+    },
+    "description": {
+      "translate": "advancement.antiquebeasts.root.description"
+    },
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "root_unlocked": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "position": {
+          "dimension": "minecraft:overworld"
+        }
+      }
+    }
+  }
+}

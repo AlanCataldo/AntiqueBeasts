@@ -45,6 +45,10 @@ public class ElephantRiderShootingGoal extends Goal {
 
     public void tick() {
         LivingEntity livingEntity = this.cyclops.getTarget();
+        if (livingEntity == null || !livingEntity.isAlive()) {
+            this.stop();
+            return;
+        }
         if (this.cyclops.distanceTo(livingEntity) > 2) {
             if (this.cyclops.canSee(livingEntity)) {
                 World world = this.cyclops.getWorld();

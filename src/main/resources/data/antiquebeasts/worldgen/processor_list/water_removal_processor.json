@@ -1,0 +1,8 @@
+{
+  "processors": [
+    {
+      "processor_type": "antiquebeasts:water_removal_processor",
+      "config": {}
+    }
+  ]
+}

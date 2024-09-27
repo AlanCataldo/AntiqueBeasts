@@ -37,6 +37,8 @@ public abstract class ItemRendererMixin {
                 return ((ItemRendererAccessor) this).antiquebeasts$getModels().getModelManager().getModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/spear/inv_netherite_hoplite_spear", "inventory"));
             else if (stack.isOf(ModItems.HERSIR_AXE))
                 return ((ItemRendererAccessor) this).antiquebeasts$getModels().getModelManager().getModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/inv_hersir_axe", "inventory"));
+            else if (stack.isOf(ModItems.PHARAOH_SCEPTER))
+                return ((ItemRendererAccessor) this).antiquebeasts$getModels().getModelManager().getModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/inv_pharaoh_scepter", "inventory"));
         }
         return value;
     }

@@ -1,5 +1,6 @@
 package net.mebahel.antiquebeasts.item;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.mebahel.antiquebeasts.entity.armor.DiamondPlateArmorRenderer;
 import net.mebahel.antiquebeasts.entity.armor.NetheritePlateArmorRenderer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
@@ -22,9 +23,19 @@ import java.util.function.Supplier;
 
 public class NetheritePlateArmorItem extends ArmorItem implements GeoItem {
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
-    private final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
+    private Supplier<Object> renderProvider;
     public NetheritePlateArmorItem(ArmorMaterial materialIn, Type type, Settings builder) {
         super(materialIn, type, builder);
+        // Prevent initialization of Fabric-only methods in Forge/Syntra environments
+        if (FabricLoader.getInstance().isModLoaded("fabric")) {
+            try {
+                this.renderProvider = GeoItem.makeRenderer(this);
+            } catch (NoSuchMethodError e) {
+                this.renderProvider = () -> null;  // Fallback in case method is missing
+            }
+        } else {
+            this.renderProvider = () -> null;  // No renderer for non-Fabric environments
+        }
     }
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {return this.cache;}
@@ -57,18 +68,20 @@ public class NetheritePlateArmorItem extends ArmorItem implements GeoItem {
     }
     @Override
     public void createRenderer(Consumer<Object> consumer) {
-        consumer.accept(new RenderProvider() {
-            private NetheritePlateArmorRenderer renderer;
+        if (FabricLoader.getInstance().isModLoaded("fabric")) {
+            consumer.accept(new RenderProvider() {
+                private NetheritePlateArmorRenderer renderer;
 
-            @Override
-            public BipedEntityModel<LivingEntity> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack,
-                                                                        EquipmentSlot equipmentSlot, BipedEntityModel<LivingEntity> original) {
-                if (this.renderer == null)
-                    this.renderer = new NetheritePlateArmorRenderer();
-                this.renderer.prepForRender(livingEntity, itemStack, equipmentSlot, original);
-                return this.renderer;
-            }
-        });
+                @Override
+                public BipedEntityModel<LivingEntity> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack,
+                                                                            EquipmentSlot equipmentSlot, BipedEntityModel<LivingEntity> original) {
+                    if (this.renderer == null)
+                        this.renderer = new NetheritePlateArmorRenderer();
+                    this.renderer.prepForRender(livingEntity, itemStack, equipmentSlot, original);
+                    return this.renderer;
+                }
+            });
+        }
     }
     @Override
     public Supplier<Object> getRenderProvider() {

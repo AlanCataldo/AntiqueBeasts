@@ -1,0 +1,34 @@
+{
+  "parent": "antiquebeasts:kill_harpy",
+  "criteria": {
+    "killed_with_harpy_feather": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "antiquebeasts:harpy"
+        },
+        "killing_blow": {
+          "is_projectile": true,
+          "direct_entity": {
+            "type": "antiquebeasts:harpy_feather"
+          }
+        }
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "item": "antiquebeasts:weapon/harpy_feather"
+    },
+    "title": {
+      "translate": "advancement.antiquebeasts.kill_with_harpy_feather.title"
+    },
+    "description": {
+      "translate": "advancement.antiquebeasts.kill_with_harpy_feather.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  }
+}

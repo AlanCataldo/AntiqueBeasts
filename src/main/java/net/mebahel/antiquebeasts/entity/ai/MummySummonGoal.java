@@ -45,14 +45,9 @@ public class MummySummonGoal extends Goal {
     }
 
     public void tick() {
-        if (!this.mummy.isSwinging()) {
-            this.mummy.setSpawnCooldown(this.mummy.getSpawnCooldown() - 1);
-        } else if (this.mummy.getSpawnCooldown() < 30) {
-            this.mummy.setCooldown(60);
-        } else {
-            this.mummy.setSpawnCooldown(120);
-            this.mummy.setCooldown(60);
-        }
+        this.mummy.setSpawnCooldown(this.mummy.getSpawnCooldown() - 1);
+        if (this.mummy.getSpawnCooldown() < 40)
+            this.mummy.setCooldown(120);
 
         switch (this.mummy.getSpawnCooldown()) {
             case 0 -> this.stop();
@@ -61,7 +56,7 @@ public class MummySummonGoal extends Goal {
                 spawnMummyAtOffset(world, 3, 2);
                 spawnMummyAtOffset(world, 3, -2);
             }
-            case 26 -> {
+            case 22 -> {
                 this.mummy.setSpawn(true);
             }
         }

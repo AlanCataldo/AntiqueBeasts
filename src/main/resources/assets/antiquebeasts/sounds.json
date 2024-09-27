@@ -732,9 +732,21 @@
     ]
   },
   "harpy_feather_hit": {
-    "subtitle": "antiquebeasts:draugr/harpy_feather_hit",
+    "subtitle": "antiquebeasts:harpy/harpy_feather_hit",
     "sounds": [
       "antiquebeasts:harpy/harpy_feather_hit"
+    ]
+  },
+  "mummy_boss_second_phase": {
+    "subtitle": "antiquebeasts:egyptian/mummy_boss_second_phase",
+    "sounds": [
+      "antiquebeasts:egyptian/mummy_boss_second_phase"
+    ]
+  },
+  "dark_magic_1": {
+    "subtitle": "antiquebeasts:egyptian/dark_magic_1",
+    "sounds": [
+      "antiquebeasts:egyptian/dark_magic_1"
     ]
   }
 }

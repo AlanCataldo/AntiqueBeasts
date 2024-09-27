@@ -56,6 +56,10 @@ public class WadjetShootingGoal extends Goal {
 
     public void tick() {
         LivingEntity livingEntity = this.actor.getTarget();
+        if (livingEntity == null || !livingEntity.isAlive()) {
+            this.stop();
+            return;
+        }
         if (livingEntity != null) {
             double d = this.actor.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
             boolean bl = this.actor.getVisibilityCache().canSee(livingEntity);

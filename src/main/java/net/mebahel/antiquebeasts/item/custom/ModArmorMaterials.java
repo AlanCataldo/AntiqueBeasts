@@ -47,7 +47,35 @@ public enum ModArmorMaterials implements StringIdentifiable, ArmorMaterial {
         map.put(ArmorItem.Type.HELMET, 5);
     }), 22, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 3.0F, 0.2F, () -> {
         return Ingredient.ofItems(new ItemConvertible[]{Items.NETHERITE_INGOT});
+    }),
+
+    IRON_SCALE("iron", 17, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
+        map.put(ArmorItem.Type.BOOTS, 3);
+        map.put(ArmorItem.Type.LEGGINGS, 5);
+        map.put(ArmorItem.Type.CHESTPLATE, 6);
+        map.put(ArmorItem.Type.HELMET, 2);
+    }), 15, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F, 0.0F, () -> {
+        return Ingredient.ofItems(new ItemConvertible[]{ModItems.IRON_SCARAB});
+    }),
+    GOLD_SCALE("gold", 20, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
+        map.put(ArmorItem.Type.BOOTS, 3);
+        map.put(ArmorItem.Type.LEGGINGS, 5);
+        map.put(ArmorItem.Type.CHESTPLATE, 6);
+        map.put(ArmorItem.Type.HELMET, 3);
+    }), 12, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0.0F, 0.0F, () -> {
+        return Ingredient.ofItems(new ItemConvertible[]{ModItems.GOLD_SCARAB});
+    }),
+
+    DIAMOND_SCALE("diamond", 38, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
+        map.put(ArmorItem.Type.BOOTS, 4);
+        map.put(ArmorItem.Type.LEGGINGS, 6);
+        map.put(ArmorItem.Type.CHESTPLATE, 8);
+        map.put(ArmorItem.Type.HELMET, 4);
+    }), 18, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0F, 0.1F, () -> {
+        return Ingredient.ofItems(new ItemConvertible[]{ModItems.DIAMOND_PLATE});
     });
+
+
 
     public static final StringIdentifiable.Codec<net.minecraft.item.ArmorMaterials> CODEC = StringIdentifiable.createCodec(net.minecraft.item.ArmorMaterials::values);
     private static final EnumMap<ArmorItem.Type, Integer> BASE_DURABILITY = (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {

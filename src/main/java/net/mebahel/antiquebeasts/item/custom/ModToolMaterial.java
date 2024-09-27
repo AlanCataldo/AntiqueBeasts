@@ -14,21 +14,25 @@ public enum ModToolMaterial implements ToolMaterial {
     FROST_WEAPON(4, 1550, 4.0F, 0.5F, 17, () -> {
         return Ingredient.ofItems(Items.DIAMOND);
     }),
+
+    PHARAOH_SCEPTER(4, 1550, 4.0F, 0.5F, 25, () -> {
+        return Ingredient.ofItems(ModItems.GOLD_SCARAB);
+    }),
     HERSIR_AXE(4, 680, 6.5F, 0.5F, 19, () -> {
         return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
     }),
 
     IRON_KHOPESH(4, 680, 7F, 1F, 15, () -> {
-        return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
+        return Ingredient.ofItems(ModItems.IRON_SCARAB);
     }),
     GOLD_KHOPESH(4, 480, 7F, 0.5F, 19, () -> {
-        return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
+        return Ingredient.ofItems(ModItems.GOLD_SCARAB);
     }),
     DIAMOND_KHOPESH(4, 1280, 7F, 1F, 17, () -> {
-        return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
+        return Ingredient.ofItems(ModItems.DIAMOND_SCARAB);
     }),
     NETHERITE_KHOPESH(4, 1580, 7F, 1F, 20, () -> {
-        return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
+        return Ingredient.ofItems(Items.NETHERITE_INGOT);
     }),
 
     HIGH_IRON(4, 680, 7.0F, 1.5F, 19, () -> {

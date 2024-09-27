@@ -9,10 +9,12 @@ import net.mebahel.antiquebeasts.entity.custom.egyptian.CamelryEntity;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.MummyEntity;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.ServantEntity;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.WadjetEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.CentaurEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.ChampionHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.EliteHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.HeroHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.*;
+import net.mebahel.antiquebeasts.entity.custom.other.DraugrArcherEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.HarpyEntity;
 import net.minecraft.entity.SpawnGroup;
@@ -33,6 +35,16 @@ public class ModEntitySpawn {
                         return false;
                     }
                     return HarpyEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                });
+
+        BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(),
+                SpawnGroup.MONSTER, ModEntities.DRAUGR_ARCHER, 20, 1, 2);
+        SpawnRestriction.register(ModEntities.DRAUGR_ARCHER, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return DraugrArcherEntity.canMobSpawn(type, world, spawnReason, pos, random);
                 });
 
         BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(),
@@ -379,6 +391,28 @@ public class ModEntitySpawn {
                         return false;
                     }
                     return ChampionHopliteEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                });
+
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                                BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST,
+                                BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.MEADOW, BiomeKeys.OLD_GROWTH_BIRCH_FOREST,
+                                TerralithBiomeKeys.YELLOWSTONE, TerralithBiomeKeys.AMETHYST_CANYON, TerralithBiomeKeys.TEMPERATE_HIGHLANDS,
+                                TerralithBiomeKeys.GRAVEL_BEACH, TerralithBiomeKeys.HOT_SHRUBLAND, TerralithBiomeKeys.ALPHA_ISLAND,
+                                TerralithBiomeKeys.BLOOMING_VALLEY, TerralithBiomeKeys.LAVENDER_VALLEY, TerralithBiomeKeys.LAVENDER_FOREST,
+                                TerralithBiomeKeys.MIRAGE_ISLES, TerralithBiomeKeys.MOONLIGHT_GROVE, TerralithBiomeKeys.MOONLIGHT_VALLEY,
+                                TerralithBiomeKeys.SAKURA_GROVE, TerralithBiomeKeys.SAKURA_VALLEY, TerralithBiomeKeys.BLOOMING_PLATEAU,
+                                TerralithBiomeKeys.SKYLANDS, TerralithBiomeKeys. SKYLANDS_AUTUMN, TerralithBiomeKeys.SKYLANDS_SPRING,
+                                TerralithBiomeKeys.SKYLANDS_SUMMER, TerralithBiomeKeys.WARM_RIVER, TerralithBiomeKeys.VOLCANIC_PEAKS,
+                                TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS)
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.PLAINS)).or(BiomeSelectors.tag(ConventionalBiomeTags.FOREST))
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.CLIMATE_TEMPERATE)),
+                SpawnGroup.CREATURE, ModEntities.CENTAUR, 7, 1, 2);
+        SpawnRestriction.register(ModEntities.CENTAUR, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return CentaurEntity.canMobSpawn(type, world, spawnReason, pos, random);
                 });
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(

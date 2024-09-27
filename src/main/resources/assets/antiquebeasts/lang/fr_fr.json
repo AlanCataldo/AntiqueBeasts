@@ -24,15 +24,22 @@
   "entity.antiquebeasts.centaur": "Centaure",
   "entity.antiquebeasts.draugr": "Draugr",
   "entity.antiquebeasts.harpy": "Harpie",
+  "entity.antiquebeasts.mummy_boss": "Pharaon momifié",
+  "entity.antiquebeasts.draugr_archer": "Archer Draugr",
+
+  "item.antiquebeasts.ankh": "§eAnkh",
+  "item.antiquebeasts.ankh_fragment": "Morceau d'Ankh",
 
   "block.antiquebeasts.amphora": "Amphore",
   "block.antiquebeasts.cursed_gold_block": "Block d'or maudit",
+  "block.antiquebeasts.mummy_boss_altar": "Autel du Pharaon",
 
   "item.antiquebeasts.music_disc.n_d_nile_music_disc": "§bDisque de musique",
   "item.antiquebeasts.music_disc.n_d_nile_music_disc.desc": "Age Of Mythology - n. d. nile",
   "item.antiquebeasts.music_disc.behold_the_great_science_fi_music_disc": "§bDisque de musique",
   "item.antiquebeasts.music_disc.behold_the_great_science_fi_music_disc.desc": "Age Of Mythology - behold the great science fi",
 
+  "item.antiquebeasts.spawn_egg.draugr_archer_spawn_egg": "Oeuf d'apparition d'Archer' Draugr",
   "item.antiquebeasts.spawn_egg.harpy_spawn_egg": "Oeuf d'apparition de Harpie",
   "item.antiquebeasts.spawn_egg.draugr_spawn_egg": "Oeuf d'apparition de Draugr",
   "item.antiquebeasts.spawn_egg.centaur_spawn_egg": "Oeuf d'apparition de centaure",
@@ -56,6 +63,7 @@
   "item.antiquebeasts.spawn_egg.elephant_rider_spawn_egg": "Oeuf d'apparition de Chevaucheur d'éléphant",
   "item.antiquebeasts.spawn_egg.chimera_spawn_egg": "Oeuf d'apparition de Chimère",
   "item.antiquebeasts.spawn_egg.pegasus_spawn_egg": "Oeuf d'apparition de Pégase",
+  "item.antiquebeasts.spawn_egg.mummy_boss_spawn_egg": "Oeuf d'apparition de Pharaon momifié",
 
   "item.antiquebeasts.throwingrock": "Rocher de lancer",
   "item.antiquebeasts.raw_cyclops_meat": "Viande de cyclope crue",
@@ -66,6 +74,14 @@
   "item.antiquebeasts.cyclops_blood": "Sang de Cyclope",
   "item.antiquebeasts.concentrated_cyclops_blood": "Sang de cyclope concentré",
   "item.antiquebeasts.cyclops_eye": "Oeil de cyclope",
+  "item.antiquebeasts.gold_scale_helmet": "Casque en écailles d'or",
+  "item.antiquebeasts.gold_scale_chestplate": "Torse en écailles d'or",
+  "item.antiquebeasts.gold_scale_leggings": "Pantalon en écailles d'or",
+  "item.antiquebeasts.gold_scale_boots": "Bottes en écailles d'or",
+  "item.antiquebeasts.diamond_scale_helmet": "Casque en écailles de diamant",
+  "item.antiquebeasts.diamond_scale_chestplate": "Torse en écailles de diamant",
+  "item.antiquebeasts.diamond_scale_leggings": "Pantalon en écailles de diamant",
+  "item.antiquebeasts.diamond_scale_boots": "Bottes en écailles de diamant",
   "item.antiquebeasts.gold_plate_helmet": "Casque en plaque d'or",
   "item.antiquebeasts.gold_plate_chestplate": "Torse en plaque d'or",
   "item.antiquebeasts.gold_plate_leggings": "Pantalon en plaque d'or",
@@ -85,6 +101,8 @@
   "item.antiquebeasts.netherite_plate_chestplate": "Torse de plaque en netherite",
   "item.antiquebeasts.netherite_plate_leggings": "Pantalon de plaque en netherite",
   "item.antiquebeasts.netherite_plate_boots": "Bottes de plaque en netherite",
+  "item.antiquebeasts.shield.iron_egyptian_shield": "Bouclier égyptien en fer",
+  "item.antiquebeasts.shield.gold_egyptian_shield": "Bouclier égyptien en or",
   "item.antiquebeasts.shield.iron_plate_shield": "Bouclier de plaque en fer",
   "item.antiquebeasts.shield.gold_plate_shield": "Bouclier de plaque en or",
   "item.antiquebeasts.shield.diamond_plate_shield": "Bouclier de plaque en diamant",
@@ -111,10 +129,14 @@
   "item.antiquebeasts.gold_scarab": "Scarabée en or",
   "item.antiquebeasts.iron_scarab": "Scarabée en fer",
   "item.antiquebeasts.diamond_scarab": "Scarabée en diamant",
+  "item.antiquebeasts.cursed_scarab": "Scarabée maudit",
   "item.antiquebeasts.chimera_hair": "Poil de Chimère",
   "item.antiquebeasts.weapon.valkyrie_spear": "Lance de Valkyrie",
   "item.antiquebeasts.weapon.harpy_feather": "Plume de Harpie",
 
+  "item.antiquebeasts.weapon.pharaoh_scepter_staff": "§5Sceptre du Pharaon",
+  "item.antiquebeasts.pharaoh_scepter_staff.tooltip": "Ce Sceptre vous permet d'utiliser ",
+  "item.antiquebeasts.pharaoh_scepter_staff.tooltip2": "la magie noire du Pharaon Mommifié",
   "item.antiquebeasts.weapon.iron_centaur_sword": "Épée de Centaur en fer",
   "item.antiquebeasts.weapon.khopesh.wood_khopesh_sickle": "Khopesh en bois",
   "item.antiquebeasts.weapon.khopesh.stone_khopesh_sickle": "Khopesh en pierre",
@@ -127,5 +149,41 @@
   "item.antiquebeasts.weapon.egyptian_halberd.diamond_egyptian_halberd": "Hallebarde egyptienne en diamant",
   "item.antiquebeasts.weapon.egyptian_halberd.netherite_egyptian_halberd": "Hallebarde egyptienne en netherite",
   "item.antiquebeasts.bow.egyptian_recurve_bow": "Arc recourbé egyptien",
-  "item.antiquebeasts.bow.greek_composite_bow": "Arc composite grec"
+  "item.antiquebeasts.bow.greek_composite_bow": "Arc composite grec",
+
+  "advancement.antiquebeasts.root.title": "Mebahel's Antique Beasts",
+  "advancement.antiquebeasts.root.description": "Explorer les mystères des créatures anciennes.",
+
+  "advancement.antiquebeasts.kill_valkyrie.title": "Le chemin vers le Valhalla",
+  "advancement.antiquebeasts.kill_valkyrie.description": "Tuer une Valkyrie pour la première fois.",
+
+  "advancement.antiquebeasts.kill_hades_shade.title": "Ghostbusters !",
+  "advancement.antiquebeasts.kill_hades_shade.description": "Tuer une entité fantomatique pour la première fois.",
+
+  "advancement.antiquebeasts.kill_draugr.title": "Qu'est-ce qui les a réveillés ?",
+  "advancement.antiquebeasts.kill_draugr.description": "Tuer un Draugr pour la première fois.",
+
+  "advancement.antiquebeasts.see_mummy_boss.title": "Qu'est-ce que j'ai éveillé ?",
+  "advancement.antiquebeasts.see_mummy_boss.description": "Réveiller un Pharaon momifié.",
+
+  "advancement.antiquebeasts.kill_mummy.title": "Es-tu ma Momie ?",
+  "advancement.antiquebeasts.kill_mummy.description": "Tuer une Momie pour la première fois.",
+
+  "advancement.antiquebeasts.kill_mummy_boss.title": "Pharaoh and Square",
+  "advancement.antiquebeasts.kill_mummy_boss.description": "Battre un Pharaon momifié.",
+
+  "advancement.antiquebeasts.kill_harpy.title": "Poulet volant ?",
+  "advancement.antiquebeasts.kill_harpy.description": "Tuer une Harpie pour la première fois.",
+
+  "advancement.antiquebeasts.kill_with_harpy_feather.title": "Qui est la Harpie maintenant ?",
+  "advancement.antiquebeasts.kill_with_harpy_feather.description":"Tuer une Harpie avec une plume de Harpie.",
+
+  "advancement.antiquebeasts.find_greek_temple.title": "Sommes-nous en Olympe ? ?",
+  "advancement.antiquebeasts.find_greek_temple.description": "Trouver un Temple Grec.",
+
+  "advancement.antiquebeasts.find_egyptian_pyramid.title": "Voyageur des dunes",
+  "advancement.antiquebeasts.find_egyptian_pyramid.description": "Trouver une Pyramide Egyptienne.",
+
+  "advancement.antiquebeasts.find_hoplite_barrack.title": "Un Peloton ? Ici ?",
+  "advancement.antiquebeasts.find_hoplite_barrack.description": "Trouver une Caserne de Hoplite."
 }

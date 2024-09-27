@@ -9,8 +9,10 @@ import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.mebahel.antiquebeasts.entity.variant.HeroHopliteVariant;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.mebahel.antiquebeasts.util.ModConfig;
+import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
+import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.ModSoundUtil;
+import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
@@ -23,7 +25,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
@@ -45,7 +46,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
 import javax.annotation.Nullable;
-import java.util.Objects;
 
 public class HeroHopliteEntity extends GreekEntity implements GeoEntity {
     public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(HeroHopliteEntity.class,
@@ -81,7 +81,7 @@ public class HeroHopliteEntity extends GreekEntity implements GeoEntity {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.72f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 42.0D+ ModConfig.infantryBonusHealth)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 42.0D+ ModBonusHealthConfig.heroHopliteBonusHealth)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0f)
                 .add(EntityAttributes.GENERIC_ARMOR, 7f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2f)
@@ -169,8 +169,8 @@ public class HeroHopliteEntity extends GreekEntity implements GeoEntity {
         this.setTarget(null);
         if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
                 && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(11);
-            if (randomValue >= 0 && randomValue <= 4) {
+            int randomValue = this.random.nextInt(10);
+            if (randomValue >= ModSpawnRateConfig.heroHopliteSpawnRate) {
                 this.remove(Entity.RemovalReason.DISCARDED);
             }
         }
@@ -188,7 +188,7 @@ public class HeroHopliteEntity extends GreekEntity implements GeoEntity {
         super.onDeath(source);
 
         if (source.getAttacker() instanceof ZombieEntity) {
-            if (this.random.nextFloat() < 0.5f) {
+            if (this.random.nextFloat() < 0.25f) {
                 ZombieEntity newZombie = EntityType.ZOMBIE.create(this.getWorld());
                 if (newZombie != null) {
                     newZombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());

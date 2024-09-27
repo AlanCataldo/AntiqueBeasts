@@ -1,0 +1,30 @@
+{
+  "parent": "antiquebeasts:root",
+  "criteria": {
+    "killed_harpy": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "antiquebeasts:throwing_axeman"
+        }
+      }
+    }
+  },
+  "rewards": {
+  },
+  "display": {
+    "icon": {
+      "item": "antiquebeasts:weapon/throwing_axe_item"
+    },
+    "title": {
+      "translate": "Axe Me a Question"
+    },
+    "description": {
+      "translate": "Kill a Throwing Axeman for the first time."
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  }
+}

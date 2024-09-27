@@ -5,8 +5,13 @@ import net.mebahel.antiquebeasts.entity.ai.HadesShadeLookAtTargetGoal;
 import net.mebahel.antiquebeasts.entity.ai.HadesShadeMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.HadesShadeMoveControl;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.mebahel.antiquebeasts.util.ModConfig;
+import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
+import net.mebahel.antiquebeasts.util.config.ModConfig;
+import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -19,14 +24,19 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
+
+import javax.annotation.Nullable;
 
 import static java.lang.Math.random;
 
@@ -83,7 +93,7 @@ public class HadesShadeEntity extends FlyingEntity implements GeoEntity {
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 40)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 22.0D + ModConfig.mythUnitBonusHealth)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 22.0D + ModBonusHealthConfig.hadesShadeBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 4f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.5f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.3f)
@@ -166,5 +176,19 @@ public class HadesShadeEntity extends FlyingEntity implements GeoEntity {
         if (soundEvent != null) {
             this.playSound(soundEvent, 0.35f, 1f);
         }
+    }
+
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
+                                 SpawnReason spawnReason, @Nullable EntityData entityData,
+                                 @Nullable NbtCompound entityNbt) {
+        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
+                && spawnReason != SpawnReason.EVENT ) {
+            int randomValue = this.random.nextInt(10);
+            if (randomValue >= ModSpawnRateConfig.hadesShadeSpawnRate) {
+                this.remove(Entity.RemovalReason.DISCARDED);
+            }
+        }
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 }

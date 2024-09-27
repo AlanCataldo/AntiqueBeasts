@@ -8,9 +8,15 @@ import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
+import net.mebahel.antiquebeasts.entity.variant.CyclopsVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.mebahel.antiquebeasts.util.ModConfig;
+import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
+import net.mebahel.antiquebeasts.util.config.ModConfig;
+import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -20,14 +26,17 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.raid.RaiderEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Util;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -57,7 +66,7 @@ public class FrostCyclopsEntity extends CyclopsEntity implements GeoEntity {
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 56.0D + ModConfig.mythUnitBonusHealth)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 56.0D + ModBonusHealthConfig.frostCyclopsBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 8f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.6f)
@@ -136,5 +145,20 @@ public class FrostCyclopsEntity extends CyclopsEntity implements GeoEntity {
                 };
             }
         };
+    }
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
+                                 SpawnReason spawnReason, @javax.annotation.Nullable EntityData entityData,
+                                 @javax.annotation.Nullable NbtCompound entityNbt) {
+        CyclopsVariant variant = Util.getRandom(CyclopsVariant.values(), this.random);
+        setVariant(variant);
+        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
+                && spawnReason != SpawnReason.EVENT ) {
+            int randomValue = this.random.nextInt(10);
+            if (randomValue >= ModSpawnRateConfig.frostCyclopsSpawnRate) {
+                this.remove(Entity.RemovalReason.DISCARDED);
+            }
+        }
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 }

@@ -4,15 +4,19 @@
   "package": "net.mebahel.antiquebeasts.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AnkhTotemMixin",
     "BrewingRecipeRegistryMixin",
     "FireDamageMixin",
     "IronGolemMixin",
     "MobEntityAccessor",
+    "PoisonImmunityMixin",
     "ShieldDurabilityMixin",
     "ShieldSoundMixin",
     "WitherDamageMixin"
   ],
   "client": [
+    "AnkhTotemClientMixin",
+    "CustomBossBarHudMixin",
     "ItemRendererAccessor",
     "ItemRendererMixin",
     "ModelLoaderMixin"

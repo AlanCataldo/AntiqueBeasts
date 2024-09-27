@@ -37,7 +37,7 @@ public class ElephantRiderModel extends GeoModel<ElephantRiderEntity> {
     }
     @Override
     public void setCustomAnimations(ElephantRiderEntity entity, long uniqueID, AnimationState<ElephantRiderEntity> customPredicate) {
-        CoreGeoBone head2 = this.getBone("head2").orElse(null);
+        CoreGeoBone head2 = this.getBone("Head2").orElse(null);
         EntityModelData extraData = customPredicate.getData(DataTickets.ENTITY_MODEL_DATA);
         float yawAngle = 0.125F * extraData.netHeadYaw() * 0.017453292F;
         float pitchAngle = 0.125F * extraData.headPitch() * 0.017453292F;

@@ -1,0 +1,23 @@
+{
+  "parent": "antiquebeasts:find_egyptian_pyramid",
+  "criteria": {
+    "see_mummy_boss": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "icon": {
+      "item": "minecraft:spyglass"
+    },
+    "title": {
+      "translate": "advancement.antiquebeasts.see_mummy_boss.title"
+    },
+    "description": {
+      "translate": "advancement.antiquebeasts.see_mummy_boss.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  }
+}

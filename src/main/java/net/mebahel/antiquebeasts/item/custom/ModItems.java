@@ -30,6 +30,10 @@ public class ModItems {
             new MusicDiscItem(7, ModSounds.BEHOLD_THE_GREAT_SCIENCE_FI_MUSIC,
                     new FabricItemSettings().maxCount(1), 149));
 
+    public static final Item DRAUGR_ARCHER_SPAWN_EGG = registerItem("spawn_egg/draugr_archer_spawn_egg",
+            new SpawnEggItem(ModEntities.DRAUGR_ARCHER,4399360, 1926344,
+                    new FabricItemSettings()));
+
     public static final Item HARPY_SPAWN_EGG = registerItem("spawn_egg/harpy_spawn_egg",
             new SpawnEggItem(ModEntities.HARPY,2699360, 866344,
                     new FabricItemSettings()));
@@ -62,6 +66,10 @@ public class ModItems {
                     new FabricItemSettings()));
     public static final Item MUMMY_SPAWN_EGG = registerItem("spawn_egg/mummy_spawn_egg",
             new SpawnEggItem(ModEntities.MUMMY,11375453, 87,
+                    new FabricItemSettings()));
+
+    public static final Item MUMMY_BOSS_SPAWN_EGG = registerItem("spawn_egg/mummy_boss_spawn_egg",
+            new SpawnEggItem(ModEntities.MUMMY_BOSS,11375453, 6821916,
                     new FabricItemSettings()));
     public static final Item CYCLOPS_SPAWN_EGG = registerItem("spawn_egg/cyclops_spawn_egg",
             new SpawnEggItem(ModEntities.CYCLOPS,10053120, 6821916,
@@ -122,6 +130,16 @@ public class ModItems {
             new Item(new FabricItemSettings()));
     public static final Item HIGH_IRON_SCRAP = registerItem("high_iron_scrap",
             new Item(new FabricItemSettings()));
+
+    public static final Item ANKH = registerItem("ankh",
+            new AnkhItem(new FabricItemSettings().maxCount(1)));
+
+    public static final Item ANKH_FRAGMENT = registerItem("ankh_fragment",
+            new Item(new FabricItemSettings()));
+    public static final Item IRON_EGYPTIAN_SHIELD = registerItem("shield/iron_egyptian_shield",
+            new CustomShieldItem(new FabricItemSettings().maxDamage(550)));
+    public static final Item GOLD_EGYPTIAN_SHIELD = registerItem("shield/gold_egyptian_shield",
+            new CustomShieldItem(new FabricItemSettings().maxDamage(700)));
     public static final Item IRON_PLATE_SHIELD = registerItem("shield/iron_plate_shield",
             new CustomShieldItem(new FabricItemSettings().maxDamage(550)));
     public static final Item GOLD_PLATE_SHIELD = registerItem("shield/gold_plate_shield",
@@ -146,6 +164,30 @@ public class ModItems {
             new Item(new FabricItemSettings()));
     public static final Item DIAMOND_PLATE = registerItem("diamond_plate",
             new Item(new FabricItemSettings()));
+    public static final Item IRON_SCALE_HELMET = registerItem("iron_scale_helmet",
+            new IronScaleArmorItem(ModArmorMaterials.IRON_SCALE, ArmorItem.Type.HELMET, new FabricItemSettings()));
+    public static final Item IRON_SCALE_CHESTPLATE = registerItem("iron_scale_chestplate",
+            new IronScaleArmorItem(ModArmorMaterials.IRON_SCALE, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
+    public static final Item IRON_SCALE_LEGGINGS = registerItem("iron_scale_leggings",
+            new IronScaleArmorItem(ModArmorMaterials.IRON_SCALE, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
+    public static final Item IRON_SCALE_BOOTS = registerItem("iron_scale_boots",
+            new IronScaleArmorItem(ModArmorMaterials.IRON_SCALE, ArmorItem.Type.BOOTS, new FabricItemSettings()));
+    public static final Item GOLD_SCALE_HELMET = registerItem("gold_scale_helmet",
+            new GoldScaleArmorItem(ModArmorMaterials.GOLD_SCALE, ArmorItem.Type.HELMET, new FabricItemSettings()));
+    public static final Item GOLD_SCALE_CHESTPLATE = registerItem("gold_scale_chestplate",
+            new GoldScaleArmorItem(ModArmorMaterials.GOLD_SCALE, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
+    public static final Item GOLD_SCALE_LEGGINGS = registerItem("gold_scale_leggings",
+            new GoldScaleArmorItem(ModArmorMaterials.GOLD_SCALE, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
+    public static final Item GOLD_SCALE_BOOTS = registerItem("gold_scale_boots",
+            new GoldScaleArmorItem(ModArmorMaterials.GOLD_SCALE, ArmorItem.Type.BOOTS, new FabricItemSettings()));
+    public static final Item DIAMOND_SCALE_HELMET = registerItem("diamond_scale_helmet",
+            new DiamondScaleArmorItem(ModArmorMaterials.DIAMOND_SCALE, ArmorItem.Type.HELMET, new FabricItemSettings()));
+    public static final Item DIAMOND_SCALE_CHESTPLATE = registerItem("diamond_scale_chestplate",
+            new DiamondScaleArmorItem(ModArmorMaterials.DIAMOND_SCALE, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
+    public static final Item DIAMOND_SCALE_LEGGINGS = registerItem("diamond_scale_leggings",
+            new DiamondScaleArmorItem(ModArmorMaterials.DIAMOND_SCALE, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
+    public static final Item DIAMOND_SCALE_BOOTS = registerItem("diamond_scale_boots",
+            new DiamondScaleArmorItem(ModArmorMaterials.DIAMOND_SCALE, ArmorItem.Type.BOOTS, new FabricItemSettings()));
     public static final IronPlateArmorItem IRON_PLATE_HELMET = registerItem("iron_plate_helmet",
             new IronPlateArmorItem(ModArmorMaterials.IRON_PLATE, ArmorItem.Type.HELMET, new FabricItemSettings()));
     public static final IronPlateArmorItem IRON_PLATE_CHESTPLATE = registerItem("iron_plate_chestplate",
@@ -178,6 +220,10 @@ public class ModItems {
             new NetheritePlateArmorItem(ModArmorMaterials.NETHERITE_PLATE, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
     public static final NetheritePlateArmorItem NETHERITE_PLATE_BOOTS = registerItem("netherite_plate_boots",
             new NetheritePlateArmorItem(ModArmorMaterials.NETHERITE_PLATE, ArmorItem.Type.BOOTS, new FabricItemSettings()));
+
+    public static final Item PHARAOH_SCEPTER = registerItem("weapon/pharaoh_scepter_staff",
+            new PharaohScepterItem(AntiqueBeasts.getTickScheduler(), ModToolMaterial.FROST_WEAPON,5, -2.8f,
+                    new FabricItemSettings()));
     public static final Item RAW_CYCLOPS_MEAT = registerItem("raw_cyclops_meat",
             new RawCyclopsMeat());
     public static final Item COOKED_CYCLOPS_MEAT = registerItem("cooked_cyclops_meat",
@@ -243,6 +289,8 @@ public class ModItems {
             new Item(new FabricItemSettings()));
     public static final Item DIAMOND_SCARAB = registerItem("diamond_scarab",
             new Item(new FabricItemSettings()));
+    public static final Item CURSED_SCARAB = registerItem("cursed_scarab",
+            new Item(new FabricItemSettings()));
     public static final Item EGYPTIAN_RECURVE_BOW = registerItem("bow/egyptian_recurve_bow",
             new EgyptianRecurveBow(new FabricItemSettings().maxDamage(640)));
     public static final Item GREEK_COMPOSITE_BOW = registerItem("bow/greek_composite_bow",
@@ -264,6 +312,7 @@ public class ModItems {
         entries.add(AXEMAN_SPAWN_EGG);
         entries.add(WADJET_SPAWN_EGG);
         entries.add(MUMMY_SPAWN_EGG);
+        entries.add(MUMMY_BOSS_SPAWN_EGG);
         entries.add(SERVANT_SPAWN_EGG);
 
         entries.add(CENTAUR_SPAWN_EGG);
@@ -285,6 +334,7 @@ public class ModItems {
 
         entries.add(DRAUGR_SPAWN_EGG);
         entries.add(HARPY_SPAWN_EGG);
+        entries.add(DRAUGR_ARCHER_SPAWN_EGG);
     }
     public static void addItemToIngredientItemGroup(FabricItemGroupEntries entries) {
         entries.add(IRON_PLATE);
@@ -296,7 +346,9 @@ public class ModItems {
         entries.add(IRON_SCARAB);
         entries.add(GOLD_SCARAB);
         entries.add(DIAMOND_SCARAB);
+        entries.add(CURSED_SCARAB);
         entries.add(CHIMERA_HAIR);
+        entries.add(ANKH_FRAGMENT);
     }
     public static void addItemToFoodItemGroup(FabricItemGroupEntries entries) {
         entries.add(COOKED_CYCLOPS_MEAT);
@@ -313,8 +365,21 @@ public class ModItems {
     public static void addItemToFunctionalItemGroup(FabricItemGroupEntries entries) {
         entries.add(ModBlocks.AMPHORA);
         entries.add(ModBlocks.CURSED_GOLDEN_BLOCK);
+        entries.add(ModBlocks.MUMMY_BOSS_ALTAR);
     }
     public static void addItemToCombatItemGroup(FabricItemGroupEntries entries) {
+        entries.add(IRON_SCALE_HELMET);
+        entries.add(IRON_SCALE_CHESTPLATE);
+        entries.add(IRON_SCALE_LEGGINGS);
+        entries.add(IRON_SCALE_BOOTS);
+        entries.add(GOLD_SCALE_HELMET);
+        entries.add(GOLD_SCALE_CHESTPLATE);
+        entries.add(GOLD_SCALE_LEGGINGS);
+        entries.add(GOLD_SCALE_BOOTS);
+        entries.add(DIAMOND_SCALE_HELMET);
+        entries.add(DIAMOND_SCALE_CHESTPLATE);
+        entries.add(DIAMOND_SCALE_LEGGINGS);
+        entries.add(DIAMOND_SCALE_BOOTS);
         entries.add(GOLD_PLATE_HELMET);
         entries.add(GOLD_PLATE_CHESTPLATE);
         entries.add(GOLD_PLATE_LEGGINGS);
@@ -335,6 +400,8 @@ public class ModItems {
         entries.add(FROST_SWORD);
         entries.add(BLOOD_STAINED_FROST_SWORD);
 
+        entries.add(IRON_EGYPTIAN_SHIELD);
+        entries.add(GOLD_EGYPTIAN_SHIELD);
         entries.add(IRON_PLATE_SHIELD);
         entries.add(GOLD_PLATE_SHIELD);
         entries.add(DIAMOND_PLATE_SHIELD);
@@ -367,6 +434,8 @@ public class ModItems {
         entries.add(NETHERITE_EGYPTIAN_HALBERD);
         entries.add(EGYPTIAN_RECURVE_BOW);
         entries.add(GREEK_COMPOSITE_BOW);
+        entries.add(PHARAOH_SCEPTER);
+        entries.add(ANKH);
     }
 
 

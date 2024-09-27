@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " ##",
+    " c#",
+    "#  "
+  ],
+  "key" : {
+    "#": {
+      "item" : "antiquebeasts:gold_scarab"
+    },
+    "c": {
+      "item" : "antiquebeasts:cursed_scarab"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:weapon/pharaoh_scepter_staff"
+  }
+}

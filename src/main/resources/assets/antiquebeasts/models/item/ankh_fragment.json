@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "antiquebeasts:item/cyclops_eye"
+    "layer0": "antiquebeasts:item/ankh_fragment"
   }
 }

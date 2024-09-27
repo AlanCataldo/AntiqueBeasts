@@ -1,6 +1,7 @@
 package net.mebahel.antiquebeasts.mixin;
 
 import net.mebahel.antiquebeasts.entity.custom.CyclopsEntity;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.MummyBossEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.EinherjarEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.HersirEntity;
 import net.mebahel.antiquebeasts.item.CustomShieldItem;
@@ -44,6 +45,12 @@ public class ShieldDurabilityMixin {
                         player.getItemCooldownManager().set(activeItem.getItem(), 100);
                         player.clearActiveItem();
                         player.getWorld().sendEntityStatus(player, (byte)30);
+                    } else if (attacker instanceof MummyBossEntity) {
+                        if (((MummyBossEntity) attacker).secondPhase || ((MummyBossEntity) attacker).thirdPhase) {
+                            player.getItemCooldownManager().set(activeItem.getItem(), 100);
+                            player.clearActiveItem();
+                            player.getWorld().sendEntityStatus(player, (byte)30);
+                        }
                     }
                 }
             }

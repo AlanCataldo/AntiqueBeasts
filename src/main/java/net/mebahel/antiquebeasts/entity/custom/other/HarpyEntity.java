@@ -1,24 +1,23 @@
 package net.mebahel.antiquebeasts.entity.custom.other;
 
-import net.mebahel.antiquebeasts.entity.ai.ChimeraFlameThrowerGoal;
-import net.mebahel.antiquebeasts.entity.ai.ChimeraMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
 import net.mebahel.antiquebeasts.entity.ai.other.HarpyFlyGoal;
 import net.mebahel.antiquebeasts.entity.ai.other.HarpyRangedAttackGoal;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
-import net.mebahel.antiquebeasts.entity.variant.ChimeraVariant;
 import net.mebahel.antiquebeasts.entity.variant.HarpyVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.mebahel.antiquebeasts.util.ModConfig;
+import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
+import net.mebahel.antiquebeasts.util.config.ModConfig;
+import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -28,7 +27,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
@@ -53,8 +51,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
 import java.util.Objects;
-
-import static java.lang.Math.random;
 
 public class HarpyEntity extends AnimalEntity implements GeoEntity {
     double rand;
@@ -147,7 +143,7 @@ public class HarpyEntity extends AnimalEntity implements GeoEntity {
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 24.0D + ModConfig.mythUnitBonusHealth)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 24.0D + ModBonusHealthConfig.harpyBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 4f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2)
@@ -261,9 +257,9 @@ public class HarpyEntity extends AnimalEntity implements GeoEntity {
         setVariant(variant);
         if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
                 && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(11);
-            if (randomValue >= 0 && randomValue <= 4) {
-                this.remove(RemovalReason.DISCARDED);
+            int randomValue = this.random.nextInt(10);
+            if (randomValue >= ModSpawnRateConfig.harpySpawnRate) {
+                this.remove(Entity.RemovalReason.DISCARDED);
             }
         }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);

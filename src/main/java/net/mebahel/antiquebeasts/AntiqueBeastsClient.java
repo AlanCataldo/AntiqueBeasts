@@ -6,10 +6,13 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.client.custom.*;
 import net.mebahel.antiquebeasts.entity.client.custom.draugr.DraugrRenderer;
+import net.mebahel.antiquebeasts.entity.client.custom.draugr_archer.DraugrArcherRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.harpy.HarpyRenderer;
+import net.mebahel.antiquebeasts.entity.client.custom.mummy_boss.MummyBossRenderer;
 import net.mebahel.antiquebeasts.entity.client.projectiles.*;
 import net.mebahel.antiquebeasts.entity.client.projectiles.harpy.HarpyFeatherRenderer;
 import net.mebahel.antiquebeasts.particle.ModParticles;
+import net.mebahel.antiquebeasts.particle.custom.MummyHoveringParticle;
 import net.mebahel.antiquebeasts.particle.custom.MummyProjectileParticle;
 import net.mebahel.antiquebeasts.particle.custom.RockSplashParticle;
 import net.mebahel.antiquebeasts.particle.custom.SnowRockSplashParticle;
@@ -21,6 +24,8 @@ import net.mebahel.antiquebeasts.util.SpearModelPredicate;
 public class AntiqueBeastsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        EntityRendererRegistry.register(ModEntities.DRAUGR_ARCHER, DraugrArcherRenderer::new);
+        EntityRendererRegistry.register(ModEntities.MUMMY_BOSS, MummyBossRenderer::new);
         EntityRendererRegistry.register(ModEntities.HARPY, HarpyRenderer::new);
         EntityRendererRegistry.register(ModEntities.DRAUGR, DraugrRenderer::new);
         EntityRendererRegistry.register(ModEntities.CENTAUR, CentaurRenderer::new);
@@ -54,6 +59,7 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.VENOM, VenomRenderer::new);
         EntityRendererRegistry.register(ModEntities.VENOM_SLOW, VenomSlowRenderer::new);
         EntityRendererRegistry.register(ModEntities.MUMMY_PROJECTILE, MummyProjectileRenderer::new);
+        EntityRendererRegistry.register(ModEntities.PHARAOH_SCEPTER_PROJECTILE, PharaohScepterProjectileRenderer::new);
         EntityRendererRegistry.register(ModEntities.CHIMERA_PROJECTILE, ChimeraProjectileRenderer::new);
         EntityRendererRegistry.register(ModEntities.VALKYRIE_SPEAR, ValkyrieSpearRenderer::new);
         EntityRendererRegistry.register(ModEntities.IRON_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "iron"));
@@ -65,6 +71,7 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(ModParticles.VENOM_PARTICLE, SnowRockSplashParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.VENOM_SLOW_PARTICLE, SnowRockSplashParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.MUMMY_PROJECTILE_PARTICLE, MummyProjectileParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ModParticles.MUMMY_HOVERING_PARTICLE, MummyHoveringParticle.Factory::new);
         BowPredicate.registerBowModels();
         ShieldModelPredicate.registerShieldModels();
         SpearModelPredicate.registerSpearModels();

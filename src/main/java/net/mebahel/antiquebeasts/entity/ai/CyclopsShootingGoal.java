@@ -31,8 +31,7 @@ public class CyclopsShootingGoal extends Goal {
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.cyclops.getTarget();
 
-        if (livingEntity instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+        if (livingEntity instanceof PlayerEntity playerEntity) {
             if (playerEntity.isCreative() || playerEntity.isSpectator()) {
                 return false;
             }
@@ -51,6 +50,10 @@ public class CyclopsShootingGoal extends Goal {
 
     public void tick() {
         LivingEntity livingEntity = this.cyclops.getTarget();
+        if (livingEntity == null || !livingEntity.isAlive()) {
+            this.stop();
+            return;
+        }
         if (this.cyclops.isShooting()) {
             Objects.requireNonNull(this.cyclops.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0);
         } else {

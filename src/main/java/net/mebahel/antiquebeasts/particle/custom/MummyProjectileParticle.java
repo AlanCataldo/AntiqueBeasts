@@ -10,27 +10,33 @@ public class MummyProjectileParticle extends SpriteBillboardParticle {
     protected MummyProjectileParticle(ClientWorld clientWorld, double xCord, double yCord, double zCord,
                                       double xd, double yd, double zd) {
         super(clientWorld, xCord, yCord, zCord, xd, yd, zd);
-
         this.velocityMultiplier = 0.92F;
-        this.x = xd;
-        this.y = yd;
-        this.z = zd;
         this.scale *= 1.85F;
         this.maxAge = 8;
 
         this.red = 1;
         this.green = 1;
         this.blue = 1;
+        this.setBoundingBoxSpacing(0.02F, 0.02F);
     }
 
     @Override
     public void tick() {
         super.tick();
+
+        this.x += this.velocityX;
+        this.y += this.velocityY;
+        this.z += this.velocityZ;
+
+        this.velocityX *= this.velocityMultiplier;
+        this.velocityY *= this.velocityMultiplier;
+        this.velocityZ *= this.velocityMultiplier;
+
         fadeOut();
     }
 
     private void fadeOut() {
-        this.alpha = (-(1/(float)maxAge) * age +1);
+        this.alpha = Math.max(0, (-(1/(float)maxAge) * age +1));
     }
 
     @Override

@@ -21,37 +21,18 @@ public class MummyShootingGoal extends Goal {
 
 
     public boolean canStart() {
-        long l = this.cyclops.getWorld().getTime();
-        if (l - this.lastUpdateTime < 20L || this.cyclops.getSpawnCooldown() > 60) {
-            return false;
-        } else {
-            this.lastUpdateTime = l;
-            LivingEntity livingEntity = this.cyclops.getTarget();
-            if (livingEntity == null) {
-                return false;
-            } else if (!livingEntity.isAlive()) {
-                return false;
-            } else {
-                Path path = this.cyclops.getNavigation().findPathTo(livingEntity, 0);
-                if (path != null) {
-                    return true;
-                } else {
-                    return this.getSquaredMaxAttackDistance(livingEntity) >= this.cyclops.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
-                }
-            }
-        }
+        return this.cyclops.getTarget() != null && this.cyclops.getSpawnCooldown() > 60;
     }
 
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.cyclops.getTarget();
 
-        if (livingEntity instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+        if (livingEntity instanceof PlayerEntity playerEntity) {
             if (playerEntity.isCreative() || playerEntity.isSpectator()) {
                 return false;
             }
         }
-        return livingEntity != null && livingEntity.isAlive() && this.cyclops.getSpawnCooldown() > 60 && livingEntity.isAlive();
+        return livingEntity != null && this.cyclops.getSpawnCooldown() > 60 && livingEntity.isAlive();
     }
 
     public void start() {
@@ -69,36 +50,21 @@ public class MummyShootingGoal extends Goal {
 
     public void tick() {
         LivingEntity livingEntity = this.cyclops.getTarget();
+        if (livingEntity == null || !livingEntity.isAlive()) {
+            this.stop();
+            return;
+        }
         if (this.cyclops.distanceTo(livingEntity) > 2) {
             if (this.cyclops.canSee(livingEntity)) {
                 World world = this.cyclops.getWorld();
                 this.cyclops.setCooldown(Math.max(this.cyclops.getCooldown() - 1, 0));
-                if (this.cyclops.getCooldown() == 8) {
+                if (this.cyclops.getCooldown() == 6) {
                     ProjectileEntity throwingRockEntity;
                     throwingRockEntity = new MummyProjectileEntity(world, this.cyclops,7);
 
                     double xProjectile = this.cyclops.getX();
                     double zProjectile = this.cyclops.getZ();
 
-                    double d = livingEntity.getEyeY() - 1.100000023841858;
-                    double e = livingEntity.getX() - xProjectile;
-                    double f = d - throwingRockEntity.getY();
-                    double g = livingEntity.getZ() - zProjectile;
-
-                    double h = Math.sqrt(e * e + g * g) * 0.20000000298023224;
-                    float distance;
-                    float speed;
-                    if (this.cyclops.distanceTo(livingEntity) > 25) {
-                        distance = 1.5f;
-                        speed = 0.85f;
-                    } else if (this.cyclops.distanceTo(livingEntity) >= 12 && this.cyclops.distanceTo(livingEntity) <= 17) {
-                        distance = 1.1f;
-                        speed = 0.7f;
-                    } else {
-                        distance = 1.1f;
-                        speed = 0.7f;
-                    }
-                    throwingRockEntity.setVelocity(e, f + h * distance, g, speed, 1.5F);
                     throwingRockEntity.setPosition(xProjectile, this.cyclops.getBodyY(1), zProjectile);
                     world.spawnEntity(throwingRockEntity);
                 } else if (this.cyclops.getCooldown() == 19) {

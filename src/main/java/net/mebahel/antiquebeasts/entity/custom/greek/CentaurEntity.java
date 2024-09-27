@@ -9,7 +9,9 @@ import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.mebahel.antiquebeasts.entity.variant.CentaurVariant;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.mebahel.antiquebeasts.util.ModConfig;
+import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
+import net.mebahel.antiquebeasts.util.config.ModConfig;
+import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
@@ -22,7 +24,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
@@ -116,7 +117,7 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 34.0D + ModConfig.mythUnitBonusHealth)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 34.0D + ModBonusHealthConfig.centaurBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 4f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.6f)
@@ -243,8 +244,8 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
         this.setTarget(null);
         if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
                 && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(11);
-            if (randomValue >= 0 && randomValue <= 4) {
+            int randomValue = this.random.nextInt(10);
+            if (randomValue >= ModSpawnRateConfig.centaurSpawnRate) {
                 this.remove(Entity.RemovalReason.DISCARDED);
             }
         }

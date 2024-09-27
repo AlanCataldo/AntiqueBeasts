@@ -1,0 +1,15 @@
+{
+  "name": "antiquebeasts:egyptian_pyramid/egyptian_pyramid_floor_2",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "antiquebeasts:egyptian/egyptian_pyramid_floor_2",
+        "processors": "antiquebeasts:water_removal_processor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

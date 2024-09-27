@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "antiquebeasts:block/mummy_boss_altar_north" },
+    "facing=south": { "model": "antiquebeasts:block/mummy_boss_altar_south" },
+    "facing=west": { "model": "antiquebeasts:block/mummy_boss_altar_west" },
+    "facing=east": { "model": "antiquebeasts:block/mummy_boss_altar_east" }
+  }
+}

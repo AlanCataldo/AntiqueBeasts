@@ -13,6 +13,7 @@ public class ModParticles {
     public static final DefaultParticleType VENOM_PARTICLE = FabricParticleTypes.simple();
     public static final DefaultParticleType VENOM_SLOW_PARTICLE = FabricParticleTypes.simple();
     public static final DefaultParticleType MUMMY_PROJECTILE_PARTICLE = FabricParticleTypes.simple();
+    public static final DefaultParticleType MUMMY_HOVERING_PARTICLE = FabricParticleTypes.simple();
 
     public static void registerParticles() {
         Registry.register(Registries.PARTICLE_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "rocksplash_particle"),
@@ -25,6 +26,8 @@ public class ModParticles {
                 VENOM_SLOW_PARTICLE);
         Registry.register(Registries.PARTICLE_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "mummy_projectile_particle"),
                 MUMMY_PROJECTILE_PARTICLE);
+        Registry.register(Registries.PARTICLE_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "mummy_hovering_particle"),
+                MUMMY_HOVERING_PARTICLE);
         AntiqueBeasts.LOGGER.info("[AntiqueBeasts] Registering particles for " + AntiqueBeasts.MOD_ID + ".");
     }
 }

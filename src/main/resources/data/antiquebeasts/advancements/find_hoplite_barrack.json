@@ -1,0 +1,38 @@
+{
+  "display": {
+    "title": {
+      "translate": "advancement.antiquebeasts.find_hoplite_barrack.title",
+      "color": "aqua"
+    },
+    "description": {
+      "translate": "advancement.antiquebeasts.find_hoplite_barrack.description"
+    },
+    "icon": {
+      "item": "antiquebeasts:iron_plate_helmet"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "location0": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "antiquebeasts:hoplite_barrack"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [["location0"]],
+  "parent": "antiquebeasts:root"
+}

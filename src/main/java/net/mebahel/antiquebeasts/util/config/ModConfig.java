@@ -1,4 +1,4 @@
-package net.mebahel.antiquebeasts.util;
+package net.mebahel.antiquebeasts.util.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -12,11 +12,8 @@ public class ModConfig {
     private static final String CONFIG_FILE_NAME = "antiquebeasts_config.json";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    // Configuration properties with defaults
     public static boolean patrolSpawning = true;
     public static int patrolSpawnDelay = 15;
-    public static int infantryBonusHealth = 0;
-    public static int mythUnitBonusHealth = 0;
 
     public static void loadConfig(File configDir) {
         if (!configDir.exists()) {
@@ -28,35 +25,20 @@ public class ModConfig {
             try (FileReader reader = new FileReader(configFile)) {
                 ConfigData data = GSON.fromJson(reader, ConfigData.class);
 
-                // Vérifier et mettre à jour les champs manquants
                 boolean updated = false;
 
                 if (data.patrolSpawning == null) {
-                    data.patrolSpawning = true;  // Valeur par défaut
+                    data.patrolSpawning = true;
                     updated = true;
                 }
                 if (data.patrolSpawnDelay == null || data.patrolSpawnDelay < 1 || data.patrolSpawnDelay > 60) {
-                    data.patrolSpawnDelay = 15;  // Valeur par défaut
+                    data.patrolSpawnDelay = 15;
                     updated = true;
                 }
 
-                if (data.infantryBonusHealth == null || data.infantryBonusHealth < 0 || data.infantryBonusHealth > 40) {
-                    data.infantryBonusHealth = 0;  // Valeur par défaut
-                    updated = true;
-                }
-
-                if (data.mythUnitBonusHealth == null || data.mythUnitBonusHealth < 0 || data.mythUnitBonusHealth > 40) {
-                    data.mythUnitBonusHealth = 0;  // Valeur par défaut
-                    updated = true;
-                }
-
-                // Mettre à jour les valeurs de la classe
                 patrolSpawning = data.patrolSpawning;
                 patrolSpawnDelay = data.patrolSpawnDelay;
-                infantryBonusHealth = data.infantryBonusHealth;
-                mythUnitBonusHealth = data.mythUnitBonusHealth;
 
-                // Sauvegarder la configuration si elle a été mise à jour
                 if (updated) {
                     saveConfig(configDir);
                 }
@@ -70,7 +52,7 @@ public class ModConfig {
 
     public static void saveConfig(File configDir) {
         File configFile = new File(configDir, CONFIG_FILE_NAME);
-        ConfigData data = new ConfigData(patrolSpawning, patrolSpawnDelay, infantryBonusHealth, mythUnitBonusHealth);
+        ConfigData data = new ConfigData(patrolSpawning, patrolSpawnDelay);
         try (FileWriter writer = new FileWriter(configFile)) {
             GSON.toJson(data, writer);
         } catch (IOException e) {
@@ -81,14 +63,10 @@ public class ModConfig {
     private static class ConfigData {
         Boolean patrolSpawning;
         Integer patrolSpawnDelay;
-        Integer infantryBonusHealth;
-        Integer mythUnitBonusHealth;
 
-        ConfigData(boolean patrolSpawning, int patrolSpawnDelay, int infantryBonusHealth, int mythUnitBonusHealth) {
+        ConfigData(boolean patrolSpawning, int patrolSpawnDelay) {
             this.patrolSpawning = patrolSpawning;
             this.patrolSpawnDelay = patrolSpawnDelay;
-            this.infantryBonusHealth = infantryBonusHealth;
-            this.mythUnitBonusHealth = mythUnitBonusHealth;
         }
     }
 }

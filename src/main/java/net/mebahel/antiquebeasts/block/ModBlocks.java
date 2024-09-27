@@ -20,6 +20,8 @@ public class ModBlocks {
             new Block(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).sounds(BlockSoundGroup.DECORATED_POT)));
     public static final Block CURSED_GOLDEN_BLOCK = registerBlock("cursed_gold_block",
             new CursedGoldBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK)));
+    public static final Block MUMMY_BOSS_ALTAR = registerBlock("mummy_boss_altar",
+            new MummyBossAltarBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK)));
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);
         return Registry.register(Registries.BLOCK, new Identifier(AntiqueBeasts.MOD_ID, name), block);

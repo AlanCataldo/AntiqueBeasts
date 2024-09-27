@@ -1,6 +1,9 @@
 package net.mebahel.antiquebeasts.entity.custom.egyptian;
 
-import net.mebahel.antiquebeasts.entity.ai.*;
+import net.mebahel.antiquebeasts.entity.ai.BigEgyptianMeleeAttackGoal;
+import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
+import net.mebahel.antiquebeasts.entity.ai.DefendLeadEntityGoal;
+import net.mebahel.antiquebeasts.entity.ai.FollowEntityGoal;
 import net.mebahel.antiquebeasts.entity.ai.util.ModPatrolGoal;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
@@ -8,9 +11,13 @@ import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.mebahel.antiquebeasts.entity.variant.EgyptiantVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.mebahel.antiquebeasts.util.ModConfig;
+import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
+import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityData;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -19,7 +26,6 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
@@ -37,7 +43,6 @@ import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
@@ -93,7 +98,7 @@ public class CamelryEntity extends EgyptianEntity implements GeoEntity {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.78f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 36.0D + ModConfig.infantryBonusHealth)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 36.0D + ModBonusHealthConfig.camleryBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 5f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.3f)
@@ -186,14 +191,6 @@ public class CamelryEntity extends EgyptianEntity implements GeoEntity {
                                  @javax.annotation.Nullable NbtCompound entityNbt) {
         EgyptiantVariant variant = Util.getRandom(EgyptiantVariant.values(), this.random);
         setVariant(variant);
-
-        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
-        && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(11);
-            if (randomValue >= 0 && randomValue <= 7) {
-                this.remove(Entity.RemovalReason.DISCARDED);
-            }
-        }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 

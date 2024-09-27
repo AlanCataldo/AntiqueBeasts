@@ -1,0 +1,30 @@
+{
+  "parent": "antiquebeasts:see_mummy_boss",
+  "criteria": {
+    "killed_mummy_boss": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "antiquebeasts:mummy_boss"
+        }
+      }
+    }
+  },
+  "rewards": {
+  },
+  "display": {
+    "icon": {
+      "item": "antiquebeasts:ankh"
+    },
+    "title": {
+      "translate": "advancement.antiquebeasts.kill_mummy_boss.title"
+    },
+    "description": {
+      "translate": "advancement.antiquebeasts.kill_mummy_boss.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  }
+}

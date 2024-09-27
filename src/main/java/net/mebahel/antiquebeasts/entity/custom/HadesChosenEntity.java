@@ -3,13 +3,11 @@ package net.mebahel.antiquebeasts.entity.custom;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.ai.HadesChosenMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.HadesChosenShootingGoal;
-import net.mebahel.antiquebeasts.entity.custom.greek.EliteHopliteEntity;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.mebahel.antiquebeasts.util.ModConfig;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
+import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
+import net.mebahel.antiquebeasts.util.config.ModConfig;
+import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -31,6 +29,7 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
@@ -64,7 +63,7 @@ public class HadesChosenEntity extends HostileEntity implements GeoEntity {
     public void setShooting(boolean shooting) {
         this.dataTracker.set(SHOOTING, shooting);
     }
-    public static final TrackedData<Integer> TICKCOUNTER = DataTracker.registerData(EliteHopliteEntity.class,
+    public static final TrackedData<Integer> TICKCOUNTER = DataTracker.registerData(HadesChosenEntity.class,
             TrackedDataHandlerRegistry.INTEGER);
 
     public void setTickCounter(Integer counter) {
@@ -137,7 +136,7 @@ public class HadesChosenEntity extends HostileEntity implements GeoEntity {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.72f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0D + ModConfig.infantryBonusHealth)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0D + ModBonusHealthConfig.hadesChosenBonusHealth)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5.5f)
                 .add(EntityAttributes.GENERIC_ARMOR, 10f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.3f)
@@ -290,6 +289,13 @@ public class HadesChosenEntity extends HostileEntity implements GeoEntity {
             PlayerEntity player = ClientUtils.getClientPlayer();
             if (player != null)
                 this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.MILITARY_CREATE, this.getSoundCategory(), 0.5f, 1f);
+        }
+        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
+                && spawnReason != SpawnReason.EVENT ) {
+            int randomValue = this.random.nextInt(10);
+            if (randomValue >= ModSpawnRateConfig.hadesChosenSpawnRate) {
+                this.remove(Entity.RemovalReason.DISCARDED);
+            }
         }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }

@@ -2,6 +2,9 @@ package net.mebahel.antiquebeasts.entity.custom;
 
 import net.mebahel.antiquebeasts.entity.variant.PegasusVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
+import net.mebahel.antiquebeasts.util.config.ModConfig;
+import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
@@ -16,15 +19,12 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.AbstractHorseEntity;
-import net.minecraft.entity.passive.HorseColor;
 import net.minecraft.entity.passive.HorseEntity;
-import net.minecraft.entity.passive.HorseMarking;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
@@ -99,7 +99,7 @@ public class PegasusEntity extends HorseEntity implements GeoEntity {
                 .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.8)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, finalSpeed)
                 .add(EntityAttributes.HORSE_JUMP_STRENGTH, finalJumpStrength)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, finalHealth)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, finalHealth + ModBonusHealthConfig.pegasusBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 6f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 7.5f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.6f)
@@ -376,11 +376,11 @@ public class PegasusEntity extends HorseEntity implements GeoEntity {
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
                 && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(11);
-            if (randomValue >= 0 && randomValue <= 4) {
+            int randomValue = this.random.nextInt(10);
+            if (randomValue >= ModSpawnRateConfig.pegasusSpawnRate) {
                 this.remove(Entity.RemovalReason.DISCARDED);
             }
         }
-        return super.initialize(world, difficulty, spawnReason, (EntityData)entityData, entityNbt);
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 }

@@ -29,5 +29,6 @@ public abstract class ModelLoaderMixin {
         this.addModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/spear/inv_diamond_hoplite_spear", "inventory"));
         this.addModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/spear/inv_netherite_hoplite_spear", "inventory"));
         this.addModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/inv_hersir_axe", "inventory"));
+        this.addModel(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/inv_pharaoh_scepter", "inventory"));
     }
 }

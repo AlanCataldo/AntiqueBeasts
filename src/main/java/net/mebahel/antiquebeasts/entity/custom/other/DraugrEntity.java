@@ -7,8 +7,10 @@ import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.variant.DraugrVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.mebahel.antiquebeasts.util.ModConfig;
-import net.mebahel.antiquebeasts.util.ModSoundUtil;
+import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
+import net.mebahel.antiquebeasts.util.config.ModConfig;
+import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -20,13 +22,13 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -46,12 +48,16 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
     }
+    public boolean shouldDespawn;
     private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
     }
     double rand;
+    public boolean shouldDespawnInPeaceful() {
+        return this.getWorld().getDifficulty() == Difficulty.PEACEFUL;
+    }
 
     public static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
             DataTracker.registerData(DraugrEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -95,7 +101,7 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.72f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 30.0D + ModConfig.infantryBonusHealth)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 30.0D + ModBonusHealthConfig.draugrBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 6f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5.0f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2f)
@@ -149,6 +155,13 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
                                  @Nullable NbtCompound entityNbt) {
 
         var biome = world.getBiome(this.getBlockPos());
+        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
+                && spawnReason != SpawnReason.EVENT ) {
+            int randomValue = this.random.nextInt(10);
+            if (randomValue >= ModSpawnRateConfig.draugrSpawnRate) {
+                this.remove(Entity.RemovalReason.DISCARDED);
+            }
+        }
 
         DraugrVariant variant;
         boolean useAxeVariant = random.nextBoolean();
@@ -164,8 +177,6 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
         }
 
         setVariant(variant);
-
-        ModSoundUtil.InfantryPlaySound(spawnReason, this);
         this.setTarget(null);
 
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
@@ -198,7 +209,7 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
     public void playAmbientSound() {
         SoundEvent soundEvent = this.getAmbientSound();
         if (soundEvent != null) {
-            this.playSound(soundEvent, 0.4f, 1f);
+            this.playSound(soundEvent, 0.8f, 1f);
         }
     }
 

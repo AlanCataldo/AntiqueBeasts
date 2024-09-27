@@ -1,0 +1,7 @@
+{
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "antiquebeasts:item/weapon/inv_pharaoh_scepter"
+	},
+	"gui_light": "front"
+}

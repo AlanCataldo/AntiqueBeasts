@@ -9,8 +9,10 @@ import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.mebahel.antiquebeasts.entity.variant.HersirVariant;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.mebahel.antiquebeasts.util.ModConfig;
+import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
+import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.ModSoundUtil;
+import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
@@ -20,7 +22,6 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
@@ -76,7 +77,7 @@ public class HuskarlEntity extends NorseEntity implements GeoEntity {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.72f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 28.0D + ModConfig.infantryBonusHealth)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 28.0D + ModBonusHealthConfig.huskarlBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 6f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.35f)
@@ -177,8 +178,8 @@ public class HuskarlEntity extends NorseEntity implements GeoEntity {
         ModSoundUtil.InfantryPlaySound(spawnReason, this);
         if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
                 && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(11);
-            if (randomValue >= 0 && randomValue <= 4) {
+            int randomValue = this.random.nextInt(10);
+            if (randomValue >= ModSpawnRateConfig.huskarlSpawnRate) {
                 this.remove(Entity.RemovalReason.DISCARDED);
             }
         }
@@ -197,7 +198,7 @@ public class HuskarlEntity extends NorseEntity implements GeoEntity {
         super.onDeath(source);
 
         if (source.getAttacker() instanceof ZombieEntity) {
-            if (this.random.nextFloat() < 0.5f) {
+            if (this.random.nextFloat() < 0.25f) {
                 ZombieEntity newZombie = EntityType.ZOMBIE.create(this.getWorld());
                 if (newZombie != null) {
                     newZombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());

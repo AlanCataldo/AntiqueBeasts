@@ -24,15 +24,40 @@
   "entity.antiquebeasts.centaur": "Centaur",
   "entity.antiquebeasts.draugr": "Draugr",
   "entity.antiquebeasts.harpy": "Harpy",
+  "entity.antiquebeasts.mummy_boss": "Mummified Pharaoh",
+  "entity.antiquebeasts.egyptian_caravan": "Egyptian Caravan",
+  "entity.antiquebeasts.draugr_archer": "Draugr Archer",
+
+  "entity.antiquebeasts.throwing_axe": "Throwing Axe",
+  "entity.antiquebeasts.harpy_feather": "Harpy Feather",
+  "entity.antiquebeasts.mummy_projectile": "Dark Magic Projectile",
+  "entity.antiquebeasts.pharaoh_scepter_projectile": "Dark Magic Projectile",
+  "entity.antiquebeasts.venom": "Wadjet Venom",
+  "entity.antiquebeasts.venom_slow": "Wadjet Venom",
+  "entity.antiquebeasts.chimera_projectile": "Chimera Fire Breath",
+  "entity.antiquebeasts.throwingsnowrock": "Ice Throwing Block",
+  "entity.antiquebeasts.throwingrock": "Rock Throwing Block",
+  "entity.antiquebeasts.hoplite_spear": "Hoplite Spear",
+  "entity.antiquebeasts.valkyrie_spear": "Valkyrie Spear",
+  "entity.antiquebeasts.hades_chosen_spear": "Hades Chosen Spear",
+  "entity.antiquebeasts.iron_throwing_hoplite_spear": "Hoplite Spear",
+  "entity.antiquebeasts.gold_throwing_hoplite_spear": "Hoplite Spear",
+  "entity.antiquebeasts.diamond_throwing_hoplite_spear": "Hoplite Spear",
+  "entity.antiquebeasts.netherite_throwing_hoplite_spear": "Hoplite Spear",
 
   "block.antiquebeasts.amphora": "Amphora",
   "block.antiquebeasts.cursed_gold_block": "Cursed Gold Block",
+  "block.antiquebeasts.mummy_boss_altar": "Pharaoh Altar",
 
   "item.antiquebeasts.music_disc.n_d_nile_music_disc": "§bMusic Disc",
   "item.antiquebeasts.music_disc.n_d_nile_music_disc.desc": "Age Of Mythology - n. d. nile",
   "item.antiquebeasts.music_disc.behold_the_great_science_fi_music_disc": "§bMusic Disc",
   "item.antiquebeasts.music_disc.behold_the_great_science_fi_music_disc.desc": "Age Of Mythology - behold the great science fi",
 
+  "item.antiquebeasts.ankh": "§eAnkh",
+  "item.antiquebeasts.ankh_fragment": "Ankh Fragment",
+
+  "item.antiquebeasts.spawn_egg.draugr_archer_spawn_egg": "Draugr Archer Spawn Egg",
   "item.antiquebeasts.spawn_egg.harpy_spawn_egg": "Harpy Spawn Egg",
   "item.antiquebeasts.spawn_egg.draugr_spawn_egg": "Draugr Spawn Egg",
   "item.antiquebeasts.spawn_egg.centaur_spawn_egg": "Centaur Spawn Egg",
@@ -56,6 +81,7 @@
   "item.antiquebeasts.spawn_egg.elephant_rider_spawn_egg": "Elephant Rider Spawn Egg",
   "item.antiquebeasts.spawn_egg.chimera_spawn_egg": "Chimera Spawn Egg",
   "item.antiquebeasts.spawn_egg.pegasus_spawn_egg": "Pegasus Spawn Egg",
+  "item.antiquebeasts.spawn_egg.mummy_boss_spawn_egg": "Mummified Pharaoh Spawn Egg",
 
   "item.antiquebeasts.throwingrock": "Throwing Rock",
   "item.antiquebeasts.raw_cyclops_meat": "Raw Cyclops Meat",
@@ -66,6 +92,20 @@
   "item.antiquebeasts.cyclops_blood": "Cyclops Blood",
   "item.antiquebeasts.concentrated_cyclops_blood": "Concentrated Cyclops Blood",
   "item.antiquebeasts.cyclops_eye": "Cyclops Eye",
+  "item.antiquebeasts.scale_armor.tooltip": "Wearing a full set of this armor will ",
+  "item.antiquebeasts.scale_armor.tooltip2": "make you immune to poison damages.",
+  "item.antiquebeasts.iron_scale_helmet": "Iron Scale Helmet",
+  "item.antiquebeasts.iron_scale_chestplate": "Iron Scale Chestplate",
+  "item.antiquebeasts.iron_scale_leggings": "Iron Scale Leggings",
+  "item.antiquebeasts.iron_scale_boots": "Iron Scale Boots",
+  "item.antiquebeasts.gold_scale_helmet": "Gold Scale Helmet",
+  "item.antiquebeasts.gold_scale_chestplate": "Gold Scale Chestplate",
+  "item.antiquebeasts.gold_scale_leggings": "Gold Scale Leggings",
+  "item.antiquebeasts.gold_scale_boots": "Gold Scale Boots",
+  "item.antiquebeasts.diamond_scale_helmet": "Diamond Scale Helmet",
+  "item.antiquebeasts.diamond_scale_chestplate": "Diamond Scale Chestplate",
+  "item.antiquebeasts.diamond_scale_leggings": "Diamond Scale Leggings",
+  "item.antiquebeasts.diamond_scale_boots": "Diamond Scale Boots",
   "item.antiquebeasts.gold_plate_helmet": "Gold Plate Helmet",
   "item.antiquebeasts.gold_plate_chestplate": "Gold Plate Chestplate",
   "item.antiquebeasts.gold_plate_leggings": "Gold Plate Leggings",
@@ -85,6 +125,8 @@
   "item.antiquebeasts.netherite_plate_chestplate": "Netherite Plate Chestplate",
   "item.antiquebeasts.netherite_plate_leggings": "Netherite Plate Leggings",
   "item.antiquebeasts.netherite_plate_boots": "Netherite Plate Boots",
+  "item.antiquebeasts.shield.iron_egyptian_shield": "Iron Egyptian Shield",
+  "item.antiquebeasts.shield.gold_egyptian_shield": "Gold Egyptian Shield",
   "item.antiquebeasts.shield.iron_plate_shield": "Iron Plate Shield",
   "item.antiquebeasts.shield.gold_plate_shield": "Gold Plate Shield",
   "item.antiquebeasts.shield.diamond_plate_shield": "Diamond Plate Shield",
@@ -111,10 +153,14 @@
   "item.antiquebeasts.gold_scarab": "Gold Scarab",
   "item.antiquebeasts.iron_scarab": "Iron Scarab",
   "item.antiquebeasts.diamond_scarab": "Diamond Scarab",
+  "item.antiquebeasts.cursed_scarab": "Cursed Scarab",
   "item.antiquebeasts.chimera_hair": "Chimera Hair",
   "item.antiquebeasts.weapon.valkyrie_spear": "Valkyrie Spear",
   "item.antiquebeasts.weapon.harpy_feather": "Harpy Feather",
 
+  "item.antiquebeasts.weapon.pharaoh_scepter_staff": "§5Pharaoh Scepter",
+  "item.antiquebeasts.pharaoh_scepter_staff.tooltip": "This Scepter let you use the ",
+  "item.antiquebeasts.pharaoh_scepter_staff.tooltip2": "Mummified Pharaoh Dark Magic",
   "item.antiquebeasts.weapon.iron_centaur_sword": "Iron Centaur Sword",
   "item.antiquebeasts.weapon.khopesh.wood_khopesh_sickle": "Wood Khopesh",
   "item.antiquebeasts.weapon.khopesh.stone_khopesh_sickle": "Stone Khopesh",
@@ -127,5 +173,41 @@
   "item.antiquebeasts.weapon.egyptian_halberd.diamond_egyptian_halberd": "Diamond Egyptian Halberd",
   "item.antiquebeasts.weapon.egyptian_halberd.netherite_egyptian_halberd": "Netherite Egyptian Halberd",
   "item.antiquebeasts.bow.egyptian_recurve_bow": "Egyptian Recurve Bow",
-  "item.antiquebeasts.bow.greek_composite_bow": "Greek Composite Bow"
+  "item.antiquebeasts.bow.greek_composite_bow": "Greek Composite Bow",
+
+  "advancement.antiquebeasts.root.title": "Mebahel's Antique Beasts",
+  "advancement.antiquebeasts.root.description": "Explore the mysteries of ancient creatures.",
+
+  "advancement.antiquebeasts.kill_valkyrie.title": "The Path to Valhalla",
+  "advancement.antiquebeasts.kill_valkyrie.description": "Kill a Valkyrie for the first time.",
+
+  "advancement.antiquebeasts.kill_hades_shade.title": "Ghostbusters !",
+  "advancement.antiquebeasts.kill_hades_shade.description": "Kill a Ghostly Entity for the first time.",
+
+  "advancement.antiquebeasts.kill_draugr.title": "What Woke Them Up ?",
+  "advancement.antiquebeasts.kill_draugr.description": "Kill a Draugr for the first time.",
+
+  "advancement.antiquebeasts.see_mummy_boss.title": "What Have I Awakened ?",
+  "advancement.antiquebeasts.see_mummy_boss.description": "Awaken a Mummified Pharaoh.",
+
+  "advancement.antiquebeasts.kill_mummy.title": "Are You My Mummy ?",
+  "advancement.antiquebeasts.kill_mummy.description": "Kill a Mummy for the first time.",
+
+  "advancement.antiquebeasts.kill_mummy_boss.title": "Pharaoh and Square",
+  "advancement.antiquebeasts.kill_mummy_boss.description": "Defeat a Mummified Pharaoh.",
+
+  "advancement.antiquebeasts.kill_harpy.title": "Flying Chicken ?",
+  "advancement.antiquebeasts.kill_harpy.description": "Kill a Harpy for the first time.",
+
+  "advancement.antiquebeasts.kill_with_harpy_feather.title": "Who's the Harpy Now ?",
+  "advancement.antiquebeasts.kill_with_harpy_feather.description":"Kill a Harpy with a Harpy Feather.",
+
+  "advancement.antiquebeasts.find_greek_temple.title": "Are We In Olympus ?",
+  "advancement.antiquebeasts.find_greek_temple.description": "Find a Greek Temple.",
+
+  "advancement.antiquebeasts.find_egyptian_pyramid.title": "Pyramiddle of Nowhere",
+  "advancement.antiquebeasts.find_egyptian_pyramid.description": "Find an Egyptian Pyramid.",
+
+  "advancement.antiquebeasts.find_hoplite_barrack.title": "A Platoon ? Here ?",
+  "advancement.antiquebeasts.find_hoplite_barrack.description": "Find an Hoplite Barrack."
 }

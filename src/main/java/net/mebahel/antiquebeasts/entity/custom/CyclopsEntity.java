@@ -10,7 +10,9 @@ import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.mebahel.antiquebeasts.entity.variant.CyclopsVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.mebahel.antiquebeasts.util.ModConfig;
+import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
+import net.mebahel.antiquebeasts.util.config.ModConfig;
+import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
@@ -26,7 +28,6 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
@@ -149,7 +150,7 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 60.0D + ModConfig.mythUnitBonusHealth)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 60.0D + ModBonusHealthConfig.cyclopsBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 6f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.6f)
@@ -337,8 +338,8 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
         setVariant(variant);
         if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
                 && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(11);
-            if (randomValue >= 0 && randomValue <= 4) {
+            int randomValue = this.random.nextInt(10);
+            if (randomValue >= ModSpawnRateConfig.cyclopsSpawnRate) {
                 this.remove(Entity.RemovalReason.DISCARDED);
             }
         }
@@ -353,7 +354,7 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
         return this.dataTracker.get(DATA_ID_TYPE_VARIANT);
     }
 
-    private void setVariant(CyclopsVariant variant) {
+    public void setVariant(CyclopsVariant variant) {
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
     }
 }

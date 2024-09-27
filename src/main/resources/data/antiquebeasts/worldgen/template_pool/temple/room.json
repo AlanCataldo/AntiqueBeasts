@@ -6,7 +6,7 @@
       "weight": 2,
       "element": {
         "location": "antiquebeasts:temple_forge",
-        "processors": "minecraft:empty",
+        "processors": "antiquebeasts:water_removal_processor",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -15,7 +15,7 @@
       "weight": 4,
       "element": {
         "location": "antiquebeasts:temple_room_1",
-        "processors": "minecraft:empty",
+        "processors": "antiquebeasts:water_removal_processor",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -24,7 +24,7 @@
       "weight": 3,
       "element": {
         "location": "antiquebeasts:temple_room_2",
-        "processors": "minecraft:empty",
+        "processors": "antiquebeasts:water_removal_processor",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -33,7 +33,7 @@
       "weight": 2,
       "element": {
         "location": "antiquebeasts:temple_bibliotheque",
-        "processors": "minecraft:empty",
+        "processors": "antiquebeasts:water_removal_processor",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -42,7 +42,7 @@
       "weight": 3,
       "element": {
         "location": "antiquebeasts:temple_arena",
-        "processors": "minecraft:empty",
+        "processors": "antiquebeasts:water_removal_processor",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -51,7 +51,7 @@
       "weight": 2,
       "element": {
         "location": "antiquebeasts:temple_labyrinth",
-        "processors": "minecraft:empty",
+        "processors": "antiquebeasts:water_removal_processor",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -60,7 +60,7 @@
       "weight": 4,
       "element": {
         "location": "antiquebeasts:temple_stockpile",
-        "processors": "minecraft:empty",
+        "processors": "antiquebeasts:water_removal_processor",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -69,7 +69,7 @@
       "weight": 3,
       "element": {
         "location": "antiquebeasts:temple_prison_zombie",
-        "processors": "minecraft:empty",
+        "processors": "antiquebeasts:water_removal_processor",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }

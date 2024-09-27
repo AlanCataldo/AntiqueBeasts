@@ -5,6 +5,7 @@ import net.mebahel.antiquebeasts.entity.projectiles.HadesChosenSpearEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.world.World;
 
@@ -25,11 +26,25 @@ public class HadesChosenShootingGoal extends Goal {
         this.hoplite.setCooldown(81);
         this.hoplite.setShooting(false);
     }
+    public boolean shouldContinue() {
+        LivingEntity livingEntity = this.hoplite.getTarget();
+
+        if (livingEntity instanceof PlayerEntity playerEntity) {
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive();
+    }
     public boolean shouldRunEveryTick() {
         return true;
     }
     public void tick() {
         LivingEntity livingEntity = this.hoplite.getTarget();
+        if (livingEntity == null || !livingEntity.isAlive()) {
+            this.stop();
+            return;
+        }
         if (this.hoplite.isShooting()) {
             Objects.requireNonNull(this.hoplite.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0);
         } else {

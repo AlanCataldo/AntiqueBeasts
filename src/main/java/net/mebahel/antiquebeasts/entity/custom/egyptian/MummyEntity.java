@@ -9,7 +9,10 @@ import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.mebahel.antiquebeasts.entity.variant.EgyptiantVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.mebahel.antiquebeasts.util.ModConfig;
+import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
+import net.mebahel.antiquebeasts.util.config.ModConfig;
+import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -20,20 +23,22 @@ import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.PillagerEntity;
-import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -104,7 +109,7 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.55f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 36.0D + ModConfig.mythUnitBonusHealth)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 36.0D + ModBonusHealthConfig.mummyBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 4f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5.0f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2f)
@@ -156,11 +161,13 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
     }
     private PlayState spawnPredicate(AnimationState state) {
         if (!this.getHasSpawned()) {
-            state.getController().forceAnimationReset();
             state.getController().setAnimation(RawAnimation.begin().then("spawn", Animation.LoopType.PLAY_ONCE));
+            if (state.getController().getAnimationState() != AnimationController.State.STOPPED) {
+                spawnHoveringParticles();
+            } else {
+                this.setHasSpawned(true);
+            }
         }
-
-        this.setHasSpawned(true);
         return PlayState.CONTINUE;
     }
 
@@ -204,9 +211,10 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
             remove(RemovalReason.DISCARDED);
         }
 
-        if (this.age < 40) {
+        if (this.age < 40 || this.getSpawn() || this.isShooting()) {
             Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0);
-        } else if (Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getValue() == 0) {
+        } else if (Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getValue() == 0
+                && !this.getSpawn() && !this.isShooting()) {
             Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.57f);
         }
     }
@@ -237,13 +245,11 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
                                  @javax.annotation.Nullable NbtCompound entityNbt) {
         EgyptiantVariant variant = Util.getRandom(EgyptiantVariant.values(), this.random);
         setVariant(variant);
-        if (spawnReason != SpawnReason.SPAWN_EGG &&
-                spawnReason != SpawnReason.COMMAND &&
-                spawnReason != SpawnReason.SPAWNER &&
-                spawnReason != SpawnReason.EVENT) {
-            int randomValue = this.random.nextInt(11);
-            if (randomValue >= 0 && randomValue <= 5) {
-                this.shouldDespawn = true;
+        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
+                && spawnReason != SpawnReason.EVENT ) {
+            int randomValue = this.random.nextInt(10);
+            if (randomValue >= ModSpawnRateConfig.mummySpawnRate) {
+                this.remove(RemovalReason.DISCARDED);
             }
         }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
@@ -253,5 +259,53 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
     }
     public void setVariant(EgyptiantVariant variant) {
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
+    }
+
+    @Override
+    public boolean damage(DamageSource source, float amount) {
+        if (source.isOf(DamageTypes.IN_FIRE) || source.isOf(DamageTypes.ON_FIRE)
+                || source.isOf(DamageTypes.LAVA)) {
+            amount *= 2;
+        }
+        return super.damage(source, amount);
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putBoolean("HasSpawned", true);
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.setHasSpawned(nbt.getBoolean("HasSpawned"));
+    }
+    private void spawnHoveringParticles() {
+        // Position de l'entité
+        double posX = this.getX();
+        double posY = this.getY() - 0.1; // Légèrement sous les pieds
+        double posZ = this.getZ();
+
+        // Récupérer la position du bloc sous l'entité
+        BlockPos blockPos = new BlockPos((int) posX, (int) (this.getY() - 0.5), (int) posZ); // Bloc sous l'entité
+        BlockState blockState = this.getWorld().getBlockState(blockPos);
+
+        // Si le bloc n'est pas de l'air, générer les particules
+        if (!blockState.isAir()) {
+            // Particules basées sur le bloc sous l'entité
+            for (int i = 0; i < 3; i++) { // Nombre de particules
+                double offsetX = (this.random.nextDouble() - 0.5) * 0.1; // Dispersion légère en X
+                double offsetZ = (this.random.nextDouble() - 0.5) * 0.1; // Dispersion légère en Z
+                double velocityY = 0.1; // Légère vélocité verticale (comme de la poussière)
+
+                // Générer des particules basées sur le bloc
+                this.getWorld().addParticle(
+                        new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), // Particules basées sur le bloc
+                        posX + offsetX, posY, posZ + offsetZ, // Position des particules
+                        0.0, velocityY, 0.0 // Vélocité des particules
+                );
+            }
+        }
     }
 }

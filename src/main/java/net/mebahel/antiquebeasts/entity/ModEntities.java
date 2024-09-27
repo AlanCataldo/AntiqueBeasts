@@ -9,6 +9,7 @@ import net.mebahel.antiquebeasts.entity.custom.greek.ChampionHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.EliteHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.HeroHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.*;
+import net.mebahel.antiquebeasts.entity.custom.other.DraugrArcherEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.HarpyEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.*;
@@ -21,6 +22,10 @@ import net.minecraft.util.Identifier;
 
 public class ModEntities {
 
+    public static final EntityType<DraugrArcherEntity> DRAUGR_ARCHER = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "draugr_archer"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DraugrArcherEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
     public static final EntityType<HarpyEntity> HARPY = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "harpy"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HarpyEntity::new)
@@ -51,7 +56,7 @@ public class ModEntities {
     public static final EntityType<ElephantRiderEntity> ELEPHANT_RIDER = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "elephant_rider"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ElephantRiderEntity::create)
-                    .dimensions(EntityDimensions.fixed(1.49f, 3.99f)).build());
+                    .dimensions(EntityDimensions.fixed(1.99f, 5.49f)).build());
     public static final EntityType<ServantEntity> SERVANT = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "servant"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ServantEntity::new)
@@ -61,10 +66,15 @@ public class ModEntities {
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "mummy"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, MummyEntity::new)
                     .dimensions(EntityDimensions.fixed(0.75f, 2.49f)).build());
+
+    public static final EntityType<MummyBossEntity> MUMMY_BOSS = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "mummy_boss"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, MummyBossEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.75f, 4f)).build());
     public static final EntityType<CamelryEntity> CAMELRY = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "camelry"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, CamelryEntity::create)
-                    .dimensions(EntityDimensions.fixed(0.85f, 2.99f)).build());
+                    .dimensions(EntityDimensions.fixed(0.95f, 3.79f)).build());
 
     public static final EntityType<AxemanEntity> AXEMAN = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "axeman"),
@@ -161,7 +171,12 @@ public class ModEntities {
     public static final EntityType<MummyProjectileEntity> MUMMY_PROJECTILE = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "mummy_projectile"),
             FabricEntityTypeBuilder.<MummyProjectileEntity>create(SpawnGroup.MISC, MummyProjectileEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+                    .dimensions(EntityDimensions.fixed(1.25f, 0.75f)).build());
+
+    public static final EntityType<PharaohScepterProjectileEntity> PHARAOH_SCEPTER_PROJECTILE = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "pharaoh_scepter_projectile"),
+            FabricEntityTypeBuilder.<PharaohScepterProjectileEntity>create(SpawnGroup.MISC, PharaohScepterProjectileEntity::new)
+                    .dimensions(EntityDimensions.fixed(1.25f, 0.75f)).build());
 
     public static final EntityType<ChimeraProjectileEntity> CHIMERA_PROJECTILE = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "chimera_projectile"),

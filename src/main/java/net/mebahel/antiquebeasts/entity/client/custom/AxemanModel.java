@@ -20,7 +20,7 @@ public class AxemanModel extends GeoModel<AxemanEntity> {
                 map.put(EgyptiantVariant.DEFAULT,
                         new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/axeman_texture.png"));
                 map.put(EgyptiantVariant.CLOAK,
-                        new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/axeman_texture.png"));
+                        new Identifier(AntiqueBeasts.MOD_ID, "textures/entity/axeman_texture_2.png"));
             });
     @Override
     public Identifier getModelResource(AxemanEntity object) {
@@ -49,5 +49,4 @@ public class AxemanModel extends GeoModel<AxemanEntity> {
             head.setRotX(7.0F * pitchAngle);
         }
     }
-
 }

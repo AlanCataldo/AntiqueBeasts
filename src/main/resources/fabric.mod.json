@@ -4,16 +4,16 @@
   "version": "${version}",
 
   "name": "Antique Beasts",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "Mebahel's Antique Beasts mod takes you back 20 years to the world of Age of Mythology, adding new creatures, bosses and structures with unique mechanics for an immersive and challenging adventure.",
   "authors": [
     "Mebahel"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/antique-beasts",
+    "sources": ""
   },
 
-  "license": "MIT License",
+  "license": "All right reserved.",
   "icon": "assets/antiquebeasts/modIcon/icon.png",
 
   "environment": "*",

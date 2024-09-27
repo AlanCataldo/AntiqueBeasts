@@ -18,6 +18,7 @@ public class ModItemGroups {
                     .icon(()-> new ItemStack(ModItems.GOLD_PLATE_HELMET)).entries((displayContext, entries) -> {
                         entries.add(ModBlocks.AMPHORA);
                         entries.add(ModBlocks.CURSED_GOLDEN_BLOCK);
+                        entries.add(ModBlocks.MUMMY_BOSS_ALTAR);
 
                         entries.add(ModItems.WOOD_KHOPESH);
                         entries.add(ModItems.STONE_KHOPESH);
@@ -29,6 +30,9 @@ public class ModItemGroups {
                         entries.add(ModItems.GOLD_EGYPTIAN_HALBERD);
                         entries.add(ModItems.DIAMOND_EGYPTIAN_HALBERD);
                         entries.add(ModItems.NETHERITE_EGYPTIAN_HALBERD);
+                        entries.add(ModItems.IRON_EGYPTIAN_SHIELD);
+                        entries.add(ModItems.GOLD_EGYPTIAN_SHIELD);
+                        entries.add(ModItems.PHARAOH_SCEPTER);
                         entries.add(ModItems.IRON_HOPLITE_SPEAR);
                         entries.add(ModItems.GOLD_HOPLITE_SPEAR);
                         entries.add(ModItems.DIAMOND_HOPLITE_SPEAR);
@@ -59,6 +63,18 @@ public class ModItemGroups {
                         entries.add(ModItems.NETHERITE_PLATE_CHESTPLATE);
                         entries.add(ModItems.NETHERITE_PLATE_LEGGINGS);
                         entries.add(ModItems.NETHERITE_PLATE_BOOTS);
+                        entries.add(ModItems.IRON_SCALE_HELMET);
+                        entries.add(ModItems.IRON_SCALE_CHESTPLATE);
+                        entries.add(ModItems.IRON_SCALE_LEGGINGS);
+                        entries.add(ModItems.IRON_SCALE_BOOTS);
+                        entries.add(ModItems.GOLD_SCALE_HELMET);
+                        entries.add(ModItems.GOLD_SCALE_CHESTPLATE);
+                        entries.add(ModItems.GOLD_SCALE_LEGGINGS);
+                        entries.add(ModItems.GOLD_SCALE_BOOTS);
+                        entries.add(ModItems.DIAMOND_SCALE_HELMET);
+                        entries.add(ModItems.DIAMOND_SCALE_CHESTPLATE);
+                        entries.add(ModItems.DIAMOND_SCALE_LEGGINGS);
+                        entries.add(ModItems.DIAMOND_SCALE_BOOTS);
 
                         entries.add(ModItems.IRON_PLATE_SHIELD);
                         entries.add(ModItems.GOLD_PLATE_SHIELD);
@@ -72,6 +88,7 @@ public class ModItemGroups {
                         entries.add(ModItems.IRON_SCARAB);
                         entries.add(ModItems.GOLD_SCARAB);
                         entries.add(ModItems.DIAMOND_SCARAB);
+                        entries.add(ModItems.CURSED_SCARAB);
                         entries.add(ModItems.HIGH_IRON_SCRAP);
                         entries.add(ModItems.HIGH_IRON_INGOT);
                         entries.add(ModItems.CHIMERA_HAIR);
@@ -80,6 +97,8 @@ public class ModItemGroups {
                         entries.add(ModItems.CONCENTRATED_CYCLOPS_BLOOD);
                         entries.add(ModItems.RAW_CYCLOPS_MEAT);
                         entries.add(ModItems.COOKED_CYCLOPS_MEAT);
+                        entries.add(ModItems.ANKH);
+                        entries.add(ModItems.ANKH_FRAGMENT);
 
                         entries.add(ModItems.HARPY_FEATHER);
 
@@ -92,6 +111,7 @@ public class ModItemGroups {
                         entries.add(ModItems.WADJET_SPAWN_EGG);
                         entries.add(ModItems.MUMMY_SPAWN_EGG);
                         entries.add(ModItems.SERVANT_SPAWN_EGG);
+                        entries.add(ModItems.MUMMY_BOSS_SPAWN_EGG);
 
                         entries.add(ModItems.CENTAUR_SPAWN_EGG);
                         entries.add(ModItems.CHIMERA_SPAWN_EGG);
@@ -110,6 +130,7 @@ public class ModItemGroups {
                         entries.add(ModItems.EINHERJAR_SPAWN_EGG);
                         entries.add(ModItems.VALKYRIE_SPAWN_EGG);
                         entries.add(ModItems.DRAUGR_SPAWN_EGG);
+                        entries.add(ModItems.DRAUGR_ARCHER_SPAWN_EGG);
                         entries.add(ModItems.HARPY_SPAWN_EGG);
 
                     }).build());

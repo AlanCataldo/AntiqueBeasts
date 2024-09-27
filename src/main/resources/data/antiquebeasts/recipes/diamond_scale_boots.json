@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "# #",
+    "# #"
+  ],
+  "key" : {
+    "#": {
+      "item" : "antiquebeasts:diamond_scarab"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:diamond_scale_boots"
+  }
+}

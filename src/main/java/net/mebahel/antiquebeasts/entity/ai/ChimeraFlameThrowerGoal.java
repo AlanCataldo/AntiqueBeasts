@@ -48,10 +48,8 @@ public class ChimeraFlameThrowerGoal extends Goal {
 
     private void chooseRandomAttack() {
         Random random = new Random();
-        int attackChoice = random.nextInt(4);
+        int attackChoice = random.nextInt(3);
         if (attackChoice == 0) {
-            this.chimera.setAttackName("goat_shoot");
-        } else if (attackChoice == 1) {
             this.chimera.setAttackName("snake_shoot");
         } else {
             this.chimera.setAttackName("lion_shoot");
@@ -100,12 +98,6 @@ public class ChimeraFlameThrowerGoal extends Goal {
                         if (this.chimera.getFireBreathingCooldown() == 10) {
                             projectile = new VenomEntity(world, this.chimera, 6f);
                             launchProjectile(world, target, projectile, 0, 0, 1, getDistanceMultiplier(), getSpeedMultiplier());
-                        }
-                    }
-                    case "goat_shoot" -> {
-                        if (this.chimera.getFireBreathingCooldown() == 10) {
-                            projectile = new MummyProjectileEntity(world, this.chimera, 6f);
-                            launchProjectile(world, target, projectile, 1, 0, 1, getDistanceMultiplier(), getSpeedMultiplier());
                         }
                     }
                 }

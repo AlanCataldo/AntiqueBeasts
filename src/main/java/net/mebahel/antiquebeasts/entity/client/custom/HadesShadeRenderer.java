@@ -8,11 +8,13 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
+import software.bernie.geckolib.renderer.layer.AutoGlowingGeoLayer;
 
 public class HadesShadeRenderer extends GeoEntityRenderer<HadesShadeEntity> {
     public HadesShadeRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new HadesShadeModel());
         this.shadowRadius = 0.25f;
+        this.addRenderLayer(new AutoGlowingGeoLayer<>(this));
     }
     @Override
     public Identifier getTextureLocation(HadesShadeEntity animatable) {

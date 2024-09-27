@@ -16,6 +16,7 @@ import net.mebahel.antiquebeasts.entity.custom.norse.HersirEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.HuskarlEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.ValkyrieEntity;
 import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
+import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
