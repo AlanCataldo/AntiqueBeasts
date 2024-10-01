@@ -57,6 +57,9 @@ public class ValkyrieEntity extends NorseEntity implements GeoEntity {
     public static final TrackedData<Boolean> HEALING = DataTracker.registerData(ValkyrieEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
 
+    public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(ValkyrieEntity.class,
+            TrackedDataHandlerRegistry.STRING);
+
     public void setHealing(boolean healing) {
         this.dataTracker.set(HEALING, healing);
     }
@@ -64,6 +67,8 @@ public class ValkyrieEntity extends NorseEntity implements GeoEntity {
     public boolean isHealing() {
         return this.dataTracker.get(HEALING);
     }
+    public void setAttackName(String attackName) { this.dataTracker.set(ATTACK_NAME, attackName); }
+    public String getAttackName() { return this.dataTracker.get(ATTACK_NAME); }
 
     public ValkyrieEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
@@ -82,6 +87,7 @@ public class ValkyrieEntity extends NorseEntity implements GeoEntity {
         this.dataTracker.startTracking(HEALING, false);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(PATROL_UUID, "");
+        this.dataTracker.startTracking(ATTACK_NAME, "attack");
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
@@ -125,7 +131,7 @@ public class ValkyrieEntity extends NorseEntity implements GeoEntity {
     private PlayState attackPredicate(AnimationState state) {
         if (this.isSwinging() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
             state.getController().forceAnimationReset();
-            state.getController().setAnimation(RawAnimation.begin().then("attack", Animation.LoopType.PLAY_ONCE));
+            state.getController().setAnimation(RawAnimation.begin().then(this.getAttackName(), Animation.LoopType.PLAY_ONCE));
         }
         return PlayState.CONTINUE;
     }
@@ -152,7 +158,7 @@ public class ValkyrieEntity extends NorseEntity implements GeoEntity {
         controllers.add(new AnimationController(this, "healing", 0, this::healingPredicate).setSoundKeyframeHandler(state -> {
             PlayerEntity player = ClientUtils.getClientPlayer();
             if (player != null)
-                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.HEAL, this.getSoundCategory(), 0.8f, 1f);
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.HEAL, this.getSoundCategory(), 1f, 1f);
         }));
     }
 

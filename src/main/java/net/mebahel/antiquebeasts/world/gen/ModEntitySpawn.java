@@ -16,6 +16,7 @@ import net.mebahel.antiquebeasts.entity.custom.greek.HeroHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.*;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrArcherEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
+import net.mebahel.antiquebeasts.entity.custom.other.DraugrWightEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.HarpyEntity;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnRestriction;
@@ -35,6 +36,15 @@ public class ModEntitySpawn {
                         return false;
                     }
                     return HarpyEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                });
+        BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(),
+                SpawnGroup.MONSTER, ModEntities.DRAUGR_WIGHT, 12, 1, 1);
+        SpawnRestriction.register(ModEntities.DRAUGR_WIGHT, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return DraugrWightEntity.canMobSpawn(type, world, spawnReason, pos, random);
                 });
 
         BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(),

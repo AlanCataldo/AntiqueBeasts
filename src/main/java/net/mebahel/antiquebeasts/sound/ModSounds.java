@@ -134,6 +134,7 @@ public class ModSounds {
     public static SoundEvent HARPY_FEATHER_HIT = registerSoundEvent("harpy_feather_hit");
     public static SoundEvent MUMMY_BOSS_SECOND_PHASE = registerSoundEvent("mummy_boss_second_phase");
     public static SoundEvent DARK_MAGIC_1 = registerSoundEvent("dark_magic_1");
+    public static SoundEvent DRAUGR_FROST_SPELL = registerSoundEvent("draugr_frost_spell");
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));

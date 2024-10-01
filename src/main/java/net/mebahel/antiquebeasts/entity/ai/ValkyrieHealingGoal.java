@@ -2,9 +2,12 @@ package net.mebahel.antiquebeasts.entity.ai;
 
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.ValkyrieEntity;
+import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.server.world.ServerWorld;
 
 import java.util.Optional;
 
@@ -41,6 +44,7 @@ public class ValkyrieHealingGoal extends Goal {
         Optional<NorseEntity> entityToHeal = this.valkyrie.getWorld().getEntitiesByClass(NorseEntity.class, this.valkyrie.getBoundingBox().expand(this.searchRadius), EntityPredicates.VALID_LIVING_ENTITY).stream()
                 .filter(entity -> entity.getHealth() < entity.getMaxHealth())
                 .findFirst();
+
         if (entityToHeal.isPresent()) {
             NorseEntity entity = entityToHeal.get();
             this.valkyrie.setHealing(true);
@@ -48,6 +52,10 @@ public class ValkyrieHealingGoal extends Goal {
             this.valkyrie.getLookControl().lookAt(entity, 15f, 15f);
             float newHealth = Math.min(entity.getHealth() + 0.25F, entity.getMaxHealth());
             entity.setHealth(newHealth);
+
+            // Appel de la méthode pour générer les particules de guérison côté serveur et client
+            generateHealingParticles(entity);
+
             double dx = entity.getX() - this.valkyrie.getX();
             double dy = entity.getY() - this.valkyrie.getY();
             double dz = entity.getZ() - this.valkyrie.getZ();
@@ -60,5 +68,23 @@ public class ValkyrieHealingGoal extends Goal {
         } else {
             this.valkyrie.setHealing(false);
         }
+    }
+
+    // Méthode pour générer des particules
+    private void generateHealingParticles(NorseEntity entity) {
+        // Assurez-vous que la logique s'exécute côté serveur
+        if (this.valkyrie.getWorld().isClient()) {
+            return; // Ne rien faire côté client directement
+        }
+
+        // Générer les particules côté serveur
+        ((ServerWorld) this.valkyrie.getWorld()).spawnParticles(
+                ModParticles.HEALING_PARTICLE,
+                //ParticleTypes.TOTEM_OF_UNDYING,// Type de particule
+                entity.getX(), entity.getY() + entity.getHeight() + 0.5, entity.getZ(),  // Position des particules
+                7,  // Nombre de particules
+                0.45, 0.45, 0.45,  // Taille de la boîte autour de la position centrale
+                0.1  // Vitesse des particules (tombent doucement)
+        );
     }
 }

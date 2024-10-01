@@ -748,5 +748,11 @@
     "sounds": [
       "antiquebeasts:egyptian/dark_magic_1"
     ]
+  },
+  "draugr_frost_spell": {
+    "subtitle": "antiquebeasts:draugr/draugr_frost_spell",
+    "sounds": [
+      "antiquebeasts:draugr/draugr_frost_spell"
+    ]
   }
 }

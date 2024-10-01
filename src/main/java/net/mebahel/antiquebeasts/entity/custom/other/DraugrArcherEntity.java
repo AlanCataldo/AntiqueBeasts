@@ -46,7 +46,6 @@ import static java.lang.Math.random;
 public class DraugrArcherEntity extends DraugrEntity implements GeoEntity {
     public DraugrArcherEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
-        this.ambientSoundChance = -this.getMinAmbientSoundDelay();
     }
     public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(DraugrArcherEntity.class,
             TrackedDataHandlerRegistry.FLOAT);

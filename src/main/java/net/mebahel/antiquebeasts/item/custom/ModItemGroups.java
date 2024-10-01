@@ -130,6 +130,7 @@ public class ModItemGroups {
                         entries.add(ModItems.EINHERJAR_SPAWN_EGG);
                         entries.add(ModItems.VALKYRIE_SPAWN_EGG);
                         entries.add(ModItems.DRAUGR_SPAWN_EGG);
+                        entries.add(ModItems.DRAUGR_WIGHT_SPAWN_EGG);
                         entries.add(ModItems.DRAUGR_ARCHER_SPAWN_EGG);
                         entries.add(ModItems.HARPY_SPAWN_EGG);
 

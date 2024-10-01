@@ -16,6 +16,7 @@ import net.mebahel.antiquebeasts.entity.custom.greek.HeroHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.*;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrArcherEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
+import net.mebahel.antiquebeasts.entity.custom.other.DraugrWightEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.HarpyEntity;
 import net.mebahel.antiquebeasts.item.TickScheduler;
 import net.mebahel.antiquebeasts.item.custom.ModItemGroups;
@@ -64,6 +65,7 @@ public class AntiqueBeasts implements ModInitializer {
 		ModBonusHealthConfig.loadConfig(configDir);
 		ModItemGroups.registerItemGroups();
 
+		FabricDefaultAttributeRegistry.register(ModEntities.DRAUGR_WIGHT, DraugrWightEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.DRAUGR_ARCHER, DraugrArcherEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.MUMMY_BOSS, MummyBossEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.HARPY, HarpyEntity.setAttributes());

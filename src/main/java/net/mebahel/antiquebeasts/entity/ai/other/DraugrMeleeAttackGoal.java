@@ -110,6 +110,6 @@ public class DraugrMeleeAttackGoal extends Goal {
         }
     }
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return 7;
+        return 6;
     }
 }

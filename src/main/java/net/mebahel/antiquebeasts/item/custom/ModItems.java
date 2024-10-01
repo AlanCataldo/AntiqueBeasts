@@ -33,7 +33,9 @@ public class ModItems {
     public static final Item DRAUGR_ARCHER_SPAWN_EGG = registerItem("spawn_egg/draugr_archer_spawn_egg",
             new SpawnEggItem(ModEntities.DRAUGR_ARCHER,4399360, 1926344,
                     new FabricItemSettings()));
-
+    public static final Item DRAUGR_WIGHT_SPAWN_EGG = registerItem("spawn_egg/draugr_wight_spawn_egg",
+            new SpawnEggItem(ModEntities.DRAUGR_WIGHT,4399360, 2926344,
+                    new FabricItemSettings()));
     public static final Item HARPY_SPAWN_EGG = registerItem("spawn_egg/harpy_spawn_egg",
             new SpawnEggItem(ModEntities.HARPY,2699360, 866344,
                     new FabricItemSettings()));
@@ -333,8 +335,9 @@ public class ModItems {
         entries.add(VALKYRIE_SPAWN_EGG);
 
         entries.add(DRAUGR_SPAWN_EGG);
-        entries.add(HARPY_SPAWN_EGG);
+        entries.add(DRAUGR_WIGHT_SPAWN_EGG);
         entries.add(DRAUGR_ARCHER_SPAWN_EGG);
+        entries.add(HARPY_SPAWN_EGG);
     }
     public static void addItemToIngredientItemGroup(FabricItemGroupEntries entries) {
         entries.add(IRON_PLATE);

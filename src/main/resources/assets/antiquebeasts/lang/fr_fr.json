@@ -26,6 +26,9 @@
   "entity.antiquebeasts.harpy": "Harpie",
   "entity.antiquebeasts.mummy_boss": "Pharaon momifié",
   "entity.antiquebeasts.draugr_archer": "Archer Draugr",
+  "entity.antiquebeasts.draugr_wight": "Draugr Délétère",
+
+  "entity.antiquebeasts.draugr_wight_projectile": "Sort de Froid Mordant",
 
   "item.antiquebeasts.ankh": "§eAnkh",
   "item.antiquebeasts.ankh_fragment": "Morceau d'Ankh",
@@ -39,6 +42,7 @@
   "item.antiquebeasts.music_disc.behold_the_great_science_fi_music_disc": "§bDisque de musique",
   "item.antiquebeasts.music_disc.behold_the_great_science_fi_music_disc.desc": "Age Of Mythology - behold the great science fi",
 
+  "item.antiquebeasts.spawn_egg.draugr_wight_spawn_egg": "Oeuf d'apparition de Draugr Délétère",
   "item.antiquebeasts.spawn_egg.draugr_archer_spawn_egg": "Oeuf d'apparition d'Archer' Draugr",
   "item.antiquebeasts.spawn_egg.harpy_spawn_egg": "Oeuf d'apparition de Harpie",
   "item.antiquebeasts.spawn_egg.draugr_spawn_egg": "Oeuf d'apparition de Draugr",

@@ -11,6 +11,7 @@ import net.mebahel.antiquebeasts.entity.custom.greek.HeroHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.*;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrArcherEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
+import net.mebahel.antiquebeasts.entity.custom.other.DraugrWightEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.HarpyEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.*;
 import net.minecraft.entity.EntityDimensions;
@@ -21,7 +22,14 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModEntities {
-
+    public static final EntityType<DraugrWightEntity> DRAUGR_WIGHT= Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "draugr_wight"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DraugrWightEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
+    public static final EntityType<DraugrWightProjectileEntity> DRAUGR_WIGHT_PROJECTILE = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "draugr_wight_projectile"),
+            FabricEntityTypeBuilder.<DraugrWightProjectileEntity>create(SpawnGroup.MISC, DraugrWightProjectileEntity::new)
+                    .dimensions(EntityDimensions.fixed(1.25f, 0.75f)).build());
     public static final EntityType<DraugrArcherEntity> DRAUGR_ARCHER = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "draugr_archer"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DraugrArcherEntity::new)

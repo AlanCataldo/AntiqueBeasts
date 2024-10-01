@@ -14,7 +14,7 @@
   },
   "display": {
     "icon": {
-      "item": "minecraft:feather"
+      "item": "minecraft:chicken"
     },
     "title": {
       "translate": "advancement.antiquebeasts.kill_harpy.title"

@@ -10,6 +10,8 @@ import net.minecraft.predicate.entity.EntityPredicates;
 import java.util.EnumSet;
 import java.util.Optional;
 
+import static java.lang.Math.random;
+
 public class ValkyrieMeleeAttackGoal extends Goal {
     protected final ValkyrieEntity mob;
     private final double speed;
@@ -83,6 +85,11 @@ public class ValkyrieMeleeAttackGoal extends Goal {
         double d = this.getSquaredMaxAttackDistance(target);
         this.cooldown = Math.max(this.cooldown - 1, 0);
         this.mob.getNavigation().startMovingTo(target, this.speed);
+        rand = random();
+        if (rand < 0.5)
+            this.mob.setAttackName("attack");
+        else
+            this.mob.setAttackName("attack2");
 
         if (this.cooldown == 0) {
             this.cooldown = MAX_COOLDOWN + 2;

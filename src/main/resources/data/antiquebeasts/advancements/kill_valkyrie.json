@@ -14,7 +14,7 @@
   },
   "display": {
     "icon": {
-      "item": "minecraft:saddle"
+      "item": "antiquebeasts:weapon/valkyrie_spear"
     },
     "title": {
       "translate": "advancement.antiquebeasts.kill_valkyrie.title"
