@@ -14,10 +14,7 @@ import net.mebahel.antiquebeasts.entity.custom.greek.ChampionHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.EliteHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.HeroHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.*;
-import net.mebahel.antiquebeasts.entity.custom.other.DraugrArcherEntity;
-import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
-import net.mebahel.antiquebeasts.entity.custom.other.DraugrWightEntity;
-import net.mebahel.antiquebeasts.entity.custom.other.HarpyEntity;
+import net.mebahel.antiquebeasts.entity.custom.other.*;
 import net.mebahel.antiquebeasts.item.TickScheduler;
 import net.mebahel.antiquebeasts.item.custom.ModItemGroups;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
@@ -58,13 +55,13 @@ public class AntiqueBeasts implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		GeckoLib.initialize();
 		File configDir = new File(FabricLoader.getInstance().getConfigDir().toFile(), "antiquebeasts");
 		ModConfig.loadConfig(configDir);
 		ModSpawnRateConfig.loadConfig(configDir);
 		ModBonusHealthConfig.loadConfig(configDir);
 		ModItemGroups.registerItemGroups();
 
+		FabricDefaultAttributeRegistry.register(ModEntities.DRAUGR_SCOURGE, DraugrScourgeEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.DRAUGR_WIGHT, DraugrWightEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.DRAUGR_ARCHER, DraugrArcherEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.MUMMY_BOSS, MummyBossEntity.setAttributes());
@@ -123,30 +120,6 @@ public class AntiqueBeasts implements ModInitializer {
 			waterRemovalScheduler.removeWorld(world);
 			registeredListeners.remove(world);
 		});
-	}
-	private Identifier getLootTableIdReflectively(LootableContainerBlockEntity lootableContainer) {
-		try {
-			// Accéder au champ lootTableId
-			Field lootTableField = LootableContainerBlockEntity.class.getDeclaredField("lootTableId");
-			lootTableField.setAccessible(true);  // Rendre le champ accessible
-			return (Identifier) lootTableField.get(lootableContainer);  // Retourner la valeur du champ
-		} catch (NoSuchFieldException | IllegalAccessException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	// Méthode pour déclencher l'avancement
-	private void triggerChestAdvancement(ServerPlayerEntity player) {
-		Identifier advancementId = new Identifier("antiquebeasts", "find_egyptian_pyramid_unique_chest");
-		Advancement advancement = player.getServer().getAdvancementLoader().get(advancementId);
-
-		if (advancement != null) {
-			AdvancementProgress progress = player.getAdvancementTracker().getProgress(advancement);
-			if (!progress.isDone()) {
-				player.getAdvancementTracker().grantCriterion(advancement, "opened_chest");
-			}
-		}
 	}
 	public static TickScheduler getTickScheduler() {
 		return tickScheduler;

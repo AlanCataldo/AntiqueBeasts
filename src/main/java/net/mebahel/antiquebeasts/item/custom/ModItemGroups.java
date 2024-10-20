@@ -47,6 +47,10 @@ public class ModItemGroups {
                         entries.add(ModItems.EGYPTIAN_RECURVE_BOW);
                         entries.add(ModItems.GREEK_COMPOSITE_BOW);
 
+                        entries.add(ModItems.VALKYRIE_HELMET);
+                        entries.add(ModItems.VALKYRIE_CHESTPLATE);
+                        entries.add(ModItems.VALKYRIE_LEGGINGS);
+                        entries.add(ModItems.VALKYRIE_BOOTS);
                         entries.add(ModItems.IRON_PLATE_HELMET);
                         entries.add(ModItems.IRON_PLATE_CHESTPLATE);
                         entries.add(ModItems.IRON_PLATE_LEGGINGS);
@@ -100,6 +104,8 @@ public class ModItemGroups {
                         entries.add(ModItems.ANKH);
                         entries.add(ModItems.ANKH_FRAGMENT);
 
+                        entries.add(ModItems.FROSTBITE_SCROLL);
+                        entries.add(ModItems.ICE_SPIKE_SCROLL);
                         entries.add(ModItems.HARPY_FEATHER);
 
                         entries.add(ModItems.N_D_NILE_MUSIC_DISC);
@@ -131,6 +137,7 @@ public class ModItemGroups {
                         entries.add(ModItems.VALKYRIE_SPAWN_EGG);
                         entries.add(ModItems.DRAUGR_SPAWN_EGG);
                         entries.add(ModItems.DRAUGR_WIGHT_SPAWN_EGG);
+                        entries.add(ModItems.DRAUGR_SCOURGE_SPAWN_EGG);
                         entries.add(ModItems.DRAUGR_ARCHER_SPAWN_EGG);
                         entries.add(ModItems.HARPY_SPAWN_EGG);
 

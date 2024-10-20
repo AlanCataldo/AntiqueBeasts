@@ -27,8 +27,10 @@
   "entity.antiquebeasts.mummy_boss": "Pharaon momifié",
   "entity.antiquebeasts.draugr_archer": "Archer Draugr",
   "entity.antiquebeasts.draugr_wight": "Draugr Délétère",
+  "entity.antiquebeasts.draugr_scourge": "Fléau Draugr",
 
   "entity.antiquebeasts.draugr_wight_projectile": "Sort de Froid Mordant",
+  "entity.antiquebeasts.frost_spike": "Sort de Lance Gelée",
 
   "item.antiquebeasts.ankh": "§eAnkh",
   "item.antiquebeasts.ankh_fragment": "Morceau d'Ankh",

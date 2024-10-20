@@ -33,7 +33,7 @@ public class DraugrWightModel extends GeoModel<DraugrWightEntity> {
             });
     @Override
     public Identifier getModelResource(DraugrWightEntity object) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "geo/draugr.geo.json");
+        return new Identifier(AntiqueBeasts.MOD_ID, "geo/draugr_wight.geo.json");
     }
 
     @Override

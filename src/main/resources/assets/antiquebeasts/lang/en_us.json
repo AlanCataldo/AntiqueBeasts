@@ -28,6 +28,7 @@
   "entity.antiquebeasts.egyptian_caravan": "Egyptian Caravan",
   "entity.antiquebeasts.draugr_archer": "Draugr Archer",
   "entity.antiquebeasts.draugr_wight": "Draugr Wight",
+  "entity.antiquebeasts.draugr_scourge": "Draugr Scourge",
 
   "entity.antiquebeasts.throwing_axe": "Throwing Axe",
   "entity.antiquebeasts.harpy_feather": "Harpy Feather",
@@ -46,6 +47,7 @@
   "entity.antiquebeasts.diamond_throwing_hoplite_spear": "Hoplite Spear",
   "entity.antiquebeasts.netherite_throwing_hoplite_spear": "Hoplite Spear",
   "entity.antiquebeasts.draugr_wight_projectile": "Forstbite Spell",
+  "entity.antiquebeasts.frost_spike": "Ice Spike Spell",
 
   "block.antiquebeasts.amphora": "Amphora",
   "block.antiquebeasts.cursed_gold_block": "Cursed Gold Block",
@@ -59,6 +61,10 @@
   "item.antiquebeasts.ankh": "§eAnkh",
   "item.antiquebeasts.ankh_fragment": "Ankh Fragment",
 
+  "item.antiquebeasts.scroll.frostbite_scroll": "§9Frostbite Scroll",
+  "item.antiquebeasts.scroll.ice_spike_scroll": "§5Ice Spike Scroll",
+
+  "item.antiquebeasts.spawn_egg.draugr_scourge_spawn_egg": "Draugr Scourge Spawn Egg",
   "item.antiquebeasts.spawn_egg.draugr_wight_spawn_egg": "Draugr Wight Spawn Egg",
   "item.antiquebeasts.spawn_egg.draugr_archer_spawn_egg": "Draugr Archer Spawn Egg",
   "item.antiquebeasts.spawn_egg.harpy_spawn_egg": "Harpy Spawn Egg",
@@ -195,6 +201,9 @@
 
   "advancement.antiquebeasts.kill_draugr_wight.title": "Frostbite",
   "advancement.antiquebeasts.kill_draugr_wight.description": "Kill a Draugr Wight for the first time.",
+
+  "advancement.antiquebeasts.kill_draugr_scourge.title": "Ice and Dice ?",
+  "advancement.antiquebeasts.kill_draugr_scourge.description": "Kill a Draugr Scourge for the first time.",
 
   "advancement.antiquebeasts.see_mummy_boss.title": "What Have I Awakened ?",
   "advancement.antiquebeasts.see_mummy_boss.description": "Awaken a Mummified Pharaoh.",

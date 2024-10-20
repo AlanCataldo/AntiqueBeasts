@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#c:in_overworld",
+    {"id": "terralith:cave/andesite_caves", "required": false},
+    {"id": "terralith:cave/diorite_caves", "required": false},
+    {"id": "terralith:cave/granite_caves", "required": false},
+    {"id": "terralith:cave/infested_caves", "required": false}
+  ]
+}

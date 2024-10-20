@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FFF",
+    "FPF",
+    "FFF"
+  ],
+  "key" : {
+    "O": {
+      "item" : "minecraft:snowball"
+    },
+    "F": {
+      "item" : "antiquebeasts:frost_shard"
+    },
+    "P": {
+      "item" : "minecraft:paper"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:frostbite_scroll"
+  }
+}

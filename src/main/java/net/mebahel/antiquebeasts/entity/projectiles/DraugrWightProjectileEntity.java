@@ -38,6 +38,7 @@ import static net.mebahel.antiquebeasts.entity.ModEntities.DRAUGR_WIGHT_PROJECTI
 public class DraugrWightProjectileEntity extends ThrownItemEntity implements GeoEntity {
 
     float damage;
+    private int ticksExisted = 0;
     private Vec3d previousPosition; // Sauvegarde de la position précédente pour générer une traînée continue
     private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
 
@@ -98,12 +99,6 @@ public class DraugrWightProjectileEntity extends ThrownItemEntity implements Geo
         }
     }
 
-    @Override
-    protected void onBlockHit(BlockHitResult blockHitResult) {
-        BlockState blockState = this.getWorld().getBlockState(blockHitResult.getBlockPos());
-        blockState.onProjectileHit(this.getWorld(), blockState, blockHitResult, this);
-    }
-
     private void generateParticles(Vec3d currentPosition) {
         if (!this.getWorld().isClient()) return;  // S'assurer que c'est exécuté côté client uniquement
 
@@ -129,7 +124,7 @@ public class DraugrWightProjectileEntity extends ThrownItemEntity implements Geo
                 Vec3d interpolatedPosition = this.previousPosition.lerp(currentPosition, t);
 
                 // Générer plusieurs particules autour de chaque point interpolé
-                for (int j = 0; j < 5; j++) {  // Ajuster le nombre de particules générées par point
+                for (int j = 0; j < 3; j++) {  // Ajuster le nombre de particules générées par point
                     double offsetX = (this.random.nextDouble() - 0.5) * 0.3;  // Dispersion latérale
                     double offsetY = (this.random.nextDouble() - 0.5) * 0.3;  // Dispersion verticale
                     double offsetZ = (this.random.nextDouble() - 0.5) * 0.3;  // Dispersion en profondeur
@@ -149,6 +144,14 @@ public class DraugrWightProjectileEntity extends ThrownItemEntity implements Geo
     @Override
     public void tick() {
         super.tick();
+        ticksExisted++; // Incrémente le compteur de ticks à chaque appel
+
+        // Désactiver la gravité pendant les 5 premières secondes (100 ticks)
+        if (ticksExisted <= 40) {
+            this.setNoGravity(true);
+        } else {
+            this.setNoGravity(false);
+        }
 
         // Générer la traînée de particules
         if (this.getWorld().isClient()) {

@@ -1,17 +1,21 @@
 package net.mebahel.antiquebeasts;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.client.custom.*;
 import net.mebahel.antiquebeasts.entity.client.custom.draugr.DraugrRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.draugr_archer.DraugrArcherRenderer;
+import net.mebahel.antiquebeasts.entity.client.custom.draugr_scourge.DraugrScourgeRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.draugr_wight.DraugrWightRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.harpy.HarpyRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.mummy_boss.MummyBossRenderer;
 import net.mebahel.antiquebeasts.entity.client.projectiles.*;
 import net.mebahel.antiquebeasts.entity.client.projectiles.draugr.DraugrWightProjectileRenderer;
+import net.mebahel.antiquebeasts.entity.client.projectiles.draugr.FrostSpikeProjectileRenderer;
 import net.mebahel.antiquebeasts.entity.client.projectiles.harpy.HarpyFeatherRenderer;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.particle.custom.*;
@@ -19,10 +23,19 @@ import net.mebahel.antiquebeasts.util.BowPredicate;
 import net.mebahel.antiquebeasts.util.HornModelPredicate;
 import net.mebahel.antiquebeasts.util.ShieldModelPredicate;
 import net.mebahel.antiquebeasts.util.SpearModelPredicate;
+import software.bernie.geckolib.GeckoLib;
 
 public class AntiqueBeastsClient implements ClientModInitializer {
+    private boolean initialized = false;
     @Override
     public void onInitializeClient() {
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (!initialized) {
+                GeckoLib.initialize(); // Initialise GeckoLib après quelques ticks
+                initialized = true;
+            }
+        });
+        EntityRendererRegistry.register(ModEntities.DRAUGR_SCOURGE, DraugrScourgeRenderer::new);
         EntityRendererRegistry.register(ModEntities.DRAUGR_WIGHT, DraugrWightRenderer::new);
         EntityRendererRegistry.register(ModEntities.DRAUGR_ARCHER, DraugrArcherRenderer::new);
         EntityRendererRegistry.register(ModEntities.MUMMY_BOSS, MummyBossRenderer::new);
@@ -61,6 +74,7 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.MUMMY_PROJECTILE, MummyProjectileRenderer::new);
         EntityRendererRegistry.register(ModEntities.PHARAOH_SCEPTER_PROJECTILE, PharaohScepterProjectileRenderer::new);
         EntityRendererRegistry.register(ModEntities.DRAUGR_WIGHT_PROJECTILE, DraugrWightProjectileRenderer::new);
+        EntityRendererRegistry.register(ModEntities.FROST_SPIKE, FrostSpikeProjectileRenderer::new);
         EntityRendererRegistry.register(ModEntities.CHIMERA_PROJECTILE, ChimeraProjectileRenderer::new);
         EntityRendererRegistry.register(ModEntities.VALKYRIE_SPEAR, ValkyrieSpearRenderer::new);
         EntityRendererRegistry.register(ModEntities.IRON_THROWING_HOPLITE_SPEAR, (context) -> new ThrowingHopliteSpearEntityRenderer(context, "iron"));

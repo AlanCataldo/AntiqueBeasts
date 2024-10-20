@@ -754,5 +754,11 @@
     "sounds": [
       "antiquebeasts:draugr/draugr_frost_spell"
     ]
+  },
+  "draugr_ice_spike": {
+    "subtitle": "antiquebeasts:draugr/draugr_ice_spike",
+    "sounds": [
+      "antiquebeasts:draugr/draugr_ice_spike"
+    ]
   }
 }

@@ -9,10 +9,7 @@ import net.mebahel.antiquebeasts.entity.custom.greek.ChampionHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.EliteHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.HeroHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.*;
-import net.mebahel.antiquebeasts.entity.custom.other.DraugrArcherEntity;
-import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
-import net.mebahel.antiquebeasts.entity.custom.other.DraugrWightEntity;
-import net.mebahel.antiquebeasts.entity.custom.other.HarpyEntity;
+import net.mebahel.antiquebeasts.entity.custom.other.*;
 import net.mebahel.antiquebeasts.entity.projectiles.*;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
@@ -22,10 +19,18 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModEntities {
+    public static final EntityType<DraugrScourgeEntity> DRAUGR_SCOURGE= Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "draugr_scourge"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DraugrScourgeEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.65f, 1.99f)).build());
+    public static final EntityType<FrostSpikeEntity> FROST_SPIKE = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "frost_spike"),
+            FabricEntityTypeBuilder.<FrostSpikeEntity>create(SpawnGroup.MISC, FrostSpikeEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.25f, 0.5f)).build());
     public static final EntityType<DraugrWightEntity> DRAUGR_WIGHT= Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "draugr_wight"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DraugrWightEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
+                    .dimensions(EntityDimensions.fixed(0.65f, 1.99f)).build());
     public static final EntityType<DraugrWightProjectileEntity> DRAUGR_WIGHT_PROJECTILE = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "draugr_wight_projectile"),
             FabricEntityTypeBuilder.<DraugrWightProjectileEntity>create(SpawnGroup.MISC, DraugrWightProjectileEntity::new)
@@ -33,7 +38,7 @@ public class ModEntities {
     public static final EntityType<DraugrArcherEntity> DRAUGR_ARCHER = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "draugr_archer"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DraugrArcherEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
+                    .dimensions(EntityDimensions.fixed(0.65f, 1.99f)).build());
     public static final EntityType<HarpyEntity> HARPY = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "harpy"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HarpyEntity::new)
@@ -41,7 +46,7 @@ public class ModEntities {
     public static final EntityType<DraugrEntity> DRAUGR = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "draugr"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DraugrEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.85f, 1.99f)).build());
+                    .dimensions(EntityDimensions.fixed(0.65f, 1.99f)).build());
     public static final EntityType<CentaurEntity> CENTAUR = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "centaur"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, CentaurEntity::new)

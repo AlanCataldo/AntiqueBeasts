@@ -1,0 +1,24 @@
+{
+  "name": "antiquebeasts:draugr_crypt_skeletal_dragon/big_room_1_back",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "antiquebeasts:draugr_crypt_skeletal_dragon/big_room_1_back_1",
+        "processors": "antiquebeasts:water_removal_processor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "antiquebeasts:draugr_crypt_skeletal_dragon/big_room_1_back_2",
+        "processors": "antiquebeasts:water_removal_processor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

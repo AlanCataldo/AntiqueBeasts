@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "antiquebeasts:draugr_crypt_skeletal_dragon",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 469872378,
+    "spacing": 128,
+    "separation": 64
+  }
+}

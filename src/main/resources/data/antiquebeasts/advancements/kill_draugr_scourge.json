@@ -1,0 +1,30 @@
+{
+  "parent": "antiquebeasts:kill_draugr",
+  "criteria": {
+    "killed_harpy": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "antiquebeasts:draugr_scourge"
+        }
+      }
+    }
+  },
+  "rewards": {
+  },
+  "display": {
+    "icon": {
+      "item": "antiquebeasts:frost_shard"
+    },
+    "title": {
+      "translate": "advancement.antiquebeasts.kill_draugr_scourge.title"
+    },
+    "description": {
+      "translate": "advancement.antiquebeasts.kill_draugr_scourge.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  }
+}

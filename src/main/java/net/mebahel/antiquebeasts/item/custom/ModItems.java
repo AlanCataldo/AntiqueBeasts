@@ -7,6 +7,7 @@ import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.block.ModBlocks;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.item.*;
+import net.mebahel.antiquebeasts.item.scroll.ScrollItem;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.*;
@@ -30,6 +31,9 @@ public class ModItems {
             new MusicDiscItem(7, ModSounds.BEHOLD_THE_GREAT_SCIENCE_FI_MUSIC,
                     new FabricItemSettings().maxCount(1), 149));
 
+    public static final Item DRAUGR_SCOURGE_SPAWN_EGG = registerItem("spawn_egg/draugr_scourge_spawn_egg",
+            new SpawnEggItem(ModEntities.DRAUGR_SCOURGE,4399360, 1526344,
+                    new FabricItemSettings()));
     public static final Item DRAUGR_ARCHER_SPAWN_EGG = registerItem("spawn_egg/draugr_archer_spawn_egg",
             new SpawnEggItem(ModEntities.DRAUGR_ARCHER,4399360, 1926344,
                     new FabricItemSettings()));
@@ -166,6 +170,14 @@ public class ModItems {
             new Item(new FabricItemSettings()));
     public static final Item DIAMOND_PLATE = registerItem("diamond_plate",
             new Item(new FabricItemSettings()));
+    public static final ValkyrieArmorItem VALKYRIE_HELMET = registerItem("valkyrie_helmet",
+            new ValkyrieArmorItem(ModArmorMaterials.HIGH_IRON, ArmorItem.Type.HELMET, new FabricItemSettings()));
+    public static final ValkyrieArmorItem VALKYRIE_CHESTPLATE = registerItem("valkyrie_chestplate",
+            new ValkyrieArmorItem(ModArmorMaterials.HIGH_IRON, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
+    public static final ValkyrieArmorItem VALKYRIE_LEGGINGS = registerItem("valkyrie_leggings",
+            new ValkyrieArmorItem(ModArmorMaterials.HIGH_IRON, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
+    public static final ValkyrieArmorItem VALKYRIE_BOOTS = registerItem("valkyrie_boots",
+            new ValkyrieArmorItem(ModArmorMaterials.HIGH_IRON, ArmorItem.Type.BOOTS, new FabricItemSettings()));
     public static final Item IRON_SCALE_HELMET = registerItem("iron_scale_helmet",
             new IronScaleArmorItem(ModArmorMaterials.IRON_SCALE, ArmorItem.Type.HELMET, new FabricItemSettings()));
     public static final Item IRON_SCALE_CHESTPLATE = registerItem("iron_scale_chestplate",
@@ -301,6 +313,10 @@ public class ModItems {
             new Item(new FabricItemSettings()));
     public static final Item VALKYRIE_SPEAR = registerItem("weapon/valkyrie_spear",
             new ValkyrieSpear(new FabricItemSettings().maxDamage(600)));
+    public static final Item FROSTBITE_SCROLL = registerItem("scroll/frostbite_scroll",
+            new ScrollItem(new FabricItemSettings().maxDamage(64), 55, 2.5f, "frostbite", AntiqueBeasts.getTickScheduler()));
+    public static final Item ICE_SPIKE_SCROLL = registerItem("scroll/ice_spike_scroll",
+            new ScrollItem(new FabricItemSettings().maxDamage(64), 55, 12, "ice_spike", AntiqueBeasts.getTickScheduler()));
 
     public static final Item IRON_CENTAUR_SWORD = registerItem("weapon/iron_centaur_sword",
             new SwordItem(ModToolMaterial.IRON_CENTAUR,3, -2.4f,
@@ -336,6 +352,7 @@ public class ModItems {
 
         entries.add(DRAUGR_SPAWN_EGG);
         entries.add(DRAUGR_WIGHT_SPAWN_EGG);
+        entries.add(DRAUGR_SCOURGE_SPAWN_EGG);
         entries.add(DRAUGR_ARCHER_SPAWN_EGG);
         entries.add(HARPY_SPAWN_EGG);
     }
@@ -371,6 +388,10 @@ public class ModItems {
         entries.add(ModBlocks.MUMMY_BOSS_ALTAR);
     }
     public static void addItemToCombatItemGroup(FabricItemGroupEntries entries) {
+        entries.add(VALKYRIE_HELMET);
+        entries.add(VALKYRIE_CHESTPLATE);
+        entries.add(VALKYRIE_LEGGINGS);
+        entries.add(VALKYRIE_BOOTS);
         entries.add(IRON_SCALE_HELMET);
         entries.add(IRON_SCALE_CHESTPLATE);
         entries.add(IRON_SCALE_LEGGINGS);
@@ -416,6 +437,9 @@ public class ModItems {
         entries.add(HERSIR_AXE);
         entries.add(THROWING_AXE_ITEM);
         entries.add(EINHERJAR_HORN);
+
+        entries.add(FROSTBITE_SCROLL);
+        entries.add(ICE_SPIKE_SCROLL);
 
         entries.add(HARPY_FEATHER);
 

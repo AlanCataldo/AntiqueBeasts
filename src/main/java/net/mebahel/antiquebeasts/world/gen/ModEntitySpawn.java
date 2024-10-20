@@ -14,10 +14,7 @@ import net.mebahel.antiquebeasts.entity.custom.greek.ChampionHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.EliteHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.HeroHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.*;
-import net.mebahel.antiquebeasts.entity.custom.other.DraugrArcherEntity;
-import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
-import net.mebahel.antiquebeasts.entity.custom.other.DraugrWightEntity;
-import net.mebahel.antiquebeasts.entity.custom.other.HarpyEntity;
+import net.mebahel.antiquebeasts.entity.custom.other.*;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.world.Difficulty;
@@ -37,6 +34,17 @@ public class ModEntitySpawn {
                     }
                     return HarpyEntity.canMobSpawn(type, world, spawnReason, pos, random);
                 });
+
+        BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(),
+                SpawnGroup.MONSTER, ModEntities.DRAUGR_SCOURGE, 4, 1, 1);
+        SpawnRestriction.register(ModEntities.DRAUGR_SCOURGE, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return DraugrScourgeEntity.canSpawnInDark(type, world, spawnReason, pos, random);
+                });
+
         BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(),
                 SpawnGroup.MONSTER, ModEntities.DRAUGR_WIGHT, 12, 1, 1);
         SpawnRestriction.register(ModEntities.DRAUGR_WIGHT, SpawnRestriction.Location.ON_GROUND,
@@ -44,7 +52,7 @@ public class ModEntitySpawn {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
                     }
-                    return DraugrWightEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                    return DraugrWightEntity.canSpawnInDark(type, world, spawnReason, pos, random);
                 });
 
         BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(),
@@ -54,7 +62,7 @@ public class ModEntitySpawn {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
                     }
-                    return DraugrArcherEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                    return DraugrArcherEntity.canSpawnInDark(type, world, spawnReason, pos, random);
                 });
 
         BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(),
@@ -64,7 +72,7 @@ public class ModEntitySpawn {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
                     }
-                    return DraugrEntity.canMobSpawn(type, world, spawnReason, pos, random);
+                    return DraugrEntity.canSpawnInDark(type, world, spawnReason, pos, random);
                 });
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(

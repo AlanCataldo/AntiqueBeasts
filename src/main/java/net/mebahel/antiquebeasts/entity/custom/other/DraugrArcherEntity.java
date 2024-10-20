@@ -1,6 +1,7 @@
 package net.mebahel.antiquebeasts.entity.custom.other;
 
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
+import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
 import net.mebahel.antiquebeasts.entity.ai.other.DraugrArcherShootingGoal;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
@@ -47,6 +48,7 @@ public class DraugrArcherEntity extends DraugrEntity implements GeoEntity {
     public DraugrArcherEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
     }
+
     public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(DraugrArcherEntity.class,
             TrackedDataHandlerRegistry.FLOAT);
 
@@ -95,11 +97,9 @@ public class DraugrArcherEntity extends DraugrEntity implements GeoEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new DraugrArcherShootingGoal(this, 80f));
-        this.goalSelector.add(3, new WanderAroundFarGoal(this, 0.35f, 1f));
-        this.goalSelector.add(4, new LookAroundGoal(this));
+        this.goalSelector.add(2, new DraugrArcherShootingGoal(this));
 
-        this.targetSelector.add(1, new RevengeGoal(this));
+        this.targetSelector.add(1, new CustomRevengeGoal(this, DraugrEntity.class));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
@@ -124,13 +124,6 @@ public class DraugrArcherEntity extends DraugrEntity implements GeoEntity {
         super.tick();
         if (shouldDespawnInPeaceful() || this.shouldDespawn) {
             remove(RemovalReason.DISCARDED);
-        }
-
-        if (this.isShooting()) {
-            Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0);
-        } else if (Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getValue() == 0
-                && !this.isShooting()) {
-            Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.65f);
         }
     }
     private PlayState predicate(AnimationState animationState) {

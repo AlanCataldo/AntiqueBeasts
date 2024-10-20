@@ -1,6 +1,7 @@
 package net.mebahel.antiquebeasts.entity.custom.other;
 
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
+import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
 import net.mebahel.antiquebeasts.entity.ai.other.DraugrMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
@@ -18,6 +19,7 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -87,7 +89,7 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
         this.goalSelector.add(3, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(4, new LookAroundGoal(this));
 
-        this.targetSelector.add(1, new RevengeGoal(this));
+        this.targetSelector.add(1, new CustomRevengeGoal(this, DraugrEntity.class));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
@@ -215,5 +217,14 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
 
     public int getMinAmbientSoundDelay() {
         return 240;
+    }
+
+    public boolean damage(DamageSource source, float amount) {
+        if (source.isOf(DamageTypes.IN_FIRE) || source.isOf(DamageTypes.ON_FIRE)) {
+            return super.damage(source, amount * 2);
+        } else if (source.isOf(DamageTypes.FREEZE)) {
+            return false;
+        }
+        return super.damage(source, amount);
     }
 }

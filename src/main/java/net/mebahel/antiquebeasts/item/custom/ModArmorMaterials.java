@@ -15,6 +15,14 @@ import java.util.EnumMap;
 import java.util.function.Supplier;
 
 public enum ModArmorMaterials implements StringIdentifiable, ArmorMaterial {
+    HIGH_IRON("diamond", 32, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
+        map.put(ArmorItem.Type.BOOTS, 4);
+        map.put(ArmorItem.Type.LEGGINGS, 6);
+        map.put(ArmorItem.Type.CHESTPLATE, 8);
+        map.put(ArmorItem.Type.HELMET, 4);
+    }), 24, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0F, 0.2F, () -> {
+        return Ingredient.ofItems(new ItemConvertible[]{ModItems.HIGH_IRON_INGOT});
+    }),
     IRON_PLATE("iron", 17, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
         map.put(ArmorItem.Type.BOOTS, 3);
         map.put(ArmorItem.Type.LEGGINGS, 5);
