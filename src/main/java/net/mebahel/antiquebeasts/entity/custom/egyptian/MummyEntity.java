@@ -10,7 +10,6 @@ import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.mebahel.antiquebeasts.entity.variant.EgyptiantVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
-import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityData;
@@ -94,6 +93,7 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
     }
     protected void initDataTracker() {
         super.initDataTracker();
+        this.dataTracker.startTracking(SHOULD_DESPAWN, false);
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(SHOOTING, false);
         this.dataTracker.startTracking(COOLDOWN, 0);
@@ -207,8 +207,9 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
-        if (shouldDespawnInPeaceful() || this.shouldDespawn) {
-            remove(RemovalReason.DISCARDED);
+        if (this.shouldDespawnInPeaceful() || this.getShouldDespawn()) {
+            System.out.println("MUMMY a été remove: " + this.getShouldDespawn());
+            this.remove(RemovalReason.DISCARDED);
         }
 
         if (this.age < 40 || this.getSpawn() || this.isShooting()) {
@@ -249,11 +250,12 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
                 && spawnReason != SpawnReason.EVENT ) {
             int randomValue = this.random.nextInt(10);
             if (randomValue >= ModSpawnRateConfig.mummySpawnRate) {
-                this.remove(RemovalReason.DISCARDED);
+                this.setShouldDespawn(true);
             }
         }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
+
     public EgyptiantVariant getVariant() {
         return EgyptiantVariant.byId(this.getTypeVariant() & 255);
     }
@@ -274,12 +276,14 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("HasSpawned", true);
+        nbt.putBoolean("shouldDespawn", this.getShouldDespawn());
     }
 
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.setHasSpawned(nbt.getBoolean("HasSpawned"));
+        this.setShouldDespawn(nbt.getBoolean("shouldDespawn"));
     }
     private void spawnHoveringParticles() {
         // Position de l'entité

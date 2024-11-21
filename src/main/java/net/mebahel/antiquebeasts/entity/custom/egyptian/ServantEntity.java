@@ -8,7 +8,6 @@ import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.mebahel.antiquebeasts.entity.variant.EgyptiantVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
-import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityData;
@@ -53,10 +52,6 @@ import static java.lang.Math.random;
 
 
 public class ServantEntity extends EgyptianEntity implements GeoEntity {
-    public ServantEntity(EntityType<? extends AnimalEntity> entityType, World world) {
-        super(entityType, world);
-        this.ambientSoundChance = -this.getMinAmbientSoundDelay();
-    }
     private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
@@ -64,13 +59,22 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
     }
     public static final TrackedData<Boolean> HAS_SPAWNED = DataTracker.registerData(ServantEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
+
     public boolean getHasSpawned() {return this.dataTracker.get(HAS_SPAWNED);}
     public void setHasSpawned(boolean bool) {
         this.dataTracker.set(HAS_SPAWNED, bool);
     }
+    int randomValue;
 
+    public ServantEntity(EntityType<? extends AnimalEntity> entityType, World world) {
+        super(entityType, world);
+        this.ambientSoundChance = -this.getMinAmbientSoundDelay();
+    }
+
+    @Override
     protected void initDataTracker() {
         super.initDataTracker();
+        this.dataTracker.startTracking(SHOULD_DESPAWN, false);
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(IS_IN_CARAVAN, false);
@@ -105,7 +109,7 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
         this.targetSelector.add(5, new ActiveTargetGoal<>(this, NorseEntity.class, true));
     }
     private PlayState predicate(AnimationState animationState) {
-        if (!this.getHasSpawned()) {
+        if (this.getHasSpawned()) {
             return PlayState.STOP;
         } else if (animationState.isMoving()) {
             animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
@@ -122,7 +126,7 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
         return PlayState.CONTINUE;
     }
     private PlayState spawnPredicate(AnimationState state) {
-        if (!this.getHasSpawned()) {
+        if (this.getHasSpawned()) {
             state.getController().setAnimation(RawAnimation.begin().then("spawn", Animation.LoopType.PLAY_ONCE));
             if (state.getController().getAnimationState() != AnimationController.State.STOPPED) {
                 spawnHoveringParticles();
@@ -145,20 +149,6 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
             if (player != null)
                 this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.MUMMY_SPAWN, this.getSoundCategory(), 0.65f, 1f);
         }));
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-        if (shouldDespawnInPeaceful() || this.shouldDespawn) {
-            remove(RemovalReason.DISCARDED);
-        }
-
-        if (this.age < 40) {
-            Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0);
-        } else if (Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getValue() == 0) {
-            Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.57f);
-        }
     }
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
@@ -185,16 +175,33 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
                                  SpawnReason spawnReason, @javax.annotation.Nullable EntityData entityData,
                                  @javax.annotation.Nullable NbtCompound entityNbt) {
-        EgyptiantVariant variant = Util.getRandom(EgyptiantVariant.values(), this.random);
-        setVariant(variant);
         if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
                 && spawnReason != SpawnReason.EVENT ) {
             int randomValue = this.random.nextInt(10);
             if (randomValue >= ModSpawnRateConfig.servantSpawnRate) {
-                this.remove(RemovalReason.DISCARDED);
+                this.setShouldDespawn(true);
             }
         }
+        EgyptiantVariant variant = Util.getRandom(EgyptiantVariant.values(), this.random);
+        setVariant(variant);
+
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (this.shouldDespawnInPeaceful() || this.getShouldDespawn()) {
+            System.out.println("SERVANT a été remove: " + this.getShouldDespawn());
+            this.remove(RemovalReason.DISCARDED);
+        }
+
+        if (this.age < 40) {
+            Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0);
+        } else if (Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getValue() == 0) {
+            Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.57f);
+        }
     }
 
     public EgyptiantVariant getVariant() {
@@ -216,11 +223,13 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("HasSpawned", true);
+        nbt.putBoolean("shouldDespawn", this.getShouldDespawn());
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.setHasSpawned(nbt.getBoolean("HasSpawned"));
+        this.setShouldDespawn(nbt.getBoolean("shouldDespawn"));
     }
     private void spawnHoveringParticles() {
         // Position de l'entité

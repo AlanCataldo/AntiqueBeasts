@@ -1,6 +1,5 @@
 package net.mebahel.antiquebeasts.util.entity;
 
-import net.mebahel.antiquebeasts.entity.custom.other.DraugrScourgeEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
@@ -99,7 +98,7 @@ public class MovementUtil {
             return;
         }
         if (jumpCooldown > 0 && distanceToTarget <= this.strafeDistance) {
-            actor.getMoveControl().strafeTo(-0.35F, 0);
+            actor.getMoveControl().strafeTo(-0.8f, 0);
             jumpCooldown--;
             return;
         } else if (jumpCooldown > 0 && distanceToTarget > this.strafeDistance) {
@@ -124,7 +123,7 @@ public class MovementUtil {
             this.performJump(jumpDirection, actor);
         } else if ((blockBehindState.isAir() || !blockBehindState.isFullCube(actor.getWorld(), blockBehindPos)) ||
                 !blockBehindState.isFullCube(actor.getWorld(), blockBehindPos)) {
-            actor.getMoveControl().strafeTo(-0.35F, 0);
+            actor.getMoveControl().strafeTo(-0.8F, 0);
         } else {
             jumpDuration = 8;
             this.performJump(jumpDirection, actor);
@@ -178,15 +177,15 @@ public class MovementUtil {
         }
 
         // Direction du strafe et du déplacement avant/arrière
-        float strafeDirection = this.movingToLeft ? 0.35f : -0.35f;  // Gauche si true, droite sinon
+        float strafeDirection = this.movingToLeft ? 1f : -1f;  // Gauche si true, droite sinon
         double distanceToTarget = actor.distanceTo(target);
         float forwardDirection;
         if (distanceToTarget <= this.strafeDistance + 3)
-            forwardDirection = -0.35f;
+            forwardDirection = -0.8f;
         else if (distanceToTarget >= this.strafeDistance + 10)
-            forwardDirection = 0.35f;
+            forwardDirection = 0.8f;
         else
-            forwardDirection = this.backward ? -0.35f : 0.35f;  // Reculer si true, avancer sinon
+            forwardDirection = this.backward ? -0.8f : 0.8f;  // Reculer si true, avancer sinon
 
         // Correction: Utiliser `strafeDirection` pour ajuster correctement la direction latérale
         Vec3d lateralDirection = new Vec3d(strafeDirection, 0, 0);  // Gauche ou droite
@@ -253,6 +252,47 @@ public class MovementUtil {
 
         // Mettre à jour la dernière position connue
         lastPosition = currentPosition;
+        lookAtTarget(target, actor);
+    }
+
+    public boolean isSkyVisibleAbove(MobEntity entity) {
+        BlockPos entityPos = entity.getBlockPos().up();  // Vérifie au-dessus de l'entité
+        return entity.getWorld().isSkyVisible(entityPos);
+    }
+
+    public void strafeUnderground(LivingEntity target, MobEntity actor) {
+        boolean canSeeTarget = actor.getVisibilityCache().canSee(target);
+        boolean sawTargetRecently = this.targetSeeingTicker > 0;
+
+        if (canSeeTarget != sawTargetRecently) {
+            this.targetSeeingTicker = 0;
+        }
+
+        if (canSeeTarget) {
+            ++this.targetSeeingTicker;
+        } else {
+            --this.targetSeeingTicker;
+        }
+
+        if (this.targetSeeingTicker >= 20) {
+            actor.getNavigation().stop();
+            ++this.combatTicks;
+        } else {
+            this.combatTicks = -1;
+        }
+
+        if (this.combatTicks >= 20) {
+            if (actor.getRandom().nextFloat() < 0.3) {
+                this.movingToLeft = !this.movingToLeft;  // Alterne entre gauche et droite
+            }
+            if (actor.getRandom().nextFloat() < 0.3) {
+                this.backward = !this.backward;  // Alterne entre avancer et reculer
+            }
+            this.combatTicks = 0;
+        }
+
+        float strafeDirection = this.movingToLeft ? 0.35f : -0.35f;
+        actor.getMoveControl().strafeTo(0, strafeDirection);  // Strafe uniquement
         lookAtTarget(target, actor);
     }
 }

@@ -9,6 +9,7 @@
     "FireDamageMixin",
     "IronGolemMixin",
     "MobEntityAccessor",
+    "PersistentStateManagerAccessor",
     "PoisonImmunityMixin",
     "ShieldDurabilityMixin",
     "ShieldSoundMixin",

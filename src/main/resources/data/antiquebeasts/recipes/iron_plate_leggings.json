@@ -1,13 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "###",
+    "R#R",
     "# #",
     "# #"
   ],
   "key" : {
     "#": {
       "item" : "antiquebeasts:iron_plate"
+    },
+    "R": {
+      "item" : "minecraft:blue_wool"
     }
   },
   "result": {

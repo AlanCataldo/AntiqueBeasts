@@ -13,10 +13,13 @@ import net.mebahel.antiquebeasts.entity.client.custom.draugr_scourge.DraugrScour
 import net.mebahel.antiquebeasts.entity.client.custom.draugr_wight.DraugrWightRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.harpy.HarpyRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.mummy_boss.MummyBossRenderer;
+import net.mebahel.antiquebeasts.entity.client.custom.skeleton_warrior.SkeletonWarriorHeadRenderer;
+import net.mebahel.antiquebeasts.entity.client.custom.skeleton_warrior.SkeletonWarriorRenderer;
 import net.mebahel.antiquebeasts.entity.client.projectiles.*;
 import net.mebahel.antiquebeasts.entity.client.projectiles.draugr.DraugrWightProjectileRenderer;
 import net.mebahel.antiquebeasts.entity.client.projectiles.draugr.FrostSpikeProjectileRenderer;
 import net.mebahel.antiquebeasts.entity.client.projectiles.harpy.HarpyFeatherRenderer;
+import net.mebahel.antiquebeasts.entity.custom.other.SkeletonWarriorEntity;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.particle.custom.*;
 import net.mebahel.antiquebeasts.util.BowPredicate;
@@ -35,6 +38,8 @@ public class AntiqueBeastsClient implements ClientModInitializer {
                 initialized = true;
             }
         });
+        EntityRendererRegistry.register(ModEntities.SKELETON_WARRIOR_HEAD, SkeletonWarriorHeadRenderer::new);
+        EntityRendererRegistry.register(ModEntities.SKELETON_WARRIOR, SkeletonWarriorRenderer::new);
         EntityRendererRegistry.register(ModEntities.DRAUGR_SCOURGE, DraugrScourgeRenderer::new);
         EntityRendererRegistry.register(ModEntities.DRAUGR_WIGHT, DraugrWightRenderer::new);
         EntityRendererRegistry.register(ModEntities.DRAUGR_ARCHER, DraugrArcherRenderer::new);

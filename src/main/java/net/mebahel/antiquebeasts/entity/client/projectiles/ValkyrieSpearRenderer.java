@@ -23,6 +23,7 @@ public class ValkyrieSpearRenderer extends GeoEntityRenderer<ValkyrieSpearEntity
     @Override
     public void preRender(MatrixStack poseStack, ValkyrieSpearEntity animatable, BakedGeoModel model, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue,
                           float alpha) {
+        poseStack.scale(0.75f, 0.75f, 0.75f);
         RenderUtils.faceRotation(poseStack, animatable, partialTick);
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }

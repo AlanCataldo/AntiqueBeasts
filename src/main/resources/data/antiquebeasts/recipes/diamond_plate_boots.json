@@ -2,12 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "   ",
-    "# #",
+    "R R",
     "# #"
   ],
   "key" : {
     "#": {
       "item" : "antiquebeasts:diamond_plate"
+    },
+    "R": {
+      "item" : "minecraft:white_wool"
     }
   },
   "result": {

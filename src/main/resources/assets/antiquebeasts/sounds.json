@@ -760,5 +760,11 @@
     "sounds": [
       "antiquebeasts:draugr/draugr_ice_spike"
     ]
+  },
+  "winning_raid_1": {
+    "subtitle": "antiquebeasts:draugr/winning_raid_1",
+    "sounds": [
+      "antiquebeasts:draugr/winning_raid_1"
+    ]
   }
 }

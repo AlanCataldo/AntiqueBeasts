@@ -4,6 +4,7 @@ import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.MummyBossEntity;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.MummyEntity;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.ServantEntity;
+import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.player.PlayerEntity;
@@ -85,6 +86,7 @@ public class MummyBossSummonGoal extends Goal {
             Vec3d offsetPosition = getOffsetPosition(forwardOffset, sideOffset);
             servant.refreshPositionAndAngles(offsetPosition.x, offsetPosition.y, offsetPosition.z, this.mummy.getYaw(), this.mummy.getPitch());
             world.spawnEntity(servant);
+            servant.playSound(ModSounds.HADES_SHADE_SPAWN, 0.5f, 1);
         }
     }
 

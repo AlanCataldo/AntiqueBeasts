@@ -6,9 +6,6 @@
     "FFF"
   ],
   "key" : {
-    "O": {
-      "item" : "minecraft:snowball"
-    },
     "F": {
       "item" : "antiquebeasts:frost_shard"
     },
@@ -17,6 +14,6 @@
     }
   },
   "result": {
-    "item": "antiquebeasts:frostbite_scroll"
+    "item": "antiquebeasts:scroll/frostbite_scroll"
   }
 }

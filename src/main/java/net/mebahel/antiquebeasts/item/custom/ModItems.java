@@ -30,7 +30,12 @@ public class ModItems {
     public static final Item BEHOLD_THE_GREAT_SCIENCE_FI_MUSIC_DISC = registerItem("music_disc/behold_the_great_science_fi_music_disc",
             new MusicDiscItem(7, ModSounds.BEHOLD_THE_GREAT_SCIENCE_FI_MUSIC,
                     new FabricItemSettings().maxCount(1), 149));
-
+    public static final Item SKELETON_WARRIOR = registerItem("spawn_egg/skeleton_warrior_spawn_egg",
+            new SpawnEggItem(ModEntities.SKELETON_WARRIOR,4399360, 1526344,
+                    new FabricItemSettings()));
+    public static final Item SKELETON_WARRIOR_HEAD = registerItem("spawn_egg/skeleton_warrior_head_spawn_egg",
+            new SpawnEggItem(ModEntities.SKELETON_WARRIOR_HEAD,4399360, 1526344,
+                    new FabricItemSettings()));
     public static final Item DRAUGR_SCOURGE_SPAWN_EGG = registerItem("spawn_egg/draugr_scourge_spawn_egg",
             new SpawnEggItem(ModEntities.DRAUGR_SCOURGE,4399360, 1526344,
                     new FabricItemSettings()));
@@ -350,6 +355,8 @@ public class ModItems {
         entries.add(EINHERJAR_SPAWN_EGG);
         entries.add(VALKYRIE_SPAWN_EGG);
 
+        entries.add(SKELETON_WARRIOR);
+        entries.add(SKELETON_WARRIOR_HEAD);
         entries.add(DRAUGR_SPAWN_EGG);
         entries.add(DRAUGR_WIGHT_SPAWN_EGG);
         entries.add(DRAUGR_SCOURGE_SPAWN_EGG);

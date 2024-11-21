@@ -1,7 +1,6 @@
 package net.mebahel.antiquebeasts.entity.custom.egyptian;
 
 import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
@@ -22,9 +21,9 @@ import org.jetbrains.annotations.Nullable;
 public class EgyptianEntity extends ModPatrolEntity {
 
     public double rand;
+
     public boolean shouldDespawn;
 
-    public SpawnReason spawnReason;
     protected EgyptianEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -38,6 +37,12 @@ public class EgyptianEntity extends ModPatrolEntity {
 
     public static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
             DataTracker.registerData(EgyptianEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    public static final TrackedData<Boolean> SHOULD_DESPAWN = DataTracker.registerData(EgyptianEntity.class,
+            TrackedDataHandlerRegistry.BOOLEAN);
+    public void setShouldDespawn(boolean bool) {
+        this.dataTracker.set(SHOULD_DESPAWN, bool);
+    }
+    public boolean getShouldDespawn() {return this.dataTracker.get(SHOULD_DESPAWN);}
     public void setAttackName(String attackName) {
         this.dataTracker.set(ATTACK_NAME, attackName);
     }
@@ -116,12 +121,6 @@ public class EgyptianEntity extends ModPatrolEntity {
 
         if (nbt.contains("PatrolTarget")) {
             this.setPatrolTarget(NbtHelper.toBlockPos(nbt.getCompound("PatrolTarget")));
-        }
-    }
-    public void tick() {
-        super.tick();
-        if (shouldDespawnInPeaceful()) {
-            remove(Entity.RemovalReason.DISCARDED);
         }
     }
 }

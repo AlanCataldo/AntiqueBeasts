@@ -60,7 +60,9 @@ public class DraugrIceSpikeSpellGoal extends Goal {
         this.movementUtil.lookAtTarget(target, this.actor);
         this.movementUtil.checkIfStuck(target, this.actor);
 
-        if (distanceToTarget <= 8) {
+        if (!this.movementUtil.isSkyVisibleAbove(this.actor)) {
+            this.movementUtil.strafeUnderground(target, this.actor);
+        } else if (distanceToTarget <= 8) {
             this.movementUtil.moveBackward(target, this.actor);
         } else {
             this.movementUtil.strafeAroundTarget(target, this.actor);

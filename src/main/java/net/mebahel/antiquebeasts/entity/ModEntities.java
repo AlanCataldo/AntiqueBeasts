@@ -19,6 +19,14 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModEntities {
+    public static final EntityType<SkeletonWarriorHeadEntity> SKELETON_WARRIOR_HEAD = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "skeleton_warrior_head"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, SkeletonWarriorHeadEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.65f, 1.99f)).build());
+    public static final EntityType<SkeletonWarriorEntity> SKELETON_WARRIOR = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "skeleton_warrior"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, SkeletonWarriorEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.65f, 1.99f)).build());
     public static final EntityType<DraugrScourgeEntity> DRAUGR_SCOURGE= Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "draugr_scourge"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DraugrScourgeEntity::new)

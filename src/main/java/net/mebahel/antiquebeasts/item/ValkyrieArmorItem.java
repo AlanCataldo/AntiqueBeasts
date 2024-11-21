@@ -46,8 +46,8 @@ public class ValkyrieArmorItem extends ArmorItem implements GeoItem {
     }
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(Text.translatable("item.antiquebeasts.scale_armor.tooltip").formatted(Formatting.GRAY, Formatting.ITALIC));
-        tooltip.add(Text.translatable("item.antiquebeasts.scale_armor.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
+        tooltip.add(Text.translatable("item.antiquebeasts.valkyrie.tooltip").formatted(Formatting.GRAY, Formatting.ITALIC));
+        tooltip.add(Text.translatable("item.antiquebeasts.valkyrie.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
     }
 
     @Override

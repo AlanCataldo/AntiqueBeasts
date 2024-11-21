@@ -2,12 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "   ",
-    "# #",
+    "R R",
     "# #"
   ],
   "key" : {
     "#": {
       "item" : "antiquebeasts:gold_plate"
+    },
+    "R": {
+      "item" : "minecraft:red_wool"
     }
   },
   "result": {

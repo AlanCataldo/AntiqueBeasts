@@ -115,7 +115,7 @@ public class DraugrScourgeEntity extends DraugrEntity implements GeoEntity {
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.72f)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3D)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 38.0D + ModBonusHealthConfig.draugrBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 10f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5.0f)
@@ -178,7 +178,7 @@ public class DraugrScourgeEntity extends DraugrEntity implements GeoEntity {
                 && spawnReason != SpawnReason.EVENT ) {
             int randomValue = this.random.nextInt(10);
             if (randomValue >= ModSpawnRateConfig.draugrSpawnRate) {
-                this.remove(RemovalReason.DISCARDED);
+                this.shouldDespawn = true;
             }
         }
 
@@ -237,6 +237,7 @@ public class DraugrScourgeEntity extends DraugrEntity implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
+
         if (shouldDespawnInPeaceful() || this.shouldDespawn) {
             remove(RemovalReason.DISCARDED);
         }

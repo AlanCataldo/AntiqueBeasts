@@ -9,13 +9,15 @@ import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.variant.DraugrVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
-import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
-import net.minecraft.entity.Entity;
+import net.mebahel.antiquebeasts.util.raid.DraugrKillTracker;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
+import net.minecraft.entity.ai.goal.LookAroundGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -29,6 +31,7 @@ import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtHelper;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
@@ -67,9 +70,18 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
     public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(DraugrEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
 
+    public static final TrackedData<Boolean> IS_PART_OF_RAID = DataTracker.registerData(DraugrEntity.class,
+            TrackedDataHandlerRegistry.BOOLEAN);
+
     public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(DraugrEntity.class,
             TrackedDataHandlerRegistry.STRING);
 
+    public boolean isPartOfRaid() {
+        return this.dataTracker.get(IS_PART_OF_RAID);
+    }
+    public void setPartOfRaid(Boolean isPartOfRaid) {
+        this.dataTracker.set(IS_PART_OF_RAID, isPartOfRaid);
+    }
     public void setSwinging(boolean swinging) { this.dataTracker.set(SWINGING, swinging); }
     public boolean isSwinging() { return this.dataTracker.get(SWINGING); }
     public void setAttackName(String attackName) { this.dataTracker.set(ATTACK_NAME, attackName); }
@@ -79,15 +91,16 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
         super.initDataTracker();
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
+        this.dataTracker.startTracking(IS_PART_OF_RAID, false);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
     }
 
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new DraugrMeleeAttackGoal(this, 0.4f, 21, 10));
-        this.goalSelector.add(3, new WanderAroundFarGoal(this, 0.35f, 1f));
-        this.goalSelector.add(4, new LookAroundGoal(this));
+        this.goalSelector.add(2, new DraugrMeleeAttackGoal(this, 1f, 21, 10));
+        this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.85f, 1f));
+        this.goalSelector.add(7, new LookAroundGoal(this));
 
         this.targetSelector.add(1, new CustomRevengeGoal(this, DraugrEntity.class));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
@@ -102,7 +115,7 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.72f)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3D)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 30.0D + ModBonusHealthConfig.draugrBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 6f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5.0f)
@@ -155,13 +168,13 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
                                  SpawnReason spawnReason, @Nullable EntityData entityData,
                                  @Nullable NbtCompound entityNbt) {
-
+        //System.out.println("J'INITIE DRAUGR");
         var biome = world.getBiome(this.getBlockPos());
         if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
                 && spawnReason != SpawnReason.EVENT ) {
             int randomValue = this.random.nextInt(10);
             if (randomValue >= ModSpawnRateConfig.draugrSpawnRate) {
-                this.remove(Entity.RemovalReason.DISCARDED);
+                this.shouldDespawn = true;
             }
         }
 
@@ -226,5 +239,29 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
             return false;
         }
         return super.damage(source, amount);
+    }
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (this.shouldDespawnInPeaceful() || this.shouldDespawn) {
+            this.remove(RemovalReason.DISCARDED);
+        }
+
+        if (this.isPartOfRaid() && this.age >= 1200 && !this.isGlowing()) {
+            this.setGlowing(true);
+        }
+    }
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putInt("Variant", this.getTypeVariant());
+        nbt.putBoolean("PartOfRaid", this.isPartOfRaid());
+    }
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.dataTracker.set(DATA_ID_TYPE_VARIANT, nbt.getInt("Variant"));
+        this.dataTracker.set(IS_PART_OF_RAID, nbt.getBoolean("PartOfRaid"));
     }
 }

@@ -12,9 +12,18 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 2,
       "element": {
         "location": "antiquebeasts:draugr_crypt_skeletal_dragon/draugr_crypt_big_room_2",
+        "processors": "antiquebeasts:water_removal_processor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "antiquebeasts:draugr_crypt_skeletal_dragon/draugr_crypt_big_room_2_secret_1",
         "processors": "antiquebeasts:water_removal_processor",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -69,6 +78,15 @@
       "weight": 3,
       "element": {
         "location": "antiquebeasts:draugr_crypt_skeletal_dragon/draugr_crypt_small_room_1",
+        "processors": "antiquebeasts:water_removal_processor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "antiquebeasts:draugr_crypt_skeletal_dragon/draugr_crypt_small_room_1_secret_1",
         "processors": "antiquebeasts:water_removal_processor",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

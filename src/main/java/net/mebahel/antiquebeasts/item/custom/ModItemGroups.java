@@ -135,6 +135,9 @@ public class ModItemGroups {
                         entries.add(ModItems.THROWING_AXEMAN_SPAWN_EGG);
                         entries.add(ModItems.EINHERJAR_SPAWN_EGG);
                         entries.add(ModItems.VALKYRIE_SPAWN_EGG);
+
+                        entries.add(ModItems.SKELETON_WARRIOR);
+                        entries.add(ModItems.SKELETON_WARRIOR_HEAD);
                         entries.add(ModItems.DRAUGR_SPAWN_EGG);
                         entries.add(ModItems.DRAUGR_WIGHT_SPAWN_EGG);
                         entries.add(ModItems.DRAUGR_SCOURGE_SPAWN_EGG);

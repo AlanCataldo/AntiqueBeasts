@@ -102,8 +102,8 @@ public class DraugrWightEntity extends DraugrEntity implements GeoEntity {
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new DraugrSpellGoal(this, 3f));
-        this.goalSelector.add(3, new DraugrWightMeleeAttackGoal(this, 0.4f, 21, 10));
-        this.goalSelector.add(4, new WanderAroundFarGoal(this, 0.35f, 1f));
+        this.goalSelector.add(3, new DraugrWightMeleeAttackGoal(this, 1f, 21, 10));
+        this.goalSelector.add(4, new WanderAroundFarGoal(this, 0.85f, 1f));
         this.goalSelector.add(5, new LookAroundGoal(this));
 
         this.targetSelector.add(1, new CustomRevengeGoal(this, DraugrEntity.class));
@@ -119,7 +119,7 @@ public class DraugrWightEntity extends DraugrEntity implements GeoEntity {
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.72f)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3D)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 34.0D + ModBonusHealthConfig.draugrBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 8f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5.0f)
@@ -192,7 +192,7 @@ public class DraugrWightEntity extends DraugrEntity implements GeoEntity {
                 && spawnReason != SpawnReason.EVENT ) {
             int randomValue = this.random.nextInt(10);
             if (randomValue >= ModSpawnRateConfig.draugrSpawnRate) {
-                this.remove(RemovalReason.DISCARDED);
+                this.shouldDespawn = true;
             }
         }
 
@@ -252,6 +252,7 @@ public class DraugrWightEntity extends DraugrEntity implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
+
         if (shouldDespawnInPeaceful() || this.shouldDespawn) {
             remove(RemovalReason.DISCARDED);
         }

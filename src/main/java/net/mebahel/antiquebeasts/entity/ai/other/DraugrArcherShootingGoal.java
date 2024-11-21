@@ -51,7 +51,9 @@ public class DraugrArcherShootingGoal extends Goal {
         this.movementUtil.lookAtTarget(target, this.actor);
         this.movementUtil.checkIfStuck(target, this.actor);
 
-        if (distanceToTarget <= STRAFE_DISTANCE) {
+        if (!this.movementUtil.isSkyVisibleAbove(this.actor)) {
+            this.movementUtil.strafeUnderground(target, this.actor);
+        } else if (distanceToTarget <= STRAFE_DISTANCE) {
             this.movementUtil.moveBackward(target, this.actor);
         } else {
             this.movementUtil.strafeAroundTarget(target, this.actor);

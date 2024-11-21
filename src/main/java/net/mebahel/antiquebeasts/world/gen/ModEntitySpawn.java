@@ -23,6 +23,15 @@ import net.minecraft.world.biome.BiomeKeys;
 
 public class ModEntitySpawn {
     public static void addEntitySpawn() {
+        BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(),
+                SpawnGroup.MONSTER, ModEntities.SKELETON_WARRIOR, 4, 1, 1);
+        SpawnRestriction.register(ModEntities.SKELETON_WARRIOR, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
+                    if (world.getDifficulty() == Difficulty.PEACEFUL) {
+                        return false;
+                    }
+                    return SkeletonWarriorEntity.canSpawnInDark(type, world, spawnReason, pos, random);
+                });
 
         BiomeModifications.addSpawn((BiomeSelectors.tag(ConventionalBiomeTags.MOUNTAIN)).or(BiomeSelectors.tag(ConventionalBiomeTags.MOUNTAIN_PEAK))
                         .or(BiomeSelectors.tag(ConventionalBiomeTags.MOUNTAIN_SLOPE)),

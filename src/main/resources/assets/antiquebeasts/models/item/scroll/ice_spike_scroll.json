@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "antiquebeasts:item/scroll/frostbite_scroll"
+    "layer0": "antiquebeasts:item/scroll/ice_spike_scroll"
   }
 }

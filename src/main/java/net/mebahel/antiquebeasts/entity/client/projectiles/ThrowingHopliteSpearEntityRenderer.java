@@ -25,7 +25,7 @@ public class ThrowingHopliteSpearEntityRenderer extends GeoEntityRenderer<Throwi
     public void preRender(MatrixStack poseStack, ThrowingHopliteSpearEntity animatable, BakedGeoModel model, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue,
                           float alpha) {
         RenderUtils.faceRotation(poseStack, animatable, partialTick);
-        poseStack.scale(1f, 1f, 1f);
+        poseStack.scale(0.75f, 0.75f, 0.75f);
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }

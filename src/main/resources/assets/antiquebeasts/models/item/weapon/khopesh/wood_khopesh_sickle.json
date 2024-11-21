@@ -2,27 +2,5 @@
 	"parent": "item/handheld",
 	"textures": {
 		"layer0": "antiquebeasts:item/weapon/khopesh/wood_khopesh"
-	},
-	"display": {
-		"thirdperson_righthand": {
-			"translation": [0, 6, 2],
-			"rotation": [0, -90, 45],
-			"scale": [1.1, 1.1, 1.1]
-		},
-		"thirdperson_lefthand": {
-			"translation": [0, 6, 2],
-			"rotation": [0, 90, -45],
-			"scale": [1.1, 1.1, 1.1]
-		},
-		"firstperson_righthand": {
-			"translation": [0, 4, 0],
-			"rotation": [-15, -85, 15],
-			"scale": [1, 1, 1]
-		},
-		"firstperson_lefthand": {
-			"translation": [0, 4, 0],
-			"rotation": [-15, 95, -15],
-			"scale": [1, 1, 1]
-		}
 	}
 }

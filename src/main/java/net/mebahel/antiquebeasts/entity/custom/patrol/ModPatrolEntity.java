@@ -1,6 +1,5 @@
 package net.mebahel.antiquebeasts.entity.custom.patrol;
 
-import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;

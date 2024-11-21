@@ -59,7 +59,7 @@ public class ScrollItem extends Item {
                 }
             }
         }
-
+        itemStack.damage(1, player, (p) -> p.sendToolBreakStatus(hand));
         player.getItemCooldownManager().set(this, this.cooldown);
         player.incrementStat(Stats.USED.getOrCreateStat(this));
         return TypedActionResult.success(itemStack, world.isClient());
