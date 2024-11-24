@@ -1,7 +1,6 @@
 package net.mebahel.antiquebeasts;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
@@ -23,20 +22,21 @@ import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.potion.ModPotions;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.mebahel.antiquebeasts.util.raid.*;
-import net.mebahel.antiquebeasts.util.config.ModArmorValueConfig;
-import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
-import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.MyProcessors;
 import net.mebahel.antiquebeasts.util.PatrolManager;
 import net.mebahel.antiquebeasts.util.WaterRemovalScheduler;
+import net.mebahel.antiquebeasts.util.config.ModArmorValueConfig;
+import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
+import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
+import net.mebahel.antiquebeasts.util.raid.AntiquebeastsDifficultyState;
+import net.mebahel.antiquebeasts.util.raid.DraugrRaidTest;
+import net.mebahel.antiquebeasts.util.raid.PersistentRaidData;
+import net.mebahel.antiquebeasts.util.raid.RaidManager;
 import net.mebahel.antiquebeasts.world.gen.ModWorldGen;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementProgress;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -61,10 +61,10 @@ public class AntiqueBeasts implements ModInitializer {
 	private static final Map<ServerWorld, ServerPlayConnectionEvents.Join> registeredJoinEventListeners = new HashMap<>();
 	public static final Map<ServerWorld, Integer> worldDifficultyLevels = new HashMap<>();
 	private static final List<DraugrRaidTest> raidsPendingResume = new ArrayList<>();
-
-	private static final List<UUID> playersPendingRaidCheck = new ArrayList<>();
-	private static final Set<UUID> processedPlayers = new HashSet<>();
+	public static final List<DraugrRaidTest> ongoingRaids = new ArrayList<>();
 	private boolean playerHasArrived = false;
+	private boolean shouldEnableLoad = true;
+
 
 	@Override
 	public void onInitialize() {
@@ -113,33 +113,35 @@ public class AntiqueBeasts implements ModInitializer {
 		ModPotions.registerPotionRecipe();
 		PatrolManager.register();
 		MyProcessors.init();
-		//RaidManager.registerWorldLoadEvents();
 		RaidManager.registerEvents();
 
 		ServerWorldEvents.LOAD.register((server, world) -> {
 			waterRemovalScheduler.addWorld(world);
 
-
-			/*if (world.getRegistryKey().equals(World.OVERWORLD)) {
-				System.out.println("World loaded: " + world.getRegistryKey());
-				PersistentRaidData raidData = PersistentRaidData.get(world);
-				System.out.println("- LOAD PersistentRaidData - " + raidData);
-
-				ServerTickEvents.END_WORLD_TICK.register(serverWorld -> {
-					if (serverWorld.equals(world)) {
-						HashMap<UUID, DraugrRaidTest> allRaids = raidData.getAllRaids();
-						System.out.println("[Debug] Raids après quelques ticks : " + allRaids);
-					}
-				});
-			}*/
-
 			ServerPlayConnectionEvents.Join joinEventListener = (handler, sender, server2) -> {
 				if (world.getRegistryKey().equals(World.OVERWORLD)) {
-					System.out.println("- PLAYER HAS ARRIVED - ");
 					playerHasArrived = true;
 				}
 			};
 			registeredJoinEventListeners.put(world, joinEventListener);
+
+			ServerTickEvents.EndTick listener = serverTick -> {
+				if (serverTick.getWorld(World.OVERWORLD) == world) {
+					if (ModConfig.enableDifficultySystem) {
+						if (worldDifficultyLevels.get(world) == 1) {
+							netherCheckCounter++;
+							if (netherCheckCounter >= NETHER_CHECK_INTERVAL) {
+								netherCheckCounter = 0;
+								//checkNetherVisit(world, difficultyState);
+							}
+						}
+					} else {
+						worldDifficultyLevels.put(world, 1);
+					}
+				}
+				tickScheduler.tick();
+				waterRemovalScheduler.tick();
+			};
 
 			PersistentStateManager stateManager = world.getPersistentStateManager();
 			AntiquebeastsDifficultyState difficultyState = stateManager.getOrCreate(
@@ -151,79 +153,8 @@ public class AntiqueBeasts implements ModInitializer {
 			worldDifficultyLevels.put(world, difficultyLevel);
 			System.out.println("[Mebahel's Antique Beasts] Loaded difficulty level for world " + world.getRegistryKey().getValue() + ": " + difficultyLevel);
 
-			ServerTickEvents.EndTick listener = serverTick -> {
-				if (serverTick.getWorld(World.OVERWORLD) == world) {
-					if (playerHasArrived) {
-
-						List<ServerPlayerEntity> playerList = world.getPlayers();
-						ServerPlayerEntity player = playerList.get(0);
-						PersistentRaidData data = PersistentRaidData.get(world);
-						DraugrRaidTest raid = data.getRaid(player.getUuid());
-						System.out.println("- DATA GET ALL RAIDS ON JOIN - ");
-						System.out.println(data.getAllRaids());
-
-						if (raid != null) {
-							System.out.println("Raid trouvé pour le joueur : " + player.getName().getString());
-							raidsPendingResume.add(raid);
-						} else {
-							System.out.println("Aucun raid en cours trouvé pour le joueur : " + player.getName().getString());
-						}
-						System.out.println("RAID PENDING :");
-						System.out.println(raidsPendingResume);
-						Set<UUID> seenRaidUuids = new HashSet<>();
-						raidsPendingResume.removeIf(existingRaid -> !seenRaidUuids.add(existingRaid.raidUuid));
-						System.out.println("RAID PENDING AFTER FILTRE :");
-						System.out.println(raidsPendingResume);
-						playerHasArrived = false;
-					}
-
-
-					if (!raidsPendingResume.isEmpty()) {
-						Iterator<DraugrRaidTest> iterator = raidsPendingResume.iterator();
-						while (iterator.hasNext()) {
-							DraugrRaidTest raid = iterator.next();
-							if (raid.isRaidCompleted()) {
-								PersistentRaidData data = PersistentRaidData.get(world);
-								if (data != null) {
-									data.removeRaid(raid.getTargetPlayerUuid());
-									data.markDirty();
-								}
-								iterator.remove();
-								continue;
-							}
-							PlayerEntity player = world.getPlayerByUuid(raid.getTargetPlayerUuid());
-							if (player != null && !raid.isRaidCompleted() && !raid.raidHasBeenResume) {
-								raid.setTargetPlayer(player);
-								raid.resumeRaid(player, world);
-						}}
-						raidsPendingResume.clear();
-					}
-
-					if (ModConfig.enableDifficultySystem) {
-						if (worldDifficultyLevels.get(world) == 1) {
-							netherCheckCounter++;
-							if (netherCheckCounter >= NETHER_CHECK_INTERVAL) {
-								netherCheckCounter = 0;
-								checkNetherVisit(world, difficultyState);
-							}
-						}
-					} else {
-						worldDifficultyLevels.put(world, 1);
-					}
-				}
-				tickScheduler.tick();
-				waterRemovalScheduler.tick();
-				serverTick.getWorlds().forEach(serverWorld -> {
-					serverWorld.getPlayers().forEach(player -> {
-						if (isMummyBossNearby(player, 15.0)) {
-							triggerAdvancement(player);
-						}
-					});
-				});
-			};
-			ServerTickEvents.END_SERVER_TICK.register(listener);
 			ServerPlayConnectionEvents.JOIN.register(joinEventListener);
-			registeredListeners.put(world, listener);
+			ServerTickEvents.END_SERVER_TICK.register(listener);
 		});
 
 		ServerWorldEvents.UNLOAD.register((server, world) -> {
@@ -245,6 +176,57 @@ public class AntiqueBeasts implements ModInitializer {
 			}
 		}
 	}
+	private void checkPlayerProximityForRaids(ServerWorld world) {
+		// Récupère les données persistantes du raid
+		PersistentRaidData raidData = PersistentRaidData.get(world);
+		if (raidData == null) {
+			return;
+		}
+
+		HashMap<UUID, DraugrRaidTest> allRaids = raidData.getAllRaids();
+		if (allRaids.isEmpty()) {
+			return;
+		}
+
+		// Parcourt tous les raids
+		for (DraugrRaidTest raid : allRaids.values()) {
+			List<ServerPlayerEntity> playersInRange = new ArrayList<>();
+
+			// Parcourt toutes les entités du raid
+			for (UUID entityUuid : raid.raidEntityUuid) {
+				Entity entity = world.getEntity(entityUuid);
+				if (entity == null || !entity.isAlive()) continue;
+
+				// Vérifie les joueurs dans un rayon de 70 blocs
+				List<ServerPlayerEntity> nearbyPlayers = world.getPlayers(player ->
+						player.squaredDistanceTo(entity.getX(), entity.getY(), entity.getZ()) <= 70 * 70
+				);
+
+				// Ajoute les joueurs trouvés à la liste des joueurs proches
+				playersInRange.addAll(nearbyPlayers);
+			}
+
+			// Mise à jour de la barre de boss : ajout des joueurs proches
+			for (ServerPlayerEntity player : playersInRange) {
+				if (!raid.getRaidBossBar().getPlayers().contains(player)) {
+					raid.getRaidBossBar().addPlayer(player);
+					System.out.println("Ajout du joueur " + player.getName().getString() + " à la barre de boss du raid.");
+				}
+			}
+
+			// Retire les joueurs trop éloignés de la barre de boss
+			List<ServerPlayerEntity> playersToRemove = new ArrayList<>();
+			for (ServerPlayerEntity player : raid.getRaidBossBar().getPlayers()) {
+				boolean isStillNearby = playersInRange.contains(player);
+				if (!isStillNearby) {
+					playersToRemove.add(player);
+					System.out.println("Retrait du joueur " + player.getName().getString() + " de la barre de boss du raid.");
+				}
+			}
+			playersToRemove.forEach(raid.getRaidBossBar()::removePlayer);
+		}
+	}
+
 	public static TickScheduler getTickScheduler() {
 		return tickScheduler;
 	}
@@ -268,6 +250,45 @@ public class AntiqueBeasts implements ModInitializer {
 			if (!progress.isDone()) {
 				player.getAdvancementTracker().grantCriterion(advancement, "see_mummy_boss");
 			}
+		}
+	}
+	private static void updateRaidPlayerProximity() {
+		// Parcourir tous les raids en cours
+		for (DraugrRaidTest raid : AntiqueBeasts.ongoingRaids) {
+			if (!raid.isRaidInProgress() || raid.isRaidCompleted()) continue; // Ignorez les raids terminés ou inactifs
+
+			List<ServerPlayerEntity> playersInRange = new ArrayList<>();
+
+			// Parcourir toutes les entités du raid pour détecter les joueurs proches
+			for (UUID entityUuid : raid.raidEntityUuid) {
+				DraugrEntity draugr = raid.findDraugrByUUID(raid.getWorld(), entityUuid);
+				if (draugr == null || !draugr.isAlive()) continue;
+
+				// Trouver tous les joueurs dans un rayon de 20 blocs autour de cette entité
+				List<ServerPlayerEntity> nearbyPlayers = raid.getWorld().getPlayers(player ->
+						player.squaredDistanceTo(draugr.getX(), draugr.getY(), draugr.getZ()) <= 20 * 20
+				);
+
+				playersInRange.addAll(nearbyPlayers); // Ajouter les joueurs trouvés à la liste globale
+			}
+
+			// Ajouter les joueurs proches à la barre de boss du raid
+			for (ServerPlayerEntity player : playersInRange) {
+				if (!raid.getRaidBossBar().getPlayers().contains(player)) {
+					raid.getRaidBossBar().addPlayer(player);
+					System.out.println("Ajout du joueur " + player.getName().getString() + " à la barre de boss du raid.");
+				}
+			}
+
+			// Retirer les joueurs trop éloignés de la barre de boss du raid
+			List<ServerPlayerEntity> playersToRemove = new ArrayList<>();
+			for (ServerPlayerEntity player : raid.getRaidBossBar().getPlayers()) {
+				if (!playersInRange.contains(player)) {
+					playersToRemove.add(player);
+					System.out.println("Retrait du joueur " + player.getName().getString() + " de la barre de boss du raid.");
+				}
+			}
+			playersToRemove.forEach(raid.getRaidBossBar()::removePlayer);
 		}
 	}
 }

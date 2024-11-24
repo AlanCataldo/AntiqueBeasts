@@ -46,6 +46,8 @@ import software.bernie.geckolib.util.ClientUtils;
 
 import javax.annotation.Nullable;
 
+import java.util.UUID;
+
 import static java.lang.Math.random;
 
 public class DraugrEntity extends HostileEntity implements GeoEntity {
@@ -54,6 +56,7 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
     }
     public boolean shouldDespawn;
+    private UUID raidUuid;
     private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
@@ -263,5 +266,20 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
         super.readCustomDataFromNbt(nbt);
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, nbt.getInt("Variant"));
         this.dataTracker.set(IS_PART_OF_RAID, nbt.getBoolean("PartOfRaid"));
+    }
+
+    @Override
+    public void onDeath(DamageSource damageSource) {
+        super.onDeath(damageSource);
+        //System.out.println("-DRAUGR UUID -");
+        //System.out.println(this.getUuid());
+    }
+
+    public UUID getRaidUuid() {
+        return raidUuid;
+    }
+
+    public void setRaidUuid(UUID raidUuid) {
+        this.raidUuid = raidUuid;
     }
 }

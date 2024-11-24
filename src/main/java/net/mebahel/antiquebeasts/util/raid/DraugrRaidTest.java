@@ -1,10 +1,9 @@
 package net.mebahel.antiquebeasts.util.raid;
 
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
-import net.mebahel.antiquebeasts.item.TickScheduler;
-import net.mebahel.antiquebeasts.util.raid.PersistentRaidData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -18,7 +17,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.PersistentState;
 
 import java.util.*;
 
@@ -37,8 +35,8 @@ public class DraugrRaidTest {
     boolean waveEntitiesSpawned;
     private ServerBossBar raidBossBar;
     static final HashMap<UUID, DraugrRaid> raids = new HashMap<>();
-    private List<DraugrEntity> activeMobs;
-    List<UUID> raidEntityUuid;
+    List<DraugrEntity> activeMobs;
+    public List<UUID> raidEntityUuid;
     public UUID raidUuid;
     UUID targetPlayerUuid;
     boolean raidCompleted = false;
@@ -76,33 +74,106 @@ public class DraugrRaidTest {
         System.out.println("- START RAID -");
         this.raidInProgress = true;
         spawnNextWave(targetPlayer, world);
-        //saveRaid();
     }
 
     void registerEvents() {
         ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
             if (entity instanceof DraugrEntity draugr && draugr.isPartOfRaid()) {
-                ServerWorld world = (ServerWorld) entity.getWorld();
+                this.setWorld((ServerWorld) entity.getWorld());
+                activeMobs.removeIf(draugrEntity -> !draugrEntity.isAlive());
 
-                activeMobs.clear();
-                for (UUID uuid : raidEntityUuid) {
-                    DraugrEntity draugrEntity = findDraugrByUUID(world, uuid);
-                    if (draugrEntity != null && !activeMobs.contains(draugrEntity)) {
-                        activeMobs.add(draugrEntity);
-                    }
-                }
-
-                activeMobs.removeIf(draugrEntity -> {
-                    boolean shouldRemove = !draugrEntity.isAlive();
-                    if (shouldRemove) {
-                        System.out.println("Draugr " + draugrEntity.getUuid() + " is removed or dead. Cleaning up.");
-                    }
-                    return shouldRemove;
-                });
-
-                updateRaidHealthBar(world);
+                updateRaidHealthBar();
             }
         });
+
+        ServerTickEvents.END_SERVER_TICK.register((serverTick) -> {
+            ServerWorld serverWorld = serverTick.getOverworld();
+
+            // Vérifiez si le raid est terminé ou inactif
+            if (!raidInProgress || raidCompleted) return;
+
+            // Ajout du raid à la liste des raids en cours, si ce n'est pas déjà fait
+            if (AntiqueBeasts.ongoingRaids.stream().noneMatch(raid -> raid.raidUuid.equals(this.raidUuid))) {
+                AntiqueBeasts.ongoingRaids.add(this);
+                System.out.println("Raid ajouté à ongoingRaids : " + raidUuid);
+            }
+
+            // Forcer une mise à jour initiale de la barre si elle est vide
+            if (raidBossBar.getPlayers().isEmpty()) {
+               // System.out.println("Mise à jour initiale de la barre de raid pour les joueurs.");
+                updateBossBarForPlayers(serverWorld);
+            }
+
+            // Mise à jour de la proximité des joueurs et gestion de la barre de raid
+            updateBossBarProximity(serverWorld);
+        });
+    }
+
+    private void updateBossBarForPlayers(ServerWorld world) {
+        List<ServerPlayerEntity> playersInWorld = world.getPlayers();
+
+        for (ServerPlayerEntity player : playersInWorld) {
+            if (!raidBossBar.getPlayers().contains(player)) {
+                raidBossBar.addPlayer(player);
+                //System.out.println("Ajout initial du joueur " + player.getName().getString() + " à la barre de boss du raid.");
+            }
+        }
+    }
+
+    private void updateBossBarProximity(ServerWorld world) {
+        List<ServerPlayerEntity> playersInWorld = world.getPlayers();
+        List<ServerPlayerEntity> playersInBossBar = new ArrayList<>(raidBossBar.getPlayers());
+
+        for (ServerPlayerEntity player : playersInWorld) {
+            boolean isWithinRange = false;
+
+            // Vérifiez si le joueur est à portée d'une entité du raid
+            for (UUID entityUuid : raidEntityUuid) {
+                DraugrEntity draugr = findDraugrByUUID(world, entityUuid);
+                if (draugr != null && draugr.isAlive()) {
+                    double distanceSquared = player.squaredDistanceTo(draugr.getX(), draugr.getY(), draugr.getZ());
+                    if (distanceSquared <= 20 * 20) {
+                        isWithinRange = true; // Joueur proche d'une entité
+                        break;
+                    }
+                }
+            }
+
+            // Ajout ou retrait du joueur
+            if (isWithinRange) {
+                if (!raidBossBar.getPlayers().contains(player)) {
+                    raidBossBar.addPlayer(player);
+                    //System.out.println("Ajout du joueur " + player.getName().getString() + " à la barre de boss du raid.");
+                }
+            } else {
+                if (raidBossBar.getPlayers().contains(player)) {
+                    raidBossBar.removePlayer(player);
+                    //System.out.println("Retrait du joueur " + player.getName().getString() + " de la barre de boss du raid.");
+                }
+            }
+
+            playersInBossBar.remove(player);
+        }
+
+        // Retirer les joueurs restants dans `playersInBossBar`
+        for (ServerPlayerEntity playerToRemove : playersInBossBar) {
+            raidBossBar.removePlayer(playerToRemove);
+            //System.out.println("Retrait du joueur " + playerToRemove.getName().getString() + " qui n'est plus dans le monde.");
+        }
+    }
+
+    public void updateBossBar() {
+        raidBossBar.setName(Text.translatable("Raid Draugr - Vague " + currentWave));
+        float totalHealth = 0.0F;
+        for (int i = 0; i < this.raidEntityUuid.size(); i++) {
+            DraugrEntity draugr = this.findDraugrByUUID(world, this.raidEntityUuid.get(i));
+            if (draugr != null) {
+                if (draugr.isAlive()) {
+                    totalHealth += draugr.getHealth();
+                }
+            }
+        }
+        raidBossBar.setPercent(totalHealth / initialMaxHealth);
     }
 
     public void setWorld(ServerWorld world) {
@@ -113,18 +184,13 @@ public class DraugrRaidTest {
         return targetPlayerUuid;
     }
 
-    private DraugrEntity findDraugrByUUID(ServerWorld world, UUID uuid) {
-        //System.out.println("JE CHERCHE");
-        // Utilise getEntity pour obtenir l'entité par son UUID
+    public DraugrEntity findDraugrByUUID(ServerWorld world, UUID uuid) {
         Entity entity = world.getEntity(uuid);
-        //System.out.println("l'anti thé" + entity);
 
-        // Vérifie si l'entité est une instance de DraugrEntity
         if (entity instanceof DraugrEntity) {
-            //System.out.println("JE TROUVE");
             return (DraugrEntity) entity;
         } else {
-            return null; // Retourne null si l'entité n'est pas un DraugrEntity
+            return null;
         }
     }
 
@@ -179,6 +245,7 @@ public class DraugrRaidTest {
                 draugr.refreshPositionAndAngles(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), random.nextFloat() * 360F, 0);
                 draugr.initialize(world, world.getLocalDifficulty(spawnPos), SpawnReason.EVENT, null, null);
                 draugr.setPartOfRaid(true);
+                //draugr.setRaidUuid(raidUuid);
                 raidEntityUuid.add(draugr.getUuid());
                 activeMobs.add(draugr);
                 world.spawnEntity(draugr);
@@ -192,89 +259,37 @@ public class DraugrRaidTest {
         }
 
         waveEntitiesSpawned = true;
-        updateRaidHealthBar(world);
-        //saveRaid();
-    }
-    public void resumeRaid(PlayerEntity player, ServerWorld world) {
-        raidHasBeenResume = true;
-        TickScheduler tickScheduler = AntiqueBeasts.getTickScheduler();
-        System.out.println("- resumeRaid resumeRaid -");
-        tickScheduler.schedule(world, 0, w -> afterLoadResumeRaid(player, world));
-    }
-    public void afterLoadResumeRaid(PlayerEntity player, ServerWorld world) {
-        this.targetPlayer = player;
-        this.raidBossBar.addPlayer((ServerPlayerEntity) player);
-        this.raidBossBar.setName(Text.translatable("Raid Draugr - Vague " + currentWave));
-        this.raidBossBar.setVisible(true);
-        this.raidInProgress = true;
-
-        /*System.out.println("- resumeRaid targetPlayer -" + targetPlayer);
-        System.out.println("- resumeRaid raidBossBar -" + raidBossBar);
-        System.out.println("- resumeRaid currentWave -" + currentWave);
-        System.out.println("- resumeRaid raidEntityUuid -" + raidEntityUuid);
-        System.out.println("- resumeRaid activeMobs -" + activeMobs);*/
-
-        raidEntityUuid.clear();  // Effacez les UUID précédents
-        for (DraugrEntity draugr : activeMobs) {
-            raidEntityUuid.add(draugr.getUuid());
-            //System.out.println("- resumeRaid draugr dans activeMobs-" + draugr);
-        }
-
-        this.activeMobs.clear();
-
-        for (UUID uuid : raidEntityUuid) {
-            DraugrEntity draugr = findDraugrByUUID(world, uuid);
-            System.out.println("- resumeRaid draugr -" + draugr);
-            if (draugr != null && !activeMobs.contains(draugr)) {
-                activeMobs.add(draugr);
-            }
-        }
-        updateRaidHealthBar(world); // Actualisez la barre de vie*/
+        updateRaidHealthBar();
     }
 
-    private void updateRaidHealthBar(ServerWorld world) {
-        if (!waveEntitiesSpawned) return;
-        //System.out.println("- updateRaidHealthBar player -" + world.getPlayers());
-        //System.out.println("- updateRaidHealthBar targetplayer -" + targetPlayer);
-        if (targetPlayer.isRemoved()) {
-            System.out.println("Le joueur est marqué comme 'removed'. Tentative de récupération d'une nouvelle instance du joueur...");
-
-            // Récupérez la nouvelle instance du joueur depuis le monde
-            PlayerEntity player = world.getPlayerByUuid(targetPlayerUuid);
-            if (player != null) {
-                targetPlayer = player; // Mettez à jour targetPlayer avec la nouvelle instance
-                System.out.println("Nouvelle instance du joueur récupérée : " + targetPlayer.getName().getString());
-            } else {
-                System.out.println("Impossible de récupérer une nouvelle instance du joueur. Abandon de la génération de la vague.");
-                return;
-            }
-            this.raidBossBar = new ServerBossBar(Text.translatable("Raid Draugr en cours..."), BossBar.Color.RED, BossBar.Style.NOTCHED_10);
-
-            raidBossBar.addPlayer((ServerPlayerEntity) targetPlayer);
-            raidBossBar.setVisible(true);
-            raidBossBar.setName(Text.translatable("Raid Draugr - Vague " + currentWave));
-        }
+    private void updateRaidHealthBar() {
+        if (!waveEntitiesSpawned || raidBossBar == null) return;
 
         float totalHealth = 0.0F;
-        for (int i = 0; i < this.raidEntityUuid.size(); i++) {
-            DraugrEntity draugr = this.findDraugrByUUID(world, this.raidEntityUuid.get(i));
-            if (draugr != null) {
-                if (draugr.isAlive()) {
-                    totalHealth += draugr.getHealth();
-                }
+
+        activeMobs.clear();
+        for (UUID uuid : raidEntityUuid) {
+            DraugrEntity draugr = findDraugrByUUID(world, uuid);
+            if (draugr != null && draugr.isAlive()) {
+                activeMobs.add(draugr);
+                totalHealth += draugr.getHealth(); // Ajoute la santé si l'entité est vivante
             }
         }
-
+        //System.out.println(activeMobs);
+        //System.out.println(totalHealth);
+        //System.out.println(currentWave);
+        // Mise à jour de la barre de santé
         if (totalHealth > 0) {
             raidBossBar.setPercent(totalHealth / initialMaxHealth);
+            raidBossBar.setName(Text.translatable("Raid Draugr - Vague " + currentWave));
+            //System.out.println("Barre mise à jour : santé totale = " + totalHealth);
         } else {
+            // Si aucune entité vivante, fin du raid ou prochaine vague
             raidBossBar.setPercent(0.0F);
-            System.out.println("All Draugr are dead.");
-
             if (currentWave >= MAX_WAVES) {
                 endRaid(targetPlayer);
             } else {
-                currentWave++;  // Increment the wave number
+                currentWave++;
                 waveEntitiesSpawned = false;
                 spawnNextWave(targetPlayer, world);
             }
@@ -290,9 +305,66 @@ public class DraugrRaidTest {
         this.raidCompleted = true;
         this.raidInProgress = false;
         this.removeRaid();
-        // Supprimer le raid des données persistantes
+        if (AntiqueBeasts.ongoingRaids.remove(this)) {
+            System.out.println("Raid supprimé de ongoingRaids : " + this.raidUuid);
+        } else {
+            System.out.println("Raid non trouvé dans ongoingRaids : " + this.raidUuid);
+        }
 
         System.out.println("Raid ended for player: " + player.getName().getString());
+    }
+
+
+
+    public void saveRaid() {
+        // Récupérer l'instance de PersistentRaidData
+        PersistentRaidData data = PersistentRaidData.get(world);
+
+        if (data != null) {
+            // Vérifiez si un raid existe déjà avec le même raidUuid
+            DraugrRaidTest existingRaid = data.getRaidByUuid(raidUuid);
+            if (existingRaid != null) {
+                // Si un raid existe avec le même UUID, mettez-le à jour
+                if (existingRaid != this) {
+                    System.out.println("[DraugrRaidTest] Un raid existant a été trouvé avec le même raidUuid : " + raidUuid);
+                    System.out.println("[DraugrRaidTest] Mise à jour du raid existant.");
+                }
+            } else {
+                // Si aucun raid n'existe avec ce raidUuid
+                System.out.println("[DraugrRaidTest] Aucun raid existant trouvé avec le raidUuid. Création d'un nouveau raid.");
+            }
+
+            // Ajouter ou mettre à jour le raid dans les données persistantes
+            data.addRaidByUuid(raidUuid, this);
+            data.markDirty(); // Marquer les données comme modifiées pour les sauvegarder
+            System.out.println("[DraugrRaidTest] Raid sauvegardé avec raidUuid : " + raidUuid);
+            //System.out.println("-- DRAUGR IN RAID -- ");
+            //System.out.println(activeMobs);
+        } else {
+            System.out.println("[DraugrRaidTest] Impossible de trouver PersistentRaidData pour sauvegarder le raid.");
+        }
+
+        // Loguer tous les raids après sauvegarde
+        HashMap<UUID, DraugrRaidTest> allRaids = data.getAllRaids();
+        System.out.println("- saveRaid allRaid by raidUuid - " + allRaids);
+    }
+
+
+    public void removeRaid() {
+        System.out.println("- REMOVE RAID -");
+        PersistentRaidData data = PersistentRaidData.get(world);
+
+        if (data != null) {
+            // Ajouter ou mettre à jour le raid dans les données persistantes
+            data.removeRaidByRaid(this);
+            data.markDirty(); // Marquer les données comme modifiées pour les sauvegarder
+            System.out.println("- REMOVE RAID CONFIRME - ");
+        } else {
+            System.out.println("[DraugrRaidTest] Impossible de trouver PersistentRaidData pour sauvegarder le raid.");
+        }
+    }
+    public ServerBossBar getRaidBossBar() {
+        return this.raidBossBar;
     }
 
     public NbtCompound writeNbt(NbtCompound nbt) {
@@ -324,6 +396,16 @@ public class DraugrRaidTest {
         }
         nbt.put("raidEntityUuid", uuidList); // Sauvegarder la liste des UUID
 
+        NbtList activeMobsList = new NbtList();
+        for (DraugrEntity draugr : activeMobs) {
+            if (draugr != null) {
+                NbtCompound draugrCompound = new NbtCompound();
+                draugr.saveSelfNbt(draugrCompound); // Utilisez saveSelfNbt pour sauvegarder l'état complet de l'entité
+                activeMobsList.add(draugrCompound);
+            }
+        }
+        nbt.put("activeMobs", activeMobsList);
+
         return nbt;
     }
     public static DraugrRaidTest fromNbt(NbtCompound nbt, ServerWorld world) {
@@ -333,8 +415,8 @@ public class DraugrRaidTest {
         System.out.println(world.getPlayers());
 
         if (player == null) {
+            player = world.getPlayers().get(0);
             System.out.println("[DraugrRaid] Joueur introuvable pour UUID : " + playerUuid);
-            return null;
         }
 
         DraugrRaidTest raid = new DraugrRaidTest(player, world);
@@ -371,33 +453,7 @@ public class DraugrRaidTest {
         return raid;
     }
 
-    public void saveRaid() {
-        // Récupérer l'instance de PersistentRaidData
-        PersistentRaidData data = PersistentRaidData.get(world);
-
-        if (data != null) {
-            // Ajouter ou mettre à jour le raid dans les données persistantes
-            data.addRaid(targetPlayerUuid, this);
-            data.markDirty(); // Marquer les données comme modifiées pour les sauvegarder
-            System.out.println("[DraugrRaidTest] Raid sauvegardé pour le joueur : " + targetPlayerUuid);
-        } else {
-            System.out.println("[DraugrRaidTest] Impossible de trouver PersistentRaidData pour sauvegarder le raid.");
-        }
-        HashMap<UUID, DraugrRaidTest> allRaid = data.getAllRaids();
-        System.out.println("- saveRaid allRaid - " + allRaid);
-    }
-
-    public void removeRaid() {
-        System.out.println("- REMOVE RAID -");
-        PersistentRaidData data = PersistentRaidData.get(world);
-
-        if (data != null) {
-            // Ajouter ou mettre à jour le raid dans les données persistantes
-            data.removeRaidByRaid(this);
-            data.markDirty(); // Marquer les données comme modifiées pour les sauvegarder
-            System.out.println("- REMOVE RAID CONFIRME - ");
-        } else {
-            System.out.println("[DraugrRaidTest] Impossible de trouver PersistentRaidData pour sauvegarder le raid.");
-        }
+    public ServerWorld getWorld() {
+        return this.world;
     }
 }

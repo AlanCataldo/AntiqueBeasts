@@ -211,8 +211,6 @@ public class DraugrRaid extends PersistentState {
             raidBossBar.setPercent(totalHealth / initialMaxHealth);
         } else {
             raidBossBar.setPercent(0.0F);
-            System.out.println("All Draugr are dead.");
-
             if (currentWave >= MAX_WAVES) {
                 endRaid(targetPlayer);
             } else {

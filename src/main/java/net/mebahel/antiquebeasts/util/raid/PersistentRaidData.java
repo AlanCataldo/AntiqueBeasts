@@ -1,8 +1,11 @@
 package net.mebahel.antiquebeasts.util.raid;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.PersistentState;
+
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -13,21 +16,23 @@ public class PersistentRaidData extends PersistentState {
     public PersistentRaidData(ServerWorld world) {
         this.world = world;
     }
-
-    public void addRaid(UUID playerUuid, DraugrRaidTest raid) {
-        raids.put(playerUuid, raid);
-        markDirty(); // Marquer les données comme "dirty" pour forcer la sauvegarde
+    public void addRaidByUuid(UUID raidUuid, DraugrRaidTest raid) {
+        raids.put(raidUuid, raid); // Sauvegarde le raid en utilisant raidUuid comme clé
+        this.markDirty();
+    }
+    public DraugrRaidTest getRaidByUuid(UUID raidUuid) {
+        return raids.get(raidUuid); // Renvoie le raid correspondant au raidUuid
     }
 
     public DraugrRaidTest getRaid(UUID playerUuid) {
         return raids.get(playerUuid);
     }
-    public DraugrRaidTest getRaidByRaid(DraugrRaidTest raid) {
-        return raids.get(raid);
+    public DraugrRaidTest getRaidByWorld(ServerWorld world) {
+        return raids.get(world);
     }
 
     public HashMap<UUID, DraugrRaidTest> getAllRaids() {
-        return raids;
+        return this.raids;
     }
 
     public void removeRaid(UUID playerUuid) {
@@ -59,17 +64,54 @@ public class PersistentRaidData extends PersistentState {
         PersistentRaidData data = new PersistentRaidData(world);
         NbtCompound raidsNbt = nbt.getCompound("Raids");
         for (String uuidStr : raidsNbt.getKeys()) {
-            System.out.println("- PersistentRaidData fromNbt - " + raidsNbt.getKeys());
             UUID uuid = UUID.fromString(uuidStr);
-            DraugrRaidTest raid = DraugrRaidTest.fromNbt(raidsNbt.getCompound(uuidStr), world);
+            NbtCompound raidCompound = raidsNbt.getCompound(uuidStr);
+
+            // Vérifiez si "activeMobs" contient des entités et loggez leur état
+            if (raidCompound.contains("activeMobs")) {
+                NbtList activeMobsList = raidCompound.getList("activeMobs", 10); // 10 correspond au type Compound
+                boolean hasAliveMobs = false;
+                //System.out.println("- Vérification des activeMobs pour le raid : " + uuid);
+
+                for (int i = 0; i < activeMobsList.size(); i++) {
+                    NbtCompound mobCompound = activeMobsList.getCompound(i);
+                    UUID mobUuid = mobCompound.getUuid("UUID");
+                    Entity entity = world.getEntity(mobUuid);
+                    System.out.println("- J'ESSAIE DE CHARGER CE DRAUGR - ");
+                    System.out.println(entity);
+                    if (entity != null && entity.isAlive()) {
+                        hasAliveMobs = true;
+                        //System.out.println("Entité vivante trouvée : " + entity.getType().getTranslationKey() + " (" + mobUuid + ")");
+                    } else {
+                        System.out.println("Entité introuvable ou morte : " + mobUuid);
+                    }
+                }
+
+                if (!hasAliveMobs) {
+                    System.out.println("Aucune entité active trouvée pour le raid : " + uuid + ". Ignoré.");
+                    continue; // Ignorez ce raid s'il n'a pas d'entités vivantes
+                }
+            } else {
+                System.out.println("Aucune activeMobs listée pour le raid : " + uuid + ". Ignoré.");
+                continue; // Ignorez ce raid s'il n'a pas de clé "activeMobs"
+            }
+
+            // Restaurez le raid si les vérifications préalables sont réussies
+            System.out.println("- Chargement du raid pour UUID : " + uuid);
+            DraugrRaidTest raid = DraugrRaidTest.fromNbt(raidCompound, world);
+
             if (raid != null) {
                 data.raids.put(uuid, raid);
+            } else {
+                System.out.println("Erreur : Impossible de charger le raid pour UUID : " + uuid);
             }
         }
+
         return data;
     }
 
     public static PersistentRaidData get(ServerWorld world) {
+        System.out.println("- PersistentRaidData get - ");
         return world.getPersistentStateManager().getOrCreate(
                 nbt -> fromNbt(nbt, world),
                 () -> new PersistentRaidData(world),

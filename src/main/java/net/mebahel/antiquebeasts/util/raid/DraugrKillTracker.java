@@ -1,6 +1,8 @@
 package net.mebahel.antiquebeasts.util.raid;
 
 import java.util.HashMap;
+
+import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,11 +26,29 @@ public class DraugrKillTracker {
             }
 
             if (currentKillCount >= KILL_THRESHOLD) {
+                System.out.println("- KILL_THRESHOLD -");
                 if (player.getWorld() instanceof ServerWorld serverWorld) {
-                    PersistentRaidData raidData = PersistentRaidData.get(serverWorld);
+                    if (AntiqueBeasts.ongoingRaids.isEmpty()) {
+                        System.out.println("No ongoing raids. Proceeding to create a new raid.");
+                    } else {
+                        // Retirez les raids complétés ou inactifs
+                        AntiqueBeasts.ongoingRaids.removeIf(raid -> !raid.isRaidInProgress() || raid.isRaidCompleted());
+                        System.out.println("Cleaned up completed or inactive raids from ongoingRaids.");
+                    }
 
-                    // Vérifie si un raid est déjà en cours pour n'importe quel joueur
-                    boolean anyRaidInProgress = raidData.getAllRaids().values().stream()
+                    // Vérifiez si un raid est déjà actif pour CE joueur
+                    boolean playerHasActiveRaid = AntiqueBeasts.ongoingRaids.stream()
+                            .anyMatch(raid -> raid.isRaidInProgress() && raid.getTargetPlayerUuid().equals(player.getUuid()));
+
+                    if (playerHasActiveRaid) {
+                        System.out.println("A raid is already in progress for this player.");
+                        player.sendMessage(Text.literal("A raid is already in progress for you!")
+                                .styled(style -> style.withColor(Formatting.RED)), false);
+                        return; // Ne démarre pas un nouveau raid
+                    }
+
+                    // Vérifiez si un raid est actif pour un autre joueur
+                    boolean anyRaidInProgress = AntiqueBeasts.ongoingRaids.stream()
                             .anyMatch(DraugrRaidTest::isRaidInProgress);
 
                     if (anyRaidInProgress) {

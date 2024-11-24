@@ -310,7 +310,6 @@ public class ModDraugrRaid {
             raidBossBar.setPercent(totalHealth / initialMaxHealth);
         } else {
             raidBossBar.setPercent(0.0F);
-            System.out.println("All Draugr are dead.");
 
             if (currentWave >= NUMBER_OF_WAVES) {
                 endRaid();
