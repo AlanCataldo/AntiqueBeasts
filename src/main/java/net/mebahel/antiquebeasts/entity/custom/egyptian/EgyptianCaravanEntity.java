@@ -7,7 +7,6 @@ import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.mebahel.antiquebeasts.entity.variant.EgyptiantVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
-import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -59,6 +58,7 @@ public class EgyptianCaravanEntity extends EgyptianEntity implements GeoEntity {
 
     protected void initDataTracker() {
         super.initDataTracker();
+        this.dataTracker.startTracking(SHOULD_DESPAWN, false);
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
@@ -164,7 +164,7 @@ public class EgyptianCaravanEntity extends EgyptianEntity implements GeoEntity {
                 && spawnReason != SpawnReason.EVENT ) {
             int randomValue = this.random.nextInt(10);
             if (randomValue >= ModSpawnRateConfig.egyptianCaravanSpawnRate) {
-                this.remove(RemovalReason.DISCARDED);
+                this.setShouldDespawn(true);
             } else {
                 for (int i = 0; i < numAxemen; i++) {
                     AxemanEntity newAxeman = new AxemanEntity(ModEntities.AXEMAN, this.getWorld(), true, this);
@@ -207,9 +207,8 @@ public class EgyptianCaravanEntity extends EgyptianEntity implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
-        if (shouldDespawnInPeaceful() || this.shouldDespawn) {
-            System.out.println("JE DESPAWN?");
-            remove(RemovalReason.DISCARDED);
+        if (this.shouldDespawnInPeaceful() || this.getShouldDespawn()) {
+            this.remove(RemovalReason.DISCARDED);
         }
     }
 
@@ -219,5 +218,15 @@ public class EgyptianCaravanEntity extends EgyptianEntity implements GeoEntity {
         } else {
             this.playSound(SoundEvents.ENTITY_CAMEL_STEP, 1.0F, 1.0F);
         }
+    }
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putBoolean("shouldDespawn", this.getShouldDespawn());
+    }
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.setShouldDespawn(nbt.getBoolean("shouldDespawn"));
     }
 }

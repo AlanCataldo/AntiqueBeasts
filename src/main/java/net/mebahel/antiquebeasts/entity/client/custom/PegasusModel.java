@@ -64,6 +64,15 @@ public class PegasusModel extends GeoModel<PegasusEntity> {
     }
     @Override
     public void setCustomAnimations(PegasusEntity entity, long uniqueID, AnimationState<PegasusEntity> customPredicate) {
+        float growthFactor = entity.getDataTracker().get(PegasusEntity.SCALE_TRACKER);
+        this.getBone("horse").ifPresent(body -> {
+            body.setScaleX(growthFactor);
+            body.setScaleY(growthFactor);
+            body.setScaleZ(growthFactor);
+        });
+
+
+        // ✅ Gestion de la tête
         if (!entity.isAttacking()) {
             CoreGeoBone head = this.getBone("head").orElse(null);
             EntityModelData extraData = customPredicate.getData(DataTickets.ENTITY_MODEL_DATA);
@@ -78,4 +87,5 @@ public class PegasusModel extends GeoModel<PegasusEntity> {
             }
         }
     }
+
 }

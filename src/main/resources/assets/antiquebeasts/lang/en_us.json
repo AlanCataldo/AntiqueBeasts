@@ -23,6 +23,7 @@
   "entity.antiquebeasts.pegasus": "Pegasus",
   "entity.antiquebeasts.centaur": "Centaur",
   "entity.antiquebeasts.draugr": "Draugr",
+  "entity.antiquebeasts.draugr_overlord": "Draugr Overlord",
   "entity.antiquebeasts.harpy": "Harpy",
   "entity.antiquebeasts.mummy_boss": "Mummified Pharaoh",
   "entity.antiquebeasts.egyptian_caravan": "Egyptian Caravan",
@@ -52,6 +53,7 @@
   "entity.antiquebeasts.frost_spike": "Ice Spike Spell",
 
   "block.antiquebeasts.amphora": "Amphora",
+  "block.antiquebeasts.draugr_chest": "Draugr Chest",
   "block.antiquebeasts.cursed_gold_block": "Cursed Gold Block",
   "block.antiquebeasts.mummy_boss_altar": "Pharaoh Altar",
 
@@ -63,6 +65,8 @@
   "item.antiquebeasts.ankh": "§eAnkh",
   "item.antiquebeasts.ankh_fragment": "Ankh Fragment",
 
+  "item.antiquebeasts.thurisaz_rune": "Thurisaz Rune",
+
   "item.antiquebeasts.scroll.frostbite_scroll": "§9Frostbite Scroll",
   "item.antiquebeasts.scroll.ice_spike_scroll": "§5Ice Spike Scroll",
 
@@ -73,6 +77,7 @@
   "item.antiquebeasts.spawn_egg.draugr_archer_spawn_egg": "Draugr Archer Spawn Egg",
   "item.antiquebeasts.spawn_egg.harpy_spawn_egg": "Harpy Spawn Egg",
   "item.antiquebeasts.spawn_egg.draugr_spawn_egg": "Draugr Spawn Egg",
+  "item.antiquebeasts.spawn_egg.draugr_overlord_spawn_egg": "Draugr Overlord Spawn Egg",
   "item.antiquebeasts.spawn_egg.centaur_spawn_egg": "Centaur Spawn Egg",
   "item.antiquebeasts.spawn_egg.cyclops_spawn_egg": "Cyclops Spawn Egg",
   "item.antiquebeasts.spawn_egg.frost-cyclops_spawn_egg": "Frost Cyclops Spawn Egg",
@@ -163,6 +168,8 @@
   "item.antiquebeasts.netherite_hoplite_spear.tooltip": "This spear inflicts Wither with each strike.",
   "item.antiquebeasts.high_iron_ingot": "High Iron Ingot",
   "item.antiquebeasts.high_iron_scrap": "High Iron Scrap",
+  "item.antiquebeasts.ebony_ingot": "Ebony Ingot",
+  "item.antiquebeasts.ebony_scrap": "Ebony Scrap",
   "item.antiquebeasts.weapon.throwing_axe_item": "High Iron Throwing axe",
   "item.antiquebeasts.weapon.hersir_axe": "High Iron Heavy Axe",
   "item.antiquebeasts.weapon.high_iron_sword": "High Iron Sword",
@@ -193,6 +200,7 @@
   "item.antiquebeasts.weapon.egyptian_halberd.netherite_egyptian_halberd": "Netherite Egyptian Halberd",
   "item.antiquebeasts.bow.egyptian_recurve_bow": "Egyptian Recurve Bow",
   "item.antiquebeasts.bow.greek_composite_bow": "Greek Composite Bow",
+  "item.antiquebeasts.bow.draugr_bow": "Draugr Bow",
 
   "advancement.antiquebeasts.root.title": "Mebahel's Antique Beasts",
   "advancement.antiquebeasts.root.description": "Explore the mysteries of ancient creatures.",

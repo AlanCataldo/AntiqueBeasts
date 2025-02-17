@@ -65,7 +65,7 @@ public class DraugrRaidHelper {
                 chestBlockEntity.setLootTable(new Identifier("antiquebeasts", "chests/egyptian/egyptian_caravan"), world.getRandom().nextLong());
             }
 
-            System.out.println("A reward chest has spawned at " + chestPos);
+            //System.out.println("A reward chest has spawned at " + chestPos);
             BlockPos finalChestPos = chestPos;
             tickScheduler.schedule(world, 15, (serverWorld) -> endRaidSound(serverWorld, finalChestPos, targetPlayer));
         }

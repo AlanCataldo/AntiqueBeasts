@@ -37,6 +37,7 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.ClientUtils;
 
 import javax.annotation.Nullable;
 
@@ -77,7 +78,12 @@ public class DraugrArcherEntity extends DraugrEntity implements GeoEntity {
 
     public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(DraugrArcherEntity.class,
             TrackedDataHandlerRegistry.STRING);
-
+    public static final TrackedData<Boolean> HAS_SPAWNED = DataTracker.registerData(DraugrArcherEntity.class,
+            TrackedDataHandlerRegistry.BOOLEAN);
+    public boolean getHasSpawned() {return this.dataTracker.get(HAS_SPAWNED);}
+    public void setHasSpawned(boolean bool) {
+        this.dataTracker.set(HAS_SPAWNED, bool);
+    }
     public void setSwinging(boolean swinging) { this.dataTracker.set(SWINGING, swinging); }
     public boolean isSwinging() { return this.dataTracker.get(SWINGING); }
     public void setAttackName(String attackName) { this.dataTracker.set(ATTACK_NAME, attackName); }
@@ -90,6 +96,7 @@ public class DraugrArcherEntity extends DraugrEntity implements GeoEntity {
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
         this.dataTracker.startTracking(COOLDOWN, 0f);
         this.dataTracker.startTracking(SHOOTING, false);
+        this.dataTracker.startTracking(HAS_SPAWNED, true);
     }
 
     @Override
@@ -119,7 +126,9 @@ public class DraugrArcherEntity extends DraugrEntity implements GeoEntity {
     }
 
     private PlayState predicate(AnimationState animationState) {
-        if (animationState.isMoving()) {
+        if (!this.getHasSpawned()) {
+            return PlayState.STOP;
+        } else if (animationState.isMoving()) {
             animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else if (!animationState.isMoving() && !this.isAttacking()) {
@@ -132,12 +141,28 @@ public class DraugrArcherEntity extends DraugrEntity implements GeoEntity {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController(this, "controller",0, this::predicate));
         controllers.add(new AnimationController(this, "attacking", 0, this::shootingPredicate));
+        controllers.add(new AnimationController(this, "spawning", 0, this::spawnPredicate).setSoundKeyframeHandler(state -> {
+            PlayerEntity player = ClientUtils.getClientPlayer();
+            if (player != null)
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.MUMMY_SPAWN, this.getSoundCategory(), 0.65f, 1f);
+        }));
     }
     private PlayState shootingPredicate(AnimationState state) {
         if (this.isShooting() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
             state.getController().forceAnimationReset();
             state.getController().setAnimation(RawAnimation.begin().then("shoot", Animation.LoopType.PLAY_ONCE));
             return PlayState.CONTINUE;
+        }
+        return PlayState.CONTINUE;
+    }
+    private PlayState spawnPredicate(AnimationState state) {
+        if (!this.getHasSpawned()) {
+            state.getController().setAnimation(RawAnimation.begin().then("spawn", Animation.LoopType.PLAY_ONCE));
+            if (state.getController().getAnimationState() != AnimationController.State.STOPPED) {
+                spawnHoveringParticles();
+            } else {
+                this.setHasSpawned(true);
+            }
         }
         return PlayState.CONTINUE;
     }

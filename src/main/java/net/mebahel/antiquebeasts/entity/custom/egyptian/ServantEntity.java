@@ -126,7 +126,7 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
         return PlayState.CONTINUE;
     }
     private PlayState spawnPredicate(AnimationState state) {
-        if (this.getHasSpawned()) {
+        if (!this.getHasSpawned()) {
             state.getController().setAnimation(RawAnimation.begin().then("spawn", Animation.LoopType.PLAY_ONCE));
             if (state.getController().getAnimationState() != AnimationController.State.STOPPED) {
                 spawnHoveringParticles();
@@ -193,7 +193,6 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
         super.tick();
 
         if (this.shouldDespawnInPeaceful() || this.getShouldDespawn()) {
-            System.out.println("SERVANT a été remove: " + this.getShouldDespawn());
             this.remove(RemovalReason.DISCARDED);
         }
 

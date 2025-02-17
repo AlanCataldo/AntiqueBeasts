@@ -10,7 +10,7 @@ import net.mebahel.antiquebeasts.entity.variant.DraugrVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
-import net.mebahel.antiquebeasts.util.raid.DraugrKillTracker;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -31,8 +31,10 @@ import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtHelper;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -45,7 +47,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
 import javax.annotation.Nullable;
-
+import java.util.Objects;
 import java.util.UUID;
 
 import static java.lang.Math.random;
@@ -54,6 +56,7 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
     public DraugrEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
+        this.speed = Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getValue();
     }
     public boolean shouldDespawn;
     private UUID raidUuid;
@@ -72,12 +75,17 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
 
     public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(DraugrEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
-
     public static final TrackedData<Boolean> IS_PART_OF_RAID = DataTracker.registerData(DraugrEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
 
     public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(DraugrEntity.class,
             TrackedDataHandlerRegistry.STRING);
+    public static final TrackedData<Boolean> HAS_SPAWNED = DataTracker.registerData(DraugrEntity.class,
+            TrackedDataHandlerRegistry.BOOLEAN);
+    public boolean getHasSpawned() {return this.dataTracker.get(HAS_SPAWNED);}
+    public void setHasSpawned(boolean bool) {
+        this.dataTracker.set(HAS_SPAWNED, bool);
+    }
 
     public boolean isPartOfRaid() {
         return this.dataTracker.get(IS_PART_OF_RAID);
@@ -90,12 +98,15 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
     public void setAttackName(String attackName) { this.dataTracker.set(ATTACK_NAME, attackName); }
     public String getAttackName() { return this.dataTracker.get(ATTACK_NAME); }
 
+    public double speed;
+
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(IS_PART_OF_RAID, false);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
+        this.dataTracker.startTracking(HAS_SPAWNED, true);
     }
 
     @Override
@@ -126,7 +137,9 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5f);
     }
     private PlayState predicate(AnimationState animationState) {
-        if (animationState.isMoving()) {
+        if (!this.getHasSpawned()) {
+            return PlayState.STOP;
+        } else if (animationState.isMoving()) {
             animationState.getController().setAnimation(RawAnimation.begin().then("transition_walk", Animation.LoopType.PLAY_ONCE).then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else if (!animationState.isMoving() && !this.isAttacking()) {
@@ -137,7 +150,7 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
     }
 
     private PlayState attackPredicate(AnimationState state) {
-        if(this.isSwinging() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
+        if (this.isSwinging() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
             state.getController().forceAnimationReset();
             state.getController().setAnimation(RawAnimation.begin().then(this.getAttackName(), Animation.LoopType.PLAY_ONCE));
         }
@@ -152,6 +165,11 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
             PlayerEntity player = ClientUtils.getClientPlayer();
             if (player != null)
                 this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.SWING, this.getSoundCategory(), 0.7f, 1.1f);
+        }));
+        controllers.add(new AnimationController(this, "spawning", 0, this::spawnPredicate).setSoundKeyframeHandler(state -> {
+            PlayerEntity player = ClientUtils.getClientPlayer();
+            if (player != null)
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.MUMMY_SPAWN, this.getSoundCategory(), 0.65f, 1f);
         }));
     }
 
@@ -251,8 +269,26 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (this.isPartOfRaid() && this.age >= 1200 && !this.isGlowing()) {
+        if (this.isPartOfRaid() && this.age >= 1000 && !this.isGlowing()) {
             this.setGlowing(true);
+        }
+
+        if (this instanceof DraugrOverlordEntity) {
+            if (this.age < 30 && this.isPartOfRaid() && !this.getHasSpawned()) {
+                Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0);
+            }
+            else if (Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getValue() == 0 &&
+                    !((DraugrOverlordEntity) this).getSpecial() && this.isPartOfRaid()) {
+                Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(this.speed);
+            }
+        } else {
+            if (this.age < 30 && this.isPartOfRaid() && !this.getHasSpawned()) {
+                Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0);
+            }
+            else if (Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getValue() == 0
+                    && this.isPartOfRaid()) {
+                Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(this.speed);
+            }
         }
     }
     @Override
@@ -266,6 +302,7 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
         super.readCustomDataFromNbt(nbt);
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, nbt.getInt("Variant"));
         this.dataTracker.set(IS_PART_OF_RAID, nbt.getBoolean("PartOfRaid"));
+        this.dataTracker.set(HAS_SPAWNED, true);
     }
 
     @Override
@@ -274,12 +311,42 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
         //System.out.println("-DRAUGR UUID -");
         //System.out.println(this.getUuid());
     }
-
-    public UUID getRaidUuid() {
-        return raidUuid;
+    private PlayState spawnPredicate(AnimationState state) {
+        if (!this.getHasSpawned()) {
+            state.getController().setAnimation(RawAnimation.begin().then("spawn", Animation.LoopType.PLAY_ONCE));
+            if (state.getController().getAnimationState() != AnimationController.State.STOPPED) {
+                spawnHoveringParticles();
+            } else {
+                this.setHasSpawned(true);
+            }
+        }
+        return PlayState.CONTINUE;
     }
+    void spawnHoveringParticles() {
+        // Position de l'entité
+        double posX = this.getX();
+        double posY = this.getY() - 0.1; // Légèrement sous les pieds
+        double posZ = this.getZ();
 
-    public void setRaidUuid(UUID raidUuid) {
-        this.raidUuid = raidUuid;
+        // Récupérer la position du bloc sous l'entité
+        BlockPos blockPos = new BlockPos((int) posX, (int) (this.getY() - 0.5), (int) posZ); // Bloc sous l'entité
+        BlockState blockState = this.getWorld().getBlockState(blockPos);
+
+        // Si le bloc n'est pas de l'air, générer les particules
+        if (!blockState.isAir()) {
+            // Particules basées sur le bloc sous l'entité
+            for (int i = 0; i < 3; i++) { // Nombre de particules
+                double offsetX = (this.random.nextDouble() - 0.5) * 0.1; // Dispersion légère en X
+                double offsetZ = (this.random.nextDouble() - 0.5) * 0.1; // Dispersion légère en Z
+                double velocityY = 0.1; // Légère vélocité verticale (comme de la poussière)
+
+                // Générer des particules basées sur le bloc
+                this.getWorld().addParticle(
+                        new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), // Particules basées sur le bloc
+                        posX + offsetX, posY, posZ + offsetZ, // Position des particules
+                        0.0, velocityY, 0.0 // Vélocité des particules
+                );
+            }
+        }
     }
 }

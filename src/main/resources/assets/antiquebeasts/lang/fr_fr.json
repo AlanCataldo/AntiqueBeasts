@@ -23,6 +23,7 @@
   "entity.antiquebeasts.pegasus": "Pégase",
   "entity.antiquebeasts.centaur": "Centaure",
   "entity.antiquebeasts.draugr": "Draugr",
+  "entity.antiquebeasts.draugr_overlord": "Seigneur Draugr",
   "entity.antiquebeasts.harpy": "Harpie",
   "entity.antiquebeasts.mummy_boss": "Pharaon momifié",
   "entity.antiquebeasts.draugr_archer": "Archer Draugr",
@@ -37,7 +38,10 @@
   "item.antiquebeasts.ankh": "§eAnkh",
   "item.antiquebeasts.ankh_fragment": "Morceau d'Ankh",
 
+  "item.antiquebeasts.thurisaz_rune": "Rune Thurisaz",
+
   "block.antiquebeasts.amphora": "Amphore",
+  "block.antiquebeasts.draugr_chest": "Coffre Draugr",
   "block.antiquebeasts.cursed_gold_block": "Block d'or maudit",
   "block.antiquebeasts.mummy_boss_altar": "Autel du Pharaon",
 
@@ -50,6 +54,7 @@
   "item.antiquebeasts.spawn_egg.draugr_archer_spawn_egg": "Oeuf d'apparition d'Archer' Draugr",
   "item.antiquebeasts.spawn_egg.harpy_spawn_egg": "Oeuf d'apparition de Harpie",
   "item.antiquebeasts.spawn_egg.draugr_spawn_egg": "Oeuf d'apparition de Draugr",
+  "item.antiquebeasts.spawn_egg.draugr_overlord_spawn_egg": "Oeuf d'apparition de Seigneur Draugr",
   "item.antiquebeasts.spawn_egg.centaur_spawn_egg": "Oeuf d'apparition de centaure",
   "item.antiquebeasts.spawn_egg.cyclops_spawn_egg": "Oeuf d'apparition de cyclope",
   "item.antiquebeasts.spawn_egg.frost-cyclops_spawn_egg": "Oeuf d'apparition de cyclope de glace",
@@ -128,6 +133,8 @@
   "item.antiquebeasts.netherite_hoplite_spear.tooltip": "Cette lance inflige Wither à chaque coup.",
   "item.antiquebeasts.high_iron_ingot": "Lingot de Haut Fer",
   "item.antiquebeasts.high_iron_scrap": "Fragement de Haut Fer",
+  "item.antiquebeasts.ebony_ingot": "Lingot d'Ebonite",
+  "item.antiquebeasts.ebony_scrap": "Fragement d'Ebonite",
   "item.antiquebeasts.weapon.throwing_axe_item": "Hache de lancer en haut fer",
   "item.antiquebeasts.weapon.hersir_axe": "Hache Lourde en haut fer",
   "item.antiquebeasts.weapon.high_iron_sword": "Épée en haut fer",
@@ -158,6 +165,7 @@
   "item.antiquebeasts.weapon.egyptian_halberd.netherite_egyptian_halberd": "Hallebarde egyptienne en netherite",
   "item.antiquebeasts.bow.egyptian_recurve_bow": "Arc recourbé egyptien",
   "item.antiquebeasts.bow.greek_composite_bow": "Arc composite grec",
+  "item.antiquebeasts.bow.draugr_bow": "Arc Draugr",
 
   "advancement.antiquebeasts.root.title": "Mebahel's Antique Beasts",
   "advancement.antiquebeasts.root.description": "Explorer les mystères des créatures anciennes.",

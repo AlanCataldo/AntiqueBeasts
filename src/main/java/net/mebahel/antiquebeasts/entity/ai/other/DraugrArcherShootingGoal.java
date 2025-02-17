@@ -1,11 +1,19 @@
 package net.mebahel.antiquebeasts.entity.ai.other;
 
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrArcherEntity;
+import net.mebahel.antiquebeasts.util.ProjectileDataAccessor;
 import net.mebahel.antiquebeasts.util.entity.MovementUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.potion.PotionUtil;
+import net.minecraft.potion.Potions;
 import net.minecraft.world.World;
 
 public class DraugrArcherShootingGoal extends Goal {
@@ -19,7 +27,15 @@ public class DraugrArcherShootingGoal extends Goal {
     }
 
     public boolean canStart() {
-        return this.actor.getTarget() != null;
+        LivingEntity livingEntity = this.actor.getTarget();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive();
     }
 
     public void start() {
@@ -37,8 +53,15 @@ public class DraugrArcherShootingGoal extends Goal {
     }
 
     public boolean shouldContinue() {
-        LivingEntity target = this.actor.getTarget();
-        return target != null && target.isAlive();
+        LivingEntity livingEntity = this.actor.getTarget();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive();
     }
 
     public void tick() {
@@ -63,7 +86,7 @@ public class DraugrArcherShootingGoal extends Goal {
             World world = this.actor.getWorld();
             this.actor.setCooldown(Math.max(this.actor.getCooldown() - 1, 0));
             if (this.actor.getCooldown() == 9) {
-                ProjectileEntity throwingAxeEntity;
+                ArrowEntity throwingAxeEntity;
                 throwingAxeEntity = new ArrowEntity(world, this.actor);
 
                 double offsetX = -0.7;
@@ -83,17 +106,18 @@ public class DraugrArcherShootingGoal extends Goal {
                 float distance;
                 float speed;
                 if (this.actor.distanceTo(target) > 25) {
-                    distance = 0.9f;
-                    speed = 2.2f;
-                } else if (this.actor.distanceTo(target) >= 12 && this.actor.distanceTo(target) <= 17) {
                     distance = 0.85f;
                     speed = 2.1f;
-                } else {
+                } else if (this.actor.distanceTo(target) >= 12 && this.actor.distanceTo(target) <= 17) {
                     distance = 0.8f;
+                    speed = 2.05f;
+                } else {
+                    distance = 0.75f;
                     speed = 2f;
                 }
                 throwingAxeEntity.setVelocity(e, f + h * distance, g, speed, 0.0F);
                 throwingAxeEntity.setPosition(xProjectile, this.actor.getBodyY(1), zProjectile);
+                throwingAxeEntity.addEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 60, 0, false, false));
                 world.spawnEntity(throwingAxeEntity);
             } else if (this.actor.getCooldown() == 25) {
                 this.actor.setShooting(true);

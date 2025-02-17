@@ -77,6 +77,7 @@ public class WadjetEntity extends EgyptianEntity implements GeoEntity {
         this.dataTracker.startTracking(IS_IN_CARAVAN, false);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(PATROL_UUID, "");
+        this.dataTracker.startTracking(SHOULD_DESPAWN, false);
     }
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
@@ -94,7 +95,7 @@ public class WadjetEntity extends EgyptianEntity implements GeoEntity {
     }
     public void tick() {
         super.tick();
-        if (shouldDespawnInPeaceful() || this.shouldDespawn) {
+        if (shouldDespawnInPeaceful() || this.getShouldDespawn()) {
             remove(RemovalReason.DISCARDED);
         }
         if (isShooting())
@@ -183,7 +184,7 @@ public class WadjetEntity extends EgyptianEntity implements GeoEntity {
                 && spawnReason != SpawnReason.EVENT ) {
             int randomValue = this.random.nextInt(10);
             if (randomValue >= ModSpawnRateConfig.wadjetSpawnRate) {
-                this.remove(RemovalReason.DISCARDED);
+                this.setShouldDespawn(true);
             }
         }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
@@ -199,5 +200,15 @@ public class WadjetEntity extends EgyptianEntity implements GeoEntity {
     public void performJump(Vec3d direction) {
         this.setVelocity(direction);
         this.velocityDirty = true;
+    }
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putBoolean("shouldDespawn", this.getShouldDespawn());
+    }
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.setShouldDespawn(nbt.getBoolean("shouldDespawn"));
     }
 }

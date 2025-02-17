@@ -3,11 +3,11 @@ package net.mebahel.antiquebeasts.block;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
-import net.minecraft.block.AbstractBlock;
+import net.mebahel.antiquebeasts.block.custom.CursedGoldBlock;
+import net.mebahel.antiquebeasts.block.custom.DraugrChestBlock;
+import net.mebahel.antiquebeasts.block.custom.MummyBossAltarBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.enums.Instrument;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -22,10 +22,14 @@ public class ModBlocks {
             new CursedGoldBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK)));
     public static final Block MUMMY_BOSS_ALTAR = registerBlock("mummy_boss_altar",
             new MummyBossAltarBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK)));
+    public static final Block DRAUGR_CHEST = registerBlock("draugr_chest",
+            new DraugrChestBlock(FabricBlockSettings.copyOf(Blocks.CHEST).nonOpaque()));
+
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);
         return Registry.register(Registries.BLOCK, new Identifier(AntiqueBeasts.MOD_ID, name), block);
     }
+
 
     private static Item registerBlockItem(String name, Block block) {
         return Registry.register(Registries.ITEM, new Identifier(AntiqueBeasts.MOD_ID, name), new BlockItem(block, new FabricItemSettings()));

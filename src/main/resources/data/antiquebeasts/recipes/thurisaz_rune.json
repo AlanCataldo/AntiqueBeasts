@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CDC",
+    "DFD",
+    "CDC"
+  ],
+  "key" : {
+    "D": {
+      "item" : "minecraft:diamond"
+    },
+    "C": {
+      "item" : "minecraft:cobblestone"
+    },
+    "F": {
+      "item" : "antiquebeasts:frost_shard"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:thurisaz_rune"
+  }
+}

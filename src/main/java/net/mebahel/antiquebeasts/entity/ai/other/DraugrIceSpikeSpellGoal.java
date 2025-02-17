@@ -5,6 +5,7 @@ import net.mebahel.antiquebeasts.util.entity.MovementUtil;
 import net.mebahel.antiquebeasts.util.entity.ProjectileUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
 public class DraugrIceSpikeSpellGoal extends Goal {
@@ -28,7 +29,15 @@ public class DraugrIceSpikeSpellGoal extends Goal {
     }
 
     public boolean canStart() {
-        return this.actor.getTarget() != null;
+        LivingEntity livingEntity = this.actor.getTarget();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive();
     }
 
     public void start() {
@@ -46,8 +55,15 @@ public class DraugrIceSpikeSpellGoal extends Goal {
     }
 
     public boolean shouldContinue() {
-        LivingEntity target = this.actor.getTarget();
-        return target != null && target.isAlive();
+        LivingEntity livingEntity = this.actor.getTarget();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive();
     }
 
     public void tick() {

@@ -208,7 +208,6 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
     public void tick() {
         super.tick();
         if (this.shouldDespawnInPeaceful() || this.getShouldDespawn()) {
-            System.out.println("MUMMY a été remove: " + this.getShouldDespawn());
             this.remove(RemovalReason.DISCARDED);
         }
 

@@ -81,8 +81,8 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
-        if (shouldDespawnInPeaceful()) {
-            remove(RemovalReason.DISCARDED);
+        if (this.shouldDespawnInPeaceful() || this.getShouldDespawn()) {
+            this.remove(RemovalReason.DISCARDED);
         }
         if (this.blinkTimer > 0) {
             this.blinkTimer--;
@@ -107,6 +107,7 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
     }
     protected void initDataTracker() {
         super.initDataTracker();
+        this.dataTracker.startTracking(SHOULD_DESPAWN, false);
         this.dataTracker.startTracking(SHOOTING, false);
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(IS_ARCHER, false);
@@ -246,7 +247,7 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
                 && spawnReason != SpawnReason.EVENT ) {
             int randomValue = this.random.nextInt(10);
             if (randomValue >= ModSpawnRateConfig.centaurSpawnRate) {
-                this.remove(Entity.RemovalReason.DISCARDED);
+                this.setShouldDespawn(true);
             }
         }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
@@ -274,5 +275,16 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
                 this.dropItem(ModItems.IRON_CENTAUR_SWORD);
             }
         }
+    }
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putBoolean("shouldDespawn", this.getShouldDespawn());
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.setShouldDespawn(nbt.getBoolean("shouldDespawn"));
     }
 }

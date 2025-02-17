@@ -766,5 +766,13 @@
     "sounds": [
       "antiquebeasts:draugr/winning_raid_1"
     ]
+  },
+  "draugr_overlord_step": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:draugr/draugr_overlord_step",
+        "stream": false
+      }
+    ]
   }
 }

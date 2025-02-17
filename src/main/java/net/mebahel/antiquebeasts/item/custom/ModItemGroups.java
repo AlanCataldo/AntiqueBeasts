@@ -19,6 +19,7 @@ public class ModItemGroups {
                         entries.add(ModBlocks.AMPHORA);
                         entries.add(ModBlocks.CURSED_GOLDEN_BLOCK);
                         entries.add(ModBlocks.MUMMY_BOSS_ALTAR);
+                        entries.add(ModBlocks.DRAUGR_CHEST);
 
                         entries.add(ModItems.WOOD_KHOPESH);
                         entries.add(ModItems.STONE_KHOPESH);
@@ -46,6 +47,7 @@ public class ModItemGroups {
                         entries.add(ModItems.BLOOD_STAINED_FROST_SWORD);
                         entries.add(ModItems.EGYPTIAN_RECURVE_BOW);
                         entries.add(ModItems.GREEK_COMPOSITE_BOW);
+                        entries.add(ModItems.DRAUGR_BOW);
 
                         entries.add(ModItems.VALKYRIE_HELMET);
                         entries.add(ModItems.VALKYRIE_CHESTPLATE);
@@ -95,6 +97,8 @@ public class ModItemGroups {
                         entries.add(ModItems.CURSED_SCARAB);
                         entries.add(ModItems.HIGH_IRON_SCRAP);
                         entries.add(ModItems.HIGH_IRON_INGOT);
+                        entries.add(ModItems.EBONY_SCRAP);
+                        entries.add(ModItems.EBONY_INGOT);
                         entries.add(ModItems.CHIMERA_HAIR);
                         entries.add(ModItems.FROST_SHARD);
                         entries.add(ModItems.CYCLOPS_BLOOD);
@@ -103,6 +107,7 @@ public class ModItemGroups {
                         entries.add(ModItems.COOKED_CYCLOPS_MEAT);
                         entries.add(ModItems.ANKH);
                         entries.add(ModItems.ANKH_FRAGMENT);
+                        entries.add(ModItems.THURISAZ_RUNE);
 
                         entries.add(ModItems.FROSTBITE_SCROLL);
                         entries.add(ModItems.ICE_SPIKE_SCROLL);
@@ -139,6 +144,7 @@ public class ModItemGroups {
                         entries.add(ModItems.SKELETON_WARRIOR);
                         entries.add(ModItems.SKELETON_WARRIOR_HEAD);
                         entries.add(ModItems.DRAUGR_SPAWN_EGG);
+                        entries.add(ModItems.DRAUGR_OVERLORD_SPAWN_EGG);
                         entries.add(ModItems.DRAUGR_WIGHT_SPAWN_EGG);
                         entries.add(ModItems.DRAUGR_SCOURGE_SPAWN_EGG);
                         entries.add(ModItems.DRAUGR_ARCHER_SPAWN_EGG);

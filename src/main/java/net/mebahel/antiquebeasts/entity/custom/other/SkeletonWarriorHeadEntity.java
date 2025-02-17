@@ -117,7 +117,7 @@ public class SkeletonWarriorHeadEntity extends DraugrEntity implements GeoEntity
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new FleeTargetGoal(this, 0.45f));
+        this.goalSelector.add(2, new FleeTargetGoal(this, 0.38f));
 
         this.targetSelector.add(1, new CustomRevengeGoal(this, SkeletonWarriorHeadEntity.class));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
@@ -133,7 +133,7 @@ public class SkeletonWarriorHeadEntity extends DraugrEntity implements GeoEntity
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.72f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 30.0D + ModBonusHealthConfig.draugrBonusHealth)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 8.0D)
                 .add(EntityAttributes.GENERIC_ARMOR, 6f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5.0f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2f)

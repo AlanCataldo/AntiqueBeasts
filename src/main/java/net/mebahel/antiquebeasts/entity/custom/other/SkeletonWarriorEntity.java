@@ -75,6 +75,12 @@ public class SkeletonWarriorEntity extends DraugrEntity implements GeoEntity {
 
     public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(SkeletonWarriorEntity.class,
             TrackedDataHandlerRegistry.STRING);
+    public static final TrackedData<Boolean> HAS_SPAWNED = DataTracker.registerData(SkeletonWarriorEntity.class,
+            TrackedDataHandlerRegistry.BOOLEAN);
+    public boolean getHasSpawned() {return this.dataTracker.get(HAS_SPAWNED);}
+    public void setHasSpawned(boolean bool) {
+        this.dataTracker.set(HAS_SPAWNED, bool);
+    }
 
     public void setSwinging(boolean swinging) { this.dataTracker.set(SWINGING, swinging); }
     public boolean isSwinging() { return this.dataTracker.get(SWINGING); }
@@ -86,6 +92,7 @@ public class SkeletonWarriorEntity extends DraugrEntity implements GeoEntity {
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
+        this.dataTracker.startTracking(HAS_SPAWNED, true);
     }
 
     @Override
@@ -116,7 +123,9 @@ public class SkeletonWarriorEntity extends DraugrEntity implements GeoEntity {
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5f);
     }
     private PlayState predicate(AnimationState animationState) {
-        if (animationState.isMoving()) {
+        if (!this.getHasSpawned()) {
+            return PlayState.STOP;
+        } else if (animationState.isMoving()) {
             animationState.getController().setAnimation(RawAnimation.begin().then("transition_walk", Animation.LoopType.PLAY_ONCE).then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else if (!animationState.isMoving() && !this.isAttacking()) {
@@ -142,6 +151,11 @@ public class SkeletonWarriorEntity extends DraugrEntity implements GeoEntity {
             PlayerEntity player = ClientUtils.getClientPlayer();
             if (player != null)
                 this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.SWING, this.getSoundCategory(), 0.7f, 1.1f);
+        }));
+        controllers.add(new AnimationController(this, "spawning", 0, this::spawnPredicate).setSoundKeyframeHandler(state -> {
+            PlayerEntity player = ClientUtils.getClientPlayer();
+            if (player != null)
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.MUMMY_SPAWN, this.getSoundCategory(), 0.65f, 1f);
         }));
     }
 
@@ -224,5 +238,16 @@ public class SkeletonWarriorEntity extends DraugrEntity implements GeoEntity {
                 world.spawnEntity(head);
             }
         }
+    }
+    private PlayState spawnPredicate(AnimationState state) {
+        if (!this.getHasSpawned()) {
+            state.getController().setAnimation(RawAnimation.begin().then("spawn", Animation.LoopType.PLAY_ONCE));
+            if (state.getController().getAnimationState() != AnimationController.State.STOPPED) {
+                spawnHoveringParticles();
+            } else {
+                this.setHasSpawned(true);
+            }
+        }
+        return PlayState.CONTINUE;
     }
 }

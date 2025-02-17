@@ -5,6 +5,7 @@ import net.mebahel.antiquebeasts.entity.projectiles.DraugrWightProjectileEntity;
 import net.mebahel.antiquebeasts.util.entity.ProjectileUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -24,7 +25,15 @@ public class DraugrSpellGoal extends Goal {
     }
 
     public boolean canStart() {
-        return this.draugr.getTarget() != null;
+        LivingEntity livingEntity = this.draugr.getTarget();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive();
     }
 
     public void start() {
@@ -32,8 +41,15 @@ public class DraugrSpellGoal extends Goal {
     }
 
     public boolean shouldContinue() {
-        LivingEntity target = this.draugr.getTarget();
-        return target != null && target.isAlive();
+        LivingEntity livingEntity = this.draugr.getTarget();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
+                return false;
+            }
+        }
+        return livingEntity != null && livingEntity.isAlive();
     }
 
     public void stop() {

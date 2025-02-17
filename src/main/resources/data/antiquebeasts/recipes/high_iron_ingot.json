@@ -1,13 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " ##",
-    " ##",
-    "   "
+    "HHH",
+    "HII",
+    "II "
   ],
   "key" : {
-    "#": {
+    "H": {
       "item" : "antiquebeasts:high_iron_scrap"
+    },
+    "I": {
+      "item" : "minecraft:iron_ingot"
     }
   },
   "result": {

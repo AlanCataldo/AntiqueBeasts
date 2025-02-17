@@ -1,5 +1,6 @@
 package net.mebahel.antiquebeasts.util.raid;
 
+import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
@@ -66,10 +67,18 @@ public class PersistentRaidData extends PersistentState {
         for (String uuidStr : raidsNbt.getKeys()) {
             UUID uuid = UUID.fromString(uuidStr);
             NbtCompound raidCompound = raidsNbt.getCompound(uuidStr);
+            boolean raidAlreadyExists = AntiqueBeasts.ongoingRaids.stream()
+                    .anyMatch(raid -> raid.raidUuid.equals(uuid));
+
+            if (raidAlreadyExists) {
+                System.out.println("Raid avec UUID " + uuid + " déjà présent dans ongoingRaids. Ignoré.");
+                continue; // Ne recrée pas ce raid
+            }
 
             // Vérifiez si "activeMobs" contient des entités et loggez leur état
             if (raidCompound.contains("activeMobs")) {
                 NbtList activeMobsList = raidCompound.getList("activeMobs", 10); // 10 correspond au type Compound
+
                 boolean hasAliveMobs = false;
                 //System.out.println("- Vérification des activeMobs pour le raid : " + uuid);
 
@@ -111,7 +120,7 @@ public class PersistentRaidData extends PersistentState {
     }
 
     public static PersistentRaidData get(ServerWorld world) {
-        System.out.println("- PersistentRaidData get - ");
+        //System.out.println("- PersistentRaidData get - ");
         return world.getPersistentStateManager().getOrCreate(
                 nbt -> fromNbt(nbt, world),
                 () -> new PersistentRaidData(world),

@@ -24,6 +24,8 @@ import java.util.List;
 import static net.minecraft.registry.tag.InstrumentTags.SCREAMING_GOAT_HORNS;
 
 public class ModItems {
+    public static final Item THURISAZ_RUNE = registerItem("thurisaz_rune",
+            new ThurisazRune(new FabricItemSettings().maxDamage(1)));
     public static final Item N_D_NILE_MUSIC_DISC = registerItem("music_disc/n_d_nile_music_disc",
             new MusicDiscItem(7, ModSounds.N_D_NILE_MUSIC,
                     new FabricItemSettings().maxCount(1), 62));
@@ -50,6 +52,9 @@ public class ModItems {
                     new FabricItemSettings()));
     public static final Item DRAUGR_SPAWN_EGG = registerItem("spawn_egg/draugr_spawn_egg",
             new SpawnEggItem(ModEntities.DRAUGR,4399360, 526344,
+                    new FabricItemSettings()));
+    public static final Item DRAUGR_OVERLORD_SPAWN_EGG = registerItem("spawn_egg/draugr_overlord_spawn_egg",
+            new SpawnEggItem(ModEntities.DRAUGR_OVERLORD,4399360, 526344,
                     new FabricItemSettings()));
     public static final Item CENTAUR_SPAWN_EGG = registerItem("spawn_egg/centaur_spawn_egg",
             new SpawnEggItem(ModEntities.CENTAUR,13342315, 15789267,
@@ -140,6 +145,11 @@ public class ModItems {
     public static final Item HIGH_IRON_INGOT = registerItem("high_iron_ingot",
             new Item(new FabricItemSettings()));
     public static final Item HIGH_IRON_SCRAP = registerItem("high_iron_scrap",
+            new Item(new FabricItemSettings()));
+
+    public static final Item EBONY_INGOT = registerItem("ebony_ingot",
+            new Item(new FabricItemSettings()));
+    public static final Item EBONY_SCRAP = registerItem("ebony_scrap",
             new Item(new FabricItemSettings()));
 
     public static final Item ANKH = registerItem("ankh",
@@ -314,6 +324,9 @@ public class ModItems {
             new EgyptianRecurveBow(new FabricItemSettings().maxDamage(640)));
     public static final Item GREEK_COMPOSITE_BOW = registerItem("bow/greek_composite_bow",
             new GreekCompositeBow(new FabricItemSettings().maxDamage(640)));
+
+    public static final Item DRAUGR_BOW = registerItem("bow/draugr_bow",
+            new DraugrBow(new FabricItemSettings().maxDamage(640)));
     public static final Item CHIMERA_HAIR = registerItem("chimera_hair",
             new Item(new FabricItemSettings()));
     public static final Item VALKYRIE_SPEAR = registerItem("weapon/valkyrie_spear",
@@ -358,6 +371,7 @@ public class ModItems {
         entries.add(SKELETON_WARRIOR);
         entries.add(SKELETON_WARRIOR_HEAD);
         entries.add(DRAUGR_SPAWN_EGG);
+        entries.add(DRAUGR_OVERLORD_SPAWN_EGG);
         entries.add(DRAUGR_WIGHT_SPAWN_EGG);
         entries.add(DRAUGR_SCOURGE_SPAWN_EGG);
         entries.add(DRAUGR_ARCHER_SPAWN_EGG);
@@ -370,6 +384,8 @@ public class ModItems {
         entries.add(FROST_SHARD);
         entries.add(HIGH_IRON_SCRAP);
         entries.add(HIGH_IRON_INGOT);
+        entries.add(EBONY_SCRAP);
+        entries.add(EBONY_INGOT);
         entries.add(IRON_SCARAB);
         entries.add(GOLD_SCARAB);
         entries.add(DIAMOND_SCARAB);
@@ -393,6 +409,7 @@ public class ModItems {
         entries.add(ModBlocks.AMPHORA);
         entries.add(ModBlocks.CURSED_GOLDEN_BLOCK);
         entries.add(ModBlocks.MUMMY_BOSS_ALTAR);
+        entries.add(ModBlocks.DRAUGR_CHEST);
     }
     public static void addItemToCombatItemGroup(FabricItemGroupEntries entries) {
         entries.add(VALKYRIE_HELMET);
@@ -466,10 +483,12 @@ public class ModItems {
         entries.add(GOLD_EGYPTIAN_HALBERD);
         entries.add(DIAMOND_EGYPTIAN_HALBERD);
         entries.add(NETHERITE_EGYPTIAN_HALBERD);
-        entries.add(EGYPTIAN_RECURVE_BOW);
         entries.add(GREEK_COMPOSITE_BOW);
+        entries.add(EGYPTIAN_RECURVE_BOW);
+        entries.add(DRAUGR_BOW);
         entries.add(PHARAOH_SCEPTER);
         entries.add(ANKH);
+        entries.add(THURISAZ_RUNE);
     }
 
 

@@ -9,11 +9,13 @@ import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.mebahel.antiquebeasts.entity.variant.HeroHopliteVariant;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
-import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.ModSoundUtil;
+import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityData;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -41,13 +43,12 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
 import javax.annotation.Nullable;
 
-public class HeroHopliteEntity extends GreekEntity implements GeoEntity {
+public class    HeroHopliteEntity extends GreekEntity implements GeoEntity {
     public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(HeroHopliteEntity.class,
             TrackedDataHandlerRegistry.FLOAT);
     private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
@@ -69,6 +70,7 @@ public class HeroHopliteEntity extends GreekEntity implements GeoEntity {
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
         this.dataTracker.startTracking(PATROL_UUID, "");
+        this.dataTracker.startTracking(SHOULD_DESPAWN, false);
     }
 
     public float getCooldown() { return this.dataTracker.get(COOLDOWN);}
@@ -110,8 +112,8 @@ public class HeroHopliteEntity extends GreekEntity implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
-        if (shouldDespawnInPeaceful()) {
-            remove(RemovalReason.DISCARDED);
+        if (this.shouldDespawnInPeaceful() || this.getShouldDespawn()) {
+            this.remove(RemovalReason.DISCARDED);
         }
     }
 
@@ -171,7 +173,7 @@ public class HeroHopliteEntity extends GreekEntity implements GeoEntity {
                 && spawnReason != SpawnReason.EVENT ) {
             int randomValue = this.random.nextInt(10);
             if (randomValue >= ModSpawnRateConfig.heroHopliteSpawnRate) {
-                this.remove(Entity.RemovalReason.DISCARDED);
+                this.setShouldDespawn(true);
             }
         }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
@@ -217,5 +219,16 @@ public class HeroHopliteEntity extends GreekEntity implements GeoEntity {
                 }
             }
         }
+    }
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putBoolean("shouldDespawn", this.getShouldDespawn());
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.setShouldDespawn(nbt.getBoolean("shouldDespawn"));
     }
 }

@@ -12,19 +12,31 @@ import net.minecraft.util.Formatting;
 
 public class DraugrKillTracker {
     private static final HashMap<PlayerEntity, Integer> killCount = new HashMap<>();
-    private static final int KILL_THRESHOLD = 3;
+    private static final int KILL_THRESHOLD = 18;
 
     public static void incrementKillCount(PlayerEntity player, LivingEntity killedEntity) {
         if (killedEntity instanceof DraugrEntity draugr && !draugr.isPartOfRaid()) {
+            // Vérifiez si le joueur est déjà assigné à un raid actif
+            boolean playerHasActiveRaid = AntiqueBeasts.ongoingRaids.stream()
+                    .anyMatch(raid -> raid.isRaidInProgress() && raid.getTargetPlayerUuid().equals(player.getUuid()));
+
+            if (playerHasActiveRaid) {
+                System.out.println("Le joueur " + player.getName().getString() + " est déjà assigné à un raid actif. KillCount non incrémenté.");
+                return; // Ne pas incrémenter le KillCount
+            }
+
+            // Incrémentation du compteur de kills si le joueur n'a pas de raid actif
             int currentKillCount = killCount.getOrDefault(player, 0) + 1;
             killCount.put(player, currentKillCount);
             System.out.println("Kills for " + player.getName().getString() + ": " + currentKillCount);
 
+            // Alerte au joueur à 90% du seuil
             if (currentKillCount == (int) (KILL_THRESHOLD * 0.9)) {
                 player.sendMessage(Text.literal("You've awoken something ...")
                         .styled(style -> style.withColor(Formatting.GOLD)), false);
             }
 
+            // Si le KillCount atteint le seuil
             if (currentKillCount >= KILL_THRESHOLD) {
                 System.out.println("- KILL_THRESHOLD -");
                 if (player.getWorld() instanceof ServerWorld serverWorld) {
@@ -34,17 +46,6 @@ public class DraugrKillTracker {
                         // Retirez les raids complétés ou inactifs
                         AntiqueBeasts.ongoingRaids.removeIf(raid -> !raid.isRaidInProgress() || raid.isRaidCompleted());
                         System.out.println("Cleaned up completed or inactive raids from ongoingRaids.");
-                    }
-
-                    // Vérifiez si un raid est déjà actif pour CE joueur
-                    boolean playerHasActiveRaid = AntiqueBeasts.ongoingRaids.stream()
-                            .anyMatch(raid -> raid.isRaidInProgress() && raid.getTargetPlayerUuid().equals(player.getUuid()));
-
-                    if (playerHasActiveRaid) {
-                        System.out.println("A raid is already in progress for this player.");
-                        player.sendMessage(Text.literal("A raid is already in progress for you!")
-                                .styled(style -> style.withColor(Formatting.RED)), false);
-                        return; // Ne démarre pas un nouveau raid
                     }
 
                     // Vérifiez si un raid est actif pour un autre joueur
@@ -68,4 +69,5 @@ public class DraugrKillTracker {
             }
         }
     }
+
 }

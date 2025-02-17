@@ -6,7 +6,9 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.loader.api.FabricLoader;
+import net.mebahel.antiquebeasts.block.ModBlockEntities;
 import net.mebahel.antiquebeasts.block.ModBlocks;
+import net.mebahel.antiquebeasts.block.screenhandlers.ModScreenHandlerType;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.custom.*;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.*;
@@ -29,6 +31,7 @@ import net.mebahel.antiquebeasts.util.config.ModArmorValueConfig;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
 import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
+import net.mebahel.antiquebeasts.util.packet.ModNetworking;
 import net.mebahel.antiquebeasts.util.raid.AntiquebeastsDifficultyState;
 import net.mebahel.antiquebeasts.util.raid.DraugrRaidTest;
 import net.mebahel.antiquebeasts.util.raid.PersistentRaidData;
@@ -36,13 +39,9 @@ import net.mebahel.antiquebeasts.util.raid.RaidManager;
 import net.mebahel.antiquebeasts.world.gen.ModWorldGen;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementProgress;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Box;
-import net.minecraft.world.PersistentStateManager;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,9 +52,10 @@ import java.util.*;
 public class AntiqueBeasts implements ModInitializer {
 	public static final String MOD_ID = "antiquebeasts";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-	private static int netherCheckCounter = 0;
-	private static final int NETHER_CHECK_INTERVAL = 300;
+
 	private static final TickScheduler tickScheduler = new TickScheduler();
+
+	private static final AntiquebeastsDifficultyState difficultyState = new AntiquebeastsDifficultyState(1);
 	private static final WaterRemovalScheduler waterRemovalScheduler = new WaterRemovalScheduler();
 	private static final Map<ServerWorld, ServerTickEvents.EndTick> registeredListeners = new HashMap<>();
 	private static final Map<ServerWorld, ServerPlayConnectionEvents.Join> registeredJoinEventListeners = new HashMap<>();
@@ -64,7 +64,9 @@ public class AntiqueBeasts implements ModInitializer {
 	public static final List<DraugrRaidTest> ongoingRaids = new ArrayList<>();
 	private boolean playerHasArrived = false;
 	private boolean shouldEnableLoad = true;
-
+	private static final int ACHIEVEMENT_CHECK_INTERVAL = 20;
+	private int achievementTickCounter = 0;
+	private final Set<UUID> playersWithAchievement = new HashSet<>();
 
 	@Override
 	public void onInitialize() {
@@ -75,6 +77,7 @@ public class AntiqueBeasts implements ModInitializer {
 		ModBonusHealthConfig.loadConfig(configDir);
 		ModItemGroups.registerItemGroups();
 
+		FabricDefaultAttributeRegistry.register(ModEntities.DRAUGR_OVERLORD, DraugrOverlordEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.SKELETON_WARRIOR_HEAD, SkeletonWarriorHeadEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.SKELETON_WARRIOR, SkeletonWarriorEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.DRAUGR_SCOURGE, DraugrScourgeEntity.setAttributes());
@@ -107,6 +110,10 @@ public class AntiqueBeasts implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ModEntities.VALKYRIE, ValkyrieEntity.setAttributes());
 		ModSounds.registerSounds();
 		ModBlocks.registerModBlocks();
+		ModBlockEntities.registerModBlockEntities();
+
+		ModScreenHandlerType.registerScreenHandlers();
+
 		ModWorldGen.generateWorldGen();
 		ModItems.registerModItems();
 		ModParticles.registerParticles();
@@ -114,10 +121,11 @@ public class AntiqueBeasts implements ModInitializer {
 		PatrolManager.register();
 		MyProcessors.init();
 		RaidManager.registerEvents();
+		ModNetworking.registerReceivers();
 
 		ServerWorldEvents.LOAD.register((server, world) -> {
 			waterRemovalScheduler.addWorld(world);
-
+			difficultyState.registerDifficultyState(world);
 			ServerPlayConnectionEvents.Join joinEventListener = (handler, sender, server2) -> {
 				if (world.getRegistryKey().equals(World.OVERWORLD)) {
 					playerHasArrived = true;
@@ -127,31 +135,19 @@ public class AntiqueBeasts implements ModInitializer {
 
 			ServerTickEvents.EndTick listener = serverTick -> {
 				if (serverTick.getWorld(World.OVERWORLD) == world) {
-					if (ModConfig.enableDifficultySystem) {
-						if (worldDifficultyLevels.get(world) == 1) {
-							netherCheckCounter++;
-							if (netherCheckCounter >= NETHER_CHECK_INTERVAL) {
-								netherCheckCounter = 0;
-								//checkNetherVisit(world, difficultyState);
-							}
-						}
-					} else {
-						worldDifficultyLevels.put(world, 1);
+					if (playerHasArrived && shouldEnableLoad) {
+						tickScheduler.schedule(world, 20, w -> {
+							PersistentRaidData.get(world);
+						});
+						shouldEnableLoad = false;
+						playerHasArrived = false;
 					}
+					waterRemovalScheduler.tick();
 				}
+				checkMummyBossAchievement(world);
+				difficultyState.updateDifficultyState(world);
 				tickScheduler.tick();
-				waterRemovalScheduler.tick();
 			};
-
-			PersistentStateManager stateManager = world.getPersistentStateManager();
-			AntiquebeastsDifficultyState difficultyState = stateManager.getOrCreate(
-					AntiquebeastsDifficultyState::fromNbt,
-					() -> new AntiquebeastsDifficultyState(1),
-					"antique_beasts_difficulty_state"
-			);
-			int difficultyLevel = difficultyState.getDifficultyLevel();
-			worldDifficultyLevels.put(world, difficultyLevel);
-			System.out.println("[Mebahel's Antique Beasts] Loaded difficulty level for world " + world.getRegistryKey().getValue() + ": " + difficultyLevel);
 
 			ServerPlayConnectionEvents.JOIN.register(joinEventListener);
 			ServerTickEvents.END_SERVER_TICK.register(listener);
@@ -163,67 +159,26 @@ public class AntiqueBeasts implements ModInitializer {
 			registeredJoinEventListeners.remove(world);
 		});
 	}
-	private static void checkNetherVisit(ServerWorld world, AntiquebeastsDifficultyState difficultyState) {
-		List<ServerPlayerEntity> players = world.getPlayers();
 
-		for (ServerPlayerEntity player : players) {
-			if (player.getAdvancementTracker().getProgress(world.getServer().getAdvancementLoader().get(new Identifier("minecraft", "nether/root"))).isDone()) {
-				int difficultyLevel = 2;
-				worldDifficultyLevels.put(world, difficultyLevel);
-				difficultyState.setDifficultyLevel(difficultyLevel);
-				System.out.println("[Mebahel's Zombie Horde] Difficulty increased to 2 due to Nether visit by " + player.getName().getString());
-				break;
+	private void checkMummyBossAchievement(ServerWorld world) {
+		if (++achievementTickCounter % ACHIEVEMENT_CHECK_INTERVAL != 0) return;
+
+		if (world.getPlayers().isEmpty()) return;
+
+		List<? extends MummyBossEntity> mummyBosses = world.getEntitiesByType(ModEntities.MUMMY_BOSS, entity -> true);
+
+		if (mummyBosses.isEmpty()) return;
+
+		for (ServerPlayerEntity player : world.getPlayers()) {
+			if (playersWithAchievement.contains(player.getUuid())) continue;
+
+			boolean isNearby = mummyBosses.stream().anyMatch(mummy ->
+					player.squaredDistanceTo(mummy.getX(), mummy.getY(), mummy.getZ()) <= 15 * 15);
+
+			if (isNearby) {
+				triggerAdvancement(player);
+				playersWithAchievement.add(player.getUuid());
 			}
-		}
-	}
-	private void checkPlayerProximityForRaids(ServerWorld world) {
-		// Récupère les données persistantes du raid
-		PersistentRaidData raidData = PersistentRaidData.get(world);
-		if (raidData == null) {
-			return;
-		}
-
-		HashMap<UUID, DraugrRaidTest> allRaids = raidData.getAllRaids();
-		if (allRaids.isEmpty()) {
-			return;
-		}
-
-		// Parcourt tous les raids
-		for (DraugrRaidTest raid : allRaids.values()) {
-			List<ServerPlayerEntity> playersInRange = new ArrayList<>();
-
-			// Parcourt toutes les entités du raid
-			for (UUID entityUuid : raid.raidEntityUuid) {
-				Entity entity = world.getEntity(entityUuid);
-				if (entity == null || !entity.isAlive()) continue;
-
-				// Vérifie les joueurs dans un rayon de 70 blocs
-				List<ServerPlayerEntity> nearbyPlayers = world.getPlayers(player ->
-						player.squaredDistanceTo(entity.getX(), entity.getY(), entity.getZ()) <= 70 * 70
-				);
-
-				// Ajoute les joueurs trouvés à la liste des joueurs proches
-				playersInRange.addAll(nearbyPlayers);
-			}
-
-			// Mise à jour de la barre de boss : ajout des joueurs proches
-			for (ServerPlayerEntity player : playersInRange) {
-				if (!raid.getRaidBossBar().getPlayers().contains(player)) {
-					raid.getRaidBossBar().addPlayer(player);
-					System.out.println("Ajout du joueur " + player.getName().getString() + " à la barre de boss du raid.");
-				}
-			}
-
-			// Retire les joueurs trop éloignés de la barre de boss
-			List<ServerPlayerEntity> playersToRemove = new ArrayList<>();
-			for (ServerPlayerEntity player : raid.getRaidBossBar().getPlayers()) {
-				boolean isStillNearby = playersInRange.contains(player);
-				if (!isStillNearby) {
-					playersToRemove.add(player);
-					System.out.println("Retrait du joueur " + player.getName().getString() + " de la barre de boss du raid.");
-				}
-			}
-			playersToRemove.forEach(raid.getRaidBossBar()::removePlayer);
 		}
 	}
 
@@ -234,15 +189,9 @@ public class AntiqueBeasts implements ModInitializer {
 	public static WaterRemovalScheduler getWaterRemovalScheduler() {
 		return waterRemovalScheduler;
 	}
-	private boolean isMummyBossNearby(PlayerEntity player, double radius) {
-		Box box = new Box(player.getX() - radius, player.getY() - radius, player.getZ() - radius,
-				player.getX() + radius, player.getY() + radius, player.getZ() + radius);
 
-		return player.getWorld().getEntitiesByClass(Entity.class, box, entity -> {
-			return entity.getType() == ModEntities.MUMMY_BOSS;
-		}).size() > 0;
-	}
 	public static final Identifier ADVANCEMENT_ID = new Identifier("antiquebeasts", "see_mummy_boss");
+
 	private void triggerAdvancement(ServerPlayerEntity player) {
 		Advancement advancement = player.getServer().getAdvancementLoader().get(ADVANCEMENT_ID);
 		if (advancement != null) {
@@ -250,45 +199,6 @@ public class AntiqueBeasts implements ModInitializer {
 			if (!progress.isDone()) {
 				player.getAdvancementTracker().grantCriterion(advancement, "see_mummy_boss");
 			}
-		}
-	}
-	private static void updateRaidPlayerProximity() {
-		// Parcourir tous les raids en cours
-		for (DraugrRaidTest raid : AntiqueBeasts.ongoingRaids) {
-			if (!raid.isRaidInProgress() || raid.isRaidCompleted()) continue; // Ignorez les raids terminés ou inactifs
-
-			List<ServerPlayerEntity> playersInRange = new ArrayList<>();
-
-			// Parcourir toutes les entités du raid pour détecter les joueurs proches
-			for (UUID entityUuid : raid.raidEntityUuid) {
-				DraugrEntity draugr = raid.findDraugrByUUID(raid.getWorld(), entityUuid);
-				if (draugr == null || !draugr.isAlive()) continue;
-
-				// Trouver tous les joueurs dans un rayon de 20 blocs autour de cette entité
-				List<ServerPlayerEntity> nearbyPlayers = raid.getWorld().getPlayers(player ->
-						player.squaredDistanceTo(draugr.getX(), draugr.getY(), draugr.getZ()) <= 20 * 20
-				);
-
-				playersInRange.addAll(nearbyPlayers); // Ajouter les joueurs trouvés à la liste globale
-			}
-
-			// Ajouter les joueurs proches à la barre de boss du raid
-			for (ServerPlayerEntity player : playersInRange) {
-				if (!raid.getRaidBossBar().getPlayers().contains(player)) {
-					raid.getRaidBossBar().addPlayer(player);
-					System.out.println("Ajout du joueur " + player.getName().getString() + " à la barre de boss du raid.");
-				}
-			}
-
-			// Retirer les joueurs trop éloignés de la barre de boss du raid
-			List<ServerPlayerEntity> playersToRemove = new ArrayList<>();
-			for (ServerPlayerEntity player : raid.getRaidBossBar().getPlayers()) {
-				if (!playersInRange.contains(player)) {
-					playersToRemove.add(player);
-					System.out.println("Retrait du joueur " + player.getName().getString() + " de la barre de boss du raid.");
-				}
-			}
-			playersToRemove.forEach(raid.getRaidBossBar()::removePlayer);
 		}
 	}
 }

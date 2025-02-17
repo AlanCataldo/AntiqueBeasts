@@ -1,6 +1,6 @@
 package net.mebahel.antiquebeasts.util;
 
-import net.mebahel.antiquebeasts.block.MummyBossAltarBlock;
+import net.mebahel.antiquebeasts.block.custom.MummyBossAltarBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.server.world.ServerWorld;
@@ -11,10 +11,12 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class WaterRemovalScheduler {
-    private final List<ScheduledTask> tasks = new CopyOnWriteArrayList<>();
+    private final Queue<ScheduledTask> tasks = new ConcurrentLinkedQueue<>();
     public final List<ServerWorld> worlds = new CopyOnWriteArrayList<>();
 
     public void addWorld(ServerWorld world) {
@@ -66,12 +68,12 @@ public class WaterRemovalScheduler {
                         ((MummyBossAltarBlock) state.getBlock()).scheduleNextEffectTick(world, pos);
                     }
                     if (state.contains(Properties.WATERLOGGED) && state.get(Properties.WATERLOGGED)) {
-                        world.setBlockState(pos, state.with(Properties.WATERLOGGED, false), 3);
+                        world.setBlockState(pos, state.with(Properties.WATERLOGGED, false), 2);
                         for (Direction direction : Direction.values()) {
                             BlockPos neighborPos = pos.offset(direction);
                             BlockState neighborState = world.getBlockState(neighborPos);
                             if (neighborState.isOf(Blocks.WATER)) {
-                                world.setBlockState(neighborPos, Blocks.AIR.getDefaultState(), 3);
+                                world.setBlockState(neighborPos, Blocks.AIR.getDefaultState(), 2);
                             }
                         }
                     }

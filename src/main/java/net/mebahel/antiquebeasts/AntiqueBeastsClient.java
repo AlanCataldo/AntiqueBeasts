@@ -1,14 +1,20 @@
 package net.mebahel.antiquebeasts;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.mebahel.antiquebeasts.block.ModBlockEntities;
+
+import net.mebahel.antiquebeasts.block.client.DraugrChestRenderer;
+import net.mebahel.antiquebeasts.block.entity.DraugrChestBlockEntity;
+import net.mebahel.antiquebeasts.block.screenhandlers.ModScreenHandlerType;
+import net.mebahel.antiquebeasts.block.screenhandlers.ModScreenHandlers;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.client.custom.*;
 import net.mebahel.antiquebeasts.entity.client.custom.draugr.DraugrRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.draugr_archer.DraugrArcherRenderer;
+import net.mebahel.antiquebeasts.entity.client.custom.draugr_overlord.DraugrOverlordRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.draugr_scourge.DraugrScourgeRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.draugr_wight.DraugrWightRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.harpy.HarpyRenderer;
@@ -19,13 +25,13 @@ import net.mebahel.antiquebeasts.entity.client.projectiles.*;
 import net.mebahel.antiquebeasts.entity.client.projectiles.draugr.DraugrWightProjectileRenderer;
 import net.mebahel.antiquebeasts.entity.client.projectiles.draugr.FrostSpikeProjectileRenderer;
 import net.mebahel.antiquebeasts.entity.client.projectiles.harpy.HarpyFeatherRenderer;
-import net.mebahel.antiquebeasts.entity.custom.other.SkeletonWarriorEntity;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.particle.custom.*;
 import net.mebahel.antiquebeasts.util.BowPredicate;
 import net.mebahel.antiquebeasts.util.HornModelPredicate;
 import net.mebahel.antiquebeasts.util.ShieldModelPredicate;
 import net.mebahel.antiquebeasts.util.SpearModelPredicate;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import software.bernie.geckolib.GeckoLib;
 
 public class AntiqueBeastsClient implements ClientModInitializer {
@@ -34,10 +40,11 @@ public class AntiqueBeastsClient implements ClientModInitializer {
     public void onInitializeClient() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (!initialized) {
-                GeckoLib.initialize(); // Initialise GeckoLib après quelques ticks
+                GeckoLib.initialize();
                 initialized = true;
             }
         });
+        EntityRendererRegistry.register(ModEntities.DRAUGR_OVERLORD, DraugrOverlordRenderer::new);
         EntityRendererRegistry.register(ModEntities.SKELETON_WARRIOR_HEAD, SkeletonWarriorHeadRenderer::new);
         EntityRendererRegistry.register(ModEntities.SKELETON_WARRIOR, SkeletonWarriorRenderer::new);
         EntityRendererRegistry.register(ModEntities.DRAUGR_SCOURGE, DraugrScourgeRenderer::new);
@@ -95,6 +102,11 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(ModParticles.MUMMY_PROJECTILE_PARTICLE, MummyProjectileParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.MUMMY_HOVERING_PARTICLE, MummyHoveringParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.HEALING_PARTICLE, HealingParticle.Factory::new);
+
+        BlockEntityRendererFactories.register(ModBlockEntities.DRAUGR_CHEST_ENTITY, DraugrChestRenderer::new);
+
+        ModScreenHandlers.registerScreenHandlers();
+
         BowPredicate.registerBowModels();
         ShieldModelPredicate.registerShieldModels();
         SpearModelPredicate.registerSpearModels();

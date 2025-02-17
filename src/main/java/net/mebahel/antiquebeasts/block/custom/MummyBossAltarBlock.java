@@ -1,4 +1,4 @@
-package net.mebahel.antiquebeasts.block;
+package net.mebahel.antiquebeasts.block.custom;
 
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.MummyBossEntity;

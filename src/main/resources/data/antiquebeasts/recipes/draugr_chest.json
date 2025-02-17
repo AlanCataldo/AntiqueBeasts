@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SCS",
+    "SSS"
+  ],
+  "key" : {
+    "C": {
+      "item" : "minecraft:chest"
+    },
+    "S": {
+      "item" : "antiquebeasts:high_iron_scrap"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:draugr_chest"
+  }
+}

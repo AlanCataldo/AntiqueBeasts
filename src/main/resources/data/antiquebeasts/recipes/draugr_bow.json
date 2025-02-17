@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sH ",
+    "s H",
+    "sH "
+  ],
+  "key" : {
+    "H": {
+      "item" : "antiquebeasts:high_iron_ingot"
+    },
+    "s": {
+      "item" : "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:bow/draugr_bow"
+  }
+}

@@ -32,25 +32,15 @@ public class DraugrWightMeleeAttackGoal extends Goal {
     }
 
     public boolean canStart() {
-        long l = this.mob.getWorld().getTime();
-        if (l - this.lastUpdateTime < 20L) {
-            return false;
-        } else {
-            this.lastUpdateTime = l;
-            LivingEntity livingEntity = this.mob.getTarget();
-            if (livingEntity == null) {
+        LivingEntity livingEntity = this.mob.getTarget();
+
+        if (livingEntity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+            if (playerEntity.isCreative() || playerEntity.isSpectator()) {
                 return false;
-            } else if (!livingEntity.isAlive()) {
-                return false;
-            } else {
-                Path path = this.mob.getNavigation().findPathTo(livingEntity, 0);
-                if (path != null) {
-                    return true;
-                } else {
-                    return this.getSquaredMaxAttackDistance(livingEntity) >= this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
-                }
             }
         }
+        return livingEntity != null && livingEntity.isAlive();
     }
 
     public boolean shouldContinue() {

@@ -17,7 +17,7 @@ public class ModSpawnRateConfig {
     public static int championHopliteSpawnRate = 5;
     public static int heroHopliteSpawnRate = 5;
     public static int hadesChosenSpawnRate = 3;
-    public static int chimeraSpawnRate = 5;
+    public static int chimeraSpawnRate = 2;
     public static int cyclopsSpawnRate = 5;
     public static int frostCyclopsSpawnRate = 5;
     public static int pegasusSpawnRate = 5;
@@ -66,7 +66,7 @@ public class ModSpawnRateConfig {
                     updated = true;
                 }
                 if (data.chimeraSpawnRate == null || data.chimeraSpawnRate > 10 || data.chimeraSpawnRate < 0) {
-                    data.chimeraSpawnRate = 5;
+                    data.chimeraSpawnRate = 2;
                     updated = true;
                 }
                 if (data.cyclopsSpawnRate == null || data.cyclopsSpawnRate > 10 || data.cyclopsSpawnRate < 0) {

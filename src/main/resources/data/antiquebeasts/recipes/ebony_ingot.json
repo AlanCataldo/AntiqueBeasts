@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "HHH",
+    "HII",
+    "II "
+  ],
+  "key" : {
+    "H": {
+      "item" : "antiquebeasts:ebony_scrap"
+    },
+    "I": {
+      "item" : "antiquebeasts:high_iron_ingot"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:ebony_ingot"
+  }
+}

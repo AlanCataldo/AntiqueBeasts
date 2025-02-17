@@ -60,8 +60,8 @@ public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
-        if (shouldDespawnInPeaceful()) {
-            remove(RemovalReason.DISCARDED);
+        if (this.shouldDespawnInPeaceful() || this.getShouldDespawn()) {
+            this.remove(RemovalReason.DISCARDED);
         }
     }
 
@@ -72,6 +72,7 @@ public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
         this.dataTracker.startTracking(PATROL_UUID, "");
+        this.dataTracker.startTracking(SHOULD_DESPAWN, false);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
@@ -151,7 +152,7 @@ public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
                 && spawnReason != SpawnReason.EVENT ) {
             int randomValue = this.random.nextInt(10);
             if (randomValue >= ModSpawnRateConfig.championHopliteSpawnRate) {
-                this.remove(Entity.RemovalReason.DISCARDED);
+                this.setShouldDespawn(true);
             }
         }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
@@ -203,5 +204,16 @@ public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
                 }
             }
         }
+    }
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putBoolean("shouldDespawn", this.getShouldDespawn());
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.setShouldDespawn(nbt.getBoolean("shouldDespawn"));
     }
 }

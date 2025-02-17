@@ -55,6 +55,12 @@ public class DraugrWightEntity extends DraugrEntity implements GeoEntity {
 
     public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(DraugrWightEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
+    public static final TrackedData<Boolean> HAS_SPAWNED = DataTracker.registerData(DraugrWightEntity.class,
+            TrackedDataHandlerRegistry.BOOLEAN);
+    public boolean getHasSpawned() {return this.dataTracker.get(HAS_SPAWNED);}
+    public void setHasSpawned(boolean bool) {
+        this.dataTracker.set(HAS_SPAWNED, bool);
+    }
     public void setShooting(boolean shooting) {
         this.dataTracker.set(SHOOTING, shooting);
     }
@@ -96,6 +102,7 @@ public class DraugrWightEntity extends DraugrEntity implements GeoEntity {
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
         this.dataTracker.startTracking(COOLDOWN, 80f);
         this.dataTracker.startTracking(SHOOTING, false);
+        this.dataTracker.startTracking(HAS_SPAWNED, true);
     }
 
     @Override
@@ -127,7 +134,9 @@ public class DraugrWightEntity extends DraugrEntity implements GeoEntity {
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5f);
     }
     private PlayState predicate(AnimationState animationState) {
-        if (animationState.isMoving()) {
+        if (!this.getHasSpawned()) {
+            return PlayState.STOP;
+        } else if (animationState.isMoving()) {
             animationState.getController().setAnimation(RawAnimation.begin().then("transition_walk", Animation.LoopType.PLAY_ONCE).then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else if (!animationState.isMoving() && !this.isAttacking()) {
@@ -167,6 +176,11 @@ public class DraugrWightEntity extends DraugrEntity implements GeoEntity {
             PlayerEntity player = ClientUtils.getClientPlayer();
             if (player != null)
                 this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.SWING, this.getSoundCategory(), 0.7f, 1.1f);
+        }));
+        controllers.add(new AnimationController(this, "spawning", 0, this::spawnPredicate).setSoundKeyframeHandler(state -> {
+            PlayerEntity player = ClientUtils.getClientPlayer();
+            if (player != null)
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.MUMMY_SPAWN, this.getSoundCategory(), 0.65f, 1f);
         }));
     }
 
@@ -280,4 +294,15 @@ public class DraugrWightEntity extends DraugrEntity implements GeoEntity {
         }
     }
 
+    private PlayState spawnPredicate(AnimationState state) {
+        if (!this.getHasSpawned()) {
+            state.getController().setAnimation(RawAnimation.begin().then("spawn", Animation.LoopType.PLAY_ONCE));
+            if (state.getController().getAnimationState() != AnimationController.State.STOPPED) {
+                spawnHoveringParticles();
+            } else {
+                this.setHasSpawned(true);
+            }
+        }
+        return PlayState.CONTINUE;
+    }
 }

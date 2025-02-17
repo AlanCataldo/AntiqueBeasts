@@ -54,7 +54,7 @@ public class MummyBossSummonGoal extends Goal {
         if (this.mummy.getSpawnCooldown() < 40)
             this.mummy.setCooldown(120);
 
-        if (this.mummy.secondPhase) { // Ne spawner que si la momie est en seconde phase
+        if (this.mummy.secondPhase || this.mummy.thirdPhase) { // Ne spawner que si la momie est en seconde phase
             switch (this.mummy.getSpawnCooldown()) {
                 case 0 -> this.stop();
                 case 10 -> {

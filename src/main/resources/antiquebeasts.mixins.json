@@ -6,9 +6,11 @@
   "mixins": [
     "AnkhTotemMixin",
     "BrewingRecipeRegistryMixin",
+    "DraugrBowProjectileMixin",
     "FireDamageMixin",
     "IronGolemMixin",
     "MobEntityAccessor",
+    "PersistentProjectileMixin",
     "PersistentStateManagerAccessor",
     "PoisonImmunityMixin",
     "ShieldDurabilityMixin",
