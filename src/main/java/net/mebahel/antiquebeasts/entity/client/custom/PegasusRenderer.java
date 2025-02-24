@@ -2,6 +2,7 @@ package net.mebahel.antiquebeasts.entity.client.custom;
 
 import net.mebahel.antiquebeasts.entity.custom.CyclopsEntity;
 import net.mebahel.antiquebeasts.entity.custom.PegasusEntity;
+import net.mebahel.antiquebeasts.entity.custom.egyptian.MummyEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -26,5 +27,8 @@ public class PegasusRenderer extends GeoEntityRenderer<PegasusEntity> {
                           float alpha) {
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }
-
+    @Override
+    public float getMotionAnimThreshold(PegasusEntity animatable) {
+        return 0.008F;
+    }
 }

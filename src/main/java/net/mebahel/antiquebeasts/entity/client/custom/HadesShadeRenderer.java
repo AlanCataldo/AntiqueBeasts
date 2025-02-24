@@ -1,6 +1,7 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
 import net.mebahel.antiquebeasts.AntiqueBeasts;
+import net.mebahel.antiquebeasts.entity.custom.FrostCyclopsEntity;
 import net.mebahel.antiquebeasts.entity.custom.HadesShadeEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -23,5 +24,9 @@ public class HadesShadeRenderer extends GeoEntityRenderer<HadesShadeEntity> {
     @Override
     public RenderLayer getRenderType(HadesShadeEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
+    }
+    @Override
+    public float getMotionAnimThreshold(HadesShadeEntity animatable) {
+        return 0.008F;
     }
 }

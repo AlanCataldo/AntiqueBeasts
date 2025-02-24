@@ -1,5 +1,6 @@
 package net.mebahel.antiquebeasts.entity.client.custom.skeleton_warrior;
 
+import net.mebahel.antiquebeasts.entity.custom.other.SkeletonWarriorEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.SkeletonWarriorHeadEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -18,5 +19,10 @@ public class SkeletonWarriorHeadRenderer extends GeoEntityRenderer<SkeletonWarri
     @Override
     public RenderLayer getRenderType(SkeletonWarriorHeadEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
+    }
+
+    @Override
+    public float getMotionAnimThreshold(SkeletonWarriorHeadEntity animatable) {
+        return 0.008F;
     }
 }

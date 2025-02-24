@@ -774,5 +774,29 @@
         "stream": false
       }
     ]
+  },
+  "frost_charge": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:draugr/frost_charge",
+        "stream": false
+      }
+    ]
+  },
+  "frost_spike_break": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:draugr/frost_spike_break",
+        "stream": false
+      }
+    ]
+  },
+  "frost_spell_3": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:draugr/draugr_frost_spell_3",
+        "stream": false
+      }
+    ]
   }
 }

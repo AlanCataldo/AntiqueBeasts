@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  P",
+    " S ",
+    "P  "
+  ],
+  "key" : {
+    "P": {
+      "item": "antiquebeasts:iron_plate"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:staff/greek_staff_handle"
+  }
+}

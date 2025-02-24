@@ -1,5 +1,6 @@
 package net.mebahel.antiquebeasts.entity.client.custom.harpy;
 
+import net.mebahel.antiquebeasts.entity.custom.other.DraugrWightEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.HarpyEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -16,5 +17,10 @@ public class HarpyRenderer extends GeoEntityRenderer<HarpyEntity> {
     @Override
     public RenderLayer getRenderType(HarpyEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
+    }
+
+    @Override
+    public float getMotionAnimThreshold(HarpyEntity animatable) {
+        return 0.008F;
     }
 }

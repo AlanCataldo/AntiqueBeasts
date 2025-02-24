@@ -3,6 +3,7 @@ package net.mebahel.antiquebeasts.entity.client.custom;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.entity.custom.CyclopsEntity;
 import net.mebahel.antiquebeasts.entity.custom.FrostCyclopsEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.EliteHopliteEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -29,5 +30,9 @@ public class FrostCyclopsRenderer extends GeoEntityRenderer<FrostCyclopsEntity> 
                           float alpha) {
         poseStack.scale(1.5f, 1.5f, 1.5f);
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+    }
+    @Override
+    public float getMotionAnimThreshold(FrostCyclopsEntity animatable) {
+        return 0.008F;
     }
 }

@@ -48,6 +48,11 @@ public class ModItemGroups {
                         entries.add(ModItems.EGYPTIAN_RECURVE_BOW);
                         entries.add(ModItems.GREEK_COMPOSITE_BOW);
                         entries.add(ModItems.DRAUGR_BOW);
+                        entries.add(ModItems.EBONY_GREATSWORD);
+                        entries.add(ModItems.FROST_BITE_GREEK_STAFF);
+                        entries.add(ModItems.FROST_SPIKE_GREEK_STAFF);
+                        entries.add(ModItems.FROST_BITE_MAGICAL_STONE);
+                        entries.add(ModItems.FROST_SPIKE_MAGICAL_STONE);
 
                         entries.add(ModItems.VALKYRIE_HELMET);
                         entries.add(ModItems.VALKYRIE_CHESTPLATE);
@@ -109,8 +114,6 @@ public class ModItemGroups {
                         entries.add(ModItems.ANKH_FRAGMENT);
                         entries.add(ModItems.THURISAZ_RUNE);
 
-                        entries.add(ModItems.FROSTBITE_SCROLL);
-                        entries.add(ModItems.ICE_SPIKE_SCROLL);
                         entries.add(ModItems.HARPY_FEATHER);
 
                         entries.add(ModItems.N_D_NILE_MUSIC_DISC);

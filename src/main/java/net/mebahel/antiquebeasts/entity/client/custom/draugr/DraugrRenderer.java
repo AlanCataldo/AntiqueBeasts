@@ -23,4 +23,9 @@ public class DraugrRenderer extends GeoEntityRenderer<DraugrEntity> {
     public RenderLayer getRenderType(DraugrEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
     }
+
+    @Override
+    public float getMotionAnimThreshold(DraugrEntity animatable) {
+        return 0.008F;
+    }
 }

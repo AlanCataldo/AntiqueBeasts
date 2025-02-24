@@ -175,7 +175,9 @@ public class PegasusEntity extends HorseEntity implements GeoEntity {
 
     @Override
     protected void jump(float strength, Vec3d movementInput) {
-        PlayerEntity player = (PlayerEntity) this.getFirstPassenger();
+        Entity passenger = this.getFirstPassenger();
+        PlayerEntity player = (passenger instanceof PlayerEntity) ? (PlayerEntity) passenger : null;
+
         MinecraftClient client = MinecraftClient.getInstance();
         BlockPos pos = this.getBlockPos();
         BlockPos belowPos = pos.down(1);
@@ -217,7 +219,9 @@ public class PegasusEntity extends HorseEntity implements GeoEntity {
             }
         }
 
-        PlayerEntity player = (PlayerEntity) this.getFirstPassenger();
+        Entity passenger = this.getFirstPassenger();
+        PlayerEntity player = (passenger instanceof PlayerEntity) ? (PlayerEntity) passenger : null;
+
         BlockPos pos = this.getBlockPos();
         BlockPos belowPos = pos.down(1);
         Vec3d vec3d = this.getVelocity();
@@ -361,7 +365,8 @@ public class PegasusEntity extends HorseEntity implements GeoEntity {
 
     @Override
     public void fall(double heightDifference, boolean onGround, BlockState state, BlockPos pos) {
-        if (this.getFirstPassenger() instanceof PlayerEntity) {
+        Entity passenger = this.getFirstPassenger();
+        if (passenger instanceof PlayerEntity) {
             return;
         }
         super.fall(heightDifference, onGround, state, pos);

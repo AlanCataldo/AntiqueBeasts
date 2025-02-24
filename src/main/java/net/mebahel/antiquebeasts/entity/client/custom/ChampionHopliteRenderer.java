@@ -2,6 +2,7 @@ package net.mebahel.antiquebeasts.entity.client.custom;
 
 import com.google.common.collect.Maps;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
+import net.mebahel.antiquebeasts.entity.custom.greek.CentaurEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.ChampionHopliteEntity;
 import net.mebahel.antiquebeasts.entity.variant.ChampionHopliteVariant;
 import net.minecraft.client.render.RenderLayer;
@@ -35,5 +36,10 @@ public class ChampionHopliteRenderer extends GeoEntityRenderer<ChampionHopliteEn
     @Override
     public RenderLayer getRenderType(ChampionHopliteEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
+    }
+
+    @Override
+    public float getMotionAnimThreshold(ChampionHopliteEntity animatable) {
+        return 0.008F;
     }
 }

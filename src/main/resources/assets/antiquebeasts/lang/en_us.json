@@ -1,6 +1,12 @@
 {
   "itemgroup.antiquebeasts": "Antique Beasts",
 
+  "item.antiquebeasts.magical_stone.frost_bite_magical_stone": "§9Frost Bite Magical Stone",
+  "item.antiquebeasts.magical_stone.frost_spike_magical_stone": "§5Frost Spike Magical Stone",
+  "item.antiquebeasts.staff.greek_staff_handle": "Greek Staff Handle",
+  "item.antiquebeasts.staff.frost_bite_greek_staff": "§9Frost Bite Greek Staff",
+  "item.antiquebeasts.staff.frost_spike_greek_staff": "§5Frost Spike Greek Staff",
+
   "entity.antiquebeasts.elite_hoplite": "Elite Hoplite",
   "entity.antiquebeasts.champion_hoplite": "Champion Hoplite",
   "entity.antiquebeasts.hero_hoplite": "Hero Hoplite",
@@ -198,6 +204,7 @@
   "item.antiquebeasts.weapon.egyptian_halberd.gold_egyptian_halberd": "Gold Egyptian Halberd",
   "item.antiquebeasts.weapon.egyptian_halberd.diamond_egyptian_halberd": "Diamond Egyptian Halberd",
   "item.antiquebeasts.weapon.egyptian_halberd.netherite_egyptian_halberd": "Netherite Egyptian Halberd",
+  "item.antiquebeasts.weapon.ebony.ebony_greatsword": "Ebony Greatsword",
   "item.antiquebeasts.bow.egyptian_recurve_bow": "Egyptian Recurve Bow",
   "item.antiquebeasts.bow.greek_composite_bow": "Greek Composite Bow",
   "item.antiquebeasts.bow.draugr_bow": "Draugr Bow",

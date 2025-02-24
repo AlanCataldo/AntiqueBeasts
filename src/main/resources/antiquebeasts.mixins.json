@@ -20,6 +20,7 @@
   "client": [
     "AnkhTotemClientMixin",
     "CustomBossBarHudMixin",
+    "HeldItemRendererMixin",
     "ItemRendererAccessor",
     "ItemRendererMixin",
     "ModelLoaderMixin"

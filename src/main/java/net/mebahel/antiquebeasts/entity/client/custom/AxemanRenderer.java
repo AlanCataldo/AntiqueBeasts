@@ -1,6 +1,7 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
 import net.mebahel.antiquebeasts.entity.custom.egyptian.AxemanEntity;
+import net.mebahel.antiquebeasts.entity.custom.other.HarpyEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -16,5 +17,9 @@ public class AxemanRenderer extends GeoEntityRenderer<AxemanEntity> {
     @Override
     public RenderLayer getRenderType(AxemanEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
+    }
+    @Override
+    public float getMotionAnimThreshold(AxemanEntity animatable) {
+        return 0.008F;
     }
 }

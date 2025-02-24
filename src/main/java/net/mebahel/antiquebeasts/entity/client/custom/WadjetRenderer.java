@@ -1,6 +1,7 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
 import net.mebahel.antiquebeasts.entity.custom.egyptian.WadjetEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.ValkyrieEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -16,5 +17,10 @@ public class WadjetRenderer extends GeoEntityRenderer<WadjetEntity> {
     @Override
     public RenderLayer getRenderType(WadjetEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
+    }
+
+    @Override
+    public float getMotionAnimThreshold(WadjetEntity animatable) {
+        return 0.008F;
     }
 }

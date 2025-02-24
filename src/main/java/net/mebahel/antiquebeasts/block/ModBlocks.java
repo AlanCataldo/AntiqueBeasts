@@ -6,6 +6,7 @@ import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.block.custom.CursedGoldBlock;
 import net.mebahel.antiquebeasts.block.custom.DraugrChestBlock;
 import net.mebahel.antiquebeasts.block.custom.MummyBossAltarBlock;
+import net.mebahel.antiquebeasts.block.custom.StaffEnchantingTableBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
@@ -24,6 +25,8 @@ public class ModBlocks {
             new MummyBossAltarBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK)));
     public static final Block DRAUGR_CHEST = registerBlock("draugr_chest",
             new DraugrChestBlock(FabricBlockSettings.copyOf(Blocks.CHEST).nonOpaque()));
+    public static final Block STAFF_ENCHANTING_TABLE = registerBlock("staff_enchanting_table",
+            new StaffEnchantingTableBlock(FabricBlockSettings.copyOf(Blocks.CHEST).nonOpaque()));
 
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);

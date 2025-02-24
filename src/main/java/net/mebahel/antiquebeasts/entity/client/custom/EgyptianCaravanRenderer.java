@@ -1,5 +1,6 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
+import net.mebahel.antiquebeasts.entity.custom.CyclopsEntity;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianCaravanEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -16,5 +17,9 @@ public class EgyptianCaravanRenderer extends GeoEntityRenderer<EgyptianCaravanEn
     @Override
     public RenderLayer getRenderType(EgyptianCaravanEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
+    }
+    @Override
+    public float getMotionAnimThreshold(EgyptianCaravanEntity animatable) {
+        return 0.008F;
     }
 }

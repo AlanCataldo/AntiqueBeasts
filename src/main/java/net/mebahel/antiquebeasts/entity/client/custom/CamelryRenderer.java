@@ -1,5 +1,6 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
+import net.mebahel.antiquebeasts.entity.custom.egyptian.AxemanEntity;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.CamelryEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -16,5 +17,10 @@ public class CamelryRenderer extends GeoEntityRenderer<CamelryEntity> {
     @Override
     public RenderLayer getRenderType(CamelryEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
+    }
+
+    @Override
+    public float getMotionAnimThreshold(CamelryEntity animatable) {
+        return 0.008F;
     }
 }

@@ -1,5 +1,6 @@
 package net.mebahel.antiquebeasts.entity.client.custom.draugr_scourge;
 
+import net.mebahel.antiquebeasts.entity.custom.other.DraugrOverlordEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrScourgeEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -22,5 +23,9 @@ public class DraugrScourgeRenderer extends GeoEntityRenderer<DraugrScourgeEntity
     @Override
     public RenderLayer getRenderType(DraugrScourgeEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
+    }
+    @Override
+    public float getMotionAnimThreshold(DraugrScourgeEntity animatable) {
+        return 0.008F;
     }
 }

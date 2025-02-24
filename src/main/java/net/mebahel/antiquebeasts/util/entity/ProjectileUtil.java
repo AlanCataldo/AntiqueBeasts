@@ -6,6 +6,7 @@ import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -40,45 +41,64 @@ public class ProjectileUtil {
         world.spawnEntity(projectile);
     }
 
-    public void scrollIceSpike(World world, LivingEntity actor, float iceSpikeDamage) {
+    public void staffIceSpike(World world, LivingEntity actor, Hand hand, float iceSpikeDamage) {
         FrostSpikeEntity iceSpikeEntity = new FrostSpikeEntity(world, actor, iceSpikeDamage);
         Vec3d direction = actor.getRotationVec(1.0F);
+        boolean isRightHand = (hand == Hand.MAIN_HAND);
 
-        // Vérifier si l'item est dans la main droite ou gauche
-        boolean isRightHand = (actor.getMainHandStack().getItem() == ModItems.ICE_SPIKE_SCROLL); // Assurez-vous que ModItems.SCROLL est l'item de votre parchemin
+        Vec3d upVector = new Vec3d(0, 1, 0);
 
-        // Décalage en fonction de la main active
-        double sideOffset = isRightHand ? 0.4 : -0.4; // Décalage positif pour la main droite, négatif pour la main gauche
-        double offsetX = -direction.z * sideOffset;
-        double offsetZ = direction.x * sideOffset;
-        double offsetY = 1.4; // Hauteur par rapport à la main
+        // ✅ Décale légèrement la position du spawn pour correspondre à la main
+        Vec3d sideOffsetVec = upVector.crossProduct(direction).normalize().multiply(isRightHand ? -0.5 : 0.5);
 
-        Vec3d handPosition = actor.getPos().add(offsetX, offsetY, offsetZ);
+        double offsetY = actor.getEyeY() - 0.6;
+        double forwardOffset = 0.6;
+        Vec3d frontOffset = direction.multiply(forwardOffset);
 
+        Vec3d handPosition = actor.getPos().add(sideOffsetVec).add(frontOffset).add(0, offsetY - actor.getY(), 0);
+
+        iceSpikeEntity.setPosition(handPosition.x, handPosition.y + 0.5, handPosition.z);
+
+        // ✅ Dévier légèrement la trajectoire selon la main utilisée
+        Vec3d sideVelocityOffset = upVector.crossProduct(direction).normalize().multiply(isRightHand ? 0.03 : -0.03);
+        direction = direction.add(sideVelocityOffset).normalize();
+
+        // ✅ Appliquer la vélocité ajustée
         iceSpikeEntity.setVelocity(direction.x, direction.y, direction.z, 1F, 0);
-        iceSpikeEntity.setPosition(handPosition.x, handPosition.y, handPosition.z);
+
         world.playSound(null, handPosition.x, handPosition.y, handPosition.z,
                 ModSounds.DRAUGR_ICE_SPIKE, SoundCategory.NEUTRAL, 0.8F, 1.0F);
+
         world.spawnEntity(iceSpikeEntity);
     }
 
-    public void scrollFrostbite(World world, LivingEntity actor, float iceSpikeDamage) {
+
+    public void scrollFrostbite(World world, LivingEntity actor, Hand hand, float iceSpikeDamage) {
         DraugrWightProjectileEntity frostbiteEntity = new DraugrWightProjectileEntity(world, actor, iceSpikeDamage);
         Vec3d direction = actor.getRotationVec(1.0F);
+        boolean isRightHand = (hand == Hand.MAIN_HAND);
 
-        // Vérifier si l'item est dans la main droite ou gauche
-        boolean isRightHand = (actor.getMainHandStack().getItem() == ModItems.FROSTBITE_SCROLL);
+        Vec3d upVector = new Vec3d(0, 1, 0);
 
-        // Décalage en fonction de la main active
-        double sideOffset = isRightHand ? 0.4 : -0.4;
-        double offsetX = -direction.z * sideOffset;
-        double offsetZ = direction.x * sideOffset;
-        double offsetY = 1.4;
+        // ✅ Décale légèrement la position du spawn pour correspondre à la main
+        Vec3d sideOffsetVec = upVector.crossProduct(direction).normalize().multiply(isRightHand ? -0.85 : 0.85);
 
-        Vec3d handPosition = actor.getPos().add(offsetX, offsetY, offsetZ);
+        double offsetY = actor.getEyeY() - 0.6;
+        double forwardOffset = 0.05;
+        Vec3d frontOffset = direction.multiply(forwardOffset);
 
+        Vec3d handPosition = actor.getPos().add(sideOffsetVec).add(frontOffset).add(0, offsetY - actor.getY(), 0);
+
+        frostbiteEntity.setPosition(handPosition.x, handPosition.y + 1, handPosition.z);
+
+        // ✅ Dévier légèrement la trajectoire selon la main utilisée
+        Vec3d sideVelocityOffset = upVector.crossProduct(direction).normalize().multiply(isRightHand ? 0.05 : -0.05);
+        direction = direction.add(sideVelocityOffset).normalize();
+
+        // ✅ Appliquer la vélocité ajustée
         frostbiteEntity.setVelocity(direction.x, direction.y, direction.z, 1F, 0);
-        frostbiteEntity.setPosition(handPosition.x, handPosition.y, handPosition.z);
+
         world.spawnEntity(frostbiteEntity);
     }
+
 }

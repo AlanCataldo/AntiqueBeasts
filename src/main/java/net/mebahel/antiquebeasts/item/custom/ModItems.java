@@ -7,7 +7,9 @@ import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.block.ModBlocks;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.item.*;
-import net.mebahel.antiquebeasts.item.scroll.ScrollItem;
+
+import net.mebahel.antiquebeasts.item.staff.FrostBiteStaff;
+import net.mebahel.antiquebeasts.item.staff.IceSpikeStaff;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.*;
@@ -24,6 +26,9 @@ import java.util.List;
 import static net.minecraft.registry.tag.InstrumentTags.SCREAMING_GOAT_HORNS;
 
 public class ModItems {
+    public static final Item EBONY_GREATSWORD = registerItem("weapon/ebony/ebony_greatsword",
+            new SwordItem(ModToolMaterial.EBONY,9, -3f,
+                    new FabricItemSettings()));
     public static final Item THURISAZ_RUNE = registerItem("thurisaz_rune",
             new ThurisazRune(new FabricItemSettings().maxDamage(1)));
     public static final Item N_D_NILE_MUSIC_DISC = registerItem("music_disc/n_d_nile_music_disc",
@@ -331,14 +336,21 @@ public class ModItems {
             new Item(new FabricItemSettings()));
     public static final Item VALKYRIE_SPEAR = registerItem("weapon/valkyrie_spear",
             new ValkyrieSpear(new FabricItemSettings().maxDamage(600)));
-    public static final Item FROSTBITE_SCROLL = registerItem("scroll/frostbite_scroll",
-            new ScrollItem(new FabricItemSettings().maxDamage(64), 55, 2.5f, "frostbite", AntiqueBeasts.getTickScheduler()));
-    public static final Item ICE_SPIKE_SCROLL = registerItem("scroll/ice_spike_scroll",
-            new ScrollItem(new FabricItemSettings().maxDamage(64), 55, 12, "ice_spike", AntiqueBeasts.getTickScheduler()));
+    public static final Item FROST_SPIKE_GREEK_STAFF = registerItem("staff/frost_spike_greek_staff",
+            new IceSpikeStaff(new FabricItemSettings().maxDamage(248)));
+    public static final Item FROST_BITE_GREEK_STAFF = registerItem("staff/frost_bite_greek_staff",
+            new FrostBiteStaff(new FabricItemSettings().maxDamage(248)));
 
     public static final Item IRON_CENTAUR_SWORD = registerItem("weapon/iron_centaur_sword",
             new SwordItem(ModToolMaterial.IRON_CENTAUR,3, -2.4f,
                     new FabricItemSettings()));
+    public static final Item FROST_BITE_MAGICAL_STONE = registerItem("magical_stone/frost_bite_magical_stone",
+            new Item(new FabricItemSettings()));
+    public static final Item FROST_SPIKE_MAGICAL_STONE = registerItem("magical_stone/frost_spike_magical_stone",
+            new Item(new FabricItemSettings()));
+    public static final Item GREEK_STAFF_HANDLE = registerItem("staff/greek_staff_handle",
+            new Item(new FabricItemSettings().fireproof()));
+
     public static <I extends Item> I registerItem(String name, I item) {
         return Registry.register(Registries.ITEM, new Identifier(AntiqueBeasts.MOD_ID, name), item);
     }
@@ -406,6 +418,7 @@ public class ModItems {
     }
 
     public static void addItemToFunctionalItemGroup(FabricItemGroupEntries entries) {
+        //entries.add(ModBlocks.STAFF_ENCHANTING_TABLE);
         entries.add(ModBlocks.AMPHORA);
         entries.add(ModBlocks.CURSED_GOLDEN_BLOCK);
         entries.add(ModBlocks.MUMMY_BOSS_ALTAR);
@@ -462,8 +475,11 @@ public class ModItems {
         entries.add(THROWING_AXE_ITEM);
         entries.add(EINHERJAR_HORN);
 
-        entries.add(FROSTBITE_SCROLL);
-        entries.add(ICE_SPIKE_SCROLL);
+        entries.add(GREEK_STAFF_HANDLE);
+        entries.add(FROST_BITE_MAGICAL_STONE);
+        entries.add(FROST_SPIKE_MAGICAL_STONE);
+        entries.add(FROST_BITE_GREEK_STAFF);
+        entries.add(FROST_SPIKE_GREEK_STAFF);
 
         entries.add(HARPY_FEATHER);
 
@@ -486,9 +502,14 @@ public class ModItems {
         entries.add(GREEK_COMPOSITE_BOW);
         entries.add(EGYPTIAN_RECURVE_BOW);
         entries.add(DRAUGR_BOW);
+        entries.add(EBONY_GREATSWORD);
         entries.add(PHARAOH_SCEPTER);
         entries.add(ANKH);
         entries.add(THURISAZ_RUNE);
+
+        entries.add(GREEK_STAFF_HANDLE);
+        entries.add(FROST_BITE_MAGICAL_STONE);
+        entries.add(FROST_SPIKE_MAGICAL_STONE);
     }
 
 

@@ -1,6 +1,7 @@
 package net.mebahel.antiquebeasts.entity.projectiles;
 
 import net.mebahel.antiquebeasts.particle.ModParticles;
+import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -17,6 +18,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.ShieldItem;
+import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
@@ -84,33 +86,48 @@ public class FrostSpikeEntity extends ThrownItemEntity implements GeoEntity {
     }
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
-        if (entityHitResult.getEntity() instanceof LivingEntity) {
+        if (entityHitResult.getEntity() instanceof LivingEntity target) {
             super.onEntityHit(entityHitResult);
-            LivingEntity target = (LivingEntity) entityHitResult.getEntity();
             this.breakShield(target);
 
-            // Inflige des dégâts
+            // ✅ Inflige des dégâts
             target.damage(this.getDamageSources().thrown(this, this.getOwner()), damage);
 
-            // Ajoute l'effet Slowness II pendant 3 secondes (60 ticks)
-            target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 60, 1, false, false ,false));  // Slowness II (amplificateur 1)
+            // ✅ Applique un effet de ralentissement
+            target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 60, 1, false, false, false));
 
-            // Optionnel : Ajoute des ticks de gel si la cible n'est pas en train de bloquer
+            // ✅ Ajoute du gel si la cible ne bloque pas
             if (!target.isBlocking()) {
                 target.setFrozenTicks(320);
             }
-        } else if (entityHitResult.getEntity() instanceof ItemFrameEntity itemFrame) {
-            itemFrame.dropItem(itemFrame.getHeldItemStack().getItem());
-            itemFrame.dropItem(new ItemStack(Items.ITEM_FRAME).getItem());
-            itemFrame.kill();
+        }
+
+        // ✅ Envoyer un signal au client pour générer les particules
+        if (!this.getWorld().isClient) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
+        }
+
+        this.discard();
+    }
+    @Override
+    public void handleStatus(byte status) {
+        super.handleStatus(status);
+        if (status == 3) { // Vérifie si c'est le signal pour les particules
+            this.generateBreakParticles();
         }
     }
-
     @Override
     protected void onBlockHit(BlockHitResult blockHitResult) {
         BlockState blockState = this.getWorld().getBlockState(blockHitResult.getBlockPos());
         blockState.onProjectileHit(this.getWorld(), blockState, blockHitResult, this);
+
+        // ✅ Envoyer un signal au client pour générer les particules
+        if (!this.getWorld().isClient) {
+            this.getWorld().sendEntityStatus(this, (byte) 3);
+        }
+
         this.playIceBreakSound();
+        this.discard();
     }
 
     private void generateParticles() {
@@ -126,6 +143,24 @@ public class FrostSpikeEntity extends ThrownItemEntity implements GeoEntity {
                     0, 0, 0);
         }
     }
+    private void generateBreakParticles() {
+        if (this.getWorld().isClient) {
+            for (int i = 0; i < 15; i++) { // Nombre de particules
+                double offsetX = (this.random.nextDouble() - 0.5) * 0.5;
+                double offsetY = (this.random.nextDouble() - 0.5) * 0.5;
+                double offsetZ = (this.random.nextDouble() - 0.5) * 0.5;
+
+                this.getWorld().addParticle(
+                        new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.ICE.getDefaultState()),
+                        this.getX() + offsetX,
+                        this.getY() + offsetY,
+                        this.getZ() + offsetZ,
+                        0, 0.1, 0
+                );
+            }
+        }
+    }
+
     @Override
     public void tick() {
         super.tick();
@@ -191,9 +226,9 @@ public class FrostSpikeEntity extends ThrownItemEntity implements GeoEntity {
         this.getWorld().playSound(
                 null, // Jouer le son pour tous les joueurs
                 this.getX(), this.getY(), this.getZ(), // Position de l'entité
-                SoundEvents.BLOCK_GLASS_BREAK, // Son de glace cassée
+                ModSounds.FROST_SPIKE_BREAK, // Son de glace cassée
                 SoundCategory.NEUTRAL, // Catégorie de son
-                0.85F, // Volume
+                0.65F, // Volume
                 1f // Hauteur (pitch)
         );
     }

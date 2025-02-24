@@ -1,5 +1,6 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
+import net.mebahel.antiquebeasts.entity.custom.norse.ThrowingAxeManEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.ValkyrieEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -16,5 +17,9 @@ public class ValkyrieRenderer extends GeoEntityRenderer<ValkyrieEntity> {
     @Override
     public RenderLayer getRenderType(ValkyrieEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
+    }
+    @Override
+    public float getMotionAnimThreshold(ValkyrieEntity animatable) {
+        return 0.008F;
     }
 }

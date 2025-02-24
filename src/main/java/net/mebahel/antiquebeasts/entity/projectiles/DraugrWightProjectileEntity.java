@@ -147,10 +147,8 @@ public class DraugrWightProjectileEntity extends ThrownItemEntity implements Geo
         ticksExisted++; // Incrémente le compteur de ticks à chaque appel
 
         // Désactiver la gravité pendant les 5 premières secondes (100 ticks)
-        if (ticksExisted <= 40) {
-            this.setNoGravity(true);
-        } else {
-            this.setNoGravity(false);
+        if (ticksExisted >= 15) {
+            this.discard();
         }
 
         // Générer la traînée de particules

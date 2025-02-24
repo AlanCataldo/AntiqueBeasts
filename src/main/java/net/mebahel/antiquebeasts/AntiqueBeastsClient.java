@@ -10,6 +10,7 @@ import net.mebahel.antiquebeasts.block.client.DraugrChestRenderer;
 import net.mebahel.antiquebeasts.block.entity.DraugrChestBlockEntity;
 import net.mebahel.antiquebeasts.block.screenhandlers.ModScreenHandlerType;
 import net.mebahel.antiquebeasts.block.screenhandlers.ModScreenHandlers;
+import net.mebahel.antiquebeasts.block.screenhandlers.StaffEnchantingTableScreen;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.client.custom.*;
 import net.mebahel.antiquebeasts.entity.client.custom.draugr.DraugrRenderer;
@@ -27,10 +28,8 @@ import net.mebahel.antiquebeasts.entity.client.projectiles.draugr.FrostSpikeProj
 import net.mebahel.antiquebeasts.entity.client.projectiles.harpy.HarpyFeatherRenderer;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.particle.custom.*;
-import net.mebahel.antiquebeasts.util.BowPredicate;
-import net.mebahel.antiquebeasts.util.HornModelPredicate;
-import net.mebahel.antiquebeasts.util.ShieldModelPredicate;
-import net.mebahel.antiquebeasts.util.SpearModelPredicate;
+import net.mebahel.antiquebeasts.util.*;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import software.bernie.geckolib.GeckoLib;
 
@@ -104,10 +103,13 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(ModParticles.HEALING_PARTICLE, HealingParticle.Factory::new);
 
         BlockEntityRendererFactories.register(ModBlockEntities.DRAUGR_CHEST_ENTITY, DraugrChestRenderer::new);
+        //HandledScreens.register(ModScreenHandlers.STAFF_ENCHANTING_STAFF_SCREEN_HANDLER, StaffEnchantingTableScreen::new);
 
         ModScreenHandlers.registerScreenHandlers();
 
         BowPredicate.registerBowModels();
+
+        ModModelPredicate.registerStaffModels();
         ShieldModelPredicate.registerShieldModels();
         SpearModelPredicate.registerSpearModels();
         HornModelPredicate.registerHornModels();

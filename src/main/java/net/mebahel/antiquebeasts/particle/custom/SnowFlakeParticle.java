@@ -13,7 +13,7 @@ public class SnowFlakeParticle extends SpriteBillboardParticle {
 
         this.velocityMultiplier = 0.99F;  // Ralentissement léger chaque tick
         this.scale *= 0.8F;  // Taille du flocon ajustée
-        this.maxAge = 30;  // Durée de vie plus longue, entre 100 et 120 ticks
+        this.maxAge = 20;  // Durée de vie plus longue, entre 100 et 120 ticks
 
         this.red = 1.0F;
         this.green = 1.0F;

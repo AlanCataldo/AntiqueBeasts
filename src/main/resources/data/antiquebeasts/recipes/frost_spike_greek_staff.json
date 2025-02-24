@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  M",
+    " H ",
+    "   "
+  ],
+  "key" : {
+    "H": {
+      "item": "antiquebeasts:staff/greek_staff_handle"
+    },
+    "M": {
+      "item": "antiquebeasts:magical_stone/frost_spike_magical_stone"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:staff/frost_spike_greek_staff"
+  }
+}

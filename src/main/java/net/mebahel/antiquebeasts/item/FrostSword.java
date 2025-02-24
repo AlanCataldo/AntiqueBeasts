@@ -49,8 +49,8 @@ public class FrostSword extends SwordItem {
         }
     }
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        stack.damage(1, attacker, (e) -> {
-            e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
+        stack.damage(1, attacker, (p) -> {
+            p.sendToolBreakStatus(attacker.getActiveHand());
         });
         if (target != null) {
             target.setFrozenTicks(400);

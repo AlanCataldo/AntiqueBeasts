@@ -115,7 +115,7 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "antiquebeasts:scroll/ice_spike_scroll",
+          "name": "antiquebeasts:magical_stone/frost_spike_magical_stone",
           "weight": 6
         },
         {
@@ -131,7 +131,7 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "antiquebeasts:scroll/frostbite_scroll",
+          "name": "antiquebeasts:magical_stone/frost_bite_magical_stone",
           "weight": 10
         }
       ],

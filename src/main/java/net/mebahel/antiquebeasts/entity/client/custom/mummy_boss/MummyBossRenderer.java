@@ -2,6 +2,7 @@ package net.mebahel.antiquebeasts.entity.client.custom.mummy_boss;
 
 import net.mebahel.antiquebeasts.entity.custom.CyclopsEntity;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.MummyBossEntity;
+import net.mebahel.antiquebeasts.entity.custom.other.HarpyEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -27,5 +28,9 @@ public class MummyBossRenderer extends GeoEntityRenderer<MummyBossEntity> {
     public void preRender(MatrixStack poseStack, MummyBossEntity animatable, BakedGeoModel model, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue,
                           float alpha) {
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+    }
+    @Override
+    public float getMotionAnimThreshold(MummyBossEntity animatable) {
+        return 0.008F;
     }
 }

@@ -112,7 +112,7 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new DraugrMeleeAttackGoal(this, 1f, 21, 10));
+        this.goalSelector.add(2, new DraugrMeleeAttackGoal(this, 1f, 20, 10));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.85f, 1f));
         this.goalSelector.add(7, new LookAroundGoal(this));
 

@@ -38,7 +38,7 @@ public class ModEntities {
     public static final EntityType<FrostSpikeEntity> FROST_SPIKE = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "frost_spike"),
             FabricEntityTypeBuilder.<FrostSpikeEntity>create(SpawnGroup.MISC, FrostSpikeEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.25f, 0.5f)).build());
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
     public static final EntityType<DraugrWightEntity> DRAUGR_WIGHT= Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "draugr_wight"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DraugrWightEntity::new)

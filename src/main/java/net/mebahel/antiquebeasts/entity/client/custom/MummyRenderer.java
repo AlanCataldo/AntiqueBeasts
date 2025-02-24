@@ -1,6 +1,7 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
 import net.mebahel.antiquebeasts.entity.custom.egyptian.MummyEntity;
+import net.mebahel.antiquebeasts.entity.custom.norse.HuskarlEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -16,5 +17,9 @@ public class MummyRenderer extends GeoEntityRenderer<MummyEntity> {
     @Override
     public RenderLayer getRenderType(MummyEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
+    }
+    @Override
+    public float getMotionAnimThreshold(MummyEntity animatable) {
+        return 0.008F;
     }
 }

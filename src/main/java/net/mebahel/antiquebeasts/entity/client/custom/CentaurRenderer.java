@@ -1,5 +1,6 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
+import net.mebahel.antiquebeasts.entity.custom.egyptian.CamelryEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.CentaurEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -29,4 +30,8 @@ public class CentaurRenderer extends GeoEntityRenderer<CentaurEntity> {
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
+    @Override
+    public float getMotionAnimThreshold(CentaurEntity animatable) {
+        return 0.008F;
+    }
 }

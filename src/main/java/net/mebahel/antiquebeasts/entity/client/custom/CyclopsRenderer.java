@@ -1,5 +1,6 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
+import net.mebahel.antiquebeasts.entity.custom.ChimeraEntity;
 import net.mebahel.antiquebeasts.entity.custom.CyclopsEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -28,5 +29,8 @@ public class CyclopsRenderer extends GeoEntityRenderer<CyclopsEntity> {
         poseStack.scale(1.5f, 1.5f, 1.5f);
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }
-
+    @Override
+    public float getMotionAnimThreshold(CyclopsEntity animatable) {
+        return 0.008F;
+    }
 }

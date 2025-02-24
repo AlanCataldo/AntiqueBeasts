@@ -138,6 +138,9 @@ public class ModSounds {
     public static SoundEvent DRAUGR_ICE_SPIKE = registerSoundEvent("draugr_ice_spike");
     public static SoundEvent WINNING_RAID_1 = registerSoundEvent("winning_raid_1");
     public static SoundEvent DRAUGR_OVERLORD_STEP = registerSoundEvent("draugr_overlord_step");
+    public static SoundEvent FROST_CHARGE = registerSoundEvent("frost_charge");
+    public static SoundEvent FROST_SPIKE_BREAK = registerSoundEvent("frost_spike_break");
+    public static SoundEvent FROST_SPELL_3 = registerSoundEvent("frost_spell_3");
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));

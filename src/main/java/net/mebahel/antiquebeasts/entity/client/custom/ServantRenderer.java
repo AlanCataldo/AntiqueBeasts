@@ -1,5 +1,6 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
+import net.mebahel.antiquebeasts.entity.custom.PegasusEntity;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.ServantEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -16,5 +17,9 @@ public class ServantRenderer extends GeoEntityRenderer<ServantEntity> {
     @Override
     public RenderLayer getRenderType(ServantEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
+    }
+    @Override
+    public float getMotionAnimThreshold(ServantEntity animatable) {
+        return 0.008F;
     }
 }

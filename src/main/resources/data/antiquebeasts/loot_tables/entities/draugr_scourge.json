@@ -55,7 +55,44 @@
           ],
           "type": "minecraft:item",
           "name": "minecraft:iron_ingot",
-          "weight": 6
+          "weight": 19
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "type": "minecraft:item",
+          "name": "antiquebeasts:magical_stone/frost_spike_magical_stone",
+          "weight": 1
+        },
+        {
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 0.0,
+                "min": 0.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "type": "minecraft:item",
+          "name": "minecraft:iron_ingot",
+          "weight": 59
         }
       ]
     }
