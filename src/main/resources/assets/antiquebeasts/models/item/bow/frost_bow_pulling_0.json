@@ -1,0 +1,6 @@
+{
+  "parent": "antiquebeasts:item/bow/frost_bow",
+  "textures": {
+    "layer0": "antiquebeasts:item/bow/frost_bow_pulling_0"
+  }
+}

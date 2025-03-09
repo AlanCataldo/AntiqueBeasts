@@ -18,12 +18,8 @@ public abstract class DraugrBowProjectileMixin {
         if (entityHitResult.getEntity() instanceof LivingEntity target) {
             PersistentProjectileEntity projectile = (PersistentProjectileEntity) (Object) this;
 
-            // ✅ Vérifie si la flèche a été tirée par le DraugrBow
             if (((ProjectileDataAccessor) projectile).isDraugrBowShot()) {
-                System.out.println("[DEBUG] DraugrBowShot detected! Applying weakness.");
                 target.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 60, 0)); // 3 sec faiblesse
-            } else {
-                System.out.println("[DEBUG] No DraugrBowShot detected.");
             }
         }
     }

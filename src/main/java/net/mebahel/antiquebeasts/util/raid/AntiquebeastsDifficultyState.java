@@ -41,15 +41,15 @@ public class AntiquebeastsDifficultyState extends PersistentState {
         return new AntiquebeastsDifficultyState(nbt.getInt("difficultyLevel"));
     }
 
-    public void registerDifficultyState (ServerWorld world) {
+    public void registerDifficultyState(ServerWorld world) {
         if (ModConfig.enableDifficultySystem) {
             PersistentStateManager stateManager = world.getPersistentStateManager();
-            AntiquebeastsDifficultyState difficultyState = stateManager.getOrCreate(
+            this.difficultyState = stateManager.getOrCreate( // ✅ Stocke la valeur dans `this.difficultyState`
                     AntiquebeastsDifficultyState::fromNbt,
                     () -> new AntiquebeastsDifficultyState(1),
                     "zombie_horde_difficulty"
             );
-            int difficultyLevel = difficultyState.getDifficultyLevel();
+            int difficultyLevel = this.difficultyState.getDifficultyLevel();
             worldDifficultyLevels.put(world, difficultyLevel);
         } else {
             worldDifficultyLevels.put(world, 1);
@@ -62,7 +62,7 @@ public class AntiquebeastsDifficultyState extends PersistentState {
                 netherCheckCounter++;
                 if (netherCheckCounter >= NETHER_CHECK_INTERVAL) {
                     netherCheckCounter = 0;
-                    checkNetherVisit(world, difficultyState);
+                    checkNetherVisit(world, this.difficultyState);
                 }
             }
         }

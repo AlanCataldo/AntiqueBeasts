@@ -1,5 +1,6 @@
 package net.mebahel.antiquebeasts.item;
 
+import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.util.ProjectileDataAccessor;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -20,7 +21,6 @@ public class DraugrBow extends BowItem {
     public DraugrBow(Settings settings) {
         super(settings);
     }
-
 
     @Override
     public UseAction getUseAction(ItemStack stack) {
@@ -51,10 +51,7 @@ public class DraugrBow extends BowItem {
                         }
 
                         int j = EnchantmentHelper.getLevel(Enchantments.POWER, stack);
-                        if (j > 0) {
-                            persistentProjectileEntity.setDamage(persistentProjectileEntity.getDamage() + 1f + (double)j * 0.5 + 0.5);
-                        }
-
+                        persistentProjectileEntity.setDamage(persistentProjectileEntity.getDamage() + (double)j * 0.5 + 1);
                         int k = EnchantmentHelper.getLevel(Enchantments.PUNCH, stack);
                         if (k > 0) {
                             persistentProjectileEntity.setPunch(k);
@@ -74,7 +71,7 @@ public class DraugrBow extends BowItem {
                         world.spawnEntity(persistentProjectileEntity);
                     }
 
-                    world.playSound((PlayerEntity)null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (world.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+                    world.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (world.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
                     if (!bl2 && !playerEntity.getAbilities().creativeMode) {
                         itemStack.decrement(1);
                         if (itemStack.isEmpty()) {
@@ -86,6 +83,10 @@ public class DraugrBow extends BowItem {
                 }
             }
         }
+    }
+    @Override
+    public boolean canRepair(ItemStack stack, ItemStack ingredient) {
+        return ingredient.isOf(ModItems.HIGH_IRON_INGOT);
     }
 }
 

@@ -3,6 +3,7 @@ package net.mebahel.antiquebeasts;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
+import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.loader.api.FabricLoader;
@@ -27,6 +28,7 @@ import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.MyProcessors;
 import net.mebahel.antiquebeasts.util.PatrolManager;
 import net.mebahel.antiquebeasts.util.WaterRemovalScheduler;
+import net.mebahel.antiquebeasts.util.books.AddBookToLootTableUtil;
 import net.mebahel.antiquebeasts.util.config.ModArmorValueConfig;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
 import net.mebahel.antiquebeasts.util.config.ModConfig;
@@ -39,6 +41,11 @@ import net.mebahel.antiquebeasts.util.raid.RaidManager;
 import net.mebahel.antiquebeasts.world.gen.ModWorldGen;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementProgress;
+import net.minecraft.item.Items;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.entry.LootPoolEntry;
+import net.minecraft.loot.function.SetNbtLootFunction;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -60,7 +67,6 @@ public class AntiqueBeasts implements ModInitializer {
 	private static final Map<ServerWorld, ServerTickEvents.EndTick> registeredListeners = new HashMap<>();
 	private static final Map<ServerWorld, ServerPlayConnectionEvents.Join> registeredJoinEventListeners = new HashMap<>();
 	public static final Map<ServerWorld, Integer> worldDifficultyLevels = new HashMap<>();
-	private static final List<DraugrRaidTest> raidsPendingResume = new ArrayList<>();
 	public static final List<DraugrRaidTest> ongoingRaids = new ArrayList<>();
 	private boolean playerHasArrived = false;
 	private boolean shouldEnableLoad = true;
@@ -122,6 +128,25 @@ public class AntiqueBeasts implements ModInitializer {
 		MyProcessors.init();
 		RaidManager.registerEvents();
 		ModNetworking.registerReceivers();
+		AddBookToLootTableUtil bookUtil = new AddBookToLootTableUtil();
+
+// 📖 Ajoute un livre depuis un String
+		bookUtil.addBookFromString(
+				"villager_entry_1",
+				"A Mysterious Event",
+				"Unknown Witness",
+				"Mary won't believe me, but I know what I saw was no jest. Some knight, with some sort of stone or rune, casting a spell to what appeared to be summoning waves of those vile draugr creatures. I made sure not to get too close, I only witnessed it from afar, but I definitely witnessed truth before my eyes, not some mere hoax or illusion. Luckily, whoever this brave soul was, he was able to slay all the draugr, then received what I can only describe as some sort of green, wide storage container, similar to a chest. I didn't get close enough to ascertain for certain, as reason told me I shan't get too close, lest I wished my early death. But whatever it was, it seemed to hold all sorts of treasures. Perhaps tomorrow I shall go back to the spot and see what remains. My mind tells me I shan't see anything there anymore, not even that brave knight who took off into the night once his deed was fulfilled, but who knows, perhaps Odin will bless me and has left a few valuable trinkets for me and Mary to ogle. I'll set foot there once again tomorrow, I'm certain of that at least... " // Texte complet ici
+		);
+
+		bookUtil.addBookFromString(
+				"villager_entry_2",
+				"More like Zeusless",
+				"Unknown Witness",
+				"Those ploughing hoplites, will they not leave us be? We're but a small village, they have the luxury of those grand eyesores they call home. I suppose that's not enough for those whoresons, attacking us, wanting our land too. If Zeus truly is for the people then why must he let this happen? \"I gave you people your golems, what more do you want?\" I don't know Zeus, maybe some thick walls where it's nice and safe from monsters like your dearly beloved hoplites get. Maybe tell them to stop trying to take our land for once. I say, Zeus could probably fart on us and he'd expect us to kneel and praise him for that too. I've had enough of this farcical display. The only good those hoplites are for is when the draugr and zombies bother them instead of us. Come morn, I'm moving away from this village in search for another. Damn Zeus and damn those bloody hoplites, may they never know peace in their miserable lives."
+		);
+
+// 📜 Enregistre l'ajout des livres dans les loots
+		bookUtil.registerModifyLootTable();
 
 		ServerWorldEvents.LOAD.register((server, world) -> {
 			waterRemovalScheduler.addWorld(world);

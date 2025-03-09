@@ -1,6 +1,7 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
 import net.mebahel.antiquebeasts.AntiqueBeasts;
+import net.mebahel.antiquebeasts.entity.custom.greek.ChampionHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.EliteHopliteEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib.constant.DataTickets;
@@ -24,16 +25,23 @@ public class EliteHopliteModel extends GeoModel<EliteHopliteEntity> {
     }
     @Override
     public void setCustomAnimations(EliteHopliteEntity entity, long uniqueID, AnimationState<EliteHopliteEntity> customPredicate) {
-        CoreGeoBone head = this.getBone("Head").orElse(null);
-        EntityModelData extraData = customPredicate.getData(DataTickets.ENTITY_MODEL_DATA);
-        float yawAngle = 0.125F * extraData.netHeadYaw() * 0.017453292F;
-        float pitchAngle = 0.125F * extraData.headPitch() * 0.017453292F;
-        if (Math.abs(yawAngle) > 0.6F) {
-            yawAngle = 0.0F;
-        }
-        if (head != null) {
-            head.setRotY(7.0F * yawAngle);
-            head.setRotX(7.0F * pitchAngle);
+        String currentAnimation = entity.getCurrentAnimation();
+
+        if (!"idle3".equals(currentAnimation)) {
+            CoreGeoBone head = this.getBone("Head").orElse(null);
+            EntityModelData extraData = customPredicate.getData(DataTickets.ENTITY_MODEL_DATA);
+            if (head != null) {
+                // ✅ Appliquer la rotation du joueur SEULEMENT si ce n'est PAS idle3
+                float yawAngle = 0.125F * extraData.netHeadYaw() * 0.017453292F;
+                float pitchAngle = 0.125F * extraData.headPitch() * 0.017453292F;
+
+                if (Math.abs(yawAngle) > 0.6F) {
+                    yawAngle = 0.0F;
+                }
+
+                head.setRotY(7.0F * yawAngle);
+                head.setRotX(7.0F * pitchAngle);
+            }
         }
     }
 }

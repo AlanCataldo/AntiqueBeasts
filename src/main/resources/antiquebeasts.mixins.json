@@ -8,6 +8,7 @@
     "BrewingRecipeRegistryMixin",
     "DraugrBowProjectileMixin",
     "FireDamageMixin",
+    "FrostBowProjectileMixin",
     "IronGolemMixin",
     "MobEntityAccessor",
     "PersistentProjectileMixin",

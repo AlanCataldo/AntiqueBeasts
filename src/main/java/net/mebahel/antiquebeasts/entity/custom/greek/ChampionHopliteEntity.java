@@ -21,6 +21,9 @@ import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -46,6 +49,9 @@ import javax.annotation.Nullable;
 
 
 public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
+    private int idleCondition = 0;
+    private boolean shouldRandomIdle = true;
+
     public ChampionHopliteEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
@@ -56,6 +62,13 @@ public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
     }
+    public String getCurrentAnimation() {
+        return this.dataTracker.get(CURRENT_ANIMATION);
+    }
+
+    public void setCurrentAnimation(String animation) {
+        this.dataTracker.set(CURRENT_ANIMATION, animation);
+    }
 
     @Override
     public void tick() {
@@ -64,7 +77,8 @@ public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
             this.remove(RemovalReason.DISCARDED);
         }
     }
-
+    public static final TrackedData<String> CURRENT_ANIMATION =
+            DataTracker.registerData(ChampionHopliteEntity.class, TrackedDataHandlerRegistry.STRING);
 
     protected void initDataTracker() {
         super.initDataTracker();
@@ -73,6 +87,7 @@ public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
         this.dataTracker.startTracking(PATROL_UUID, "");
         this.dataTracker.startTracking(SHOULD_DESPAWN, false);
+        this.dataTracker.startTracking(CURRENT_ANIMATION, "idle");
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
@@ -110,9 +125,30 @@ public class ChampionHopliteEntity extends GreekEntity implements GeoEntity {
             return PlayState.CONTINUE;
         } else if (animationState.isMoving() && !this.isAttacking()) {
             animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
+            if (shouldRandomIdle) {
+                double rand = Math.random();
+                if (rand < 0.33) {
+                    idleCondition = 1;
+                } else if (rand < 0.66) {
+                    idleCondition = 2;
+                } else {
+                    idleCondition = 3;
+                }
+                this.shouldRandomIdle = false;
+            }
             return PlayState.CONTINUE;
         } else if (!animationState.isMoving() && !this.isAttacking()) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+            if (idleCondition == 1) {
+                setCurrentAnimation("idle");
+                animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+            } else if (idleCondition == 2) {
+                setCurrentAnimation("idle2");
+                animationState.getController().setAnimation(RawAnimation.begin().then("idle2", Animation.LoopType.LOOP));
+            } else {
+                setCurrentAnimation("idle3");
+                animationState.getController().setAnimation(RawAnimation.begin().then("idle3", Animation.LoopType.LOOP));
+            }
+            this.shouldRandomIdle = true;
             return PlayState.CONTINUE;
         }
         return PlayState.CONTINUE;

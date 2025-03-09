@@ -1,0 +1,6 @@
+{
+  "parent": "antiquebeasts:item/bow/ebony_bow",
+  "textures": {
+    "layer0": "antiquebeasts:item/bow/ebony_bow_pulling_2"
+  }
+}

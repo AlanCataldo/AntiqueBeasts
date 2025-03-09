@@ -44,11 +44,14 @@ public class ModItemGroups {
                         entries.add(ModItems.HERSIR_AXE);
                         entries.add(ModItems.VALKYRIE_SPEAR);
                         entries.add(ModItems.FROST_SWORD);
+                        entries.add(ModItems.FROST_BOW);
                         entries.add(ModItems.BLOOD_STAINED_FROST_SWORD);
                         entries.add(ModItems.EGYPTIAN_RECURVE_BOW);
                         entries.add(ModItems.GREEK_COMPOSITE_BOW);
                         entries.add(ModItems.DRAUGR_BOW);
+                        entries.add(ModItems.EBONY_BOW);
                         entries.add(ModItems.EBONY_GREATSWORD);
+                        entries.add(ModItems.GREEK_STAFF_HANDLE);
                         entries.add(ModItems.FROST_BITE_GREEK_STAFF);
                         entries.add(ModItems.FROST_SPIKE_GREEK_STAFF);
                         entries.add(ModItems.FROST_BITE_MAGICAL_STONE);

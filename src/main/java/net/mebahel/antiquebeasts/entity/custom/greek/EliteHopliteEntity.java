@@ -1,19 +1,21 @@
 package net.mebahel.antiquebeasts.entity.custom.greek;
 
 import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
-import net.mebahel.antiquebeasts.entity.ai.util.ModPatrolGoal;
 import net.mebahel.antiquebeasts.entity.ai.greek.GreekMeleeAttackGoal;
+import net.mebahel.antiquebeasts.entity.ai.util.ModPatrolGoal;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.mebahel.antiquebeasts.entity.variant.EliteHopliteVariant;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
-import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.ModSoundUtil;
+import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityData;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -41,7 +43,6 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
@@ -49,11 +50,14 @@ import javax.annotation.Nullable;
 
 
 public class EliteHopliteEntity extends GreekEntity implements GeoEntity {
-
+    private int idleCondition = 0;
+    private boolean shouldRandomIdle = true;
     private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
 
     public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(EliteHopliteEntity.class,
             TrackedDataHandlerRegistry.FLOAT);
+    public static final TrackedData<String> CURRENT_ANIMATION =
+            DataTracker.registerData(EliteHopliteEntity.class, TrackedDataHandlerRegistry.STRING);
 
     public float getCooldown() { return this.dataTracker.get(COOLDOWN);}
     public void setCooldown(float cooldown) {
@@ -71,6 +75,13 @@ public class EliteHopliteEntity extends GreekEntity implements GeoEntity {
             this.remove(RemovalReason.DISCARDED);
         }
     }
+    public String getCurrentAnimation() {
+        return this.dataTracker.get(CURRENT_ANIMATION);
+    }
+
+    public void setCurrentAnimation(String animation) {
+        this.dataTracker.set(CURRENT_ANIMATION, animation);
+    }
 
     public EliteHopliteEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
@@ -84,6 +95,7 @@ public class EliteHopliteEntity extends GreekEntity implements GeoEntity {
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
         this.dataTracker.startTracking(PATROL_UUID, "");
         this.dataTracker.startTracking(SHOULD_DESPAWN, false);
+        this.dataTracker.startTracking(CURRENT_ANIMATION, "idle");
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
@@ -121,9 +133,30 @@ public class EliteHopliteEntity extends GreekEntity implements GeoEntity {
             return PlayState.CONTINUE;
         } else if (animationState.isMoving() && !this.isAttacking()) {
             animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
+            if (shouldRandomIdle) {
+                double rand = Math.random();
+                if (rand < 0.33) {
+                    idleCondition = 1;
+                } else if (rand < 0.66) {
+                    idleCondition = 2;
+                } else {
+                    idleCondition = 3;
+                }
+                this.shouldRandomIdle = false;
+            }
             return PlayState.CONTINUE;
         } else if (!animationState.isMoving() && !this.isAttacking()) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+            if (idleCondition == 1) {
+                setCurrentAnimation("idle");
+                animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+            } else if (idleCondition == 2) {
+                setCurrentAnimation("idle2");
+                animationState.getController().setAnimation(RawAnimation.begin().then("idle2", Animation.LoopType.LOOP));
+            } else {
+                setCurrentAnimation("idle3");
+                animationState.getController().setAnimation(RawAnimation.begin().then("idle3", Animation.LoopType.LOOP));
+            }
+            this.shouldRandomIdle = true;
             return PlayState.CONTINUE;
         }
         return PlayState.CONTINUE;

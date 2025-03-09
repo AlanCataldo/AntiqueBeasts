@@ -21,7 +21,7 @@ public class DraugrKillTracker {
                     .anyMatch(raid -> raid.isRaidInProgress() && raid.getTargetPlayerUuid().equals(player.getUuid()));
 
             if (playerHasActiveRaid) {
-                System.out.println("Le joueur " + player.getName().getString() + " est déjà assigné à un raid actif. KillCount non incrémenté.");
+                //System.out.println("Le joueur " + player.getName().getString() + " est déjà assigné à un raid actif. KillCount non incrémenté.");
                 return; // Ne pas incrémenter le KillCount
             }
 
@@ -38,7 +38,7 @@ public class DraugrKillTracker {
 
             // Si le KillCount atteint le seuil
             if (currentKillCount >= KILL_THRESHOLD) {
-                System.out.println("- KILL_THRESHOLD -");
+                //System.out.println("- KILL_THRESHOLD -");
                 if (player.getWorld() instanceof ServerWorld serverWorld) {
                     if (AntiqueBeasts.ongoingRaids.isEmpty()) {
                         System.out.println("No ongoing raids. Proceeding to create a new raid.");
@@ -60,7 +60,7 @@ public class DraugrKillTracker {
                     }
 
                     // Pas de raid en cours, démarre un nouveau raid
-                    System.out.println("KILL COUNT ATTEINT.");
+                    //System.out.println("KILL COUNT ATTEINT.");
                     DraugrRaidTest raid = new DraugrRaidTest(player, serverWorld);
                     raid.startRaid();
                     raid.saveRaid();

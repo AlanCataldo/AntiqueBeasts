@@ -88,7 +88,7 @@ public class HadesShadeEntity extends FlyingEntity implements GeoEntity {
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(SWINGING, false);
-        this.dataTracker.startTracking(ATTACK_NAME, "animation.hades_shade.attack");
+        this.dataTracker.startTracking(ATTACK_NAME, "attack");
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
@@ -116,7 +116,7 @@ public class HadesShadeEntity extends FlyingEntity implements GeoEntity {
             return PlayState.CONTINUE;
         }
 
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+        animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
     private PlayState attackPredicate(AnimationState state) {

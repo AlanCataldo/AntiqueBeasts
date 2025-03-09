@@ -10,6 +10,8 @@ public class BowPredicate {
         registerBow(ModItems.EGYPTIAN_RECURVE_BOW);
         registerBow(ModItems.GREEK_COMPOSITE_BOW);
         registerBow(ModItems.DRAUGR_BOW);
+        registerBow(ModItems.EBONY_BOW);
+        registerBow(ModItems.FROST_BOW);
     }
 
     private static void registerBow(Item bow) {

@@ -1,5 +1,7 @@
 package net.mebahel.antiquebeasts.entity.custom.other;
 
+import net.mebahel.antiquebeasts.block.entity.BlockScanEntity;
+import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
 import net.mebahel.antiquebeasts.entity.ai.other.DraugrOverlordMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.other.DraugrOverlordSpecialAttackGoal;
@@ -13,6 +15,7 @@ import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
@@ -40,6 +43,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -132,7 +136,7 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new DraugrOverlordSpecialAttackGoal(this, null));
-        this.goalSelector.add(3, new DraugrOverlordMeleeAttackGoal(this, 1f, 25, 16));
+        this.goalSelector.add(3, new DraugrOverlordMeleeAttackGoal(this, 0.95f, 25, 16));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.85f, 1f));
         this.goalSelector.add(7, new LookAroundGoal(this));
 
@@ -296,9 +300,6 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
 
         float healthPercent = this.getHealth() / this.getMaxHealth();
         this.bossBar.setPercent(healthPercent);
-        if (this.getSpecial() && this.getSpecialCooldown() < 16 && this.getSpecialCooldown() > 8) {
-            spawnShockwaveParticles();
-        }
 
         // Vérifie si le boss doit être retiré (évite un affichage persistant)
         if (this.isDead() || this.isRemoved()) {
@@ -421,4 +422,45 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
             }
         }
     }
+        public static void AreaCrackedGround(LivingEntity mob, World world, BlockPos centerPos, int radius) {
+            // On prend le bloc directement sous le mob, sans offset
+            BlockPos startPos = centerPos.down();
+
+            for (int x = -radius; x <= radius; x++) {
+                for (int z = -radius; z <= radius; z++) {
+                    BlockPos targetPos = startPos.add(x, -1, z);
+
+                    // Vérifie si le bloc est dans le rayon circulaire
+                    if (startPos.getSquaredDistance(targetPos) <= radius * radius) {
+                        // Récupère le bloc à la position ciblée
+                        BlockState blockState = world.getBlockState(targetPos);
+
+                        // Fait spawn l'entité block au bon endroit
+                        BlockPos spawnPos = targetPos.up();
+                        spawnBlockScanEntity(world, spawnPos, blockState, mob.getRandom());
+                    }
+                }
+            }
+        }
+
+
+        public static void spawnBlockScanEntity(World world, BlockPos pos, BlockState blockState, Random random) {
+            BlockScanEntity blockScanEntity = new BlockScanEntity(ModEntities.BLOCK_SCAN_ENTITY, world);
+
+            // Add a random Y offset between +0.0 and +0.2
+            float randomYOffset = random.nextFloat() * 0.2f + 0.2f; // Random Y offset between 0.0 and 0.2
+            blockScanEntity.setPosition(pos.getX(), pos.getY() - 0.5 + randomYOffset, pos.getZ()); // Center the entity on the block
+
+            // Set the block state
+            blockScanEntity.setBlockState(blockState);
+
+            // Apply random rotation (up to 20 degrees on X and Z axes)
+            float randomPitch = random.nextFloat() * 40 - 20; // Random pitch between -20 and 20 degrees
+            float randomYaw = random.nextFloat() * 40 - 20; // Random yaw between -20 and 20 degrees
+            blockScanEntity.setPitch(randomPitch);
+            blockScanEntity.setYaw(randomYaw);
+
+            // Spawn the entity
+            world.spawnEntity(blockScanEntity);
+        }
 }

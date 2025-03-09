@@ -173,6 +173,22 @@ public class FrostSpikeEntity extends ThrownItemEntity implements GeoEntity {
             this.setNoGravity(false);
         }
 
+        BlockPos pos = this.getBlockPos();
+        BlockState state = this.getWorld().getBlockState(pos);
+
+        if (state.isOf(Blocks.WATER)) {
+            freezeWater(getWorld(), pos);
+
+            // ✅ Gèle aussi les blocs adjacents
+            for (BlockPos adjacentPos : new BlockPos[]{
+                    pos.north(), pos.south(), pos.east(), pos.west(), pos.up(), pos.down()
+            }) {
+                if (getWorld().getBlockState(adjacentPos).isOf(Blocks.WATER)) {
+                    freezeWater(getWorld(), adjacentPos);
+                }
+            }
+        }
+
         // Reste de la logique de la méthode tick()...
 
         HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
@@ -221,6 +237,10 @@ public class FrostSpikeEntity extends ThrownItemEntity implements GeoEntity {
             this.setVelocity(vec3d2.x, vec3d2.y - 0.05, vec3d2.z); // Appliquer la gravité si activée
         }
         this.setPosition(d, e, f);
+    }
+    private void freezeWater(World world, BlockPos pos) {
+        world.setBlockState(pos, Blocks.ICE.getDefaultState());
+        world.playSound(null, pos, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.BLOCKS, 0.5F, 1.0F);
     }
     private void playIceBreakSound() {
         this.getWorld().playSound(

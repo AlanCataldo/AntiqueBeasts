@@ -36,8 +36,6 @@ public class DraugrOverlordRenderer extends GeoEntityRenderer<DraugrOverlordEnti
         double swordY = swordBone.getPivotY() / 16.0;
         double swordZ = swordBone.getPivotZ() / 16.0;
 
-        System.out.println("[DEBUG] Sword Bone Position: X=" + swordX + ", Y=" + swordY + ", Z=" + swordZ);
-
         // 🔹 Convertir en position globale en ajoutant la position de l'entité
         return new Vec3d(entity.getX() + swordX, entity.getY() + swordY, entity.getZ() + swordZ);
     }

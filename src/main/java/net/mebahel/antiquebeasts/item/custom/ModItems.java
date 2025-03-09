@@ -7,7 +7,6 @@ import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.block.ModBlocks;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.item.*;
-
 import net.mebahel.antiquebeasts.item.staff.FrostBiteStaff;
 import net.mebahel.antiquebeasts.item.staff.IceSpikeStaff;
 import net.mebahel.antiquebeasts.sound.ModSounds;
@@ -26,6 +25,10 @@ import java.util.List;
 import static net.minecraft.registry.tag.InstrumentTags.SCREAMING_GOAT_HORNS;
 
 public class ModItems {
+    public static final Item FROST_BOW = registerItem("bow/frost_bow",
+            new FrostBow(new FabricItemSettings().maxDamage(1280)));
+    public static final Item EBONY_BOW = registerItem("bow/ebony_bow",
+            new EbonyBow(new FabricItemSettings().maxDamage(1280)));
     public static final Item EBONY_GREATSWORD = registerItem("weapon/ebony/ebony_greatsword",
             new SwordItem(ModToolMaterial.EBONY,9, -3f,
                     new FabricItemSettings()));
@@ -503,6 +506,8 @@ public class ModItems {
         entries.add(EGYPTIAN_RECURVE_BOW);
         entries.add(DRAUGR_BOW);
         entries.add(EBONY_GREATSWORD);
+        entries.add(EBONY_BOW);
+        entries.add(FROST_BOW);
         entries.add(PHARAOH_SCEPTER);
         entries.add(ANKH);
         entries.add(THURISAZ_RUNE);

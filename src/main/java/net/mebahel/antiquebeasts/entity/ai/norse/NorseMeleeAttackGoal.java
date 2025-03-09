@@ -184,6 +184,6 @@ public class NorseMeleeAttackGoal extends Goal {
         }
     }
     protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return 8;
+        return 7;
     }
 }

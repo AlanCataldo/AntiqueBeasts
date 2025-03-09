@@ -34,7 +34,7 @@ public class ModEntitySpawn {
                 });
 
         BiomeModifications.addSpawn((BiomeSelectors.tag(ConventionalBiomeTags.MOUNTAIN)).or(BiomeSelectors.tag(ConventionalBiomeTags.MOUNTAIN_PEAK))
-                        .or(BiomeSelectors.tag(ConventionalBiomeTags.MOUNTAIN_SLOPE)),
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.MOUNTAIN_SLOPE)).or(BiomeSelectors.tag(ConventionalBiomeTags.SNOWY_PLAINS)),
                 SpawnGroup.CREATURE, ModEntities.HARPY, 6, 1, 3);
         SpawnRestriction.register(ModEntities.HARPY, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
@@ -45,37 +45,37 @@ public class ModEntitySpawn {
                 });
 
         BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(),
-                SpawnGroup.MONSTER, ModEntities.DRAUGR_SCOURGE, 4, 1, 1);
+                SpawnGroup.MONSTER, ModEntities.DRAUGR_SCOURGE, 3, 1, 1);
         SpawnRestriction.register(ModEntities.DRAUGR_SCOURGE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
                     }
-                    return DraugrScourgeEntity.canSpawnInDark(type, world, spawnReason, pos, random);
+                    return DraugrScourgeEntity.canSpawnIgnoreLightLevel(type, world, spawnReason, pos, random);
                 });
 
         BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(),
-                SpawnGroup.MONSTER, ModEntities.DRAUGR_WIGHT, 12, 1, 1);
+                SpawnGroup.MONSTER, ModEntities.DRAUGR_WIGHT, 8, 1, 1);
         SpawnRestriction.register(ModEntities.DRAUGR_WIGHT, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
                     }
-                    return DraugrWightEntity.canSpawnInDark(type, world, spawnReason, pos, random);
+                    return DraugrWightEntity.canSpawnIgnoreLightLevel(type, world, spawnReason, pos, random);
                 });
 
         BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(),
-                SpawnGroup.MONSTER, ModEntities.DRAUGR_ARCHER, 20, 1, 2);
+                SpawnGroup.MONSTER, ModEntities.DRAUGR_ARCHER, 10, 1, 2);
         SpawnRestriction.register(ModEntities.DRAUGR_ARCHER, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
                     }
-                    return DraugrArcherEntity.canSpawnInDark(type, world, spawnReason, pos, random);
+                    return DraugrArcherEntity.canSpawnIgnoreLightLevel(type, world, spawnReason, pos, random);
                 });
 
         BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(),
-                SpawnGroup.MONSTER, ModEntities.DRAUGR, 20, 1, 2);
+                SpawnGroup.MONSTER, ModEntities.DRAUGR, 10, 1, 2);
         SpawnRestriction.register(ModEntities.DRAUGR, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {

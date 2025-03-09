@@ -13,6 +13,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import java.util.List;
 import java.util.Objects;
 
+import static net.mebahel.antiquebeasts.entity.custom.other.DraugrOverlordEntity.AreaCrackedGround;
+
 public class DraugrOverlordSpecialAttackGoal extends Goal {
     private final DraugrOverlordEntity overlord;
     private final StatusEffect potionEffect;
@@ -62,7 +64,10 @@ public class DraugrOverlordSpecialAttackGoal extends Goal {
 
         switch (this.overlord.getSpecialCooldown()) {
             case 0 -> this.stop();
-            case 17 -> this.executeSpecialAttack();
+            case 17 -> {
+                this.executeSpecialAttack();
+                AreaCrackedGround(this.overlord, this.overlord.getWorld(), this.overlord.getBlockPos(), 10);
+            }
             case 25 -> {
                 Objects.requireNonNull(this.overlord.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0f);
                 this.overlord.setSpecial(true);
@@ -79,8 +84,8 @@ public class DraugrOverlordSpecialAttackGoal extends Goal {
 
         for (LivingEntity entity : entities) {
             // ✅ Appliquer 15 de dégâts
-            entity.damage(this.overlord.getWorld().getDamageSources().mobAttack(this.overlord), 15.0f);
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 4 * 20, 1));
+            entity.damage(this.overlord.getWorld().getDamageSources().mobAttack(this.overlord), 18.0f);
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 5 * 20, 2));
 
 
             // ✅ Calculer la direction de repoussement

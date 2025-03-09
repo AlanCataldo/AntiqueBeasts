@@ -18,6 +18,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -150,6 +152,21 @@ public class DraugrWightProjectileEntity extends ThrownItemEntity implements Geo
         if (ticksExisted >= 15) {
             this.discard();
         }
+        BlockPos pos = this.getBlockPos();
+        BlockState state = this.getWorld().getBlockState(pos);
+
+        if (state.isOf(Blocks.WATER)) {
+            freezeWater(getWorld(), pos);
+
+            // ✅ Gèle aussi les blocs adjacents
+            for (BlockPos adjacentPos : new BlockPos[]{
+                    pos.north(), pos.south(), pos.east(), pos.west(), pos.up(), pos.down()
+            }) {
+                if (getWorld().getBlockState(adjacentPos).isOf(Blocks.WATER)) {
+                    freezeWater(getWorld(), adjacentPos);
+                }
+            }
+        }
 
         // Générer la traînée de particules
         if (this.getWorld().isClient()) {
@@ -167,5 +184,9 @@ public class DraugrWightProjectileEntity extends ThrownItemEntity implements Geo
         this.setPosition(this.getX() + velocity.x, this.getY() + velocity.y, this.getZ() + velocity.z);
         this.updateRotation();
         this.setVelocity(velocity.multiply(0.99));  // Réduire légèrement la vitesse à chaque tick
+    }
+    private void freezeWater(World world, BlockPos pos) {
+        world.setBlockState(pos, Blocks.ICE.getDefaultState());
+        world.playSound(null, pos, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.BLOCKS, 0.5F, 1.0F);
     }
 }

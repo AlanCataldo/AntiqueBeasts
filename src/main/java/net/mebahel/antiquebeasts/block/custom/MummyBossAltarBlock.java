@@ -109,7 +109,7 @@ public class MummyBossAltarBlock extends HorizontalFacingBlock {
 
     // Appliquer un effet de Mining Fatigue aux joueurs proches
     public void applyEffectToNearbyPlayers(ServerWorld world, BlockPos pos) {
-        Box effectArea = new Box(pos).expand(150);  // Rayon de 150 blocs
+        Box effectArea = new Box(pos).expand(50);
         for (PlayerEntity player : world.getEntitiesByClass(PlayerEntity.class, effectArea, playerEntity -> true)) {
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.MINING_FATIGUE, 600, 2, false, false, false));
         }
@@ -118,7 +118,6 @@ public class MummyBossAltarBlock extends HorizontalFacingBlock {
     @Override
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
         if (!world.isClient) {
-            // Planifier le tick initial dès que le bloc est ajouté, qu'il soit placé manuellement ou généré automatiquement.
             scheduleNextEffectTick((ServerWorld) world, pos);
         }
         super.onBlockAdded(state, world, pos, oldState, notify);

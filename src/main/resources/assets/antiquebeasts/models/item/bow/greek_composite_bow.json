@@ -83,7 +83,7 @@
     {
       "predicate": {
         "minecraft:pulling": 1,
-        "minecraft:pull": 0.75
+        "minecraft:pull": 0.90
       },
       "model": "antiquebeasts:item/bow/greek_composite_bow_pulling_1"
     },

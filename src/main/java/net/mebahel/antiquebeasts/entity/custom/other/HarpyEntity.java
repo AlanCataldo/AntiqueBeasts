@@ -230,7 +230,7 @@ public class HarpyEntity extends AnimalEntity implements GeoEntity {
     public void playAmbientSound() {
         SoundEvent soundEvent = this.getAmbientSound();
         if (soundEvent != null) {
-            this.playSound(soundEvent, 0.35f, 1f);
+            this.playSound(soundEvent, 0.25f, 1f);
         }
     }
 

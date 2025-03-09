@@ -11,7 +11,6 @@ import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.mebahel.antiquebeasts.entity.variant.CyclopsVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
-import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
@@ -48,18 +47,22 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
 import static java.lang.Math.random;
 
 public class CyclopsEntity extends AnimalEntity implements GeoEntity {
+
+    private int idleCondition = 0;
     private int blinkTimer = 0;
     private int nextBlink = 0;
+    private boolean shouldRandomIdle = true;
     double rand;
     double last_step = 0;
     public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(CyclopsEntity.class,
@@ -84,6 +87,8 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
         return null;
     }
+    private String currentIdleAnimation = "idle";
+
     public float getCooldown() { return this.dataTracker.get(COOLDOWN);}
 
     public void setCooldown(float cooldown) {
@@ -176,15 +181,26 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
         this.targetSelector.add(5, new ActiveTargetGoal<>(this, NorseEntity.class, true));
     }
 
-    private PlayState predicate(AnimationState animationState) {
-        if(animationState.isMoving()) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
+    private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> event) {
+        if (event.isMoving()) {
+            event.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
+            if (this.shouldRandomIdle) {
+                this.idleCondition = Math.random() < 0.5 ? 1 : 2;
+                this.shouldRandomIdle = false;
+            }
             return PlayState.CONTINUE;
+        } else {
+            if (idleCondition == 1) {
+                event.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+            } else {
+                event.getController().setAnimation(RawAnimation.begin().then("idle2", Animation.LoopType.LOOP));
+            }
+            this.shouldRandomIdle = true;
         }
 
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
+
 
     private PlayState attackPredicate(AnimationState state) {
         if(this.isSwinging() && !this.isShooting() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {

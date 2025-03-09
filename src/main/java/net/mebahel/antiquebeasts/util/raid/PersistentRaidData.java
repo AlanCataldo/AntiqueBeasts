@@ -86,8 +86,8 @@ public class PersistentRaidData extends PersistentState {
                     NbtCompound mobCompound = activeMobsList.getCompound(i);
                     UUID mobUuid = mobCompound.getUuid("UUID");
                     Entity entity = world.getEntity(mobUuid);
-                    System.out.println("- J'ESSAIE DE CHARGER CE DRAUGR - ");
-                    System.out.println(entity);
+                    //System.out.println("- J'ESSAIE DE CHARGER CE DRAUGR - ");
+                    //System.out.println(entity);
                     if (entity != null && entity.isAlive()) {
                         hasAliveMobs = true;
                         //System.out.println("Entité vivante trouvée : " + entity.getType().getTranslationKey() + " (" + mobUuid + ")");

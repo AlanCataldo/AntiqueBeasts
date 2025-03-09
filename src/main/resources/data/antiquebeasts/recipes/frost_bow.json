@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SE ",
+    "S E",
+    "SE "
+  ],
+  "key" : {
+    "E": {
+      "item" : "antiquebeasts:frost_shard"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:bow/frost_bow"
+  }
+}

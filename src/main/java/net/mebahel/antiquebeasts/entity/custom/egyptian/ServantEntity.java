@@ -109,7 +109,7 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
         this.targetSelector.add(5, new ActiveTargetGoal<>(this, NorseEntity.class, true));
     }
     private PlayState predicate(AnimationState animationState) {
-        if (this.getHasSpawned()) {
+        if (!this.getHasSpawned()) {
             return PlayState.STOP;
         } else if (animationState.isMoving()) {
             animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));

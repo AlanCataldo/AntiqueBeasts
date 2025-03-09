@@ -2,6 +2,7 @@ package net.mebahel.antiquebeasts.entity;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
+import net.mebahel.antiquebeasts.block.entity.BlockScanEntity;
 import net.mebahel.antiquebeasts.entity.custom.*;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.*;
 import net.mebahel.antiquebeasts.entity.custom.greek.CentaurEntity;
@@ -19,6 +20,13 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModEntities {
+    public static final EntityType<BlockScanEntity> BLOCK_SCAN_ENTITY = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(AntiqueBeasts.MOD_ID, "block_scan_entity"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, BlockScanEntity::new)
+                    .dimensions(EntityDimensions.fixed(1.0F, 1.0F)) // Set size to 1x1x1
+                    .build()
+    );
     public static final EntityType<DraugrOverlordEntity> DRAUGR_OVERLORD = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "draugr_overlord"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DraugrOverlordEntity::new)
@@ -71,7 +79,7 @@ public class ModEntities {
     public static final EntityType<PegasusEntity> PEGASUS = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "pegasus"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, PegasusEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.85f, 1.7f)).build());
+                    .dimensions(EntityDimensions.fixed(1.3965f, 1.6f)).build());
 
     public static final EntityType<ChimeraEntity> CHIMERA = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "chimera"),
