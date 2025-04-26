@@ -13,7 +13,11 @@ import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityData;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -50,7 +54,6 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
@@ -65,12 +68,16 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
     private boolean shouldRandomIdle = true;
     double rand;
     double last_step = 0;
+
     public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(CyclopsEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
+
     public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(CyclopsEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
+
     public static final TrackedData<Float> COOLDOWN = DataTracker.registerData(CyclopsEntity.class,
             TrackedDataHandlerRegistry.FLOAT);
+
     public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(CyclopsEntity.class,
             TrackedDataHandlerRegistry.STRING);
 
@@ -203,7 +210,7 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
 
 
     private PlayState attackPredicate(AnimationState state) {
-        if(this.isSwinging() && !this.isShooting() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
+        if(this.isSwinging() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
             state.getController().forceAnimationReset();
             state.getController().setAnimation(RawAnimation.begin().then(this.getAttackName(), Animation.LoopType.PLAY_ONCE));
         }
@@ -211,8 +218,8 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
         return PlayState.CONTINUE;
     }
 
-    private PlayState shootingPredicate(AnimationState state) {
-        if(this.isShooting() && !this.isSwinging() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
+    private <E extends GeoAnimatable> PlayState shootingPredicate(AnimationState<E> state) {
+        if (!this.isSwinging() && this.isShooting()) {
             state.getController().forceAnimationReset();
             state.getController().setAnimation(RawAnimation.begin().then("ranged_attack", Animation.LoopType.PLAY_ONCE));
         }
@@ -352,14 +359,8 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
                                  @javax.annotation.Nullable NbtCompound entityNbt) {
         CyclopsVariant variant = Util.getRandom(CyclopsVariant.values(), this.random);
         setVariant(variant);
-        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
-                && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(10);
-            if (randomValue >= ModSpawnRateConfig.cyclopsSpawnRate) {
-                this.remove(Entity.RemovalReason.DISCARDED);
-            }
-        }
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+
+        return entityData;
     }
 
     public CyclopsVariant getVariant() {
@@ -372,5 +373,37 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
 
     public void setVariant(CyclopsVariant variant) {
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
+    }
+
+    public static boolean canMobSpawnWithRate(EntityType<? extends AnimalEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, net.minecraft.util.math.random.Random random) {
+        if (spawnReason == SpawnReason.SPAWNER || spawnReason == SpawnReason.SPAWN_EGG
+                || spawnReason == SpawnReason.COMMAND || spawnReason == SpawnReason.EVENT) {
+            return true;
+        }
+
+        long time = world.getLevelProperties().getTimeOfDay();
+        if (time % 24000L >= 13000L) {
+            return false;
+        }
+
+        BlockPos blockPos = pos.down();
+        BlockState blockBelow = world.getBlockState(blockPos);
+
+        boolean isGrassyGround = blockBelow.isOf(Blocks.GRASS);
+
+        if (!isGrassyGround) {
+            return false;
+        }
+
+        if (world.getLightLevel(pos) < 9) {
+            return false;
+        }
+
+        if (!world.isSkyVisible(pos)) {
+            return false;
+        }
+
+        int randomValue = random.nextInt(10);
+        return randomValue < ModSpawnRateConfig.cyclopsSpawnRate;
     }
 }

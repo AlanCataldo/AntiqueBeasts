@@ -1,6 +1,5 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
-import net.mebahel.antiquebeasts.entity.custom.egyptian.ServantEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.ThrowingAxeManEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -12,7 +11,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class ThrowingAxeManRenderer extends GeoEntityRenderer<ThrowingAxeManEntity> {
     public ThrowingAxeManRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new ThrowingAxeManModel());
-        this.shadowRadius = 0.25f;
+        this.shadowRadius = 0.5f;
     }
     @Override
     public RenderLayer getRenderType(ThrowingAxeManEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {

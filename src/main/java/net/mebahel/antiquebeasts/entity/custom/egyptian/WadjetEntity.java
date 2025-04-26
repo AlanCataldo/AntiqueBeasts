@@ -1,16 +1,17 @@
 package net.mebahel.antiquebeasts.entity.custom.egyptian;
 
-import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
 import net.mebahel.antiquebeasts.entity.ai.WadjetLookAtTargetGoal;
 import net.mebahel.antiquebeasts.entity.ai.WadjetShootingGoal;
+import net.mebahel.antiquebeasts.entity.ai.util.GroupRevengeGoal;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.mebahel.antiquebeasts.entity.variant.WadjetVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
-import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -33,6 +34,7 @@ import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -77,7 +79,6 @@ public class WadjetEntity extends EgyptianEntity implements GeoEntity {
         this.dataTracker.startTracking(IS_IN_CARAVAN, false);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(PATROL_UUID, "");
-        this.dataTracker.startTracking(SHOULD_DESPAWN, false);
     }
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
@@ -95,7 +96,7 @@ public class WadjetEntity extends EgyptianEntity implements GeoEntity {
     }
     public void tick() {
         super.tick();
-        if (shouldDespawnInPeaceful() || this.getShouldDespawn()) {
+        if (shouldDespawnInPeaceful()) {
             remove(RemovalReason.DISCARDED);
         }
         if (isShooting())
@@ -135,7 +136,7 @@ public class WadjetEntity extends EgyptianEntity implements GeoEntity {
         this.goalSelector.add(3, new WadjetLookAtTargetGoal(this));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.35f, 1f));
 
-        this.targetSelector.add(1, new CustomRevengeGoal(this, EgyptianEntity.class));
+        this.targetSelector.add(1, new GroupRevengeGoal(this, EgyptianEntity.class).setGroupRevenge());
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, DraugrEntity.class, true));
@@ -180,14 +181,8 @@ public class WadjetEntity extends EgyptianEntity implements GeoEntity {
                                  @javax.annotation.Nullable NbtCompound entityNbt) {
         WadjetVariant variant = Util.getRandom(WadjetVariant.values(), this.random);
         setVariant(variant);
-        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
-                && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(10);
-            if (randomValue >= ModSpawnRateConfig.wadjetSpawnRate) {
-                this.setShouldDespawn(true);
-            }
-        }
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+
+        return entityData;
     }
 
     public WadjetVariant getVariant() {
@@ -201,14 +196,37 @@ public class WadjetEntity extends EgyptianEntity implements GeoEntity {
         this.setVelocity(direction);
         this.velocityDirty = true;
     }
-    @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putBoolean("shouldDespawn", this.getShouldDespawn());
-    }
-    @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        this.setShouldDespawn(nbt.getBoolean("shouldDespawn"));
+
+    public static boolean canMobSpawnWithRate(EntityType<? extends AnimalEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, net.minecraft.util.math.random.Random random) {
+        if (spawnReason == SpawnReason.SPAWNER || spawnReason == SpawnReason.SPAWN_EGG
+                || spawnReason == SpawnReason.COMMAND || spawnReason == SpawnReason.EVENT) {
+            return true;
+        }
+
+        long time = world.getLevelProperties().getTimeOfDay();
+        if (time % 24000L >= 13000L) {
+            return false;
+        }
+
+        BlockPos blockPos = pos.down();
+        BlockState blockBelow = world.getBlockState(blockPos);
+
+        boolean isSandyGround = blockBelow.isOf(Blocks.SAND)
+                || blockBelow.isOf(Blocks.RED_SAND);
+
+        if (!isSandyGround) {
+            return false;
+        }
+
+        if (world.getLightLevel(pos) < 9) {
+            return false;
+        }
+
+        if (!world.isSkyVisible(pos)) {
+            return false;
+        }
+
+        int randomValue = random.nextInt(10);
+        return randomValue < ModSpawnRateConfig.wadjetSpawnRate;
     }
 }

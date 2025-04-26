@@ -1,0 +1,60 @@
+{
+  "name": "antiquebeasts:temple/side_floor_3",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "antiquebeasts:temple/side_1_floor_3",
+        "processors": "antiquebeasts:water_removal_processor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "antiquebeasts:temple/side_2_floor_3",
+        "processors": "antiquebeasts:water_removal_processor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "antiquebeasts:temple/side_3_floor_3",
+        "processors": "antiquebeasts:water_removal_processor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "antiquebeasts:temple/side_4_floor_3",
+        "processors": "antiquebeasts:water_removal_processor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "antiquebeasts:temple/side_5_floor_3",
+        "processors": "antiquebeasts:water_removal_processor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "antiquebeasts:temple/side_6_floor_3",
+        "processors": "antiquebeasts:water_removal_processor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

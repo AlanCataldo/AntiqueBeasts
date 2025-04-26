@@ -37,7 +37,7 @@ public class ModPatrolEntity extends AnimalEntity {
 
     public static final TrackedData<String> PATROL_UUID = DataTracker.registerData(ModPatrolEntity.class,
             TrackedDataHandlerRegistry.STRING);
-    
+
 
     public void setPatrolTarget(BlockPos targetPos) {
         this.patrolTarget = targetPos;
@@ -72,10 +72,12 @@ public class ModPatrolEntity extends AnimalEntity {
     }
 
     public boolean isAnyMemberAttacking() {
-        List<ModPatrolEntity> patrolMembers = this.getWorld().getEntitiesByClass(ModPatrolEntity.class, this.getBoundingBox().expand(16.0), e -> e.isPartOf(this));
+        List<ModPatrolEntity> patrolMembers = this.getWorld().getEntitiesByClass(ModPatrolEntity.class, this.getBoundingBox().expand(16.0),
+                e -> e.isPartOfSamePatrol(this));
+
         for (ModPatrolEntity member : patrolMembers) {
             if (member.getTarget() != null) {
-                return true;
+                return true; // Un membre combat encore
             }
         }
         return false;
@@ -102,4 +104,6 @@ public class ModPatrolEntity extends AnimalEntity {
     public boolean isPartOfSamePatrol(ModPatrolEntity other) {
         return Objects.equals(this.dataTracker.get(PATROL_UUID), other.getPatrolId());
     }
+
+
 }

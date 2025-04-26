@@ -1,18 +1,19 @@
 package net.mebahel.antiquebeasts.entity.custom.norse;
 
-import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
-import net.mebahel.antiquebeasts.entity.ai.util.ModPatrolGoal;
 import net.mebahel.antiquebeasts.entity.ai.norse.NorseMeleeAttackGoal;
+import net.mebahel.antiquebeasts.entity.ai.util.GroupRevengeGoal;
+import net.mebahel.antiquebeasts.entity.ai.util.ModPatrolGoal;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.mebahel.antiquebeasts.entity.variant.HersirVariant;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
-import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.ModSoundUtil;
+import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
@@ -32,6 +33,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -91,7 +93,7 @@ public class HuskarlEntity extends NorseEntity implements GeoEntity {
         this.goalSelector.add(4, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(5, new LookAroundGoal(this));
 
-        this.targetSelector.add(1, new CustomRevengeGoal(this, NorseEntity.class));
+        this.targetSelector.add(1, new GroupRevengeGoal(this, NorseEntity.class).setGroupRevenge());
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, DraugrEntity.class, true));
@@ -176,14 +178,8 @@ public class HuskarlEntity extends NorseEntity implements GeoEntity {
         HersirVariant variant = Util.getRandom(HersirVariant.values(), this.random);
         setVariant(variant);
         ModSoundUtil.InfantryPlaySound(spawnReason, this);
-        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
-                && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(10);
-            if (randomValue >= ModSpawnRateConfig.huskarlSpawnRate) {
-                this.remove(Entity.RemovalReason.DISCARDED);
-            }
-        }
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+
+        return entityData;
     }
 
     public HersirVariant getVariant() {
@@ -219,5 +215,39 @@ public class HuskarlEntity extends NorseEntity implements GeoEntity {
                 }
             }
         }
+    }
+    public static boolean canMobSpawnWithRate(EntityType<? extends AnimalEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, net.minecraft.util.math.random.Random random) {
+        if (spawnReason == SpawnReason.SPAWNER || spawnReason == SpawnReason.SPAWN_EGG
+                || spawnReason == SpawnReason.COMMAND || spawnReason == SpawnReason.EVENT) {
+            return true;
+        }
+        long time = world.getLevelProperties().getTimeOfDay();
+        if (time % 24000L >= 13000L) {
+            return false;
+        }
+
+        BlockPos blockPos = pos.down();
+        BlockState blockBelow = world.getBlockState(blockPos);
+
+        boolean isSnowyGround = blockBelow.isOf(Blocks.SNOW_BLOCK)
+                || blockBelow.isOf(Blocks.POWDER_SNOW)
+                || blockBelow.isOf(Blocks.GRASS_BLOCK)
+                || blockBelow.isOf(Blocks.DIRT)
+                || blockBelow.isOf(Blocks.SNOW);
+
+        if (!isSnowyGround) {
+            return false;
+        }
+
+        if (world.getLightLevel(pos) < 9) {
+            return false;
+        }
+
+        if (!world.isSkyVisible(pos.up())) {
+            return false;
+        }
+
+        int randomValue = random.nextInt(10);
+        return randomValue < ModSpawnRateConfig.huskarlSpawnRate;
     }
 }

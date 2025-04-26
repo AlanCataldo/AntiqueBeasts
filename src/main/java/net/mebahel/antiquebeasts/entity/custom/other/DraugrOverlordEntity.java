@@ -43,6 +43,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
@@ -70,8 +71,8 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
                 BossBar.Style.NOTCHED_10      // Style classique (progression)
         );
         this.bossBar.setPercent(1.0f);
+        this.setPersistent();
     }
-    public boolean shouldDespawn;
     private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
@@ -235,20 +236,10 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
                                  SpawnReason spawnReason, @Nullable EntityData entityData,
                                  @Nullable NbtCompound entityNbt) {
-        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
-                && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(10);
-            if (randomValue >= ModSpawnRateConfig.draugrSpawnRate) {
-                this.shouldDespawn = true;
-            }
-        }
-
         DraugrOverlordVariant variant = DraugrOverlordVariant.GREATSWORD;
 
         setVariant(variant);
-        this.setTarget(null);
-
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        return entityData;
     }
 
     @Override
@@ -298,12 +289,36 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
     public void tick() {
         super.tick();
 
+        this.updateBossBar();
         float healthPercent = this.getHealth() / this.getMaxHealth();
         this.bossBar.setPercent(healthPercent);
 
         // Vérifie si le boss doit être retiré (évite un affichage persistant)
         if (this.isDead() || this.isRemoved()) {
             this.bossBar.clearPlayers();
+        }
+    }
+
+    private void updateBossBar() {
+        // Créer une boîte autour du boss avec un rayon de 50 blocs pour détecter les joueurs
+        Box detectionBox = new Box(this.getBlockPos()).expand(18);
+
+        // Parcours tous les joueurs du monde
+        for (PlayerEntity player : this.getWorld().getPlayers()) {
+            if (player instanceof ServerPlayerEntity serverPlayer) {
+                // Vérifie si le joueur est dans la zone d'affichage (50 blocs)
+                if (detectionBox.contains(player.getPos())) {
+                    // Si le joueur est dans la zone et n'est pas déjà dans la bossBar, l'ajoute
+                    if (!this.bossBar.getPlayers().contains(serverPlayer)) {
+                        this.bossBar.addPlayer(serverPlayer);
+                    }
+                } else {
+                    // Si le joueur est en dehors de la zone, le retire de la bossBar
+                    if (this.bossBar.getPlayers().contains(serverPlayer)) {
+                        this.bossBar.removePlayer(serverPlayer);
+                    }
+                }
+            }
         }
     }
 
@@ -386,42 +401,14 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
             );
         }
     }
-    @Override
-    public void onStartedTrackingBy(ServerPlayerEntity player) {
-        super.onStartedTrackingBy(player);
-        this.bossBar.addPlayer(player); // Ajoute le joueur à la barre de boss
-    }
+
 
     @Override
     public void onStoppedTrackingBy(ServerPlayerEntity player) {
         super.onStoppedTrackingBy(player);
         this.bossBar.removePlayer(player); // Retire le joueur de la barre de boss
     }
-    public void spawnShockwaveParticles() {
-        if (!this.getSpecial()) return; // ❌ Ne rien faire si l'attaque spéciale n'est pas active
 
-        World world = this.getWorld();
-        BlockPos entityPos = this.getBlockPos();
-
-        for (int radius = 1; radius <= 8; radius++) { // Augmente progressivement le rayon de l'onde
-            int particleCount = (int) (radius * 8); // Plus le rayon est grand, plus il y a de particules
-
-            for (int i = 0; i < particleCount; i++) {
-                double angle = (2 * Math.PI / particleCount) * i; // Positionner les particules en cercle
-                double xOffset = Math.cos(angle) * radius;
-                double zOffset = Math.sin(angle) * radius;
-
-                BlockPos particlePos = entityPos.add((int) xOffset, 0, (int) zOffset); // Générer sur le sol
-                BlockState blockState = world.getBlockState(particlePos);
-
-                if (!blockState.isAir()) {
-                    world.addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState),
-                            particlePos.getX() + 0.5, particlePos.getY() + 0.1, particlePos.getZ() + 0.5,
-                            0.0, 0.1, 0.0);
-                }
-            }
-        }
-    }
         public static void AreaCrackedGround(LivingEntity mob, World world, BlockPos centerPos, int radius) {
             // On prend le bloc directement sous le mob, sans offset
             BlockPos startPos = centerPos.down();

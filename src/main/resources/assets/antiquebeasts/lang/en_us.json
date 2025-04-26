@@ -38,6 +38,8 @@
   "entity.antiquebeasts.draugr_scourge": "Draugr Scourge",
   "entity.antiquebeasts.skeleton_warrior": "Skeleton Warrior",
   "entity.antiquebeasts.skeleton_warrior_head": "Skeleton Warrior Head",
+  "entity.antiquebeasts.dwarven_spider": "Dwarven Spider",
+  "entity.antiquebeasts.dwarven_spider_guardian": "Dwarven Spider Guardian",
 
   "entity.antiquebeasts.throwing_axe": "Throwing Axe",
   "entity.antiquebeasts.harpy_feather": "Harpy Feather",
@@ -60,6 +62,7 @@
 
   "block.antiquebeasts.amphora": "Amphora",
   "block.antiquebeasts.draugr_chest": "Draugr Chest",
+  "block.antiquebeasts.greek_chest": "Greek Chest",
   "block.antiquebeasts.cursed_gold_block": "Cursed Gold Block",
   "block.antiquebeasts.mummy_boss_altar": "Pharaoh Altar",
 
@@ -106,6 +109,8 @@
   "item.antiquebeasts.spawn_egg.chimera_spawn_egg": "Chimera Spawn Egg",
   "item.antiquebeasts.spawn_egg.pegasus_spawn_egg": "Pegasus Spawn Egg",
   "item.antiquebeasts.spawn_egg.mummy_boss_spawn_egg": "Mummified Pharaoh Spawn Egg",
+  "item.antiquebeasts.spawn_egg.dwarven_spider_spawn_egg": "Dwarven Spider Spawn Egg",
+  "item.antiquebeasts.spawn_egg.dwarven_spider_guardian_spawn_egg": "Dwarven Spider Guardian Spawn Egg",
 
   "item.antiquebeasts.throwingrock": "Throwing Rock",
   "item.antiquebeasts.raw_cyclops_meat": "Raw Cyclops Meat",

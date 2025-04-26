@@ -27,6 +27,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -36,6 +37,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -75,6 +77,7 @@ public class SkeletonWarriorEntity extends DraugrEntity implements GeoEntity {
 
     public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(SkeletonWarriorEntity.class,
             TrackedDataHandlerRegistry.STRING);
+
     public static final TrackedData<Boolean> HAS_SPAWNED = DataTracker.registerData(SkeletonWarriorEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
     public boolean getHasSpawned() {return this.dataTracker.get(HAS_SPAWNED);}
@@ -179,20 +182,29 @@ public class SkeletonWarriorEntity extends DraugrEntity implements GeoEntity {
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
                                  SpawnReason spawnReason, @Nullable EntityData entityData,
                                  @Nullable NbtCompound entityNbt) {
-        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
-                && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(10);
-            if (randomValue >= ModSpawnRateConfig.draugrSpawnRate) {
-                this.remove(RemovalReason.DISCARDED);
-            }
-        }
-
-
         SkeletonWarriorVariant variant = Util.getRandom(SkeletonWarriorVariant.values(), this.random);
         setVariant(variant);
         this.setTarget(null);
 
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        return entityData;
+    }
+    public static boolean canMobSpawnWithRate(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random,
+                                              Boolean draugrCanSpawnInDark) {
+        if (spawnReason == SpawnReason.SPAWNER || spawnReason == SpawnReason.SPAWN_EGG
+                || spawnReason == SpawnReason.COMMAND || spawnReason == SpawnReason.EVENT) {
+            return true;
+        }
+        if (draugrCanSpawnInDark) {
+            BlockPos blockPos = pos.down();
+            if (!world.getBlockState(blockPos).allowsSpawning(world, blockPos, type)) {
+                return false;
+            }
+
+
+            int randomValue = random.nextInt(10);
+            return randomValue < ModSpawnRateConfig.skeletonWarriorSpawnRate;
+        }
+        return false;
     }
 
     protected SoundEvent getAmbientSound() {
@@ -221,9 +233,8 @@ public class SkeletonWarriorEntity extends DraugrEntity implements GeoEntity {
     public void onDeath(DamageSource cause) {
         super.onDeath(cause);
 
-
         rand = random();
-        if (rand < 0.65) {
+        if (rand < 0.55) {
             if (cause.getAttacker() instanceof PlayerEntity) {
                 World world = this.getEntityWorld();
                 double x = this.getX();

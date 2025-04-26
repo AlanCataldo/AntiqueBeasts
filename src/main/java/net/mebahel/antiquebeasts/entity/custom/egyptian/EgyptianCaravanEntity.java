@@ -23,6 +23,7 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvent;
@@ -58,7 +59,7 @@ public class EgyptianCaravanEntity extends EgyptianEntity implements GeoEntity {
 
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(SHOULD_DESPAWN, false);
+
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
@@ -160,33 +161,27 @@ public class EgyptianCaravanEntity extends EgyptianEntity implements GeoEntity {
 
         EgyptiantVariant variant = Util.getRandom(EgyptiantVariant.values(), this.random);
         setVariant(variant);
-        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
-                && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(10);
-            if (randomValue >= ModSpawnRateConfig.egyptianCaravanSpawnRate) {
-                this.setShouldDespawn(true);
-            } else {
-                for (int i = 0; i < numAxemen; i++) {
-                    AxemanEntity newAxeman = new AxemanEntity(ModEntities.AXEMAN, this.getWorld(), true, this);
-                    Vec3d offsetPosition = getOffsetPosition(4 * this.random.nextDouble(), 4 * this.random.nextDouble());
-                    newAxeman.refreshPositionAndAngles(offsetPosition.x, offsetPosition.y, offsetPosition.z, this.getYaw(), this.getPitch());
-                    this.getWorld().spawnEntity(newAxeman);
-                }
-                if (this.random.nextInt(3) == 0) {
-                    ElephantRiderEntity newElephantRider = new ElephantRiderEntity(ModEntities.ELEPHANT_RIDER, this.getWorld(), true, this);
-                    Vec3d offsetPosition = getOffsetPosition(4 * this.random.nextDouble(), 4 * this.random.nextDouble());
-                    newElephantRider.refreshPositionAndAngles(offsetPosition.x, offsetPosition.y, offsetPosition.z, this.getYaw(), this.getPitch());
-                    this.getWorld().spawnEntity(newElephantRider);
-                }
-                if (this.random.nextInt(2) == 0) {
-                    CamelryEntity newCamelryRider = new CamelryEntity(ModEntities.CAMELRY, this.getWorld(), true, this);
-                    Vec3d offsetPosition = getOffsetPosition(4 * this.random.nextDouble(), 4 * this.random.nextDouble());
-                    newCamelryRider.refreshPositionAndAngles(offsetPosition.x, offsetPosition.y, offsetPosition.z, this.getYaw(), this.getPitch());
-                    this.getWorld().spawnEntity(newCamelryRider);
-                }
-            }
+
+        for (int i = 0; i < numAxemen; i++) {
+            AxemanEntity newAxeman = new AxemanEntity(ModEntities.AXEMAN, this.getWorld(), true, this);
+            Vec3d offsetPosition = getOffsetPosition(4 * this.random.nextDouble(), 4 * this.random.nextDouble());
+            newAxeman.refreshPositionAndAngles(offsetPosition.x, offsetPosition.y, offsetPosition.z, this.getYaw(), this.getPitch());
+            this.getWorld().spawnEntity(newAxeman);
         }
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        if (this.random.nextInt(3) == 0) {
+            ElephantRiderEntity newElephantRider = new ElephantRiderEntity(ModEntities.ELEPHANT_RIDER, this.getWorld(), true, this);
+            Vec3d offsetPosition = getOffsetPosition(4 * this.random.nextDouble(), 4 * this.random.nextDouble());
+            newElephantRider.refreshPositionAndAngles(offsetPosition.x, offsetPosition.y, offsetPosition.z, this.getYaw(), this.getPitch());
+            this.getWorld().spawnEntity(newElephantRider);
+        }
+        if (this.random.nextInt(2) == 0) {
+            CamelryEntity newCamelryRider = new CamelryEntity(ModEntities.CAMELRY, this.getWorld(), true, this);
+            Vec3d offsetPosition = getOffsetPosition(4 * this.random.nextDouble(), 4 * this.random.nextDouble());
+            newCamelryRider.refreshPositionAndAngles(offsetPosition.x, offsetPosition.y, offsetPosition.z, this.getYaw(), this.getPitch());
+            this.getWorld().spawnEntity(newCamelryRider);
+        }
+
+        return entityData;
     }
 
     private Vec3d getOffsetPosition(double offsetX, double offsetZ) {
@@ -207,7 +202,7 @@ public class EgyptianCaravanEntity extends EgyptianEntity implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
-        if (this.shouldDespawnInPeaceful() || this.getShouldDespawn()) {
+        if (this.shouldDespawnInPeaceful()) {
             this.remove(RemovalReason.DISCARDED);
         }
     }
@@ -219,14 +214,36 @@ public class EgyptianCaravanEntity extends EgyptianEntity implements GeoEntity {
             this.playSound(SoundEvents.ENTITY_CAMEL_STEP, 1.0F, 1.0F);
         }
     }
-    @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putBoolean("shouldDespawn", this.getShouldDespawn());
-    }
-    @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        this.setShouldDespawn(nbt.getBoolean("shouldDespawn"));
+    public static boolean canMobSpawnWithRate(EntityType<? extends AnimalEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, net.minecraft.util.math.random.Random random) {
+        if (spawnReason == SpawnReason.SPAWNER || spawnReason == SpawnReason.SPAWN_EGG
+                || spawnReason == SpawnReason.COMMAND || spawnReason == SpawnReason.EVENT) {
+            return true;
+        }
+
+        long time = world.getLevelProperties().getTimeOfDay();
+        if (time % 24000L >= 13000L) {
+            return false;
+        }
+
+        BlockPos blockPos = pos.down();
+        BlockState blockBelow = world.getBlockState(blockPos);
+
+        boolean isSandyGround = blockBelow.isOf(Blocks.SAND)
+                || blockBelow.isOf(Blocks.RED_SAND);
+
+        if (!isSandyGround) {
+            return false;
+        }
+
+        if (world.getLightLevel(pos) < 9) {
+            return false;
+        }
+
+        if (!world.isSkyVisible(pos)) {
+            return false;
+        }
+
+        int randomValue = random.nextInt(10);
+        return randomValue < ModSpawnRateConfig.egyptianCaravanSpawnRate;
     }
 }

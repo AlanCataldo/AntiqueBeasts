@@ -17,44 +17,41 @@ import net.minecraft.util.Identifier;
 import java.util.*;
 
 public class AddBookToLootTableUtil {
-    private final Map<String, NbtCompound> books = new HashMap<>();
+
+    private final Map<String, BookLootData> books = new HashMap<>();
 
     /**
-     * 📖 Ajoute un livre directement à partir d'un texte en String.
-     * @param bookId ID unique du livre
-     * @param title Titre du livre
-     * @param author Auteur du livre
-     * @param content Texte complet du livre
+     * 📖 Ajoute un livre directement à partir d'un texte.
      */
-    public void addBookFromString(String bookId, String title, String author, String content) {
-        List<String> pages = splitIntoPages(content, 256); // Découpe auto en pages
-        addBook(bookId, title, author, pages);
+    public void addBookFromString(String bookId, String title, String author, String content, List<Identifier> targetLootTables) {
+        List<String> pages = splitIntoPages(content, 256);
+        addBook(bookId, title, author, pages, targetLootTables);
     }
 
     /**
-     * 📖 Ajoute un livre personnalisé à la liste.
+     * 📖 Ajoute un livre à la liste des livres à injecter dans les loot tables.
      */
-    public void addBook(String bookId, String title, String author, List<String> pages) {
+    public void addBook(String bookId, String title, String author, List<String> pages, List<Identifier> targetLootTables) {
         NbtCompound bookNbt = new NbtCompound();
         bookNbt.putString("title", title);
         bookNbt.putString("author", author);
         bookNbt.put("pages", createBookPages(pages));
-        books.put(bookId, bookNbt);
+        books.put(bookId, new BookLootData(bookNbt, targetLootTables));
     }
 
     /**
-     * 📜 Convertit une liste de textes en pages de livre Minecraft.
+     * 📜 Convertit une liste de pages String en NbtList.
      */
     private NbtList createBookPages(List<String> pages) {
         NbtList pagesList = new NbtList();
         for (String text : pages) {
-            pagesList.add(NbtString.of(Text.Serializer.toJson(Text.of(text)))); // ✅ Correction ici !
+            pagesList.add(NbtString.of(Text.Serializer.toJson(Text.of(text))));
         }
         return pagesList;
     }
 
     /**
-     * ✂️ Découpe un texte en plusieurs pages (256 caractères max par page).
+     * ✂️ Découpe un long texte en pages.
      */
     private List<String> splitIntoPages(String text, int maxPageLength) {
         List<String> pages = new ArrayList<>();
@@ -68,54 +65,39 @@ public class AddBookToLootTableUtil {
     }
 
     /**
-     * 🎲 Enregistre les livres dans les loot tables.
+     * 📦 Injection dans les loot tables ciblées.
      */
     public void registerModifyLootTable() {
         LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
-            List<Identifier> lootTables = List.of(
-                    new Identifier("minecraft", "chests/village/village_armorer"),
-                    new Identifier("minecraft", "chests/village/village_butcher"),
-                    new Identifier("minecraft", "chests/village/village_cartographer"),
-                    new Identifier("minecraft", "chests/village/village_desert_house"),
-                    new Identifier("minecraft", "chests/village/village_fisher"),
-                    new Identifier("minecraft", "chests/village/village_fletcher"),
-                    new Identifier("minecraft", "chests/village/village_mason"),
-                    new Identifier("minecraft", "chests/village/village_plains_house"),
-                    new Identifier("minecraft", "chests/village/village_savanna_house"),
-                    new Identifier("minecraft", "chests/village/village_shepherd"),
-                    new Identifier("minecraft", "chests/village/village_snowy_house"),
-                    new Identifier("minecraft", "chests/village/village_taiga_house"),
-                    new Identifier("minecraft", "chests/village/village_tannery"),
-                    new Identifier("minecraft", "chests/village/village_temple"),
-                    new Identifier("minecraft", "chests/village/village_toolsmith"),
-                    new Identifier("minecraft", "chests/village/village_weaponsmith"),
-                    new Identifier("minecraft", "chests/stronghold_library"),
-                    new Identifier("minecraft", "chests/ancient_city")
-            );
-            int bookCount = books.size();
-            int ironWeight = 5 + (bookCount * 3);
+            List<BookLootData> matchingBooks = books.values().stream()
+                    .filter(book -> book.targetLootTables.contains(id))
+                    .toList();
 
-            if (lootTables.contains(id)) {
-                LootPool.Builder poolBuilder = LootPool.builder();
+            if (matchingBooks.isEmpty()) return;
 
-                // 🎲 Ajoute un item "factice" (lingot de fer, quantité 0) pour réduire la fréquence des livres
-                LootPoolEntry emptyEntry = ItemEntry.builder(Items.IRON_INGOT)
-                        .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(0))) // Définit la quantité à 0
-                        .weight(ironWeight)
+            LootPool.Builder poolBuilder = LootPool.builder();
+
+            // ⚖️ Entrée factice pour réduire la proba
+            LootPoolEntry emptyEntry = ItemEntry.builder(Items.IRON_INGOT)
+                    .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(0)))
+                    .weight(3 + (matchingBooks.size() * 3))
+                    .build();
+            poolBuilder.with(emptyEntry);
+
+            for (BookLootData book : matchingBooks) {
+                LootPoolEntry bookEntry = ItemEntry.builder(Items.WRITTEN_BOOK)
+                        .apply(SetNbtLootFunction.builder(book.nbt))
+                        .weight(1)
                         .build();
-                poolBuilder.with(emptyEntry);
-
-                // 📖 Ajoute chaque livre avec un poids ajustable
-                for (NbtCompound bookNbt : books.values()) {
-                    LootPoolEntry bookEntry = ItemEntry.builder(Items.WRITTEN_BOOK)
-                            .apply(SetNbtLootFunction.builder(bookNbt))
-                            .weight(5) // Plus petit = plus rare
-                            .build();
-                    poolBuilder.with(bookEntry);
-                }
-
-                tableBuilder.pool(poolBuilder.build());
+                poolBuilder.with(bookEntry);
             }
+
+            tableBuilder.pool(poolBuilder.build());
         });
     }
+
+    /**
+     * 📚 Représente un livre avec ses loot tables cibles.
+     */
+    private record BookLootData(NbtCompound nbt, List<Identifier> targetLootTables) {}
 }

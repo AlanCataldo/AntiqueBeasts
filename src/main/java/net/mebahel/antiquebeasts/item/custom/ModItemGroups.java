@@ -155,6 +155,8 @@ public class ModItemGroups {
                         entries.add(ModItems.DRAUGR_SCOURGE_SPAWN_EGG);
                         entries.add(ModItems.DRAUGR_ARCHER_SPAWN_EGG);
                         entries.add(ModItems.HARPY_SPAWN_EGG);
+                        entries.add(ModSpawnEggs.DWARVEN_SPIDER_SPAWN_EGG);
+                        entries.add(ModSpawnEggs.DWARVEN_SPIDER_GUARDIAN_SPAWN_EGG);
 
                     }).build());
     public static void registerItemGroups() {

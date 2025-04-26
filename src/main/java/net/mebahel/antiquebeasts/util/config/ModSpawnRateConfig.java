@@ -33,10 +33,11 @@ public class ModSpawnRateConfig {
     public static int servantSpawnRate = 3;
     public static int egyptianCaravanSpawnRate = 2;
     public static int draugrSpawnRate = 10;
-    public static int draugrArcherSpawnRate = 10;
-    public static int draugrWightSpawnRate = 10;
-    public static int draugrScourgeSpawnRate = 10;
-    public static int harpySpawnRate = 5;
+    public static int draugrArcherSpawnRate = 9;
+    public static int draugrWightSpawnRate = 7;
+    public static int draugrScourgeSpawnRate = 5;
+    public static int skeletonWarriorSpawnRate = 8;
+    public static int harpySpawnRate = 3;
 
     public static void loadConfig(File configDir) {
         if (!configDir.exists()) {
@@ -139,19 +140,23 @@ public class ModSpawnRateConfig {
                     updated = true;
                 }
                 if (data.draugrArcherSpawnRate == null || data.draugrArcherSpawnRate > 10 || data.draugrArcherSpawnRate < 0) {
-                    data.draugrArcherSpawnRate = 10;
+                    data.draugrArcherSpawnRate = 9;
                     updated = true;
                 }
                 if (data.draugrWightSpawnRate == null || data.draugrWightSpawnRate > 10 || data.draugrWightSpawnRate < 0) {
-                    data.draugrWightSpawnRate = 10;
+                    data.draugrWightSpawnRate = 7;
                     updated = true;
                 }
                 if (data.draugrScourgeSpawnRate == null || data.draugrScourgeSpawnRate > 10 || data.draugrScourgeSpawnRate < 0) {
-                    data.draugrScourgeSpawnRate = 10;
+                    data.draugrScourgeSpawnRate = 5;
+                    updated = true;
+                }
+                if (data.skeletonWarriorSpawnRate == null || data.skeletonWarriorSpawnRate > 10 || data.skeletonWarriorSpawnRate < 0) {
+                    data.skeletonWarriorSpawnRate = 8;
                     updated = true;
                 }
                 if (data.harpySpawnRate == null || data.harpySpawnRate > 10 || data.harpySpawnRate < 0) {
-                    data.harpySpawnRate = 5;
+                    data.harpySpawnRate = 3;
                     updated = true;
                 }
 
@@ -178,6 +183,7 @@ public class ModSpawnRateConfig {
                 draugrArcherSpawnRate = data.draugrArcherSpawnRate;
                 draugrWightSpawnRate = data.draugrWightSpawnRate;
                 draugrScourgeSpawnRate = data.draugrScourgeSpawnRate;
+                skeletonWarriorSpawnRate = data.skeletonWarriorSpawnRate;
                 harpySpawnRate = data.harpySpawnRate;
 
                 if (updated) {
@@ -197,7 +203,7 @@ public class ModSpawnRateConfig {
                 cyclopsSpawnRate, frostCyclopsSpawnRate, pegasusSpawnRate, centaurSpawnRate, hadesShadeSpawnRate,
                 throwingAxemanSpawnRate, hersirSpawnRate, huskarlSpawnRate, einherjarSpawnRate, valkyrieSpawnRate,
                 wadjetSpawnRate, mummySpawnRate, servantSpawnRate, egyptianCaravanSpawnRate, draugrSpawnRate, draugrArcherSpawnRate,
-                draugrWightSpawnRate, draugrScourgeSpawnRate, harpySpawnRate);
+                draugrWightSpawnRate, draugrScourgeSpawnRate, skeletonWarriorSpawnRate, harpySpawnRate);
         try (FileWriter writer = new FileWriter(configFile)) {
             GSON.toJson(data, writer);
         } catch (IOException e) {
@@ -229,13 +235,15 @@ public class ModSpawnRateConfig {
         Integer draugrArcherSpawnRate;
         Integer draugrWightSpawnRate;
         Integer draugrScourgeSpawnRate;
+        Integer skeletonWarriorSpawnRate;
         Integer harpySpawnRate;
 
         ConfigData(int eliteHopliteSpawnRate, int championHopliteSpawnRate, int heroHopliteSpawnRate, int hadesChosenSpawnRate,
                    int chimeraSpawnRate, int cyclopsSpawnRate, int frostCyclopsSpawnRate, int pegasusSpawnRate, int centaurSpawnRate,
                    int hadesShadeSpawnRate, int throwingAxemanSpawnRate, int hersirSpawnRate, int huskarlSpawnRate, int einherjarSpawnRate,
                    int valkyrieSpawnRate, int wadjetSpawnRate, int mummySpawnRate, int servantSpawnRate, int egyptianCaravanSpawnRate,
-                   int draugrSpawnRate, int draugrArcherSpawnRate, int draugrWightSpawnRate, int draugrScourgeSpawnRate,  int harpySpawnRate) {
+                   int draugrSpawnRate, int draugrArcherSpawnRate, int draugrWightSpawnRate, int draugrScourgeSpawnRate,  int skeletonWarriorSpawnRate,
+                   int harpySpawnRate) {
 
             this.eliteHopliteSpawnRate = eliteHopliteSpawnRate;
             this.championHopliteSpawnRate = championHopliteSpawnRate;
@@ -260,6 +268,7 @@ public class ModSpawnRateConfig {
             this.draugrArcherSpawnRate = draugrArcherSpawnRate;
             this.draugrWightSpawnRate = draugrWightSpawnRate;
             this.draugrScourgeSpawnRate = draugrScourgeSpawnRate;
+            this.skeletonWarriorSpawnRate = skeletonWarriorSpawnRate;
             this.harpySpawnRate = harpySpawnRate;
         }
     }

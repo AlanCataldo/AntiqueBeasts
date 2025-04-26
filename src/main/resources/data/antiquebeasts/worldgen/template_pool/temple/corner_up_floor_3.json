@@ -1,0 +1,15 @@
+{
+  "name": "antiquebeasts:temple/corner_up_floor_3",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "antiquebeasts:temple/corner_up_1_floor_3",
+        "processors": "antiquebeasts:water_removal_processor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

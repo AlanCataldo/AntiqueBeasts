@@ -42,13 +42,6 @@ public class GreekEntity extends ModPatrolEntity implements GeoEntity {
 
     public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(GreekEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
-
-    public static final TrackedData<Boolean> SHOULD_DESPAWN = DataTracker.registerData(GreekEntity.class,
-            TrackedDataHandlerRegistry.BOOLEAN);
-    public void setShouldDespawn(boolean bool) {
-        this.dataTracker.set(SHOULD_DESPAWN, bool);
-    }
-    public boolean getShouldDespawn() {return this.dataTracker.get(SHOULD_DESPAWN);}
     public void setShooting(boolean shooting) {
         this.dataTracker.set(SHOOTING, shooting);
     }
@@ -148,6 +141,16 @@ public class GreekEntity extends ModPatrolEntity implements GeoEntity {
 
         if (nbt.contains("PatrolTarget")) {
             this.setPatrolTarget(NbtHelper.toBlockPos(nbt.getCompound("PatrolTarget")));
+        }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.getTarget() != null) {
+           if (!this.getTarget().isAlive()) {
+               this.setTarget(null);
+           }
         }
     }
 }

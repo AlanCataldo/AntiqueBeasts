@@ -35,6 +35,7 @@ import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -48,7 +49,6 @@ import software.bernie.geckolib.util.ClientUtils;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
-import java.util.UUID;
 
 import static java.lang.Math.random;
 
@@ -58,8 +58,6 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
         this.speed = Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getValue();
     }
-    public boolean shouldDespawn;
-    private UUID raidUuid;
     private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
@@ -189,15 +187,7 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
                                  SpawnReason spawnReason, @Nullable EntityData entityData,
                                  @Nullable NbtCompound entityNbt) {
-        //System.out.println("J'INITIE DRAUGR");
         var biome = world.getBiome(this.getBlockPos());
-        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
-                && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(10);
-            if (randomValue >= ModSpawnRateConfig.draugrSpawnRate) {
-                this.shouldDespawn = true;
-            }
-        }
 
         DraugrVariant variant;
         boolean useAxeVariant = random.nextBoolean();
@@ -265,7 +255,7 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
     public void tick() {
         super.tick();
 
-        if (this.shouldDespawnInPeaceful() || this.shouldDespawn) {
+        if (this.shouldDespawnInPeaceful()) {
             this.remove(RemovalReason.DISCARDED);
         }
 
@@ -308,8 +298,6 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
     @Override
     public void onDeath(DamageSource damageSource) {
         super.onDeath(damageSource);
-        //System.out.println("-DRAUGR UUID -");
-        //System.out.println(this.getUuid());
     }
     private PlayState spawnPredicate(AnimationState state) {
         if (!this.getHasSpawned()) {
@@ -322,29 +310,42 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
         }
         return PlayState.CONTINUE;
     }
+    public static boolean canMobSpawnWithRate(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random,
+                                              Boolean draugrCanSpawnInDark) {
+        if (spawnReason == SpawnReason.SPAWNER || spawnReason == SpawnReason.SPAWN_EGG
+                || spawnReason == SpawnReason.COMMAND || spawnReason == SpawnReason.EVENT) {
+            return true;
+        }
+        if (draugrCanSpawnInDark) {
+            BlockPos blockPos = pos.down();
+            if (!world.getBlockState(blockPos).allowsSpawning(world, blockPos, type)) {
+                return false;
+            }
+
+
+            int randomValue = random.nextInt(10);
+            return randomValue < ModSpawnRateConfig.draugrSpawnRate;
+        }
+        return false;
+    }
     void spawnHoveringParticles() {
-        // Position de l'entité
         double posX = this.getX();
-        double posY = this.getY() - 0.1; // Légèrement sous les pieds
+        double posY = this.getY() - 0.1;
         double posZ = this.getZ();
 
-        // Récupérer la position du bloc sous l'entité
-        BlockPos blockPos = new BlockPos((int) posX, (int) (this.getY() - 0.5), (int) posZ); // Bloc sous l'entité
+        BlockPos blockPos = new BlockPos((int) posX, (int) (this.getY() - 0.5), (int) posZ);
         BlockState blockState = this.getWorld().getBlockState(blockPos);
 
-        // Si le bloc n'est pas de l'air, générer les particules
         if (!blockState.isAir()) {
-            // Particules basées sur le bloc sous l'entité
             for (int i = 0; i < 3; i++) { // Nombre de particules
-                double offsetX = (this.random.nextDouble() - 0.5) * 0.1; // Dispersion légère en X
-                double offsetZ = (this.random.nextDouble() - 0.5) * 0.1; // Dispersion légère en Z
-                double velocityY = 0.1; // Légère vélocité verticale (comme de la poussière)
+                double offsetX = (this.random.nextDouble() - 0.5) * 0.1;
+                double offsetZ = (this.random.nextDouble() - 0.5) * 0.1;
+                double velocityY = 0.1;
 
-                // Générer des particules basées sur le bloc
                 this.getWorld().addParticle(
-                        new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), // Particules basées sur le bloc
-                        posX + offsetX, posY, posZ + offsetZ, // Position des particules
-                        0.0, velocityY, 0.0 // Vélocité des particules
+                        new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState),
+                        posX + offsetX, posY, posZ + offsetZ,
+                        0.0, velocityY, 0.0
                 );
             }
         }

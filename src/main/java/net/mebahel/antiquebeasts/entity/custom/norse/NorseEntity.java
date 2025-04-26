@@ -84,4 +84,13 @@ public class NorseEntity extends ModPatrolEntity {
             this.setPatrolTarget(NbtHelper.toBlockPos(nbt.getCompound("PatrolTarget")));
         }
     }
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.getTarget() != null) {
+            if (!this.getTarget().isAlive()) {
+                this.setTarget(null);
+            }
+        }
+    }
 }

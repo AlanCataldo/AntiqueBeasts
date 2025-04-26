@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SCS",
+    "SSS"
+  ],
+  "key" : {
+    "C": {
+      "item" : "minecraft:chest"
+    },
+    "S": {
+      "item" : "minecraft:quartz_block"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:greek_chest"
+  }
+}

@@ -4,13 +4,17 @@ import com.google.common.collect.Maps;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.entity.custom.greek.CentaurEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.ChampionHopliteEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.EliteHopliteEntity;
 import net.mebahel.antiquebeasts.entity.variant.ChampionHopliteVariant;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 
@@ -32,6 +36,12 @@ public class ChampionHopliteRenderer extends GeoEntityRenderer<ChampionHopliteEn
     @Override
     public Identifier getTextureLocation(ChampionHopliteEntity animatable) {
         return LOCATION_BY_VARIANT.get(animatable.getVariant());
+    }
+
+    public void preRender(MatrixStack poseStack, ChampionHopliteEntity animatable, BakedGeoModel model, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue,
+                          float alpha) {
+        poseStack.scale(0.88f, 0.88f, 0.88f);
+        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }
     @Override
     public RenderLayer getRenderType(ChampionHopliteEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {

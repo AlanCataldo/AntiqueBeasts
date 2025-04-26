@@ -1,6 +1,8 @@
 package net.mebahel.antiquebeasts.entity.custom.greek;
 
-import net.mebahel.antiquebeasts.entity.ai.*;
+import net.mebahel.antiquebeasts.entity.ai.CentaurLookAtTargetGoal;
+import net.mebahel.antiquebeasts.entity.ai.CentaurMeleeAttackGoal;
+import net.mebahel.antiquebeasts.entity.ai.CentaurShootingGoal;
 import net.mebahel.antiquebeasts.entity.ai.util.ModPatrolGoal;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
@@ -10,13 +12,14 @@ import net.mebahel.antiquebeasts.entity.variant.CentaurVariant;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
-import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.ActiveTargetGoal;
-import net.minecraft.entity.ai.goal.LookAroundGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityData;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -25,6 +28,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ZombieEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -32,6 +36,7 @@ import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -40,7 +45,6 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
@@ -52,7 +56,6 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
     private int blinkTimer = 0;
     private int nextBlink = 0;
     double rand;
-
     public static final TrackedData<Boolean> IS_ARCHER = DataTracker.registerData(CentaurEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
 
@@ -81,7 +84,7 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
-        if (this.shouldDespawnInPeaceful() || this.getShouldDespawn()) {
+        if (this.shouldDespawnInPeaceful()) {
             this.remove(RemovalReason.DISCARDED);
         }
         if (this.blinkTimer > 0) {
@@ -107,7 +110,6 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
     }
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(SHOULD_DESPAWN, false);
         this.dataTracker.startTracking(SHOOTING, false);
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(IS_ARCHER, false);
@@ -134,7 +136,8 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(7, new LookAroundGoal(this));
 
-        this.targetSelector.add(1, new CustomRevengeGoal(this, GreekEntity.class));
+        this.targetSelector.add(1, (new RevengeGoal(this, GreekEntity.class))
+                .setGroupRevenge(GreekEntity.class));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, DraugrEntity.class, true));
@@ -243,14 +246,7 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
         CentaurVariant variant = Util.getRandom(CentaurVariant.values(), this.random);
         setVariant(variant);
         this.setTarget(null);
-        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
-                && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(10);
-            if (randomValue >= ModSpawnRateConfig.centaurSpawnRate) {
-                this.setShouldDespawn(true);
-            }
-        }
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        return entityData;
     }
 
     public CentaurVariant getVariant() {
@@ -276,15 +272,36 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
             }
         }
     }
-    @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putBoolean("shouldDespawn", this.getShouldDespawn());
-    }
 
-    @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        this.setShouldDespawn(nbt.getBoolean("shouldDespawn"));
+    public static boolean canMobSpawnWithRate(EntityType<? extends AnimalEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, net.minecraft.util.math.random.Random random) {
+        if (spawnReason == SpawnReason.SPAWNER || spawnReason == SpawnReason.SPAWN_EGG
+                || spawnReason == SpawnReason.COMMAND || spawnReason == SpawnReason.EVENT) {
+            return true;
+        }
+
+        long time = world.getLevelProperties().getTimeOfDay();
+        if (time % 24000L >= 13000L) {
+            return false;
+        }
+
+        BlockPos blockPos = pos.down();
+        BlockState blockBelow = world.getBlockState(blockPos);
+
+        boolean isGrassyGround = blockBelow.isOf(Blocks.GRASS);
+
+        if (!isGrassyGround) {
+            return false;
+        }
+
+        if (world.getLightLevel(pos) < 9) {
+            return false;
+        }
+
+        if (!world.isSkyVisible(pos)) {
+            return false;
+        }
+
+        int randomValue = random.nextInt(10);
+        return randomValue < ModSpawnRateConfig.centaurSpawnRate;
     }
 }

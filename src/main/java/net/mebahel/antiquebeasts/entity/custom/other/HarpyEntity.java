@@ -9,9 +9,7 @@ import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.variant.HarpyVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
-import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -38,6 +36,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -53,7 +52,7 @@ import software.bernie.geckolib.util.ClientUtils;
 import java.util.Objects;
 
 public class HarpyEntity extends AnimalEntity implements GeoEntity {
-    double rand;
+
     public static final TrackedData<Boolean> SHOOTING = DataTracker.registerData(HarpyEntity.class,
             TrackedDataHandlerRegistry.BOOLEAN);
 
@@ -255,14 +254,8 @@ public class HarpyEntity extends AnimalEntity implements GeoEntity {
                                  @javax.annotation.Nullable NbtCompound entityNbt) {
         HarpyVariant variant = Util.getRandom(HarpyVariant.values(), this.random);
         setVariant(variant);
-        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
-                && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(10);
-            if (randomValue >= ModSpawnRateConfig.harpySpawnRate) {
-                this.remove(Entity.RemovalReason.DISCARDED);
-            }
-        }
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+
+        return entityData;
     }
 
     public HarpyVariant getVariant() {
@@ -279,12 +272,34 @@ public class HarpyEntity extends AnimalEntity implements GeoEntity {
 
     @Override
     public boolean hasNoGravity() {
-        return true;  // Désactive la gravité pour cette entité
+        return true;
     }
 
     @Override
     public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
-        // Empêche les dégâts de chute
         return false;
+    }
+
+    public static boolean canMobSpawnWithRate(EntityType<? extends AnimalEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, net.minecraft.util.math.random.Random random) {
+        if (spawnReason == SpawnReason.SPAWNER || spawnReason == SpawnReason.SPAWN_EGG
+                || spawnReason == SpawnReason.COMMAND || spawnReason == SpawnReason.EVENT) {
+            return true;
+        }
+        long time = world.getLevelProperties().getTimeOfDay();
+        if (time % 24000L >= 13000L) {
+            return false;
+        }
+
+        BlockPos blockPos = pos.down();
+        if (!world.getBlockState(blockPos).allowsSpawning(world, blockPos, type)) {
+            return false;
+        }
+
+        if (!world.isSkyVisible(pos)) {
+            return false;
+        }
+
+        int randomValue = random.nextInt(10);
+        return randomValue < ModSpawnRateConfig.harpySpawnRate;
     }
 }

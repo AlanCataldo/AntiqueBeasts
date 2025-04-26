@@ -1,7 +1,7 @@
 package net.mebahel.antiquebeasts.entity.custom.greek;
 
-import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
 import net.mebahel.antiquebeasts.entity.ai.greek.GreekMeleeAttackGoal;
+import net.mebahel.antiquebeasts.entity.ai.util.GroupRevengeGoal;
 import net.mebahel.antiquebeasts.entity.ai.util.ModPatrolGoal;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
@@ -12,6 +12,8 @@ import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.ModSoundUtil;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
@@ -36,6 +38,7 @@ import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -47,7 +50,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
 import javax.annotation.Nullable;
-
 
 public class EliteHopliteEntity extends GreekEntity implements GeoEntity {
     private int idleCondition = 0;
@@ -71,7 +73,7 @@ public class EliteHopliteEntity extends GreekEntity implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
-        if (this.shouldDespawnInPeaceful() || this.getShouldDespawn()) {
+        if (this.shouldDespawnInPeaceful()) {
             this.remove(RemovalReason.DISCARDED);
         }
     }
@@ -94,7 +96,6 @@ public class EliteHopliteEntity extends GreekEntity implements GeoEntity {
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(ATTACK_NAME, "attack");
         this.dataTracker.startTracking(PATROL_UUID, "");
-        this.dataTracker.startTracking(SHOULD_DESPAWN, false);
         this.dataTracker.startTracking(CURRENT_ANIMATION, "idle");
     }
 
@@ -116,7 +117,8 @@ public class EliteHopliteEntity extends GreekEntity implements GeoEntity {
         this.goalSelector.add(4, new WanderAroundFarGoal(this, 0.35f, 1f));
         this.goalSelector.add(5, new LookAroundGoal(this));
 
-        this.targetSelector.add(1, new CustomRevengeGoal(this, GreekEntity.class));
+        this.targetSelector.add(1, (new GroupRevengeGoal(this, GreekEntity.class))
+                        .setGroupRevenge(GreekEntity.class));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, DraugrEntity.class, true));
@@ -173,8 +175,8 @@ public class EliteHopliteEntity extends GreekEntity implements GeoEntity {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller",0, this::predicate));
-        controllers.add(new AnimationController(this, "attacking", 0, this::attackPredicate).setSoundKeyframeHandler(state -> {
+        controllers.add(new AnimationController(this, "controller",1, this::predicate));
+        controllers.add(new AnimationController(this, "attacking", 1, this::attackPredicate).setSoundKeyframeHandler(state -> {
             PlayerEntity player = ClientUtils.getClientPlayer();
             if (player != null)
                 this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.SWING, this.getSoundCategory(), 0.5f, 1.5f);
@@ -194,14 +196,8 @@ public class EliteHopliteEntity extends GreekEntity implements GeoEntity {
         setVariant(variant);
         ModSoundUtil.InfantryPlaySound(spawnReason, this);
         this.setTarget(null);
-        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
-                && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(10);
-            if (randomValue >= ModSpawnRateConfig.eliteHopliteSpawnRate) {
-                this.setShouldDespawn(true);
-            }
-        }
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+
+        return entityData;
     }
 
     public EliteHopliteVariant getVariant() {
@@ -249,15 +245,44 @@ public class EliteHopliteEntity extends GreekEntity implements GeoEntity {
             }
         }
     }
-    @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putBoolean("shouldDespawn", this.getShouldDespawn());
+    public static boolean canMobSpawnWithRate(EntityType<? extends AnimalEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, net.minecraft.util.math.random.Random random) {
+        if (spawnReason == SpawnReason.SPAWNER || spawnReason == SpawnReason.SPAWN_EGG
+                || spawnReason == SpawnReason.COMMAND || spawnReason == SpawnReason.EVENT) {
+            return true;
+        }
+
+        long time = world.getLevelProperties().getTimeOfDay();
+        if (time % 24000L >= 13000L) {
+            return false;
+        }
+
+        BlockPos blockPos = pos.down();
+        BlockState blockBelow = world.getBlockState(blockPos);
+
+        boolean isGrassyGround = blockBelow.isOf(Blocks.GRASS);
+
+        if (!isGrassyGround) {
+            return false;
+        }
+
+        if (world.getLightLevel(pos) < 9) {
+            return false;
+        }
+
+        if (!world.isSkyVisible(pos)) {
+            return false;
+        }
+
+        int randomValue = random.nextInt(10);
+        return randomValue < ModSpawnRateConfig.eliteHopliteSpawnRate;
     }
 
     @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+    }
+    @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setShouldDespawn(nbt.getBoolean("shouldDespawn"));
     }
 }

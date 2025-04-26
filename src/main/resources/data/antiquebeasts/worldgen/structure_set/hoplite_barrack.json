@@ -7,10 +7,10 @@
   ],
   "placement": {
     "type": "minecraft:random_spread",
-    "salt": 86321488,
+    "salt": 36331488,
     "exclusion_zone":
     {
-      "other_set":"antiquebeasts:ext_cyclops_cave",
+      "other_set":"minecraft:villages",
       "chunk_count": 16
     },
     "spacing": 56,

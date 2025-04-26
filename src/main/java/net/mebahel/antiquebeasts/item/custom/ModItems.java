@@ -426,6 +426,7 @@ public class ModItems {
         entries.add(ModBlocks.CURSED_GOLDEN_BLOCK);
         entries.add(ModBlocks.MUMMY_BOSS_ALTAR);
         entries.add(ModBlocks.DRAUGR_CHEST);
+        entries.add(ModBlocks.GREEK_CHEST);
     }
     public static void addItemToCombatItemGroup(FabricItemGroupEntries entries) {
         entries.add(VALKYRIE_HELMET);
@@ -444,6 +445,7 @@ public class ModItems {
         entries.add(DIAMOND_SCALE_CHESTPLATE);
         entries.add(DIAMOND_SCALE_LEGGINGS);
         entries.add(DIAMOND_SCALE_BOOTS);
+
         entries.add(GOLD_PLATE_HELMET);
         entries.add(GOLD_PLATE_CHESTPLATE);
         entries.add(GOLD_PLATE_LEGGINGS);

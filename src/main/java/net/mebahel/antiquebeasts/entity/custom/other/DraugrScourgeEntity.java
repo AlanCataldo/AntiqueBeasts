@@ -3,7 +3,6 @@ package net.mebahel.antiquebeasts.entity.custom.other;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
 import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
 import net.mebahel.antiquebeasts.entity.ai.other.DraugrIceSpikeSpellGoal;
-import net.mebahel.antiquebeasts.entity.ai.other.DraugrWightMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
@@ -15,7 +14,8 @@ import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -29,7 +29,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -199,14 +200,6 @@ public class DraugrScourgeEntity extends DraugrEntity implements GeoEntity {
                                  @Nullable NbtCompound entityNbt) {
 
         var biome = world.getBiome(this.getBlockPos());
-        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
-                && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(10);
-            if (randomValue >= ModSpawnRateConfig.draugrSpawnRate) {
-                this.shouldDespawn = true;
-            }
-        }
-
         DraugrScourgeVariant variant;
 
         if (biome.isIn(ConventionalBiomeTags.DESERT) || biome.isIn(ConventionalBiomeTags.BADLANDS)) {
@@ -222,7 +215,7 @@ public class DraugrScourgeEntity extends DraugrEntity implements GeoEntity {
         setVariant(variant);
         this.setTarget(null);
 
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        return entityData;
     }
 
     @Override
@@ -263,7 +256,7 @@ public class DraugrScourgeEntity extends DraugrEntity implements GeoEntity {
     public void tick() {
         super.tick();
 
-        if (shouldDespawnInPeaceful() || this.shouldDespawn) {
+        if (shouldDespawnInPeaceful()) {
             remove(RemovalReason.DISCARDED);
         }
         if (this.age % 7 == 0) {
@@ -290,8 +283,22 @@ public class DraugrScourgeEntity extends DraugrEntity implements GeoEntity {
             this.getWorld().addParticle(ModParticles.SNOWFLAKE_HAND_PARTICLE, rightShoulderX, rightShoulderY, rightShoulderZ, 0, 0, 0);
         }
     }
-    public void performJump(Vec3d direction) {
-        this.setVelocity(direction);
-        this.velocityDirty = true;
+    public static boolean canMobSpawnWithRate(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random,
+                                              Boolean draugrCanSpawnInDark) {
+        if (spawnReason == SpawnReason.SPAWNER || spawnReason == SpawnReason.SPAWN_EGG
+                || spawnReason == SpawnReason.COMMAND || spawnReason == SpawnReason.EVENT) {
+            return true;
+        }
+
+        if (draugrCanSpawnInDark) {
+            BlockPos blockPos = pos.down();
+            if (!world.getBlockState(blockPos).allowsSpawning(world, blockPos, type)) {
+                return false;
+            }
+
+            int randomValue = random.nextInt(10);
+            return randomValue < ModSpawnRateConfig.draugrScourgeSpawnRate;
+        }
+        return false;
     }
 }

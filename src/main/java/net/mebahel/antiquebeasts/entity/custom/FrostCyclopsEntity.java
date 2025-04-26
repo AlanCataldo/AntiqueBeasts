@@ -11,9 +11,9 @@ import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.mebahel.antiquebeasts.entity.variant.CyclopsVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
-import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
-import net.minecraft.entity.Entity;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -27,6 +27,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ZombieEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.VillagerEntity;
@@ -35,11 +36,13 @@ import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
@@ -62,6 +65,8 @@ public class FrostCyclopsEntity extends CyclopsEntity implements GeoEntity {
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
         return null;
     }
+    private boolean shouldRandomIdle = true;
+    private int idleCondition = 0;
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
@@ -92,16 +97,25 @@ public class FrostCyclopsEntity extends CyclopsEntity implements GeoEntity {
         this.targetSelector.add(5, new ActiveTargetGoal<>(this, NorseEntity.class, true));
     }
 
-    private PlayState predicate(AnimationState animationState) {
-        if(animationState.isMoving()) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
+    private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> event) {
+        if (event.isMoving()) {
+            event.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
+            if (this.shouldRandomIdle) {
+                this.idleCondition = Math.random() < 0.5 ? 1 : 2;
+                this.shouldRandomIdle = false;
+            }
             return PlayState.CONTINUE;
+        } else {
+            if (idleCondition == 1) {
+                event.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+            } else {
+                event.getController().setAnimation(RawAnimation.begin().then("idle2", Animation.LoopType.LOOP));
+            }
+            this.shouldRandomIdle = true;
         }
 
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
-
     private PlayState attackPredicate(AnimationState state) {
         if(this.isSwinging() && !this.isShooting() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
             state.getController().forceAnimationReset();
@@ -152,13 +166,41 @@ public class FrostCyclopsEntity extends CyclopsEntity implements GeoEntity {
                                  @javax.annotation.Nullable NbtCompound entityNbt) {
         CyclopsVariant variant = Util.getRandom(CyclopsVariant.values(), this.random);
         setVariant(variant);
-        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
-                && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(10);
-            if (randomValue >= ModSpawnRateConfig.frostCyclopsSpawnRate) {
-                this.remove(Entity.RemovalReason.DISCARDED);
-            }
+        return entityData;
+    }
+
+    public static boolean canMobSpawnWithRate(EntityType<? extends AnimalEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, net.minecraft.util.math.random.Random random) {
+        if (spawnReason == SpawnReason.SPAWNER || spawnReason == SpawnReason.SPAWN_EGG
+                || spawnReason == SpawnReason.COMMAND || spawnReason == SpawnReason.EVENT) {
+            return true;
         }
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        long time = world.getLevelProperties().getTimeOfDay();
+        if (time % 24000L >= 13000L) {
+            return false;
+        }
+
+        BlockPos blockPos = pos.down();
+        BlockState blockBelow = world.getBlockState(blockPos);
+
+        boolean isSnowyGround = blockBelow.isOf(Blocks.SNOW_BLOCK)
+                || blockBelow.isOf(Blocks.POWDER_SNOW)
+                || blockBelow.isOf(Blocks.GRASS_BLOCK)
+                || blockBelow.isOf(Blocks.DIRT)
+                || blockBelow.isOf(Blocks.SNOW);
+
+        if (!isSnowyGround) {
+            return false;
+        }
+
+        if (world.getLightLevel(pos) < 9) {
+            return false;
+        }
+
+        if (!world.isSkyVisible(pos.up())) {
+            return false;
+        }
+
+        int randomValue = random.nextInt(10);
+        return randomValue < ModSpawnRateConfig.frostCyclopsSpawnRate;
     }
 }

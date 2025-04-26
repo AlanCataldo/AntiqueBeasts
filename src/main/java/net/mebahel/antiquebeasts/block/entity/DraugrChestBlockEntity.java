@@ -4,9 +4,9 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.mebahel.antiquebeasts.block.ModBlockEntities;
-import net.mebahel.antiquebeasts.block.screenhandlers.ChestScreenHandler;
-import net.mebahel.antiquebeasts.block.screenhandlers.ModScreenHandlerType;
+import net.mebahel.antiquebeasts.block.screenhandlers.DraugrChestScreenHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ChestBlockEntity;
@@ -21,7 +21,7 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -39,7 +39,7 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.RenderUtils;
 
-public class DraugrChestBlockEntity extends ChestBlockEntity implements GeoBlockEntity {
+public class DraugrChestBlockEntity extends ChestBlockEntity implements GeoBlockEntity, ExtendedScreenHandlerFactory {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public boolean isOpened = false;
     public boolean hasBeenOpened = false;
@@ -99,7 +99,8 @@ public class DraugrChestBlockEntity extends ChestBlockEntity implements GeoBlock
 
     @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory inventory) {
-        return new ChestScreenHandler(ModScreenHandlerType.DRAUGR_CHEST, syncId, inventory, ScreenHandlerContext.create(world, pos));
+        return new DraugrChestScreenHandler(syncId, inventory, this);
+
     }
 
     public void sync() {
@@ -137,7 +138,6 @@ public class DraugrChestBlockEntity extends ChestBlockEntity implements GeoBlock
 
     @Override
     public void onClose(PlayerEntity player) {
-
         if (!player.isSpectator()) {
             --this.viewerCount;
             if (viewerCount == 0 && hasBeenOpened) {
@@ -213,11 +213,10 @@ public class DraugrChestBlockEntity extends ChestBlockEntity implements GeoBlock
         if (this.age < 10)
             this.hasBeenOpened = false;
 
-
-
         if (this.closeCooldown> 0) {
             this.closeCooldown--;
-        } else if (closeCooldown == 0 && this.hasBeenOpened) {
+        } else if (closeCooldown == 0 && this.hasBeenOpened && viewerCount == 0) {
+            this.isOpened = false;
             this.hasBeenOpened = false;
             this.markDirty();
         }
@@ -267,4 +266,16 @@ public class DraugrChestBlockEntity extends ChestBlockEntity implements GeoBlock
         }
     }
 
+    @Override
+    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
+        buf.writeBlockPos(this.getPos());
+    }
+    @Override
+    public Text getDisplayName() {
+        return this.getContainerName();
+    }
+    @Override
+    public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
+        return new DraugrChestScreenHandler(syncId, playerInventory, this);
+    }
 }

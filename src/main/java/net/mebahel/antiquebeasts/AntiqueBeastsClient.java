@@ -7,6 +7,8 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.mebahel.antiquebeasts.block.ModBlockEntities;
 import net.mebahel.antiquebeasts.block.client.BlockScanRenderer;
 import net.mebahel.antiquebeasts.block.client.DraugrChestRenderer;
+import net.mebahel.antiquebeasts.block.client.GreekChestRenderer;
+import net.mebahel.antiquebeasts.block.screenhandlers.DraugrChestScreen;
 import net.mebahel.antiquebeasts.block.screenhandlers.ModScreenHandlers;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.client.custom.*;
@@ -15,6 +17,8 @@ import net.mebahel.antiquebeasts.entity.client.custom.draugr_archer.DraugrArcher
 import net.mebahel.antiquebeasts.entity.client.custom.draugr_overlord.DraugrOverlordRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.draugr_scourge.DraugrScourgeRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.draugr_wight.DraugrWightRenderer;
+import net.mebahel.antiquebeasts.entity.client.custom.dwarven_spider.DwarvenSpiderRenderer;
+import net.mebahel.antiquebeasts.entity.client.custom.dwarven_spider_guardian.DwarvenSpiderGuardianRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.harpy.HarpyRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.mummy_boss.MummyBossRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.skeleton_warrior.SkeletonWarriorHeadRenderer;
@@ -26,6 +30,7 @@ import net.mebahel.antiquebeasts.entity.client.projectiles.harpy.HarpyFeatherRen
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.particle.custom.*;
 import net.mebahel.antiquebeasts.util.*;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import software.bernie.geckolib.GeckoLib;
 
@@ -69,6 +74,8 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.HUSKARL, HuskarlRenderer::new);
         EntityRendererRegistry.register(ModEntities.EINHERJAR, EinherjarRenderer::new);
         EntityRendererRegistry.register(ModEntities.VALKYRIE, ValkyrieRenderer::new);
+        EntityRendererRegistry.register(ModEntities.DWARVEN_SPIDER, DwarvenSpiderRenderer::new);
+        EntityRendererRegistry.register(ModEntities.DWARVEN_SPIDER_GUARDIAN, DwarvenSpiderGuardianRenderer::new);
         EntityRendererRegistry.register(ModEntities.THROWING_AXEMAN, ThrowingAxeManRenderer::new);
         EntityRendererRegistry.register(ModEntities.THROWINGROCK, ThrowingRockRenderer::new);
         EntityRendererRegistry.register(ModEntities.HOPLITE_SPEAR, HopliteSpearRenderer::new);
@@ -100,9 +107,9 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.BLOCK_SCAN_ENTITY, BlockScanRenderer::new);
 
         BlockEntityRendererFactories.register(ModBlockEntities.DRAUGR_CHEST_ENTITY, DraugrChestRenderer::new);
-        //HandledScreens.register(ModScreenHandlers.STAFF_ENCHANTING_STAFF_SCREEN_HANDLER, StaffEnchantingTableScreen::new);
+        BlockEntityRendererFactories.register(ModBlockEntities.GREEK_CHEST_ENTITY, GreekChestRenderer::new);
 
-        ModScreenHandlers.registerScreenHandlers();
+        HandledScreens.register(ModScreenHandlers.DRAUGR_CHEST_SCREEN_HANDLER, DraugrChestScreen::new);
 
         BowPredicate.registerBowModels();
 

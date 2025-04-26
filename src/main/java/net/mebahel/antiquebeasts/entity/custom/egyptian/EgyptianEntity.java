@@ -22,8 +22,6 @@ public class EgyptianEntity extends ModPatrolEntity {
 
     public double rand;
 
-    public boolean shouldDespawn;
-
     protected EgyptianEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -37,12 +35,7 @@ public class EgyptianEntity extends ModPatrolEntity {
 
     public static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
             DataTracker.registerData(EgyptianEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    public static final TrackedData<Boolean> SHOULD_DESPAWN = DataTracker.registerData(EgyptianEntity.class,
-            TrackedDataHandlerRegistry.BOOLEAN);
-    public void setShouldDespawn(boolean bool) {
-        this.dataTracker.set(SHOULD_DESPAWN, bool);
-    }
-    public boolean getShouldDespawn() {return this.dataTracker.get(SHOULD_DESPAWN);}
+
     public void setAttackName(String attackName) {
         this.dataTracker.set(ATTACK_NAME, attackName);
     }
@@ -121,6 +114,16 @@ public class EgyptianEntity extends ModPatrolEntity {
 
         if (nbt.contains("PatrolTarget")) {
             this.setPatrolTarget(NbtHelper.toBlockPos(nbt.getCompound("PatrolTarget")));
+        }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.getTarget() != null) {
+            if (!this.getTarget().isAlive()) {
+                this.setTarget(null);
+            }
         }
     }
 }

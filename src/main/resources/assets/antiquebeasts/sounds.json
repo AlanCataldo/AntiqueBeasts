@@ -798,5 +798,53 @@
         "stream": false
       }
     ]
+  },
+  "dwarven_spider_walk": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:dwarven_spider/dwarven_spider_walk",
+        "stream": false
+      }
+    ]
+  },
+  "dwarven_spider_ambient_1": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:dwarven_spider/dwarven_spider_ambient_1",
+        "stream": false
+      }
+    ]
+  },
+  "dwarven_spider_injured_1": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:dwarven_spider/dwarven_spider_injured_1",
+        "stream": false
+      }
+    ]
+  },
+  "dwarven_spider_death_1": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:dwarven_spider/dwarven_spider_death_1",
+        "stream": false
+      }
+    ]
+  },
+  "dwarven_spider_mining": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:dwarven_spider/dwarven_spider_mining",
+        "stream": false
+      }
+    ]
+  },
+  "dwarven_spider_jump_attack": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:dwarven_spider/dwarven_spider_jump_attack",
+        "stream": false
+      }
+    ]
   }
 }

@@ -4,6 +4,8 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.block.entity.BlockScanEntity;
 import net.mebahel.antiquebeasts.entity.custom.*;
+import net.mebahel.antiquebeasts.entity.custom.dwarven.DwarvenSpiderEntity;
+import net.mebahel.antiquebeasts.entity.custom.dwarven.DwarvenSpiderGuardianEntity;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.*;
 import net.mebahel.antiquebeasts.entity.custom.greek.CentaurEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.ChampionHopliteEntity;
@@ -24,9 +26,17 @@ public class ModEntities {
             Registries.ENTITY_TYPE,
             new Identifier(AntiqueBeasts.MOD_ID, "block_scan_entity"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, BlockScanEntity::new)
-                    .dimensions(EntityDimensions.fixed(1.0F, 1.0F)) // Set size to 1x1x1
+                    .dimensions(EntityDimensions.fixed(0.75f, 1.0F)) // Set size to 1x1x1
                     .build()
     );
+    public static final EntityType<DwarvenSpiderGuardianEntity> DWARVEN_SPIDER_GUARDIAN = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "dwarven_spider_guardian"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DwarvenSpiderGuardianEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.99f, 1.25f)).build());
+    public static final EntityType<DwarvenSpiderEntity> DWARVEN_SPIDER = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "dwarven_spider"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DwarvenSpiderEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.8f, 1f)).build());
     public static final EntityType<DraugrOverlordEntity> DRAUGR_OVERLORD = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "draugr_overlord"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DraugrOverlordEntity::new)

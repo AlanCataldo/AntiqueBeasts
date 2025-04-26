@@ -47,7 +47,7 @@ public class GreekMeleeAttackGoal extends Goal {
                 if (path != null) {
                     return true;
                 } else {
-                    return this.getSquaredMaxAttackDistance(livingEntity) >= this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
+                    return this.getSquaredMaxAttackDistance() >= this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
                 }
             }
         }
@@ -56,8 +56,7 @@ public class GreekMeleeAttackGoal extends Goal {
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.mob.getTarget();
 
-        if (livingEntity instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+        if (livingEntity instanceof PlayerEntity playerEntity) {
             if (playerEntity.isCreative() || playerEntity.isSpectator()) {
                 return false;
             }
@@ -125,7 +124,7 @@ public class GreekMeleeAttackGoal extends Goal {
             this.mob.tryAttack(target);
         }
     }
-    protected double getSquaredMaxAttackDistance(LivingEntity entity) {
+    protected double getSquaredMaxAttackDistance() {
         return 8;
     }
 }

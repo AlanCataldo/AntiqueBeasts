@@ -170,7 +170,7 @@ public class DraugrWightProjectileEntity extends ThrownItemEntity implements Geo
 
         // Générer la traînée de particules
         if (this.getWorld().isClient()) {
-            generateParticles(this.getPos());  // Appel de la méthode modifiée
+            generateParticles(this.getPos());  // Appel de la méthode modizfiée
         }
 
         // Gérer la collision avec des entités ou des blocs
@@ -188,5 +188,14 @@ public class DraugrWightProjectileEntity extends ThrownItemEntity implements Geo
     private void freezeWater(World world, BlockPos pos) {
         world.setBlockState(pos, Blocks.ICE.getDefaultState());
         world.playSound(null, pos, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.BLOCKS, 0.5F, 1.0F);
+        this.discard();
+    }
+
+    @Override
+    protected void onBlockHit(BlockHitResult blockHitResult) {
+        BlockState blockState = this.getWorld().getBlockState(blockHitResult.getBlockPos());
+        blockState.onProjectileHit(this.getWorld(), blockState, blockHitResult, this);
+
+        this.discard();
     }
 }

@@ -6,10 +6,7 @@ import net.mebahel.antiquebeasts.entity.ai.HadesShadeMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.HadesShadeMoveControl;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
-import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
@@ -24,10 +21,9 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -35,8 +31,6 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
-
-import javax.annotation.Nullable;
 
 import static java.lang.Math.random;
 
@@ -111,7 +105,7 @@ public class HadesShadeEntity extends FlyingEntity implements GeoEntity {
     }
 
     private PlayState predicate(AnimationState animationState) {
-        if(animationState.isMoving()) {
+        if (animationState.isMoving()) {
             animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
@@ -177,18 +171,18 @@ public class HadesShadeEntity extends FlyingEntity implements GeoEntity {
             this.playSound(soundEvent, 0.35f, 1f);
         }
     }
-
-    @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
-                                 SpawnReason spawnReason, @Nullable EntityData entityData,
-                                 @Nullable NbtCompound entityNbt) {
-        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
-                && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(10);
-            if (randomValue >= ModSpawnRateConfig.hadesShadeSpawnRate) {
-                this.remove(Entity.RemovalReason.DISCARDED);
-            }
+    public static boolean canMobSpawnWithRate(EntityType<? extends FlyingEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, net.minecraft.util.math.random.Random random) {
+        if (spawnReason == SpawnReason.SPAWNER || spawnReason == SpawnReason.SPAWN_EGG
+                || spawnReason == SpawnReason.COMMAND || spawnReason == SpawnReason.EVENT) {
+            return true;
         }
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+
+        BlockPos blockPos = pos.down();
+        if (!world.getBlockState(blockPos).allowsSpawning(world, blockPos, type)) {
+            return false;
+        }
+
+        int randomValue = random.nextInt(10);
+        return randomValue < ModSpawnRateConfig.hadesChosenSpawnRate;
     }
 }

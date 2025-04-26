@@ -3,19 +3,18 @@ package net.mebahel.antiquebeasts.mixin;
 import net.mebahel.antiquebeasts.entity.custom.ChimeraEntity;
 import net.mebahel.antiquebeasts.entity.custom.CyclopsEntity;
 import net.mebahel.antiquebeasts.entity.custom.FrostCyclopsEntity;
-import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
+import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
-import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.ai.goal.GoalSelector;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.passive.IronGolemEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import net.mebahel.antiquebeasts.mixin.MobEntityAccessor;
 
 @Mixin(IronGolemEntity.class)
 public abstract class IronGolemMixin extends MobEntity {

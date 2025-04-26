@@ -15,7 +15,10 @@ import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
+import net.minecraft.entity.ai.goal.LookAroundGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -28,9 +31,10 @@ import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -202,14 +206,6 @@ public class DraugrWightEntity extends DraugrEntity implements GeoEntity {
                                  @Nullable NbtCompound entityNbt) {
 
         var biome = world.getBiome(this.getBlockPos());
-        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
-                && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(10);
-            if (randomValue >= ModSpawnRateConfig.draugrSpawnRate) {
-                this.shouldDespawn = true;
-            }
-        }
-
         DraugrWightVariant variant;
         boolean useAxeVariant = random.nextBoolean();
 
@@ -226,7 +222,7 @@ public class DraugrWightEntity extends DraugrEntity implements GeoEntity {
         setVariant(variant);
         this.setTarget(null);
 
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        return entityData;
     }
 
     @Override
@@ -267,7 +263,7 @@ public class DraugrWightEntity extends DraugrEntity implements GeoEntity {
     public void tick() {
         super.tick();
 
-        if (shouldDespawnInPeaceful() || this.shouldDespawn) {
+        if (shouldDespawnInPeaceful()) {
             remove(RemovalReason.DISCARDED);
         }
         if (this.age % 7 == 0 && !this.isShooting() && !this.isSwinging()) {
@@ -275,22 +271,17 @@ public class DraugrWightEntity extends DraugrEntity implements GeoEntity {
         }
     }
     private void generateLeftHandParticles() {
-        // Offset pour la main gauche
         Vec3d leftHandOffset = new Vec3d(-0.42, 0.85, -0.075);
-
-        // Obtenir la direction du regard de l'entité
-        Vec3d lookDirection = this.getRotationVec(1.0F); // 1.0F = interpolation complète vers le tick actuel
-
-        // Calculer la position de la main gauche en fonction de la direction du regard
+        Vec3d lookDirection = this.getRotationVec(1.0F);
         Vec3d leftHandPosition = this.getPos().add(
-                lookDirection.crossProduct(new Vec3d(0, 1, 0))  // Rotation à 90° autour de l'axe Y
-                        .normalize().multiply(leftHandOffset.x)  // Ajuster la position latérale (gauche-droite)
-        ).add(0, leftHandOffset.y, 0);  // Ajouter la hauteur pour la position de la main
+                lookDirection.crossProduct(new Vec3d(0, 1, 0))
+                        .normalize().multiply(leftHandOffset.x)
+        ).add(0, leftHandOffset.y, 0);
 
-        if (this.getWorld().isClient) {  // Générer des particules côté client
+        if (this.getWorld().isClient) {
             this.getWorld().addParticle(ModParticles.SNOWFLAKE_HAND_PARTICLE,
                     leftHandPosition.x, leftHandPosition.y, leftHandPosition.z,
-                    0, -0.05, 0);  // Les particules tombent doucement vers le bas
+                    0, -0.05, 0);
         }
     }
 
@@ -304,5 +295,24 @@ public class DraugrWightEntity extends DraugrEntity implements GeoEntity {
             }
         }
         return PlayState.CONTINUE;
+    }
+
+    public static boolean canMobSpawnWithRate(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random,
+                                              Boolean draugrCanSpawnInDark) {
+        if (spawnReason == SpawnReason.SPAWNER || spawnReason == SpawnReason.SPAWN_EGG
+                || spawnReason == SpawnReason.COMMAND || spawnReason == SpawnReason.EVENT) {
+            return true;
+        }
+
+        if (draugrCanSpawnInDark) {
+            BlockPos blockPos = pos.down();
+            if (!world.getBlockState(blockPos).allowsSpawning(world, blockPos, type)) {
+                return false;
+            }
+
+            int randomValue = random.nextInt(10);
+            return randomValue < ModSpawnRateConfig.draugrWightSpawnRate;
+        }
+        return false;
     }
 }

@@ -28,7 +28,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -183,16 +185,7 @@ public class DraugrArcherEntity extends DraugrEntity implements GeoEntity {
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
                                  SpawnReason spawnReason, @Nullable EntityData entityData,
                                  @Nullable NbtCompound entityNbt) {
-
         var biome = world.getBiome(this.getBlockPos());
-        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
-                && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(10);
-            if (randomValue >= ModSpawnRateConfig.draugrArcherSpawnRate) {
-                this.shouldDespawn = true;
-            }
-        }
-
         DraugrArcherVariant variant;
 
         if (biome.isIn(ConventionalBiomeTags.DESERT) || biome.isIn(ConventionalBiomeTags.BADLANDS)) {
@@ -208,7 +201,26 @@ public class DraugrArcherEntity extends DraugrEntity implements GeoEntity {
         setVariant(variant);
         this.setTarget(null);
 
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        return entityData;
+    }
+
+    public static boolean canMobSpawnWithRate(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random,
+                                              Boolean draugrCanSpawnInDark) {
+        if (spawnReason == SpawnReason.SPAWNER || spawnReason == SpawnReason.SPAWN_EGG
+                || spawnReason == SpawnReason.COMMAND || spawnReason == SpawnReason.EVENT) {
+            return true;
+        }
+
+        if (draugrCanSpawnInDark) {
+            BlockPos blockPos = pos.down();
+            if (!world.getBlockState(blockPos).allowsSpawning(world, blockPos, type)) {
+                return false;
+            }
+
+            int randomValue = random.nextInt(10);
+            return randomValue < ModSpawnRateConfig.draugrArcherSpawnRate;
+        }
+        return false;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package net.mebahel.antiquebeasts.entity.custom.egyptian;
 
-import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
 import net.mebahel.antiquebeasts.entity.ai.egyptian.EgyptianMeleeAttackGoal;
+import net.mebahel.antiquebeasts.entity.ai.util.GroupRevengeGoal;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
@@ -10,6 +10,7 @@ import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -74,7 +75,6 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(SHOULD_DESPAWN, false);
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
         this.dataTracker.startTracking(IS_IN_CARAVAN, false);
@@ -99,7 +99,7 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.5f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
 
-        this.targetSelector.add(1, new CustomRevengeGoal(this, EgyptianEntity.class));
+        this.targetSelector.add(1, new GroupRevengeGoal(this, EgyptianEntity.class).setGroupRevenge());
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, DraugrEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true));
@@ -175,24 +175,17 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
                                  SpawnReason spawnReason, @javax.annotation.Nullable EntityData entityData,
                                  @javax.annotation.Nullable NbtCompound entityNbt) {
-        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
-                && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(10);
-            if (randomValue >= ModSpawnRateConfig.servantSpawnRate) {
-                this.setShouldDespawn(true);
-            }
-        }
         EgyptiantVariant variant = Util.getRandom(EgyptiantVariant.values(), this.random);
         setVariant(variant);
 
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        return entityData;
     }
 
     @Override
     public void tick() {
         super.tick();
 
-        if (this.shouldDespawnInPeaceful() || this.getShouldDespawn()) {
+        if (this.shouldDespawnInPeaceful()) {
             this.remove(RemovalReason.DISCARDED);
         }
 
@@ -222,13 +215,11 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("HasSpawned", true);
-        nbt.putBoolean("shouldDespawn", this.getShouldDespawn());
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.setHasSpawned(nbt.getBoolean("HasSpawned"));
-        this.setShouldDespawn(nbt.getBoolean("shouldDespawn"));
     }
     private void spawnHoveringParticles() {
         // Position de l'entité
@@ -256,5 +247,24 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
                 );
             }
         }
+    }
+    public static boolean canMobSpawnWithRate(EntityType<? extends AnimalEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, net.minecraft.util.math.random.Random random) {
+        if (spawnReason == SpawnReason.SPAWNER || spawnReason == SpawnReason.SPAWN_EGG
+                || spawnReason == SpawnReason.COMMAND || spawnReason == SpawnReason.EVENT) {
+            return true;
+        }
+
+        BlockPos blockPos = pos.down();
+        BlockState blockBelow = world.getBlockState(blockPos);
+
+        boolean isSandyGround = blockBelow.isOf(Blocks.SAND)
+                || blockBelow.isOf(Blocks.RED_SAND);
+
+        if (!isSandyGround) {
+            return false;
+        }
+
+        int randomValue = random.nextInt(10);
+        return randomValue < ModSpawnRateConfig.servantSpawnRate;
     }
 }

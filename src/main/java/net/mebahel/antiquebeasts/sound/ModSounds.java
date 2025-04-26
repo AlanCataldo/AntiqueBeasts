@@ -102,6 +102,7 @@ public class ModSounds {
     public static SoundEvent SERVANT_AMBIENT_2 = registerSoundEvent("servant_ambient_2");
     public static SoundEvent SERVANT_AMBIENT_3 = registerSoundEvent("servant_ambient_3");
     public static SoundEvent CURSED_BIRTH = registerSoundEvent("cursed_birth");
+
     public static SoundEvent MUMMY_SPAWN = registerSoundEvent("mummy_spawn");
     public static SoundEvent ELEPHANT_HURT_1 = registerSoundEvent("elephant_hurt_1");
     public static SoundEvent ELEPHANT_HURT_2 = registerSoundEvent("elephant_hurt_2");
@@ -141,6 +142,12 @@ public class ModSounds {
     public static SoundEvent FROST_CHARGE = registerSoundEvent("frost_charge");
     public static SoundEvent FROST_SPIKE_BREAK = registerSoundEvent("frost_spike_break");
     public static SoundEvent FROST_SPELL_3 = registerSoundEvent("frost_spell_3");
+    public static SoundEvent DWARVEN_SPIDER_WALK = registerSoundEvent("dwarven_spider_walk");
+    public static SoundEvent DWARVEN_SPIDER_AMBIENT_1 = registerSoundEvent("dwarven_spider_ambient_1");
+    public static SoundEvent DWARVEN_SPIDER_INJURED_1 = registerSoundEvent("dwarven_spider_injured_1");
+    public static SoundEvent DWARVEN_SPIDER_DEATH_1 = registerSoundEvent("dwarven_spider_death_1");
+    public static SoundEvent DWARVEN_SPIDER_MINING = registerSoundEvent("dwarven_spider_mining");
+    public static SoundEvent DWARVEN_SPIDER_JUMP_ATTACK = registerSoundEvent("dwarven_spider_jump_attack");
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));

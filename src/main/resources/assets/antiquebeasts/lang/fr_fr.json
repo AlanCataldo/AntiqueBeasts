@@ -31,6 +31,8 @@
   "entity.antiquebeasts.draugr_scourge": "Fléau Draugr",
   "entity.antiquebeasts.skeleton_warrior": "Guerrier Squelette",
   "entity.antiquebeasts.skeleton_warrior_head": "Tête de Guerrier Squelette",
+  "entity.antiquebeasts.dwarven_spider": "Araignée Dwemer",
+  "entity.antiquebeasts.dwarven_spider_guardian": "Araignée Dwemer Gardienne",
 
   "entity.antiquebeasts.draugr_wight_projectile": "Sort de Froid Mordant",
   "entity.antiquebeasts.frost_spike": "Sort de Lance Gelée",
@@ -42,6 +44,7 @@
 
   "block.antiquebeasts.amphora": "Amphore",
   "block.antiquebeasts.draugr_chest": "Coffre Draugr",
+  "block.antiquebeasts.greek_chest": "Coffre Grec",
   "block.antiquebeasts.cursed_gold_block": "Block d'or maudit",
   "block.antiquebeasts.mummy_boss_altar": "Autel du Pharaon",
 
@@ -77,6 +80,8 @@
   "item.antiquebeasts.spawn_egg.chimera_spawn_egg": "Oeuf d'apparition de Chimère",
   "item.antiquebeasts.spawn_egg.pegasus_spawn_egg": "Oeuf d'apparition de Pégase",
   "item.antiquebeasts.spawn_egg.mummy_boss_spawn_egg": "Oeuf d'apparition de Pharaon momifié",
+  "item.antiquebeasts.spawn_egg.dwarven_spider_spawn_egg": "Oeuf d'apparition d'Araignée Dwemer",
+  "item.antiquebeasts.spawn_egg.dwarven_spider_guardian_spawn_egg": "Oeuf d'apparition d'Araignée Dwemer Gardienne",
 
   "item.antiquebeasts.throwingrock": "Rocher de lancer",
   "item.antiquebeasts.raw_cyclops_meat": "Viande de cyclope crue",

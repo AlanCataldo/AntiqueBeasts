@@ -1,11 +1,11 @@
 {
-  "name": "antiquebeasts:temple/couloir",
+  "name": "antiquebeasts:temple/temple_bas",
   "fallback": "minecraft:empty",
   "elements": [
     {
       "weight": 1,
       "element": {
-        "location": "antiquebeasts:temple_bas",
+        "location": "antiquebeasts:temple/temple_bas",
         "processors": "antiquebeasts:water_removal_processor",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

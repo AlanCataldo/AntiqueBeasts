@@ -1,6 +1,5 @@
 package net.mebahel.antiquebeasts.entity.client.custom;
 
-import net.mebahel.antiquebeasts.entity.custom.norse.HersirEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.HuskarlEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -12,7 +11,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class HuskarlRenderer extends GeoEntityRenderer<HuskarlEntity> {
     public HuskarlRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new HuskarlModel());
-        this.shadowRadius = 0.25f;
+        this.shadowRadius = 0.5f;
     }
     @Override
     public RenderLayer getRenderType(HuskarlEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {

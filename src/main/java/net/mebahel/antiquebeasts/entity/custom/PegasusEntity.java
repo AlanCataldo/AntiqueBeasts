@@ -4,9 +4,9 @@ import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.variant.PegasusVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
-import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.util.InputUtil;
@@ -19,14 +19,16 @@ import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.passive.*;
+import net.minecraft.entity.passive.AbstractHorseEntity;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.HorseEntity;
+import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
@@ -39,8 +41,8 @@ import org.lwjgl.glfw.GLFW;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
@@ -57,7 +59,6 @@ public class PegasusEntity extends HorseEntity implements GeoEntity {
     private int transitionFromGroundTicks = 0;
     private boolean transitioningToGround = false;
     private boolean transitioningToFly = false;
-
     private int transition = 0;
     private float entityScale = 1.0F;
     public static final TrackedData<Float> SCALE_TRACKER = DataTracker.registerData(PegasusEntity.class, TrackedDataHandlerRegistry.FLOAT);
@@ -97,7 +98,7 @@ public class PegasusEntity extends HorseEntity implements GeoEntity {
     public static DefaultAttributeContainer.Builder setAttributes() {
         Random random = Random.create();
 
-        double baseSpeed = 1;
+        double baseSpeed = 0.22;
         double baseHealth = 40.0;
         double baseJumpStrength = 1;
         double minMultiplier = 1.25;
@@ -206,7 +207,7 @@ public class PegasusEntity extends HorseEntity implements GeoEntity {
     public void tick() {
         super.tick();
 
-        if (!this.getWorld().isClient) { // ✅ S'assurer que seul le serveur modifie la taille
+        if (!this.getWorld().isClient) {
             if (this.isBaby()) {
                 float age = this.getBreedingAge(); // De -24000 à 0
                 float progress = Math.max(0.0F, Math.min(1.0F, 1.0F - (age / -24000.0F))); // De 0.0 à 1.0
@@ -405,24 +406,48 @@ public class PegasusEntity extends HorseEntity implements GeoEntity {
     @Nullable
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
-                && spawnReason != SpawnReason.EVENT ) {
-            int randomValue = this.random.nextInt(10);
-            if (randomValue >= ModSpawnRateConfig.pegasusSpawnRate) {
-                this.remove(Entity.RemovalReason.DISCARDED);
-            }
-            if (this.isBaby()) {
-                this.setScale(0.5F); // Force la taille à 0.5 au spawn
-            }
-        }
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        if (this.isBaby())
+            this.setScale(0.5F);
+
+        return entityData;
     }
 
     @Override
     @Nullable
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-            PegasusEntity horseEntity2 = (PegasusEntity) ModEntities.PEGASUS.create(world);
+            PegasusEntity horseEntity2 = ModEntities.PEGASUS.create(world);
             this.setChildAttributes(entity, horseEntity2);
             return horseEntity2;
+    }
+    public static boolean canMobSpawnWithRate(EntityType<? extends AnimalEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, net.minecraft.util.math.random.Random random) {
+        if (spawnReason == SpawnReason.SPAWNER || spawnReason == SpawnReason.SPAWN_EGG
+                || spawnReason == SpawnReason.COMMAND || spawnReason == SpawnReason.EVENT) {
+            return true;
+        }
+
+        long time = world.getLevelProperties().getTimeOfDay();
+        if (time % 24000L >= 13000L) {
+            return false;
+        }
+
+        BlockPos blockPos = pos.down();
+        BlockState blockBelow = world.getBlockState(blockPos);
+
+        boolean isGrassyGround = blockBelow.isOf(Blocks.GRASS);
+
+        if (!isGrassyGround) {
+            return false;
+        }
+
+        if (world.getLightLevel(pos) < 9) {
+            return false;
+        }
+
+        if (!world.isSkyVisible(pos)) {
+            return false;
+        }
+
+        int randomValue = random.nextInt(10);
+        return randomValue < ModSpawnRateConfig.pegasusSpawnRate;
     }
 }
