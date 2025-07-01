@@ -4,6 +4,7 @@ import net.mebahel.antiquebeasts.entity.ai.CentaurLookAtTargetGoal;
 import net.mebahel.antiquebeasts.entity.ai.CentaurMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.CentaurShootingGoal;
 import net.mebahel.antiquebeasts.entity.ai.util.ModPatrolGoal;
+import net.mebahel.antiquebeasts.entity.custom.dwemer.DwemerEntity;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
@@ -141,6 +142,7 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, DraugrEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, DwemerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, RaiderEntity.class, true));

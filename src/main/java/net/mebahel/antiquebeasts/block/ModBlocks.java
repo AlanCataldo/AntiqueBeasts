@@ -14,6 +14,10 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 
 public class ModBlocks {
+    public static final Block DWEMER_SPIDER_BLOCK = registerBlock("dwemer_spider_block",
+            new DwemerSpiderBlock(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()));
+    public static final Block DWEMER_CHEST = registerBlock("dwemer_chest",
+            new DwemerChestBlock(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()));
     public static final Block AMPHORA = registerBlock("amphora",
             new Block(FabricBlockSettings.copyOf(Blocks.DECORATED_POT).sounds(BlockSoundGroup.DECORATED_POT)));
     public static final Block CURSED_GOLDEN_BLOCK = registerBlock("cursed_gold_block",
@@ -24,6 +28,14 @@ public class ModBlocks {
             new DraugrChestBlock(FabricBlockSettings.copyOf(Blocks.CHEST).nonOpaque()));
     public static final Block GREEK_CHEST = registerBlock("greek_chest",
             new GreekChestBlock(FabricBlockSettings.copyOf(Blocks.CHEST).nonOpaque()));
+    public static final Block DWEMER_METAL_PIPE = registerBlock("dwemer_metal_pipe",
+            new DwarvenMetalPipeBlock(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()));
+
+    public static final Block DWEMER_METAL_PIPE_GEAR = registerBlock("dwemer_metal_pipe_gear",
+            new DwarvenMetalPipeGearBlock(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK).nonOpaque()));
+
+    public static final Block DWEMER_METAL_BLOCK = registerBlock("dwemer_metal_block",
+            new Block(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK)));
 
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);

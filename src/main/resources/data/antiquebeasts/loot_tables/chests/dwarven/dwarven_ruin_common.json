@@ -1,0 +1,221 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "name": "minerais_bruts",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 2.0,
+        "max": 4.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:raw_iron",
+          "weight": 25
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:raw_copper",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:raw_gold",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:redstone",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:lapis_lazuli",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:coal",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:diamond",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:emerald",
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "name": "matieres_organique",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 2.0,
+        "max": 3.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:bone",
+          "weight": 25,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 4.0
+              },
+              "add": false
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:string",
+          "weight": 20,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 4.0
+              },
+              "add": false
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:red_mushroom",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:brown_mushroom",
+          "weight": 15
+        }
+      ]
+    },
+    {
+      "name": "armes_dwemer",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 1.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:weapon/dwemer/dwemer_war_axe",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:weapon/dwemer/dwemer_warhammer",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:weapon/dwemer/dwemer_dagger",
+          "weight": 12
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:weapon/dwemer/dwemer_axe",
+          "weight": 9
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:weapon/dwemer/dwemer_sword",
+          "weight": 9
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:weapon/dwemer/dwemer_mace",
+          "weight": 7
+        }
+      ]
+    },
+    {
+      "name": "scrap_dwemer",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 2.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:dwemer_metal_scrap",
+          "weight": 20,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 2.0
+              },
+              "add": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "template_forge",
+      "rolls": {
+        "min": 0,
+        "max": 1,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        { "type": "minecraft:item", "name": "minecraft:netherite_upgrade_smithing_template", "weight": 2 },
+        { "type": "minecraft:item", "name": "minecraft:sentry_armor_trim_smithing_template", "weight": 2 },
+        { "type": "minecraft:item", "name": "minecraft:dune_armor_trim_smithing_template", "weight": 2 },
+        { "type": "minecraft:item", "name": "minecraft:coast_armor_trim_smithing_template", "weight": 2 },
+        { "type": "minecraft:item", "name": "minecraft:wild_armor_trim_smithing_template", "weight": 2 },
+        { "type": "minecraft:item", "name": "minecraft:ward_armor_trim_smithing_template", "weight": 2 },
+        { "type": "minecraft:item", "name": "minecraft:eye_armor_trim_smithing_template", "weight": 2 },
+        { "type": "minecraft:item", "name": "minecraft:vex_armor_trim_smithing_template", "weight": 2 },
+        { "type": "minecraft:item", "name": "minecraft:tide_armor_trim_smithing_template", "weight": 2 },
+        { "type": "minecraft:item", "name": "minecraft:snout_armor_trim_smithing_template", "weight": 2 },
+        { "type": "minecraft:item", "name": "minecraft:rib_armor_trim_smithing_template", "weight": 2 },
+        { "type": "minecraft:item", "name": "minecraft:spire_armor_trim_smithing_template", "weight": 2 },
+        { "type": "minecraft:item", "name": "minecraft:wayfinder_armor_trim_smithing_template", "weight": 2 },
+        { "type": "minecraft:item", "name": "minecraft:shaper_armor_trim_smithing_template", "weight": 2 },
+        { "type": "minecraft:item", "name": "minecraft:silence_armor_trim_smithing_template", "weight": 2 },
+        { "type": "minecraft:item", "name": "minecraft:raiser_armor_trim_smithing_template", "weight": 2 },
+        { "type": "minecraft:item", "name": "minecraft:host_armor_trim_smithing_template", "weight": 2 }
+      ]
+    },
+    {
+      "name": "livre_enchante",
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "minecraft:random_chance",
+          "chance": 0.33
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:book",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

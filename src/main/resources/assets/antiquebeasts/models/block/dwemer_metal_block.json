@@ -1,0 +1,7 @@
+{
+	"parent": "block/cube_all",
+	"textures": {
+		"all": "antiquebeasts:block/dwemer_metal_block",
+		"particle": "antiquebeasts:block/dwemer_metal_pipe"
+	}
+}

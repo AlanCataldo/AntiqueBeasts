@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Antique Beasts",
-  "description": "Mebahel's Antique Beasts mod takes you back 20 years to the world of Age of Mythology, adding new creatures, bosses and structures with unique mechanics for an immersive and challenging adventure.",
+  "description": "Mebahel's Antique Beasts mod takes you back 20 years to the world of Age of Mythology and Skyrim, adding new creatures, bosses and structures with unique mechanics for an immersive and challenging adventure.",
   "authors": [
     "Mebahel"
   ],
@@ -34,7 +34,8 @@
     "fabric": "*",
     "minecraft": ">=1.20",
     "java": ">=17",
-    "geckolib": ">=4.2"
+    "geckolib": ">=4.2",
+    "azurelib": ">=3.0.0"
   },
   "suggests": {
     "another-mod": "*"

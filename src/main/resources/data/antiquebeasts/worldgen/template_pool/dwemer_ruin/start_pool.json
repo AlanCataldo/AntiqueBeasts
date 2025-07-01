@@ -1,0 +1,33 @@
+{
+  "name": "antiquebeasts:dwemer_ruin/start_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "antiquebeasts:dwemer_ruin/dwemer_ruin_room_start",
+        "processors": "antiquebeasts:water_removal_processor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "antiquebeasts:dwemer_ruin/dwemer_ruin_raldbthar_1",
+        "processors": "antiquebeasts:water_removal_processor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "antiquebeasts:dwemer_ruin/dwemer_ruin_blackreach_middle_3",
+        "processors": "antiquebeasts:water_removal_processor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

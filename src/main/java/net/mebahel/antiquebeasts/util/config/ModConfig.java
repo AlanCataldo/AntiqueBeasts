@@ -11,9 +11,9 @@ import java.io.IOException;
 public class ModConfig {
     private static final String CONFIG_FILE_NAME = "antiquebeasts_config.json";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    public static boolean patrolSpawning = true;
-    public static int patrolSpawnDelay = 15;
-    public static boolean enableDifficultySystem = true;
+    public static boolean patrolSpawning = false;
+    public static int patrolSpawnDelay = 45;
+    public static boolean enableDifficultySystem = false;
 
     public static void loadConfig(File configDir) {
         if (!configDir.exists()) {
@@ -28,15 +28,15 @@ public class ModConfig {
                 boolean updated = false;
 
                 if (data.patrolSpawning == null) {
-                    data.patrolSpawning = true;
+                    data.patrolSpawning = false;
                     updated = true;
                 }
                 if (data.patrolSpawnDelay == null || data.patrolSpawnDelay < 1 || data.patrolSpawnDelay > 60) {
-                    data.patrolSpawnDelay = 15;
+                    data.patrolSpawnDelay = 45;
                     updated = true;
                 }
                 if (data.enableDifficultySystem == null) {
-                    data.enableDifficultySystem = true;
+                    data.enableDifficultySystem = false;
                     updated = true;
                 }
 

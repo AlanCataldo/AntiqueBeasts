@@ -1,0 +1,15 @@
+{
+  "name": "antiquebeasts:dwemer_ruin/dwemer_ruin_raldbthar_3",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "antiquebeasts:dwemer_ruin/dwemer_ruin_raldbthar_3",
+        "processors": "antiquebeasts:water_removal_processor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

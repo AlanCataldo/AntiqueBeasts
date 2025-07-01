@@ -215,12 +215,6 @@
       "antiquebeasts:swing1"
     ]
   },
-  "fleshcrush1": {
-    "subtitle": "antiquebeasts:fleshcrush1",
-    "sounds": [
-      "antiquebeasts:fleshcrush1"
-    ]
-  },
   "throwing_axeman_ambient1": {
     "subtitle": "antiquebeasts:throwing_axeman_ambient1",
     "sounds": [
@@ -701,18 +695,6 @@
       "antiquebeasts:draugr/draugr_hurt_2"
     ]
   },
-  "harpy_ambient_1": {
-    "subtitle": "antiquebeasts:draugr/harpy_ambient_1",
-    "sounds": [
-      "antiquebeasts:harpy/harpy_ambient_1"
-    ]
-  },
-  "harpy_ambient_2": {
-    "subtitle": "antiquebeasts:draugr/harpy_ambient_2",
-    "sounds": [
-      "antiquebeasts:harpy/harpy_ambient_2"
-    ]
-  },
   "harpy_death_1": {
     "subtitle": "antiquebeasts:draugr/harpy_death_1",
     "sounds": [
@@ -843,6 +825,102 @@
     "sounds": [
       {
         "name": "antiquebeasts:dwarven_spider/dwarven_spider_jump_attack",
+        "stream": false
+      }
+    ]
+  },
+  "dwarven_centurion_attack_1": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:dwarven_centurion/dwarven_centurion_attack_1",
+        "stream": false
+      }
+    ]
+  },
+  "dwarven_centurion_attack_2": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:dwarven_centurion/dwarven_centurion_attack_2",
+        "stream": false
+      }
+    ]
+  },
+  "dwarven_centurion_death_1": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:dwarven_centurion/dwarven_centurion_death_1",
+        "stream": false
+      }
+    ]
+  },
+  "dwarven_centurion_injured_1": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:dwarven_centurion/dwarven_centurion_injured_1",
+        "stream": false
+      }
+    ]
+  },
+  "dwarven_centurion_injured_2": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:dwarven_centurion/dwarven_centurion_injured_2",
+        "stream": false
+      }
+    ]
+  },
+  "dwarven_centurion_walk": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:dwarven_centurion/dwarven_centurion_walk",
+        "stream": false
+      }
+    ]
+  },
+  "dwarven_centurion_ambient_1": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:dwarven_centurion/dwarven_centurion_ambient_1",
+        "stream": false
+      }
+    ]
+  },
+  "dwarven_centurion_shooting": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:dwarven_centurion/dwarven_centurion_shooting",
+        "stream": false
+      }
+    ]
+  },
+  "dwarven_centurion_power_attack": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:dwarven_centurion/dwarven_centurion_power_attack",
+        "stream": false
+      }
+    ]
+  },
+  "dwarven_gear_multiple": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:dwarven_centurion/dwarven_gear_multiple",
+        "stream": false
+      }
+    ]
+  },
+  "dwarven_chest_open": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:dwarven_centurion/dwarven_chest_open",
+        "stream": false
+      }
+    ]
+  },
+  "dwarven_chest_close": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:dwarven_centurion/dwarven_chest_close",
         "stream": false
       }
     ]

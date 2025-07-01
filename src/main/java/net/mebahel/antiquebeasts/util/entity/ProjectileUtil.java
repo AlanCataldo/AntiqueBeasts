@@ -2,6 +2,7 @@ package net.mebahel.antiquebeasts.util.entity;
 
 import net.mebahel.antiquebeasts.entity.projectiles.DraugrWightProjectileEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.FrostSpikeEntity;
+import net.mebahel.antiquebeasts.entity.projectiles.SteamProjectileEntity;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.LivingEntity;
@@ -25,6 +26,25 @@ public class ProjectileUtil {
         projectile.setPosition(leftHandPosition.x, leftHandPosition.y, leftHandPosition.z);
         world.spawnEntity(projectile);
     }
+    public void shootSteamProjectile(World world, LivingEntity actor, Vec3d shootDirection, float damage) {
+        double speed = 1.5;
+
+        // Create your projectile entity
+        SteamProjectileEntity projectile = new SteamProjectileEntity(world, actor, damage);
+
+        // Define an offset for the nozzle — adjust as needed
+        Vec3d nozzleOffset = new Vec3d(0.3, 0.3, -0.6);
+        Vec3d origin = actor.getPos()
+                .add(nozzleOffset.rotateY(-actor.getYaw() * ((float) Math.PI / 180)))
+                .add(0, actor.getHeight()- 0.95f, 0);
+
+        // Set projectile's position and velocity based on the fixed direction
+        projectile.setVelocity(shootDirection.normalize().multiply(speed));
+        projectile.setPosition(origin.x, origin.y, origin.z);
+
+        world.spawnEntity(projectile);
+    }
+
     public void shootProjectile(LivingEntity target, LivingEntity actor, float iceSpikeDamage, Vec3d leftHandOffset) {
         double distanceToTarget = actor.distanceTo(target);
         double speed = distanceToTarget > 12 ? 1.1 : 0.85;

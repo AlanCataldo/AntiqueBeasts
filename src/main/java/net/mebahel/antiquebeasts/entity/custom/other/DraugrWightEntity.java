@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
 import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
 import net.mebahel.antiquebeasts.entity.ai.other.DraugrSpellGoal;
 import net.mebahel.antiquebeasts.entity.ai.other.DraugrWightMeleeAttackGoal;
+import net.mebahel.antiquebeasts.entity.custom.dwemer.DwemerEntity;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
@@ -122,6 +123,7 @@ public class DraugrWightEntity extends DraugrEntity implements GeoEntity {
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, RaiderEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, DwemerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, GreekEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, EgyptianEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, NorseEntity.class, true));

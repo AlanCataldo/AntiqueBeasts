@@ -2,6 +2,7 @@ package net.mebahel.antiquebeasts.entity.custom.egyptian;
 
 import net.mebahel.antiquebeasts.entity.ai.egyptian.EgyptianMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.util.GroupRevengeGoal;
+import net.mebahel.antiquebeasts.entity.custom.dwemer.DwemerEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
@@ -102,6 +103,7 @@ public class ServantEntity extends EgyptianEntity implements GeoEntity {
         this.targetSelector.add(1, new GroupRevengeGoal(this, EgyptianEntity.class).setGroupRevenge());
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, DraugrEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, DwemerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, RaiderEntity.class, true));

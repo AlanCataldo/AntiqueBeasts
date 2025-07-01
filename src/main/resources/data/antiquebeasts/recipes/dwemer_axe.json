@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " II",
+    " GI",
+    " G "
+  ],
+  "key" : {
+    "I": {
+      "item" : "antiquebeasts:dwemer_metal_ingot"
+    },
+    "G": {
+      "item" : "antiquebeasts:dwemer_metal_gear"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:weapon/dwemer/dwemer_axe"
+  }
+}

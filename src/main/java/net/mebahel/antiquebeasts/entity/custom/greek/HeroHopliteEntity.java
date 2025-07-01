@@ -3,6 +3,7 @@ package net.mebahel.antiquebeasts.entity.custom.greek;
 import net.mebahel.antiquebeasts.entity.ai.HopliteShootingGoal;
 import net.mebahel.antiquebeasts.entity.ai.greek.GreekMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.util.GroupRevengeGoal;
+import net.mebahel.antiquebeasts.entity.custom.dwemer.DwemerEntity;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
@@ -118,6 +119,7 @@ public class    HeroHopliteEntity extends GreekEntity implements GeoEntity {
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, DraugrEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, DwemerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, RaiderEntity.class, true));

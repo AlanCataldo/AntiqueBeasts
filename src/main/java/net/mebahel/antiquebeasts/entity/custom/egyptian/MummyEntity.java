@@ -4,6 +4,7 @@ import net.mebahel.antiquebeasts.entity.ai.MummyShootingGoal;
 import net.mebahel.antiquebeasts.entity.ai.MummySummonGoal;
 import net.mebahel.antiquebeasts.entity.ai.egyptian.EgyptianMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.util.GroupRevengeGoal;
+import net.mebahel.antiquebeasts.entity.custom.dwemer.DwemerEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
@@ -129,9 +130,11 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.45f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
 
-        this.targetSelector.add(1, new GroupRevengeGoal(this, EgyptianEntity.class).setGroupRevenge());
+        this.targetSelector.add(1, (new GroupRevengeGoal(this, EgyptianEntity.class))
+                .setGroupRevenge(EgyptianEntity.class));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, DraugrEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, DwemerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, RaiderEntity.class, true));

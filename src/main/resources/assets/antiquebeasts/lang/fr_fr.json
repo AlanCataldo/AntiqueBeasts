@@ -31,8 +31,9 @@
   "entity.antiquebeasts.draugr_scourge": "Fléau Draugr",
   "entity.antiquebeasts.skeleton_warrior": "Guerrier Squelette",
   "entity.antiquebeasts.skeleton_warrior_head": "Tête de Guerrier Squelette",
-  "entity.antiquebeasts.dwarven_spider": "Araignée Dwemer",
-  "entity.antiquebeasts.dwarven_spider_guardian": "Araignée Dwemer Gardienne",
+  "entity.antiquebeasts.dwemer_spider": "Araignée Dwemer",
+  "entity.antiquebeasts.dwemer_spider_guardian": "Araignée Dwemer Gardienne",
+  "entity.antiquebeasts.dwemer_centurion": "Centurion Dwemer",
 
   "entity.antiquebeasts.draugr_wight_projectile": "Sort de Froid Mordant",
   "entity.antiquebeasts.frost_spike": "Sort de Lance Gelée",

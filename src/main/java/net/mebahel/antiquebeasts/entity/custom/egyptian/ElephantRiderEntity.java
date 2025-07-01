@@ -2,6 +2,7 @@ package net.mebahel.antiquebeasts.entity.custom.egyptian;
 
 import net.mebahel.antiquebeasts.entity.ai.*;
 import net.mebahel.antiquebeasts.entity.ai.util.GroupRevengeGoal;
+import net.mebahel.antiquebeasts.entity.custom.dwemer.DwemerEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
@@ -9,7 +10,6 @@ import net.mebahel.antiquebeasts.entity.custom.patrol.ModPatrolEntity;
 import net.mebahel.antiquebeasts.entity.variant.EgyptiantVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
-import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
@@ -129,6 +129,7 @@ public class ElephantRiderEntity extends EgyptianEntity implements GeoEntity {
         this.targetSelector.add(1, new GroupRevengeGoal(this, EgyptianEntity.class).setGroupRevenge());
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, DwemerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, DraugrEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));

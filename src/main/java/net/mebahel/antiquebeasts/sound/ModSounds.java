@@ -51,7 +51,6 @@ public class ModSounds {
     public static SoundEvent SHIELD_BLOCK = registerSoundEvent("shield_block");
 
     public static SoundEvent SWING = registerSoundEvent("swing1");
-    public static SoundEvent FLESHCRUSH1 = registerSoundEvent("fleshcrush1");
     public static SoundEvent EINHERJAR_AMBIENT1 = registerSoundEvent("einherjar_ambient1");
     public static SoundEvent EINHERJAR_AMBIENT2 = registerSoundEvent("einherjar_ambient2");
     public static SoundEvent EINHERJAR_AMBIENT3 = registerSoundEvent("einherjar_ambient3");
@@ -127,8 +126,6 @@ public class ModSounds {
     public static SoundEvent DRAUGR_DEATH_1 = registerSoundEvent("draugr_death_1");
     public static SoundEvent DRAUGR_HURT_1 = registerSoundEvent("draugr_hurt_1");
     public static SoundEvent DRAUGR_HURT_2 = registerSoundEvent("draugr_hurt_2");
-    public static SoundEvent HARPY_AMBIENT_1 = registerSoundEvent("harpy_ambient_1");
-    public static SoundEvent HARPY_AMBIENT_2 = registerSoundEvent("harpy_ambient_2");
     public static SoundEvent HARPY_DEATH_1 = registerSoundEvent("harpy_death_1");
     public static SoundEvent HARPY_HURT_1 = registerSoundEvent("harpy_hurt_1");
     public static SoundEvent HARPY_HURT_2 = registerSoundEvent("harpy_hurt_2");
@@ -148,6 +145,18 @@ public class ModSounds {
     public static SoundEvent DWARVEN_SPIDER_DEATH_1 = registerSoundEvent("dwarven_spider_death_1");
     public static SoundEvent DWARVEN_SPIDER_MINING = registerSoundEvent("dwarven_spider_mining");
     public static SoundEvent DWARVEN_SPIDER_JUMP_ATTACK = registerSoundEvent("dwarven_spider_jump_attack");
+    public static SoundEvent DWARVEN_CENTURION_ATTACK_1 = registerSoundEvent("dwarven_centurion_attack_1");
+    public static SoundEvent DWARVEN_CENTURION_ATTACK_2 = registerSoundEvent("dwarven_centurion_attack_2");
+    public static SoundEvent DWARVEN_CENTURION_DEATH_1 = registerSoundEvent("dwarven_centurion_death_1");
+    public static SoundEvent DWARVEN_CENTURION_INJURED_1 = registerSoundEvent("dwarven_centurion_injured_1");
+    public static SoundEvent DWARVEN_CENTURION_INJURED_2 = registerSoundEvent("dwarven_centurion_injured_2");
+    public static SoundEvent DWARVEN_CENTURION_WALK = registerSoundEvent("dwarven_centurion_walk");
+    public static SoundEvent DWARVEN_CENTURION_AMBIENT_1 = registerSoundEvent("dwarven_centurion_ambient_1");
+    public static SoundEvent DWARVEN_CENTURION_SHOOTING = registerSoundEvent("dwarven_centurion_shooting");
+    public static SoundEvent DWARVEN_CENTURION_POWER_ATTACK = registerSoundEvent("dwarven_centurion_power_attack");
+    public static SoundEvent DWARVEN_GEAR_MULTIPLE = registerSoundEvent("dwarven_gear_multiple");
+    public static SoundEvent DWARVEN_CHEST_OPEN = registerSoundEvent("dwarven_chest_open");
+    public static SoundEvent DWARVEN_CHEST_CLOSE = registerSoundEvent("dwarven_chest_close");
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));

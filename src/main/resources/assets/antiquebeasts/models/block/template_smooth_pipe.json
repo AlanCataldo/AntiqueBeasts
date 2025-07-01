@@ -1,0 +1,43 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "antiquebeasts:block/dwemer_metal_pipe",
+		"particle": "antiquebeasts:block/dwemer_metal_pipe"
+	},
+	"elements": [
+		{
+			"name": "pipe",
+			"from": [2, 2, 0],
+			"to": [14, 14, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, -3]},
+			"faces": {
+				"east": {"uv": [2.5, 10.5, 5.25, 13.5], "texture": "#0"},
+				"west": {"uv": [2.5, 10.5, 5.25, 13.5], "texture": "#0"},
+				"up": {"uv": [9.75, 7.5, 6.75, 4.75], "texture": "#0"},
+				"down": {"uv": [9.75, 4.75, 6.75, 7.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "bracket",
+			"from": [2, 2, 11],
+			"to": [14, 14, 16],
+			"faces": {
+				"east": {"uv": [1, 10.5, 2.25, 13.5], "texture": "#0"},
+				"south": {"uv": [0, 6.5, 3, 9.5], "texture": "#0"},
+				"west": {"uv": [2.25, 10.5, 1, 13.5], "texture": "#0"},
+				"up": {"uv": [6.5, 6, 3.5, 4.75], "texture": "#0"},
+				"down": {"uv": [6.5, 4.75, 3.5, 6], "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "group",
+			"origin": [0, 0, 0],
+			"color": 0,
+			"children": [0, 1]
+		}
+	]
+}

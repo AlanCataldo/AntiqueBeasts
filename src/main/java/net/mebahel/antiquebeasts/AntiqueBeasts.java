@@ -11,8 +11,9 @@ import net.mebahel.antiquebeasts.block.ModBlocks;
 import net.mebahel.antiquebeasts.block.screenhandlers.ModScreenHandlers;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.custom.*;
-import net.mebahel.antiquebeasts.entity.custom.dwarven.DwarvenSpiderEntity;
-import net.mebahel.antiquebeasts.entity.custom.dwarven.DwarvenSpiderGuardianEntity;
+import net.mebahel.antiquebeasts.entity.custom.dwemer.DwemerCenturionEntity;
+import net.mebahel.antiquebeasts.entity.custom.dwemer.DwemerSpiderEntity;
+import net.mebahel.antiquebeasts.entity.custom.dwemer.DwemerSpiderGuardianEntity;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.*;
 import net.mebahel.antiquebeasts.entity.custom.greek.CentaurEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.ChampionHopliteEntity;
@@ -21,6 +22,7 @@ import net.mebahel.antiquebeasts.entity.custom.greek.HeroHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.*;
 import net.mebahel.antiquebeasts.entity.custom.other.*;
 import net.mebahel.antiquebeasts.item.TickScheduler;
+import net.mebahel.antiquebeasts.item.custom.ModArmors;
 import net.mebahel.antiquebeasts.item.custom.ModItemGroups;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.item.custom.ModSpawnEggs;
@@ -59,7 +61,7 @@ public class AntiqueBeasts implements ModInitializer {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	private static final TickScheduler tickScheduler = new TickScheduler();
-	private static final AntiquebeastsDifficultyState difficultyState = new AntiquebeastsDifficultyState(1);
+	private static final AntiquebeastsDifficultyState antiquebeastsDifficultyState = new AntiquebeastsDifficultyState(1);
 	private static final WaterRemovalScheduler waterRemovalScheduler = new WaterRemovalScheduler();
 	private static final Map<ServerWorld, ServerTickEvents.EndTick> registeredListeners = new HashMap<>();
 	private static final Map<ServerWorld, ServerPlayConnectionEvents.Join> registeredJoinEventListeners = new HashMap<>();
@@ -80,6 +82,9 @@ public class AntiqueBeasts implements ModInitializer {
 		ModBonusHealthConfig.loadConfig(configDir);
 		ModItemGroups.registerItemGroups();
 
+		FabricDefaultAttributeRegistry.register(ModEntities.DWEMER_CENTURION, DwemerCenturionEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.DWEMER_SPIDER, DwemerSpiderEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.DWEMER_SPIDER_GUARDIAN, DwemerSpiderGuardianEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.DRAUGR_OVERLORD, DraugrOverlordEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.SKELETON_WARRIOR_HEAD, SkeletonWarriorHeadEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.SKELETON_WARRIOR, SkeletonWarriorEntity.setAttributes());
@@ -111,8 +116,8 @@ public class AntiqueBeasts implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ModEntities.THROWING_AXEMAN, ThrowingAxeManEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.EINHERJAR, EinherjarEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.VALKYRIE, ValkyrieEntity.setAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.DWARVEN_SPIDER, DwarvenSpiderEntity.setAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.DWARVEN_SPIDER_GUARDIAN, DwarvenSpiderGuardianEntity.setAttributes());
+
+		ModArmors.registerModArmors();
 		ModSounds.registerSounds();
 		ModBlocks.registerModBlocks();
 		ModBlockEntities.registerModBlockEntities();
@@ -157,8 +162,8 @@ public class AntiqueBeasts implements ModInitializer {
 		bookUtil.registerModifyLootTable();
 
 		ServerWorldEvents.LOAD.register((server, world) -> {
-			//waterRemovalScheduler.addWorld(world);
-			difficultyState.registerDifficultyState(world);
+			waterRemovalScheduler.addWorld(world);
+			antiquebeastsDifficultyState.registerDifficultyState(world);
 			ServerPlayConnectionEvents.Join joinEventListener = (handler, sender, server2) -> {
 				if (world.getRegistryKey().equals(World.OVERWORLD)) {
 					playerHasArrived = true;
@@ -175,10 +180,10 @@ public class AntiqueBeasts implements ModInitializer {
 						shouldEnableLoad = false;
 						playerHasArrived = false;
 					}
-					//waterRemovalScheduler.tick();
+					waterRemovalScheduler.tick();
 				}
 				checkMummyBossAchievement(world);
-				difficultyState.updateDifficultyState(world);
+				antiquebeastsDifficultyState.updateDifficultyState(world);
 				tickScheduler.tick();
 			};
 
@@ -187,7 +192,7 @@ public class AntiqueBeasts implements ModInitializer {
 		});
 
 		ServerWorldEvents.UNLOAD.register((server, world) -> {
-			//waterRemovalScheduler.removeWorld(world);
+			waterRemovalScheduler.removeWorld(world);
 			registeredListeners.remove(world);
 			registeredJoinEventListeners.remove(world);
 		});

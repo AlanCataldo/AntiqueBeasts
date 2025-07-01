@@ -25,6 +25,30 @@ import java.util.List;
 import static net.minecraft.registry.tag.InstrumentTags.SCREAMING_GOAT_HORNS;
 
 public class ModItems {
+    public static final Item DWEMER_WAR_AXE = registerItem("weapon/dwemer/dwemer_war_axe",
+            new AxeItem(ModToolMaterial.DWARVEN_2,7, -2.9f,
+                    new FabricItemSettings()));
+    public static final Item DWEMER_WARHAMMER = registerItem("weapon/dwemer/dwemer_warhammer",
+            new SwordItem(ModToolMaterial.DWARVEN_1,8, -3.2f,
+                    new FabricItemSettings()));
+    public static final Item DWEMER_DAGGER = registerItem("weapon/dwemer/dwemer_dagger",
+            new SwordItem(ModToolMaterial.DWARVEN_1,5, -2f,
+                    new FabricItemSettings()));
+    public static final Item DWEMER_AXE = registerItem("weapon/dwemer/dwemer_axe",
+            new AxeItem(ModToolMaterial.DWARVEN_1,6, -2.4f,
+                    new FabricItemSettings()));
+    public static final Item DWEMER_SWORD = registerItem("weapon/dwemer/dwemer_sword",
+            new SwordItem(ModToolMaterial.DWARVEN_1,6, -2.4f,
+                    new FabricItemSettings()));
+    public static final Item DWEMER_MACE = registerItem("weapon/dwemer/dwemer_mace",
+            new SwordItem(ModToolMaterial.DWARVEN_2,6, -2.7f,
+                    new FabricItemSettings()));
+    public static final Item DWEMER_METAL_SCRAP = registerItem("dwemer_metal_scrap",
+            new Item(new FabricItemSettings()));
+    public static final Item DWEMER_METAL_INGOT = registerItem("dwemer_metal_ingot",
+            new Item(new FabricItemSettings()));
+    public static final Item DWEMER_METAL_GEAR = registerItem("dwemer_metal_gear",
+            new Item(new FabricItemSettings()));
     public static final Item FROST_BOW = registerItem("bow/frost_bow",
             new FrostBow(new FabricItemSettings().maxDamage(1280)));
     public static final Item EBONY_BOW = registerItem("bow/ebony_bow",
@@ -407,12 +431,15 @@ public class ModItems {
         entries.add(CURSED_SCARAB);
         entries.add(CHIMERA_HAIR);
         entries.add(ANKH_FRAGMENT);
+        entries.add(DWEMER_METAL_GEAR);
+        entries.add(DWEMER_METAL_SCRAP);
+        entries.add(DWEMER_METAL_INGOT);
     }
     public static void addItemToFoodItemGroup(FabricItemGroupEntries entries) {
-        entries.add(COOKED_CYCLOPS_MEAT);
         entries.add(RAW_CYCLOPS_MEAT);
-        entries.add(CONCENTRATED_CYCLOPS_BLOOD);
+        entries.add(COOKED_CYCLOPS_MEAT);
         entries.add(CYCLOPS_BLOOD);
+        entries.add(CONCENTRATED_CYCLOPS_BLOOD);
     }
 
     public static void addItemToToolsAndUtilitiesGroup(FabricItemGroupEntries entries) {
@@ -421,12 +448,15 @@ public class ModItems {
     }
 
     public static void addItemToFunctionalItemGroup(FabricItemGroupEntries entries) {
-        //entries.add(ModBlocks.STAFF_ENCHANTING_TABLE);
         entries.add(ModBlocks.AMPHORA);
         entries.add(ModBlocks.CURSED_GOLDEN_BLOCK);
         entries.add(ModBlocks.MUMMY_BOSS_ALTAR);
         entries.add(ModBlocks.DRAUGR_CHEST);
         entries.add(ModBlocks.GREEK_CHEST);
+        entries.add(ModBlocks.DWEMER_METAL_BLOCK);
+        entries.add(ModBlocks.DWEMER_METAL_PIPE);
+        entries.add(ModBlocks.DWEMER_METAL_PIPE_GEAR);
+        entries.add(ModBlocks.DWEMER_CHEST);
     }
     public static void addItemToCombatItemGroup(FabricItemGroupEntries entries) {
         entries.add(VALKYRIE_HELMET);
@@ -517,8 +547,14 @@ public class ModItems {
         entries.add(GREEK_STAFF_HANDLE);
         entries.add(FROST_BITE_MAGICAL_STONE);
         entries.add(FROST_SPIKE_MAGICAL_STONE);
-    }
 
+        entries.add(DWEMER_DAGGER);
+        entries.add(DWEMER_SWORD);
+        entries.add(DWEMER_MACE);
+        entries.add(DWEMER_WARHAMMER);
+        entries.add(DWEMER_AXE);
+        entries.add(DWEMER_WAR_AXE);
+    }
 
     public static void registerModItems() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(ModItems::addItemToSpawnEggItemGroup);

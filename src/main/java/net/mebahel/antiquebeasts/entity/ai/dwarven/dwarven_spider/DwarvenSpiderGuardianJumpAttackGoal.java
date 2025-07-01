@@ -1,6 +1,6 @@
 package net.mebahel.antiquebeasts.entity.ai.dwarven.dwarven_spider;
 
-import net.mebahel.antiquebeasts.entity.custom.dwarven.DwarvenSpiderGuardianEntity;
+import net.mebahel.antiquebeasts.entity.custom.dwemer.DwemerSpiderGuardianEntity;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
@@ -13,7 +13,7 @@ import net.minecraft.util.math.Vec3d;
 import java.util.Objects;
 
 public class DwarvenSpiderGuardianJumpAttackGoal extends Goal {
-    private final DwarvenSpiderGuardianEntity guardian;
+    private final DwemerSpiderGuardianEntity guardian;
     private boolean hasDealtDamage = false;
     private int cooldown;
 
@@ -21,7 +21,7 @@ public class DwarvenSpiderGuardianJumpAttackGoal extends Goal {
     private static final double MIN_DISTANCE = 3.0;
     private static final double MAX_DISTANCE = 12.0;
 
-    public DwarvenSpiderGuardianJumpAttackGoal(DwarvenSpiderGuardianEntity guardian) {
+    public DwarvenSpiderGuardianJumpAttackGoal(DwemerSpiderGuardianEntity guardian) {
         this.guardian = guardian;
     }
 

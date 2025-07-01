@@ -1,7 +1,7 @@
 package net.mebahel.antiquebeasts.entity.ai.dwarven.dwarven_spider;
 
-import net.mebahel.antiquebeasts.entity.custom.dwarven.DwarvenEntity;
-import net.mebahel.antiquebeasts.entity.custom.dwarven.DwarvenSpiderEntity;
+import net.mebahel.antiquebeasts.entity.custom.dwemer.DwemerEntity;
+import net.mebahel.antiquebeasts.entity.custom.dwemer.DwemerSpiderEntity;
 import net.minecraft.entity.ai.FuzzyTargeting;
 import net.minecraft.entity.ai.goal.WanderAroundGoal;
 import net.minecraft.util.math.Vec3d;
@@ -10,16 +10,16 @@ import org.jetbrains.annotations.Nullable;
 public class DwarvenSpiderWanderFarGoal extends WanderAroundGoal {
     protected final float probability;
 
-    public DwarvenEntity mob;
+    public DwemerEntity mob;
 
-    public DwarvenSpiderWanderFarGoal(DwarvenEntity mob, double speed, float probability) {
+    public DwarvenSpiderWanderFarGoal(DwemerEntity mob, double speed, float probability) {
         super(mob, speed);
         this.mob = mob;
         this.probability = probability;
     }
     @Override
     public boolean shouldContinue() {
-        return !this.mob.getNavigation().isIdle() && !this.mob.hasPassengers() && !this.mob.getDataTracker().get(DwarvenSpiderEntity.IS_MINING);
+        return !this.mob.getNavigation().isIdle() && !this.mob.hasPassengers() && !this.mob.getDataTracker().get(DwemerSpiderEntity.IS_MINING);
     }
 
     @Nullable
@@ -34,7 +34,7 @@ public class DwarvenSpiderWanderFarGoal extends WanderAroundGoal {
 
     @Override
     public boolean canStart() {
-        if (this.mob.hasPassengers() || this.mob.getDataTracker().get(DwarvenSpiderEntity.IS_MINING)) {
+        if (this.mob.hasPassengers() || this.mob.getDataTracker().get(DwemerSpiderEntity.IS_MINING)) {
             return false;
         } else {
             if (!this.ignoringChance) {

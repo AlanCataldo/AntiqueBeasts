@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down,state=0":  { "model": "antiquebeasts:block/dwemer_spider_block", "x": 180 },
+    "facing=down,state=1":  { "model": "antiquebeasts:block/dwemer_spider_block", "x": 180 },
+    "facing=down,state=2":  { "model": "antiquebeasts:block/dwemer_spider_block", "x": 180 },
+
+    "facing=up,state=0":    { "model": "antiquebeasts:block/dwemer_spider_block" },
+    "facing=up,state=1":    { "model": "antiquebeasts:block/dwemer_spider_block" },
+    "facing=up,state=2":    { "model": "antiquebeasts:block/dwemer_spider_block" },
+
+    "facing=north,state=0": { "model": "antiquebeasts:block/dwemer_spider_block", "x": 90 },
+    "facing=north,state=1": { "model": "antiquebeasts:block/dwemer_spider_block", "x": 90 },
+    "facing=north,state=2": { "model": "antiquebeasts:block/dwemer_spider_block", "x": 90 },
+
+    "facing=south,state=0": { "model": "antiquebeasts:block/dwemer_spider_block", "x": 270 },
+    "facing=south,state=1": { "model": "antiquebeasts:block/dwemer_spider_block", "x": 270 },
+    "facing=south,state=2": { "model": "antiquebeasts:block/dwemer_spider_block", "x": 270 },
+
+    "facing=west,state=0":  { "model": "antiquebeasts:block/dwemer_spider_block", "x": 90, "y": 270 },
+    "facing=west,state=1":  { "model": "antiquebeasts:block/dwemer_spider_block", "x": 90, "y": 270 },
+    "facing=west,state=2":  { "model": "antiquebeasts:block/dwemer_spider_block", "x": 90, "y": 270 },
+
+    "facing=east,state=0":  { "model": "antiquebeasts:block/dwemer_spider_block", "x": 90, "y": 90 },
+    "facing=east,state=1":  { "model": "antiquebeasts:block/dwemer_spider_block", "x": 90, "y": 90 },
+    "facing=east,state=2":  { "model": "antiquebeasts:block/dwemer_spider_block", "x": 90, "y": 90 }
+  }
+}

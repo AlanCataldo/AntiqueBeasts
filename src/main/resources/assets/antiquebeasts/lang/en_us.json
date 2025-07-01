@@ -7,6 +7,9 @@
   "item.antiquebeasts.staff.frost_bite_greek_staff": "§9Frost Bite Greek Staff",
   "item.antiquebeasts.staff.frost_spike_greek_staff": "§5Frost Spike Greek Staff",
 
+  "entity.antiquebeasts.dwemer_spider": "Dwemer Spider",
+  "entity.antiquebeasts.dwemer_spider_guardian": "Dwemer Spider Guardian",
+  "entity.antiquebeasts.dwemer_centurion": "Dwemer Centurion",
   "entity.antiquebeasts.elite_hoplite": "Elite Hoplite",
   "entity.antiquebeasts.champion_hoplite": "Champion Hoplite",
   "entity.antiquebeasts.hero_hoplite": "Hero Hoplite",
@@ -38,10 +41,9 @@
   "entity.antiquebeasts.draugr_scourge": "Draugr Scourge",
   "entity.antiquebeasts.skeleton_warrior": "Skeleton Warrior",
   "entity.antiquebeasts.skeleton_warrior_head": "Skeleton Warrior Head",
-  "entity.antiquebeasts.dwarven_spider": "Dwarven Spider",
-  "entity.antiquebeasts.dwarven_spider_guardian": "Dwarven Spider Guardian",
 
   "entity.antiquebeasts.throwing_axe": "Throwing Axe",
+  "entity.antiquebeasts.steam_projectile": "Pressured Steam",
   "entity.antiquebeasts.harpy_feather": "Harpy Feather",
   "entity.antiquebeasts.mummy_projectile": "Dark Magic Projectile",
   "entity.antiquebeasts.pharaoh_scepter_projectile": "Dark Magic Projectile",
@@ -60,11 +62,27 @@
   "entity.antiquebeasts.draugr_wight_projectile": "Forstbite Spell",
   "entity.antiquebeasts.frost_spike": "Ice Spike Spell",
 
+  "block.antiquebeasts.dwemer_chest": "Dwemer Chest",
+  "block.antiquebeasts.dwemer_spider block": "Dwemer Spider Block",
+  "block.antiquebeasts.dwemer_metal_block": "Dwemer Metal Block",
+  "block.antiquebeasts.dwemer_metal_pipe": "Dwemer Metal Pipe",
+  "block.antiquebeasts.dwemer_metal_pipe_gear": "Dwemer Metal Pipe with Gears",
   "block.antiquebeasts.amphora": "Amphora",
   "block.antiquebeasts.draugr_chest": "Draugr Chest",
   "block.antiquebeasts.greek_chest": "Greek Chest",
   "block.antiquebeasts.cursed_gold_block": "Cursed Gold Block",
   "block.antiquebeasts.mummy_boss_altar": "Pharaoh Altar",
+
+  "item.antiquebeasts.dwemer_metal_gear": "Dwemer Metal Gear",
+  "item.antiquebeasts.dwemer_metal_scrap": "Dwemer Metal Scrap",
+  "item.antiquebeasts.dwemer_metal_ingot": "Dwemer Metal Ingot",
+
+  "item.antiquebeasts.weapon.dwemer.dwemer_dagger": "Dwemer Dagger",
+  "item.antiquebeasts.weapon.dwemer.dwemer_sword": "Dwemer Sword",
+  "item.antiquebeasts.weapon.dwemer.dwemer_mace": "Dwemer Mace",
+  "item.antiquebeasts.weapon.dwemer.dwemer_warhammer": "Dwemer Warhammer",
+  "item.antiquebeasts.weapon.dwemer.dwemer_axe": "Dwemer Axe",
+  "item.antiquebeasts.weapon.dwemer.dwemer_war_axe": "Dwemer War Axe",
 
   "item.antiquebeasts.music_disc.n_d_nile_music_disc": "§bMusic Disc",
   "item.antiquebeasts.music_disc.n_d_nile_music_disc.desc": "Age Of Mythology - n. d. nile",
@@ -79,6 +97,9 @@
   "item.antiquebeasts.scroll.frostbite_scroll": "§9Frostbite Scroll",
   "item.antiquebeasts.scroll.ice_spike_scroll": "§5Ice Spike Scroll",
 
+  "item.antiquebeasts.spawn_egg.dwarven_centurion_spawn_egg": "Dwemer Centurion Spawn Egg",
+  "item.antiquebeasts.spawn_egg.dwarven_spider_spawn_egg": "Dwemer Spider Spawn Egg",
+  "item.antiquebeasts.spawn_egg.dwarven_spider_guardian_spawn_egg": "Dwemer Spider Guardian Spawn Egg",
   "item.antiquebeasts.spawn_egg.skeleton_warrior_spawn_egg": "Skeleton Warrior Spawn Egg",
   "item.antiquebeasts.spawn_egg.skeleton_warrior_head_spawn_egg": "Skeleton Warrior Head Spawn Egg",
   "item.antiquebeasts.spawn_egg.draugr_scourge_spawn_egg": "Draugr Scourge Spawn Egg",
@@ -109,8 +130,6 @@
   "item.antiquebeasts.spawn_egg.chimera_spawn_egg": "Chimera Spawn Egg",
   "item.antiquebeasts.spawn_egg.pegasus_spawn_egg": "Pegasus Spawn Egg",
   "item.antiquebeasts.spawn_egg.mummy_boss_spawn_egg": "Mummified Pharaoh Spawn Egg",
-  "item.antiquebeasts.spawn_egg.dwarven_spider_spawn_egg": "Dwarven Spider Spawn Egg",
-  "item.antiquebeasts.spawn_egg.dwarven_spider_guardian_spawn_egg": "Dwarven Spider Guardian Spawn Egg",
 
   "item.antiquebeasts.throwingrock": "Throwing Rock",
   "item.antiquebeasts.raw_cyclops_meat": "Raw Cyclops Meat",

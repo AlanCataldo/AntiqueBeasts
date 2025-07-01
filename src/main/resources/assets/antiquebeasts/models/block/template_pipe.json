@@ -1,0 +1,54 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"texture_size": [64, 64],
+	"textures": {
+		"1": "antiquebeasts:block/dwemer_metal_pipe"
+	},
+	"elements": [
+		{
+			"name": "pipe",
+			"from": [2, 2, 3],
+			"to": [14, 14, 11],
+			"faces": {
+				"east": {"uv": [2.5, 10.5, 4.5, 13.5], "texture": "#1"},
+				"west": {"uv": [2.5, 10.5, 4.5, 13.5], "texture": "#1"},
+				"up": {"uv": [9.75, 6.75, 6.75, 4.75], "texture": "#1"},
+				"down": {"uv": [9.75, 4.75, 6.75, 6.75], "texture": "#1"}
+			}
+		},
+		{
+			"name": "bracket",
+			"from": [2, 2, 11],
+			"to": [14, 14, 16],
+			"faces": {
+				"east": {"uv": [1, 10.5, 2.25, 13.5], "texture": "#1"},
+				"south": {"uv": [0, 6.5, 3, 9.5], "texture": "#1"},
+				"west": {"uv": [2.25, 10.5, 1, 13.5], "texture": "#1"},
+				"up": {"uv": [6.5, 6, 3.5, 4.75], "texture": "#1"},
+				"down": {"uv": [6.5, 4.75, 3.5, 6], "texture": "#1"}
+			}
+		},
+		{
+			"name": "opening",
+			"from": [1, 1, 0],
+			"to": [15, 15, 3],
+			"faces": {
+				"north": {"uv": [3, 0, 6.5, 3.5], "texture": "#1"},
+				"east": {"uv": [0, 10, 0.75, 13.5], "texture": "#1"},
+				"south": {"uv": [3, 0, 6.5, 3.5], "texture": "#1"},
+				"west": {"uv": [0.75, 10, 0, 13.5], "texture": "#1"},
+				"up": {"uv": [6.5, 4.5, 3, 3.75], "texture": "#1"},
+				"down": {"uv": [6.5, 3.75, 3, 4.5], "texture": "#1"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "group",
+			"origin": [0, 0, 0],
+			"color": 0,
+			"children": [0, 1, 2]
+		}
+	]
+}

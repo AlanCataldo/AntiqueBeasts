@@ -38,6 +38,12 @@ public enum ModToolMaterial implements ToolMaterial {
     EBONY(4, 2048, 7F, 0.5F, 22, () -> {
         return Ingredient.ofItems(ModItems.EBONY_INGOT);
     }),
+    DWARVEN_1(4, 1380, 7F, 0F, 20, () -> {
+        return Ingredient.ofItems(ModItems.EBONY_INGOT);
+    }),
+    DWARVEN_2(4, 1380, 7F, 0.5F, 20, () -> {
+        return Ingredient.ofItems(ModItems.EBONY_INGOT);
+    }),
 
     HIGH_IRON(4, 680, 7.0F, 1.5F, 19, () -> {
         return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);

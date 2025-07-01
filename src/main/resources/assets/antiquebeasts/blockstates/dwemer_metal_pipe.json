@@ -1,0 +1,372 @@
+{
+  "variants": {
+    "facing=down,front_connected=false,back_connected=false,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe",
+      "x": 90
+    },
+    "facing=down,front_connected=false,back_connected=false,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth_side",
+      "x": 90
+    },
+    "facing=down,front_connected=false,back_connected=false,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth",
+      "x": 90
+    },
+    "facing=down,front_connected=false,back_connected=false,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth",
+      "x": 90
+    },
+    "facing=down,front_connected=false,back_connected=true,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_back_extension",
+      "x": 90
+    },
+    "facing=down,front_connected=false,back_connected=true,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth_top",
+      "x": 90
+    },
+    "facing=down,front_connected=false,back_connected=true,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_back_smooth",
+      "x": 90
+    },
+    "facing=down,front_connected=false,back_connected=true,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_back_smooth",
+      "x": 90
+    },
+    "facing=down,front_connected=true,back_connected=false,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "x": 90
+    },
+    "facing=down,front_connected=true,back_connected=false,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "x": 90
+    },
+    "facing=down,front_connected=true,back_connected=false,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "x": 90
+    },
+    "facing=down,front_connected=true,back_connected=false,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "x": 90
+    },
+    "facing=down,front_connected=true,back_connected=true,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "x": 90
+    },
+    "facing=down,front_connected=true,back_connected=true,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "x": 90
+    },
+    "facing=down,front_connected=true,back_connected=true,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "x": 90
+    },
+    "facing=down,front_connected=true,back_connected=true,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "x": 90
+    },
+    "facing=up,front_connected=false,back_connected=false,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe",
+      "x": 270
+    },
+    "facing=up,front_connected=false,back_connected=false,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth_side",
+      "x": 270
+    },
+    "facing=up,front_connected=false,back_connected=false,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth",
+      "x": 270
+    },
+    "facing=up,front_connected=false,back_connected=false,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth",
+      "x": 270
+    },
+    "facing=up,front_connected=false,back_connected=true,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_back_extension",
+      "x": 270
+    },
+    "facing=up,front_connected=false,back_connected=true,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth_top",
+      "x": 270
+    },
+    "facing=up,front_connected=false,back_connected=true,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_back_smooth",
+      "x": 270
+    },
+    "facing=up,front_connected=false,back_connected=true,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_back_smooth",
+      "x": 270
+    },
+    "facing=up,front_connected=true,back_connected=false,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "x": 270
+    },
+    "facing=up,front_connected=true,back_connected=false,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "x": 270
+    },
+    "facing=up,front_connected=true,back_connected=false,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "x": 270
+    },
+    "facing=up,front_connected=true,back_connected=false,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "x": 270
+    },
+    "facing=up,front_connected=true,back_connected=true,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "x": 270
+    },
+    "facing=up,front_connected=true,back_connected=true,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "x": 270
+    },
+    "facing=up,front_connected=true,back_connected=true,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "x": 270
+    },
+    "facing=up,front_connected=true,back_connected=true,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "x": 270
+    },
+    "facing=north,front_connected=false,back_connected=false,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe"
+    },
+    "facing=north,front_connected=false,back_connected=false,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth_side"
+    },
+    "facing=north,front_connected=false,back_connected=false,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth"
+    },
+    "facing=north,front_connected=false,back_connected=false,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth"
+    },
+    "facing=north,front_connected=false,back_connected=true,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_back_extension"
+    },
+    "facing=north,front_connected=false,back_connected=true,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth_top"
+    },
+    "facing=north,front_connected=false,back_connected=true,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_back_smooth"
+    },
+    "facing=north,front_connected=false,back_connected=true,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_back_smooth"
+    },
+    "facing=north,front_connected=true,back_connected=false,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension"
+    },
+    "facing=north,front_connected=true,back_connected=false,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension"
+    },
+    "facing=north,front_connected=true,back_connected=false,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension"
+    },
+    "facing=north,front_connected=true,back_connected=false,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension"
+    },
+    "facing=north,front_connected=true,back_connected=true,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension"
+    },
+    "facing=north,front_connected=true,back_connected=true,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension"
+    },
+    "facing=north,front_connected=true,back_connected=true,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension"
+    },
+    "facing=north,front_connected=true,back_connected=true,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension"
+    },
+    "facing=south,front_connected=false,back_connected=false,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe",
+      "y": 180
+    },
+    "facing=south,front_connected=false,back_connected=false,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth_side",
+      "y": 180
+    },
+    "facing=south,front_connected=false,back_connected=false,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth",
+      "y": 180
+    },
+    "facing=south,front_connected=false,back_connected=false,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth",
+      "y": 180
+    },
+    "facing=south,front_connected=false,back_connected=true,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_back_extension",
+      "y": 180
+    },
+    "facing=south,front_connected=false,back_connected=true,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth_top",
+      "y": 180
+    },
+    "facing=south,front_connected=false,back_connected=true,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_back_smooth",
+      "y": 180
+    },
+    "facing=south,front_connected=false,back_connected=true,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_back_smooth",
+      "y": 180
+    },
+    "facing=south,front_connected=true,back_connected=false,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "y": 180
+    },
+    "facing=south,front_connected=true,back_connected=false,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "y": 180
+    },
+    "facing=south,front_connected=true,back_connected=false,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "y": 180
+    },
+    "facing=south,front_connected=true,back_connected=false,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "y": 180
+    },
+    "facing=south,front_connected=true,back_connected=true,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "y": 180
+    },
+    "facing=south,front_connected=true,back_connected=true,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "y": 180
+    },
+    "facing=south,front_connected=true,back_connected=true,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "y": 180
+    },
+    "facing=south,front_connected=true,back_connected=true,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "y": 180
+    },
+    "facing=west,front_connected=false,back_connected=false,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe",
+      "y": 270
+    },
+    "facing=west,front_connected=false,back_connected=false,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth_side",
+      "y": 270
+    },
+    "facing=west,front_connected=false,back_connected=false,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth",
+      "y": 270
+    },
+    "facing=west,front_connected=false,back_connected=false,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth",
+      "y": 270
+    },
+    "facing=west,front_connected=false,back_connected=true,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_back_extension",
+      "y": 270
+    },
+    "facing=west,front_connected=false,back_connected=true,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth_top",
+      "y": 270
+    },
+    "facing=west,front_connected=false,back_connected=true,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_back_smooth",
+      "y": 270
+    },
+    "facing=west,front_connected=false,back_connected=true,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_back_smooth",
+      "y": 270
+    },
+    "facing=west,front_connected=true,back_connected=false,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "y": 270
+    },
+    "facing=west,front_connected=true,back_connected=false,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "y": 270
+    },
+    "facing=west,front_connected=true,back_connected=false,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "y": 270
+    },
+    "facing=west,front_connected=true,back_connected=false,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "y": 270
+    },
+    "facing=west,front_connected=true,back_connected=true,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "y": 270
+    },
+    "facing=west,front_connected=true,back_connected=true,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "y": 270
+    },
+    "facing=west,front_connected=true,back_connected=true,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "y": 270
+    },
+    "facing=west,front_connected=true,back_connected=true,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "y": 270
+    },
+    "facing=east,front_connected=false,back_connected=false,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe",
+      "y": 90
+    },
+    "facing=east,front_connected=false,back_connected=false,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth_side",
+      "y": 90
+    },
+    "facing=east,front_connected=false,back_connected=false,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth",
+      "y": 90
+    },
+    "facing=east,front_connected=false,back_connected=false,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth",
+      "y": 90
+    },
+    "facing=east,front_connected=false,back_connected=true,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_back_extension",
+      "y": 90
+    },
+    "facing=east,front_connected=false,back_connected=true,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_smooth_top",
+      "y": 90
+    },
+    "facing=east,front_connected=false,back_connected=true,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_back_smooth",
+      "y": 90
+    },
+    "facing=east,front_connected=false,back_connected=true,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_back_smooth",
+      "y": 90
+    },
+    "facing=east,front_connected=true,back_connected=false,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "y": 90
+    },
+    "facing=east,front_connected=true,back_connected=false,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "y": 90
+    },
+    "facing=east,front_connected=true,back_connected=false,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "y": 90
+    },
+    "facing=east,front_connected=true,back_connected=false,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_forward_extension",
+      "y": 90
+    },
+    "facing=east,front_connected=true,back_connected=true,smooth=false,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "y": 90
+    },
+    "facing=east,front_connected=true,back_connected=true,smooth=false,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "y": 90
+    },
+    "facing=east,front_connected=true,back_connected=true,smooth=true,connected_side=false": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "y": 90
+    },
+    "facing=east,front_connected=true,back_connected=true,smooth=true,connected_side=true": {
+      "model": "antiquebeasts:block/dwemer_metal_pipe_double_extension",
+      "y": 90
+    }
+  }
+}

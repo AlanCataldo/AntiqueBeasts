@@ -1,0 +1,7 @@
+{
+  "parent": "antiquebeasts:block/template_pipe_back_smooth",
+  "textures": {
+    "1": "antiquebeasts:block/dwemer_metal_pipe",
+    "particle": "antiquebeasts:block/dwemer_metal_pipe"
+  }
+}

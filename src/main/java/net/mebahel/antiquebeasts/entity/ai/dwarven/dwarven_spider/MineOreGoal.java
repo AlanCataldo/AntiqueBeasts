@@ -1,6 +1,6 @@
 package net.mebahel.antiquebeasts.entity.ai.dwarven.dwarven_spider;
 
-import net.mebahel.antiquebeasts.entity.custom.dwarven.DwarvenSpiderEntity;
+import net.mebahel.antiquebeasts.entity.custom.dwemer.DwemerSpiderEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.ai.goal.Goal;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MineOreGoal extends Goal {
-    private final DwarvenSpiderEntity spider;
+    private final DwemerSpiderEntity spider;
     private BlockPos targetOre = null;
     private int miningTime = 0;
     private boolean miningFished = false;
@@ -25,14 +25,14 @@ public class MineOreGoal extends Goal {
             Blocks.NETHER_QUARTZ_ORE, Blocks.NETHER_GOLD_ORE, Blocks.COAL_ORE, Blocks.DEEPSLATE_COAL_ORE
     );
 
-    public MineOreGoal(DwarvenSpiderEntity spider) {
+    public MineOreGoal(DwemerSpiderEntity spider) {
         this.spider = spider;
     }
 
     @Override
     public boolean canStart() {
-        if (spider.getDataTracker().get(DwarvenSpiderEntity.IS_MINING) ||
-                spider.getDataTracker().get(DwarvenSpiderEntity.MINING_COOLDOWN) > 0) {
+        if (spider.getDataTracker().get(DwemerSpiderEntity.IS_MINING) ||
+                spider.getDataTracker().get(DwemerSpiderEntity.MINING_COOLDOWN) > 0) {
             return false;
         }
         if (spider.getTarget() != null) {
@@ -46,7 +46,6 @@ public class MineOreGoal extends Goal {
     public void start() {
         if (targetOre != null) {
             BlockPos bestPosition = findBestMiningPosition(targetOre);
-            System.out.println("🚶 Dwarven Spider se dirige vers " + bestPosition);
             spider.getNavigation().startMovingTo(bestPosition.getX(), bestPosition.getY(), bestPosition.getZ(), 1.0);
             miningTime = 0;
         }
@@ -60,7 +59,6 @@ public class MineOreGoal extends Goal {
     @Override
     public void tick() {
         if (targetOre == null || !isStillOre(targetOre)) {
-            System.out.println("❌ Bloc cible manquant ou remplacé, arrêt du minage !");
             miningFished = true;
             return;
         }
@@ -68,23 +66,19 @@ public class MineOreGoal extends Goal {
         BlockPos bestPosition = findBestMiningPosition(targetOre);
         double distance = spider.getPos().distanceTo(bestPosition.toCenterPos());
 
-        // **Forcer l'araignée à finir son chemin avant de miner**
         if (!spider.getNavigation().isIdle()) {
-            System.out.println("📍 L'araignée est en mouvement, elle ne commence pas encore à miner.");
             return;
         }
 
         if (distance < 1.5) { // Vérifier si l'araignée est bien positionnée
             spider.getLookControl().lookAt(targetOre.getX() + 0.5, targetOre.getY() + 0.5, targetOre.getZ() + 0.5);
 
-            if (!spider.getDataTracker().get(DwarvenSpiderEntity.IS_MINING)) {
-                System.out.println("⛏ Dwarven Spider commence à miner !");
-                spider.getDataTracker().set(DwarvenSpiderEntity.IS_MINING, true);
+            if (!spider.getDataTracker().get(DwemerSpiderEntity.IS_MINING)) {
+                spider.getDataTracker().set(DwemerSpiderEntity.IS_MINING, true);
                 miningTime = 0;
             }
 
             miningTime++;
-            System.out.println("⏳ Minage en cours... " + miningTime + "/" + MINING_DURATION);
 
             if (miningTime % 7 == 0) {
                 spawnMiningParticles(targetOre);
@@ -96,7 +90,6 @@ public class MineOreGoal extends Goal {
             spider.getWorld().setBlockBreakingInfo(spider.getId(), targetOre, breakProgress);
 
             if (miningTime >= MINING_DURATION) {
-                System.out.println("✅ Dwarven Spider a terminé de miner !");
                 spider.collectDroppedItems(targetOre);
                 spider.getWorld().breakBlock(targetOre, false);
                 miningFished = true;
@@ -116,9 +109,8 @@ public class MineOreGoal extends Goal {
 
     @Override
     public void stop() {
-        System.out.println("🛑 Dwarven Spider arrête de miner et entre en cooldown de 40s.");
-        spider.getDataTracker().set(DwarvenSpiderEntity.IS_MINING, false);
-        spider.getDataTracker().set(DwarvenSpiderEntity.MINING_COOLDOWN, MINING_COOLDOWN);
+        spider.getDataTracker().set(DwemerSpiderEntity.IS_MINING, false);
+        spider.getDataTracker().set(DwemerSpiderEntity.MINING_COOLDOWN, MINING_COOLDOWN);
         this.miningFished = false;
         targetOre = null;
         miningTime = 0;

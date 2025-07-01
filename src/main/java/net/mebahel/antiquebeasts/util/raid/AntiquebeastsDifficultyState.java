@@ -16,7 +16,7 @@ public class AntiquebeastsDifficultyState extends PersistentState {
     private static int netherCheckCounter = 0;
     private static final int NETHER_CHECK_INTERVAL = 300;
     private int difficultyLevel;
-    AntiquebeastsDifficultyState difficultyState = null;
+    AntiquebeastsDifficultyState antiquebeastsDifficultyState = null;
 
     public AntiquebeastsDifficultyState(int difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
@@ -33,23 +33,23 @@ public class AntiquebeastsDifficultyState extends PersistentState {
 
     @Override
     public NbtCompound writeNbt(NbtCompound nbt) {
-        nbt.putInt("difficultyLevel", difficultyLevel);
+        nbt.putInt("antiquebeastsDifficultyLevel", difficultyLevel);
         return nbt;
     }
 
     public static AntiquebeastsDifficultyState fromNbt(NbtCompound nbt) {
-        return new AntiquebeastsDifficultyState(nbt.getInt("difficultyLevel"));
+        return new AntiquebeastsDifficultyState(nbt.getInt("antiquebeastsDifficultyLevel"));
     }
 
     public void registerDifficultyState(ServerWorld world) {
         if (ModConfig.enableDifficultySystem) {
             PersistentStateManager stateManager = world.getPersistentStateManager();
-            this.difficultyState = stateManager.getOrCreate( // ✅ Stocke la valeur dans `this.difficultyState`
+            this.antiquebeastsDifficultyState = stateManager.getOrCreate( // ✅ Stocke la valeur dans `this.difficultyState`
                     AntiquebeastsDifficultyState::fromNbt,
                     () -> new AntiquebeastsDifficultyState(1),
-                    "zombie_horde_difficulty"
+                    "antiquebeasts_difficulty"
             );
-            int difficultyLevel = this.difficultyState.getDifficultyLevel();
+            int difficultyLevel = this.antiquebeastsDifficultyState.getDifficultyLevel();
             worldDifficultyLevels.put(world, difficultyLevel);
         } else {
             worldDifficultyLevels.put(world, 1);
@@ -62,20 +62,20 @@ public class AntiquebeastsDifficultyState extends PersistentState {
                 netherCheckCounter++;
                 if (netherCheckCounter >= NETHER_CHECK_INTERVAL) {
                     netherCheckCounter = 0;
-                    checkNetherVisit(world, this.difficultyState);
+                    checkNetherVisit(world, this.antiquebeastsDifficultyState);
                 }
             }
         }
     }
 
-    private static void checkNetherVisit(ServerWorld world, AntiquebeastsDifficultyState difficultyState) {
+    private static void checkNetherVisit(ServerWorld world, AntiquebeastsDifficultyState antiquebeastsDifficultyState) {
         List<ServerPlayerEntity> players = world.getPlayers();
 
         for (ServerPlayerEntity player : players) {
             if (player.getAdvancementTracker().getProgress(world.getServer().getAdvancementLoader().get(new Identifier("minecraft", "nether/root"))).isDone()) {
                 int difficultyLevel = 2;
                 worldDifficultyLevels.put(world, difficultyLevel);
-                difficultyState.setDifficultyLevel(difficultyLevel);
+                antiquebeastsDifficultyState.setDifficultyLevel(difficultyLevel);
                 System.out.println("[Mebahel's Antique Beasts] Difficulty increased to 2 due to Nether visit by " + player.getName().getString());
                 break;
             }

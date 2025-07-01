@@ -1,0 +1,19 @@
+{
+  "structures": [
+    {
+      "structure": "antiquebeasts:dwemer_ruin",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 237872496,
+    "exclusion_zone":
+    {
+      "other_set":"antiquebeasts:draugr_crypt_skeletal_dragon",
+      "chunk_count": 16
+    },
+    "spacing": 164,
+    "separation": 120
+  }
+}

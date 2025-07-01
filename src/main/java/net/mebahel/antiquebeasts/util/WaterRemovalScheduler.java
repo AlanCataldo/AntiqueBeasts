@@ -13,11 +13,8 @@ import net.minecraft.world.World;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 public class WaterRemovalScheduler {
-    private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     private static final int MAX_TASKS = 120; // 🚀 Limite de tâches pour éviter une surcharge
     private static final int MAX_TASKS_PER_TICK = 10; // ✅ Nombre max de tâches par tick
 
@@ -45,6 +42,13 @@ public class WaterRemovalScheduler {
         while (iterator.hasNext() && processedCount < MAX_TASKS_PER_TICK) {
             ScheduledTask task = iterator.next();
 
+            task.tick();
+            // Supprimer les tâches expirées
+            if (task.isExpired()) {
+                iterator.remove();
+                continue;
+            }
+
             if (task.isDue() && !processedStructures.contains(task.getHash())) {
                 task.run();
                 processedStructures.add(task.getHash());
@@ -55,14 +59,15 @@ public class WaterRemovalScheduler {
 
         if (processedStructures.size() > MAX_TASKS) {
             processedStructures.clear();
-            tasks.clear();
         }
+
         if (tasks.size() > 1000) {
-            System.out.println("Forcing cleanup of WaterRemovalScheduler - Too many tasks!");
+            //System.out.println("Forcing cleanup of WaterRemovalScheduler - Too many tasks!");
             tasks.clear();
             processedStructures.clear();
         }
-        System.out.println("WaterRemovalScheduler - Tasks in queue: " + tasks.size() + ", Processed structures: " + processedStructures.size());
+
+        //System.out.println("WaterRemovalScheduler - Tasks in queue: " + tasks.size() + ", Processed structures: " + processedStructures.size());
     }
 
     public void schedule(BlockPos startPos, BlockPos endPos, int delayTicks) {
@@ -74,6 +79,8 @@ public class WaterRemovalScheduler {
     }
 
     private static class ScheduledTask {
+        private static final int MAX_LIFESPAN_TICKS = 200; // Durée de vie max (10 secondes à 20 TPS)
+
         private final List<ServerWorld> worlds;
         private final Box structureBox;
         private final int delayTicks;
@@ -92,12 +99,18 @@ public class WaterRemovalScheduler {
         }
 
         public boolean isDue() {
-            return currentTick++ >= delayTicks;
+            return currentTick >= delayTicks;
+        }
+
+        public boolean isExpired() {
+            return currentTick >= MAX_LIFESPAN_TICKS;
         }
 
         public void run() {
             for (ServerWorld world : worlds) {
                 BlockPos.stream(structureBox).forEach(pos -> {
+                    if (!world.isChunkLoaded(pos)) return;
+
                     BlockState state = world.getBlockState(pos);
                     if (state.getBlock() instanceof MummyBossAltarBlock) {
                         ((MummyBossAltarBlock) state.getBlock()).scheduleNextEffectTick(world, pos);
@@ -107,6 +120,7 @@ public class WaterRemovalScheduler {
                         for (Direction direction : Direction.values()) {
                             BlockPos neighborPos = pos.offset(direction);
                             BlockState neighborState = world.getBlockState(neighborPos);
+                            if (!world.isChunkLoaded(neighborPos)) return;
                             if (neighborState.isOf(Blocks.WATER)) {
                                 world.setBlockState(neighborPos, Blocks.AIR.getDefaultState(), 2);
                             }
@@ -114,6 +128,10 @@ public class WaterRemovalScheduler {
                     }
                 });
             }
+        }
+
+        public void tick() {
+            currentTick++;
         }
     }
 }

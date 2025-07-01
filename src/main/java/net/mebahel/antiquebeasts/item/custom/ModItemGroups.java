@@ -20,6 +20,21 @@ public class ModItemGroups {
                         entries.add(ModBlocks.CURSED_GOLDEN_BLOCK);
                         entries.add(ModBlocks.MUMMY_BOSS_ALTAR);
                         entries.add(ModBlocks.DRAUGR_CHEST);
+                        entries.add(ModBlocks.GREEK_CHEST);
+                        entries.add(ModBlocks.DWEMER_CHEST);
+                        entries.add(ModBlocks.DWEMER_METAL_BLOCK);
+                        entries.add(ModBlocks.DWEMER_METAL_PIPE);
+                        entries.add(ModBlocks.DWEMER_METAL_PIPE_GEAR);
+                        entries.add(ModItems.DWEMER_METAL_GEAR);
+                        entries.add(ModItems.DWEMER_METAL_SCRAP);
+                        entries.add(ModItems.DWEMER_METAL_INGOT);
+
+                        entries.add(ModItems.DWEMER_DAGGER);
+                        entries.add(ModItems.DWEMER_SWORD);
+                        entries.add(ModItems.DWEMER_MACE);
+                        entries.add(ModItems.DWEMER_WARHAMMER);
+                        entries.add(ModItems.DWEMER_AXE);
+                        entries.add(ModItems.DWEMER_WAR_AXE);
 
                         entries.add(ModItems.WOOD_KHOPESH);
                         entries.add(ModItems.STONE_KHOPESH);
@@ -155,8 +170,10 @@ public class ModItemGroups {
                         entries.add(ModItems.DRAUGR_SCOURGE_SPAWN_EGG);
                         entries.add(ModItems.DRAUGR_ARCHER_SPAWN_EGG);
                         entries.add(ModItems.HARPY_SPAWN_EGG);
-                        entries.add(ModSpawnEggs.DWARVEN_SPIDER_SPAWN_EGG);
-                        entries.add(ModSpawnEggs.DWARVEN_SPIDER_GUARDIAN_SPAWN_EGG);
+
+                        entries.add(ModSpawnEggs.DWEMER_SPIDER_SPAWN_EGG);
+                        entries.add(ModSpawnEggs.DWEMER_SPIDER_GUARDIAN_SPAWN_EGG);
+                        entries.add(ModSpawnEggs.DWEMER_CENTURION_SPAWN_EGG);
 
                     }).build());
     public static void registerItemGroups() {

@@ -1,67 +1,28 @@
 package net.mebahel.antiquebeasts.item;
 
-import net.fabricmc.loader.api.FabricLoader;
-import net.mebahel.antiquebeasts.entity.armor.IronPlateArmorRenderer;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
+import net.mebahel.antiquebeasts.entity.armor.GoldScaleArmor.AzGoldScaleArmorDispatcher;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
-import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.animatable.client.RenderProvider;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.object.PlayState;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+import java.util.List;
 
-public class IronPlateArmorItem extends ArmorItem implements GeoItem {
-    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
-    private Supplier<Object> renderProvider;
+public class IronPlateArmorItem extends ArmorItem {
+    public final AzGoldScaleArmorDispatcher dispatcher;
 
-    public IronPlateArmorItem(ArmorMaterial materialIn, ArmorItem.Type type, Settings builder) {
-        super(materialIn, type, builder);
-        // Prevent initialization of Fabric-only methods in Forge/Syntra environments
-        if (FabricLoader.getInstance().isModLoaded("fabric")) {
-            try {
-                this.renderProvider = GeoItem.makeRenderer(this);
-            } catch (NoSuchMethodError e) {
-                this.renderProvider = () -> null;  // Fallback in case method is missing
-            }
-        } else {
-            this.renderProvider = () -> null;  // No renderer for non-Fabric environments
-        }
+    public IronPlateArmorItem(ArmorMaterial material, Type type, Settings settings) {
+        super(material, type, settings);
+        this.dispatcher = new AzGoldScaleArmorDispatcher();
     }
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {return this.cache;}
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller", 20, this::predicate));
-    }
-    private PlayState predicate(AnimationState animationState) {
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-        return PlayState.CONTINUE;
-    }
-    @Override
-    public void createRenderer(Consumer<Object> consumer) {
-        consumer.accept(new RenderProvider() {
-            private IronPlateArmorRenderer renderer;
 
-            @Override
-            public BipedEntityModel<LivingEntity> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack,
-                                                                        EquipmentSlot equipmentSlot, BipedEntityModel<LivingEntity> original) {
-                if (this.renderer == null)
-                    this.renderer = new IronPlateArmorRenderer();
-                this.renderer.prepForRender(livingEntity, itemStack, equipmentSlot, original);
-                return this.renderer;
-            }
-        });
-    }
     @Override
-    public Supplier<Object> getRenderProvider() {
-        return this.renderProvider;
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        tooltip.add(Text.translatable("item.antiquebeasts.scale_armor.tooltip").formatted(Formatting.GRAY, Formatting.ITALIC));
+        tooltip.add(Text.translatable("item.antiquebeasts.scale_armor.tooltip2").formatted(Formatting.GRAY, Formatting.ITALIC));
     }
 }

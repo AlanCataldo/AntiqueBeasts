@@ -1,25 +1,24 @@
 package net.mebahel.antiquebeasts.util;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.state.property.Properties;
+import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.structure.StructureTemplate;
 import net.minecraft.structure.processor.StructureProcessor;
 import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.WorldView;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class WaterRemovalProcessor extends StructureProcessor {
 
-    public static final Codec<WaterRemovalProcessor> CODEC = Codec.unit(WaterRemovalProcessor::new);
-
-    public WaterRemovalProcessor() {}
+    // Utilisation d'une Map pour stocker les zones déjà traitées avec un hash pour identifier les Box
+    private final Map<Integer, Box> scheduledBoxes = new HashMap<>();
+    private StructurePlacementData previousPlacementData = null;
 
     @Override
     public StructureTemplate.StructureBlockInfo process(
@@ -30,24 +29,34 @@ public class WaterRemovalProcessor extends StructureProcessor {
             StructureTemplate.StructureBlockInfo currentBlockInfo,
             StructurePlacementData placementData) {
 
-        BlockState blockState = currentBlockInfo.state();
-        FluidState fluidState = world.getFluidState(currentBlockInfo.pos());
+        // Si le placementData a changé, on recalcule les coordonnées de la structure
+        if (previousPlacementData == null || placementData != previousPlacementData) {
+            BlockPos minPos = new BlockPos(
+                    placementData.getBoundingBox().getMinX(),
+                    placementData.getBoundingBox().getMinY(),
+                    placementData.getBoundingBox().getMinZ()
+            );
+            BlockPos maxPos = new BlockPos(
+                    placementData.getBoundingBox().getMaxX(),
+                    placementData.getBoundingBox().getMaxY(),
+                    placementData.getBoundingBox().getMaxZ()
+            );
+            Box structureBox = new Box(minPos, maxPos);
 
-        // Vérifie si le bloc est immergé et waterloggable
-        if (blockState.contains(Properties.WATERLOGGED) && fluidState.getFluid() == Fluids.WATER) {
-            // Vérifie que world est bien un accès vers un monde en lecture (ServerWorldView implémente ça)
-            if (world instanceof net.minecraft.server.world.ServerWorld serverWorld) {
-                ChunkPos chunkPos = new ChunkPos(currentBlockInfo.pos());
+            int boxHash = Objects.hash(minPos.asLong(), maxPos.asLong());
 
-                // Vérifie si le chunk est chargé ET généré
-                if (serverWorld.isChunkLoaded(chunkPos.x, chunkPos.z)) {
-                    serverWorld.setBlockState(currentBlockInfo.pos(), Blocks.AIR.getDefaultState(), 2);
-                }
+            if (!scheduledBoxes.containsKey(boxHash)) {
+                scheduledBoxes.put(boxHash, structureBox);
+                AntiqueBeasts.getWaterRemovalScheduler().schedule(minPos, maxPos, 1);
             }
         }
 
+        previousPlacementData = placementData;
+
         return currentBlockInfo;
     }
+
+    public static final Codec<WaterRemovalProcessor> CODEC = Codec.unit(WaterRemovalProcessor::new);
 
     @Override
     protected StructureProcessorType<?> getType() {

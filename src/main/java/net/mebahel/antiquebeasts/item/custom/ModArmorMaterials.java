@@ -58,7 +58,7 @@ public enum ModArmorMaterials implements StringIdentifiable, ArmorMaterial {
         return Ingredient.ofItems(new ItemConvertible[]{Items.NETHERITE_INGOT});
     }),
 
-    IRON_SCALE("iron", 17, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
+    IRON_SCALE("iron_scale", 17, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
         map.put(ArmorItem.Type.BOOTS, ModArmorValueConfig.ironScaleArmor[0]);
         map.put(ArmorItem.Type.LEGGINGS, ModArmorValueConfig.ironScaleArmor[1]);
         map.put(ArmorItem.Type.CHESTPLATE, ModArmorValueConfig.ironScaleArmor[2]);
@@ -66,7 +66,7 @@ public enum ModArmorMaterials implements StringIdentifiable, ArmorMaterial {
     }), 15, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F, 0.0F, () -> {
         return Ingredient.ofItems(new ItemConvertible[]{ModItems.IRON_SCARAB});
     }),
-    GOLD_SCALE("gold", 20, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
+    GOLD_SCALE("gold_scale", 20, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
         map.put(ArmorItem.Type.BOOTS, ModArmorValueConfig.goldScaleArmor[0]);
         map.put(ArmorItem.Type.LEGGINGS, ModArmorValueConfig.goldScaleArmor[1]);
         map.put(ArmorItem.Type.CHESTPLATE, ModArmorValueConfig.goldScaleArmor[2]);
@@ -75,7 +75,7 @@ public enum ModArmorMaterials implements StringIdentifiable, ArmorMaterial {
         return Ingredient.ofItems(new ItemConvertible[]{ModItems.GOLD_SCARAB});
     }),
 
-    DIAMOND_SCALE("diamond", 38, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
+    DIAMOND_SCALE("diamond_scale", 38, (EnumMap)Util.make(new EnumMap(ArmorItem.Type.class), (map) -> {
         map.put(ArmorItem.Type.BOOTS, ModArmorValueConfig.diamondScaleArmor[0]);
         map.put(ArmorItem.Type.LEGGINGS, ModArmorValueConfig.diamondScaleArmor[1]);
         map.put(ArmorItem.Type.CHESTPLATE, ModArmorValueConfig.diamondScaleArmor[2]);

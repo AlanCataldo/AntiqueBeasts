@@ -1,6 +1,11 @@
 {
   "replace": false,
   "values": [
-    "antiquebeasts:cursed_gold_block"
+    "antiquebeasts:cursed_gold_block",
+    "antiquebeasts:dwemer_metal_block",
+    "antiquebeasts:dwemer_metal_pipe",
+    "antiquebeasts:dwemer_metal_pipe_gear",
+    "antiquebeasts:dwemer_spider_block",
+    "antiquebeasts:dwemer_chest"
   ]
 }

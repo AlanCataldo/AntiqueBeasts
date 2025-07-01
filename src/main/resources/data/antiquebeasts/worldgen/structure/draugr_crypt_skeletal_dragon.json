@@ -3,7 +3,7 @@
   "start_pool": "antiquebeasts:draugr_crypt_skeletal_dragon/start_pool",
   "size": 7,
   "biomes": "#antiquebeasts:has_structure/draugr_crypt_skeletal_dragon",
-  "step": "surface_structures",
+  "step": "strongholds",
   "terrain_adaptation": "bury",
   "start_height": {
     "type": "minecraft:uniform",

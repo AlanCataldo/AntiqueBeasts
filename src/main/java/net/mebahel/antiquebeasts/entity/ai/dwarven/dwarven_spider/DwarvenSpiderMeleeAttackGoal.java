@@ -1,6 +1,6 @@
 package net.mebahel.antiquebeasts.entity.ai.dwarven.dwarven_spider;
 
-import net.mebahel.antiquebeasts.entity.custom.dwarven.DwarvenEntity;
+import net.mebahel.antiquebeasts.entity.custom.dwemer.DwemerEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
@@ -11,7 +11,7 @@ import java.util.EnumSet;
 public class DwarvenSpiderMeleeAttackGoal extends Goal {
     public int ATTACK_RANGE;
 
-    protected final DwarvenEntity mob;
+    protected final DwemerEntity mob;
     private final double speed;
     private final int ATTACK_TIME;
     private int MAX_COOLDOWN = 21;
@@ -20,7 +20,7 @@ public class DwarvenSpiderMeleeAttackGoal extends Goal {
     public int attackCooldown;
     private long lastUpdateTime;
     double rand;
-    public DwarvenSpiderMeleeAttackGoal(DwarvenEntity mob, double speed, int attackCooldwon, int attackRange, int attackMoment) {
+    public DwarvenSpiderMeleeAttackGoal(DwemerEntity mob, double speed, int attackCooldwon, int attackRange, int attackMoment) {
         this.mob = mob;
         this.speed = speed;
         this.ATTACK_RANGE = attackRange;

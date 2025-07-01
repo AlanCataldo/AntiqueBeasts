@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SCS",
+    "SSS"
+  ],
+  "key" : {
+    "C": {
+      "item" : "minecraft:chest"
+    },
+    "S": {
+      "item" : "antiquebeasts:dwemer_metal_ingot"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:dwemer_chest"
+  }
+}
