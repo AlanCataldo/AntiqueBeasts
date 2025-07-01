@@ -41,6 +41,9 @@ public class ModBonusHealthConfig {
     public static int axemanBonusHealth = 0;
     public static int camleryBonusHealth = 0;
     public static int elephantRiderBonusHealth = 0;
+    public static int dwemerSpiderBonusHealth = 0;
+    public static int dwemerSpiderGuardianBonusHealth = 0;
+    public static int dwemerCenturionBonusHealth = 0;
 
     public static void loadConfig(File configDir) {
         if (!configDir.exists()) {
@@ -174,6 +177,18 @@ public class ModBonusHealthConfig {
                     data.elephantRiderBonusHealth = 0;
                     updated = true;
                 }
+                if (data.dwemerSpiderBonusHealth == null || data.dwemerSpiderBonusHealth > 100 || data.dwemerSpiderBonusHealth < 0) {
+                    data.dwemerSpiderBonusHealth = 0;
+                    updated = true;
+                }
+                if (data.dwemerSpiderGuardianBonusHealth == null || data.dwemerSpiderGuardianBonusHealth > 100 || data.dwemerSpiderGuardianBonusHealth < 0) {
+                    data.dwemerSpiderGuardianBonusHealth = 0;
+                    updated = true;
+                }
+                if (data.dwemerCenturionBonusHealth == null || data.dwemerCenturionBonusHealth > 100 || data.dwemerCenturionBonusHealth < 0) {
+                    data.dwemerCenturionBonusHealth = 0;
+                    updated = true;
+                }
 
                 eliteHopliteBonusHealth = data.eliteHopliteBonusHealth;
                 championHopliteBonusHealth = data.championHopliteBonusHealth;
@@ -203,6 +218,10 @@ public class ModBonusHealthConfig {
                 axemanBonusHealth = data.axemanBonusHealth;
                 camleryBonusHealth = data.camleryBonusHealth;
                 elephantRiderBonusHealth = data.elephantRiderBonusHealth;
+                dwemerSpiderBonusHealth = data.dwemerSpiderBonusHealth;
+                dwemerSpiderGuardianBonusHealth = data.dwemerSpiderGuardianBonusHealth;
+                dwemerCenturionBonusHealth = data.dwemerCenturionBonusHealth;
+
 
                 if (updated) {
                     saveConfig(configDir);
@@ -222,12 +241,14 @@ public class ModBonusHealthConfig {
                 throwingAxemanBonusHealth, hersirBonusHealth, huskarlBonusHealth, einherjarBonusHealth, valkyrieBonusHealth,
                 wadjetBonusHealth, mummyBonusHealth, servantBonusHealth, egyptianCaravanBonusHealth, draugrBonusHealth, draugrArcherBonusHealth, draugrWightBonusHealth,
                 draugrScourgeBonusHealth,
-                harpyBonusHealth, mummifiedPharaohBonusHealth, axemanBonusHealth, camleryBonusHealth, elephantRiderBonusHealth);
+                harpyBonusHealth, mummifiedPharaohBonusHealth, axemanBonusHealth, camleryBonusHealth, elephantRiderBonusHealth,
+                dwemerSpiderBonusHealth, dwemerSpiderGuardianBonusHealth, dwemerCenturionBonusHealth);
         try (FileWriter writer = new FileWriter(configFile)) {
             GSON.toJson(data, writer);
         } catch (IOException e) {
             System.err.println("Failed to save config file: " + e.getMessage());
         }
+
     }
 
     private static class ConfigData {
@@ -259,13 +280,18 @@ public class ModBonusHealthConfig {
         Integer axemanBonusHealth;
         Integer camleryBonusHealth;
         Integer elephantRiderBonusHealth;
+        Integer dwemerSpiderBonusHealth;
+        Integer dwemerSpiderGuardianBonusHealth;
+        Integer dwemerCenturionBonusHealth;
+
         ConfigData(int eliteHopliteBonusHealth, int championHopliteBonusHealth, int heroHopliteBonusHealth, int hadesChosenBonusHealth,
                    int chimeraBonusHealth, int cyclopsBonusHealth, int frostCyclopsBonusHealth, int pegasusBonusHealth, int centaurBonusHealth,
                    int hadesShadeBonusHealth, int throwingAxemanBonusHealth, int hersirBonusHealth, int huskarlBonusHealth, int einherjarBonusHealth,
                    int valkyrieBonusHealth, int wadjetBonusHealth, int mummyBonusHealth, int servantBonusHealth, int egyptianCaravanBonusHealth,
                    int draugrBonusHealth, int draugrArcherBonusHealth, int draugrWightBonusHealth,
                    int draugrScourgeBonusHealth, int harpyBonusHealth, int mummifiedPharaohBonusHealth,int axemanBonusHealth,
-                   int camleryBonusHealth, int elephantRiderBonusHealth) {
+                   int camleryBonusHealth, int elephantRiderBonusHealth,
+                   int dwemerSpiderBonusHealth, int dwemerSpiderGuardianBonusHealth, int dwemerCenturionBonusHealth) {
 
             this.eliteHopliteBonusHealth = eliteHopliteBonusHealth;
             this.championHopliteBonusHealth = championHopliteBonusHealth;
@@ -295,6 +321,9 @@ public class ModBonusHealthConfig {
             this.axemanBonusHealth = axemanBonusHealth;
             this.camleryBonusHealth = camleryBonusHealth;
             this.elephantRiderBonusHealth = elephantRiderBonusHealth;
+            this.dwemerSpiderBonusHealth = dwemerSpiderBonusHealth;
+            this.dwemerSpiderGuardianBonusHealth = dwemerSpiderGuardianBonusHealth;
+            this.dwemerCenturionBonusHealth = dwemerCenturionBonusHealth;
         }
     }
 }

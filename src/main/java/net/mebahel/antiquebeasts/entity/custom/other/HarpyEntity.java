@@ -143,7 +143,7 @@ public class HarpyEntity extends AnimalEntity implements GeoEntity {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 24.0D + ModBonusHealthConfig.harpyBonusHealth)
-                .add(EntityAttributes.GENERIC_ARMOR, 4f)
+                .add(EntityAttributes.GENERIC_ARMOR, 2f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.4);

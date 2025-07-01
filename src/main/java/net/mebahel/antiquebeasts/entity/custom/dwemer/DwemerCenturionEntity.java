@@ -160,7 +160,7 @@ public class DwemerCenturionEntity extends DwemerEntity implements GeoEntity {
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 20)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 84 + ModBonusHealthConfig.cyclopsBonusHealth)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3D)
-                .add(EntityAttributes.GENERIC_ARMOR, 10f)
+                .add(EntityAttributes.GENERIC_ARMOR, 8f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 9f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.8f)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.25f);

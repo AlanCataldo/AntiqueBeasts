@@ -134,7 +134,7 @@ public class SkeletonWarriorHeadEntity extends DraugrEntity implements GeoEntity
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.72f)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 8.0D)
-                .add(EntityAttributes.GENERIC_ARMOR, 6f)
+                .add(EntityAttributes.GENERIC_ARMOR, 2f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5.0f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2f)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5f);
