@@ -49,7 +49,7 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import static java.lang.Math.random;
 
@@ -101,7 +101,8 @@ public class SkeletonWarriorEntity extends DraugrEntity implements GeoEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new DraugrMeleeAttackGoal(this, 1f, 21, 10));
+        this.goalSelector.add(2, new DraugrMeleeAttackGoal(this, 1f,
+                30, 18, 6));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.85f, 1f));
         this.goalSelector.add(6, new LookAroundGoal(this));
 

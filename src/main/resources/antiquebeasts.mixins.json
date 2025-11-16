@@ -23,8 +23,7 @@
     "CustomBossBarHudMixin",
     "HeldItemRendererMixin",
     "ItemRendererAccessor",
-    "ItemRendererMixin",
-    "ModelLoaderMixin"
+    "ItemRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

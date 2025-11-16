@@ -677,6 +677,30 @@
       "antiquebeasts:draugr/draugr_ambient_3"
     ]
   },
+  "draugr_ambient_4": {
+    "subtitle": "antiquebeasts:draugr/draugr_ambient_4",
+    "sounds": [
+      "antiquebeasts:draugr/draugr_ambient_4"
+    ]
+  },
+  "draugr_ambient_5": {
+    "subtitle": "antiquebeasts:draugr/draugr_ambient_5",
+    "sounds": [
+      "antiquebeasts:draugr/draugr_ambient_5"
+    ]
+  },
+  "draugr_taunt_1": {
+    "subtitle": "antiquebeasts:draugr/draugr_taunt_1",
+    "sounds": [
+      "antiquebeasts:draugr/draugr_taunt_1"
+    ]
+  },
+  "draugr_taunt_2": {
+    "subtitle": "antiquebeasts:draugr/draugr_taunt_2",
+    "sounds": [
+      "antiquebeasts:draugr/draugr_taunt_2"
+    ]
+  },
   "draugr_death_1": {
     "subtitle": "antiquebeasts:draugr/draugr_death_1",
     "sounds": [
@@ -693,6 +717,24 @@
     "subtitle": "antiquebeasts:draugr/draugr_hurt_2",
     "sounds": [
       "antiquebeasts:draugr/draugr_hurt_2"
+    ]
+  },
+  "draugr_hurt_3": {
+    "subtitle": "antiquebeasts:draugr/draugr_hurt_3",
+    "sounds": [
+      "antiquebeasts:draugr/draugr_hurt_3"
+    ]
+  },
+  "draugr_hurt_4": {
+    "subtitle": "antiquebeasts:draugr/draugr_hurt_4",
+    "sounds": [
+      "antiquebeasts:draugr/draugr_hurt_4"
+    ]
+  },
+  "draugr_walk_1": {
+    "subtitle": "antiquebeasts:draugr/draugr_walk_1",
+    "sounds": [
+      "antiquebeasts:draugr/draugr_walk_1"
     ]
   },
   "harpy_death_1": {
@@ -921,6 +963,46 @@
     "sounds": [
       {
         "name": "antiquebeasts:dwarven_centurion/dwarven_chest_close",
+        "stream": false
+      }
+    ]
+  },
+  "cracked_ground": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:weapon/cracked_ground",
+        "stream": false
+      }
+    ]
+  },
+  "ground_impact": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:weapon/ground_impact",
+        "stream": false
+      }
+    ]
+  },
+  "sword_impact": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:weapon/sword_impact",
+        "stream": false
+      }
+    ]
+  },
+  "sword_slash": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:weapon/sword_slash",
+        "stream": false
+      }
+    ]
+  },
+  "sword_slash_ring": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:weapon/sword_slash_ring",
         "stream": false
       }
     ]

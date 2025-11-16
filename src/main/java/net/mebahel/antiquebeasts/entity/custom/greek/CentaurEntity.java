@@ -50,6 +50,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
 import java.util.Random;
+import org.jetbrains.annotations.Nullable;
 
 import static java.lang.Math.random;
 
@@ -243,8 +244,8 @@ public class CentaurEntity extends GreekEntity implements GeoEntity {
     }
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
-                                 SpawnReason spawnReason, @javax.annotation.Nullable EntityData entityData,
-                                 @javax.annotation.Nullable NbtCompound entityNbt) {
+                                 SpawnReason spawnReason, @Nullable EntityData entityData,
+                                 @Nullable NbtCompound entityNbt) {
         CentaurVariant variant = Util.getRandom(CentaurVariant.values(), this.random);
         setVariant(variant);
         this.setTarget(null);

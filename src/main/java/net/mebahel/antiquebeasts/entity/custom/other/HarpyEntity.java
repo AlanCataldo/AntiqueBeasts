@@ -250,8 +250,8 @@ public class HarpyEntity extends AnimalEntity implements GeoEntity {
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
-                                 SpawnReason spawnReason, @javax.annotation.Nullable EntityData entityData,
-                                 @javax.annotation.Nullable NbtCompound entityNbt) {
+                                 SpawnReason spawnReason, @Nullable EntityData entityData,
+                                 @Nullable NbtCompound entityNbt) {
         HarpyVariant variant = Util.getRandom(HarpyVariant.values(), this.random);
         setVariant(variant);
 

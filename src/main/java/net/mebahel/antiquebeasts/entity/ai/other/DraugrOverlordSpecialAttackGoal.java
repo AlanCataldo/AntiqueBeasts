@@ -2,10 +2,10 @@ package net.mebahel.antiquebeasts.entity.ai.other;
 
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrOverlordEntity;
+import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,10 +17,9 @@ import static net.mebahel.antiquebeasts.entity.custom.other.DraugrOverlordEntity
 
 public class DraugrOverlordSpecialAttackGoal extends Goal {
     private final DraugrOverlordEntity overlord;
-    private final StatusEffect potionEffect;
-    public DraugrOverlordSpecialAttackGoal(DraugrOverlordEntity overlord, StatusEffect effect) {
+
+    public DraugrOverlordSpecialAttackGoal(DraugrOverlordEntity overlord) {
         this.overlord = overlord;
-        this.potionEffect = effect;
     }
 
     public boolean canStart() {
@@ -43,7 +42,7 @@ public class DraugrOverlordSpecialAttackGoal extends Goal {
     public void stop() {
         Objects.requireNonNull(this.overlord.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(this.overlord.speed);
         this.overlord.setSpecial(false);
-        this.overlord.setSpecialCooldown(180);
+        this.overlord.setSpecialCooldown(100 + this.overlord.getRandom().nextInt(40));
     }
 
     public boolean shouldContinue() {
@@ -63,30 +62,46 @@ public class DraugrOverlordSpecialAttackGoal extends Goal {
             this.overlord.setSpecialCooldown(this.overlord.getSpecialCooldown() - 1);
 
         switch (this.overlord.getSpecialCooldown()) {
-            case 0 -> this.stop();
-            case 17 -> {
-                this.executeSpecialAttack();
-                AreaCrackedGround(this.overlord, this.overlord.getWorld(), this.overlord.getBlockPos(), 10);
+            case 0 ->
+                this.stop();
+            case 4 -> {
+                if (this.overlord.getRandom().nextInt(2) == 0) { // 1 chance sur 5
+                    if (this.overlord.getRandom().nextBoolean()) {
+                        this.overlord.playSound(ModSounds.DRAUGR_TAUNT_1, 1.0F, 1.0F);
+                    } else {
+                        this.overlord.playSound(ModSounds.DRAUGR_TAUNT_2, 1.0F, 1.0F);
+                    }
+                }
+            }
+
+            case 10-> {
+                this.executeSpecialAttack(12, 1f);
+                AreaCrackedGround(this.overlord, this.overlord.getWorld(), this.overlord.getBlockPos(), 12);
+                this.overlord.playSound(ModSounds.WEAPON_GROUND_IMPACT, 1.0f, 0.8f);
+            }
+            case 18 -> {
+                this.executeSpecialAttack(6,0.3f);
+                AreaCrackedGround(this.overlord, this.overlord.getWorld(), this.overlord.getBlockPos(), 6);
+                this.overlord.playSound(ModSounds.WEAPON_CRACKED_GROUND, 1.0f, 0.8f);
             }
             case 25 -> {
                 Objects.requireNonNull(this.overlord.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0f);
+                this.overlord.triggerAnim("specialController", "sl_attack_quake");
                 this.overlord.setSpecial(true);
             }
         }
     }
 
-    private void executeSpecialAttack() {
+    private void executeSpecialAttack(int radius, float velocity) {
         List<LivingEntity> entities = this.overlord.getWorld().getEntitiesByClass(
                 LivingEntity.class,
-                this.overlord.getBoundingBox().expand(10),
+                this.overlord.getBoundingBox().expand(radius),
                 entity -> !(entity instanceof DraugrEntity) && entity.isAlive()
         );
 
         for (LivingEntity entity : entities) {
-            // ✅ Appliquer 15 de dégâts
-            entity.damage(this.overlord.getWorld().getDamageSources().mobAttack(this.overlord), 18.0f);
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 5 * 20, 2));
-
+            entity.damage(this.overlord.getWorld().getDamageSources().mobAttack(this.overlord), 20.0f);
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 6 * 20, 2));
 
             // ✅ Calculer la direction de repoussement
             double deltaX = entity.getX() - this.overlord.getX();
@@ -94,8 +109,7 @@ public class DraugrOverlordSpecialAttackGoal extends Goal {
             double distance = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
 
             if (distance > 0) {
-                double knockbackStrength = 1.5;
-                entity.setVelocity(deltaX / distance * knockbackStrength, 0.5, deltaZ / distance * knockbackStrength);
+                entity.setVelocity(0, velocity, 0);
             }
         }
     }

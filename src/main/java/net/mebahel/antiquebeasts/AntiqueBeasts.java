@@ -38,6 +38,7 @@ import net.mebahel.antiquebeasts.util.config.ModArmorValueConfig;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
 import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
+import net.mebahel.antiquebeasts.util.packet.ChestOpenSync;
 import net.mebahel.antiquebeasts.util.packet.ModNetworking;
 import net.mebahel.antiquebeasts.util.raid.AntiquebeastsDifficultyState;
 import net.mebahel.antiquebeasts.util.raid.DraugrRaidTest;
@@ -52,6 +53,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import software.bernie.geckolib.network.GeckoLibNetwork;
 
 import java.io.File;
 import java.util.*;
@@ -121,7 +123,6 @@ public class AntiqueBeasts implements ModInitializer {
 		ModSounds.registerSounds();
 		ModBlocks.registerModBlocks();
 		ModBlockEntities.registerModBlockEntities();
-
 		ModWorldGen.generateWorldGen();
 
 		ModItems.registerModItems();
@@ -134,6 +135,7 @@ public class AntiqueBeasts implements ModInitializer {
 		RaidManager.registerEvents();
 		ModNetworking.registerReceivers();
 		AddBookToLootTableUtil bookUtil = new AddBookToLootTableUtil();
+		ChestOpenSync.registerServerReceiver();
 
 		bookUtil.addBookFromString(
 				"villager_entry_2",

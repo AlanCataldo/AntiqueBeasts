@@ -16,9 +16,9 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.util.ClientUtils;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class PharaohScepterItem extends SwordItem {

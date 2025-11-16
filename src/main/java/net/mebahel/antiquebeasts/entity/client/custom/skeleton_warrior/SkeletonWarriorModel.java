@@ -37,7 +37,7 @@ public class SkeletonWarriorModel extends GeoModel<SkeletonWarriorEntity> {
     }
     @Override
     public Identifier getAnimationResource(SkeletonWarriorEntity animatable) {
-        return new Identifier(AntiqueBeasts.MOD_ID, "animations/draugr.animation.json");
+        return new Identifier(AntiqueBeasts.MOD_ID, "animations/skeleton_warrior.animation.json");
     }
     @Override
     public void setCustomAnimations(SkeletonWarriorEntity entity, long uniqueID, AnimationState<SkeletonWarriorEntity> customPredicate) {

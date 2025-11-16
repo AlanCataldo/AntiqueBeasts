@@ -39,105 +39,94 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
-import javax.annotation.Nullable;
-
-import static java.lang.Math.random;
-
 public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
+
     private final ServerBossBar bossBar;
+    private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
+    private int attackTick = 0;
+
     public DraugrOverlordEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
         this.bossBar = new ServerBossBar(
-                Text.of("Draugr Overlord"),  // Titre affiché
-                BossBar.Color.RED,          // Couleur rouge
-                BossBar.Style.NOTCHED_10      // Style classique (progression)
+                Text.of("Draugr Overlord"),
+                BossBar.Color.RED,
+                BossBar.Style.NOTCHED_10
         );
         this.bossBar.setPercent(1.0f);
         this.setPersistent();
     }
-    private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
-    }
-    double rand;
-    public boolean shouldDespawnInPeaceful() {
-        return this.getWorld().getDifficulty() == Difficulty.PEACEFUL;
-    }
 
+    // ---- TRACKED DATA ----
     public static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
             DataTracker.registerData(DraugrOverlordEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    public static final TrackedData<Boolean> SWINGING =
+            DataTracker.registerData(DraugrOverlordEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    public static final TrackedData<String> ATTACK_NAME =
+            DataTracker.registerData(DraugrOverlordEntity.class, TrackedDataHandlerRegistry.STRING);
+    public static final TrackedData<Boolean> HAS_SPAWNED =
+            DataTracker.registerData(DraugrOverlordEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    public static final TrackedData<Integer> SPECIAL_COOLDOWN =
+            DataTracker.registerData(DraugrOverlordEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    public static final TrackedData<Boolean> SPECIAL =
+            DataTracker.registerData(DraugrOverlordEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
-    public static final TrackedData<Boolean> SWINGING = DataTracker.registerData(DraugrOverlordEntity.class,
-            TrackedDataHandlerRegistry.BOOLEAN);
+    // ---- BASIC GETTERS / SETTERS ----
+    public int incrementAttackTick() { return ++attackTick; }
+    public void resetAttackTick() { this.attackTick = 0; }
 
-    public static final TrackedData<String> ATTACK_NAME = DataTracker.registerData(DraugrOverlordEntity.class,
-            TrackedDataHandlerRegistry.STRING);
+    public boolean getSpecial() { return this.dataTracker.get(SPECIAL); }
+    public void setSpecial(boolean bool) { this.dataTracker.set(SPECIAL, bool); }
 
-    public static final TrackedData<Boolean> HAS_SPAWNED = DataTracker.registerData(DraugrOverlordEntity.class,
-            TrackedDataHandlerRegistry.BOOLEAN);
-    public static final TrackedData<Integer> SPECIAL_COOLDOWN = DataTracker.registerData(DraugrOverlordEntity.class,
-            TrackedDataHandlerRegistry.INTEGER);
-    public static final TrackedData<Boolean> SPECIAL = DataTracker.registerData(DraugrOverlordEntity.class,
-            TrackedDataHandlerRegistry.BOOLEAN);
+    public int getSpecialCooldown() { return this.dataTracker.get(SPECIAL_COOLDOWN); }
+    public void setSpecialCooldown(int value) { this.dataTracker.set(SPECIAL_COOLDOWN, value); }
 
-    public boolean getSpecial() {return this.dataTracker.get(SPECIAL);}
+    public boolean getHasSpawned() { return this.dataTracker.get(HAS_SPAWNED); }
+    public void setHasSpawned(boolean bool) { this.dataTracker.set(HAS_SPAWNED, bool); }
 
-    public void setSpecial(boolean bool) {
-        this.dataTracker.set(SPECIAL, bool);
-    }
-
-    public Integer getSpecialCooldown() {return this.dataTracker.get(SPECIAL_COOLDOWN);}
-    public void setSpecialCooldown(Integer integer) {
-        this.dataTracker.set(SPECIAL_COOLDOWN, integer);
-    }
-    public boolean getHasSpawned() {return this.dataTracker.get(HAS_SPAWNED);}
-    public void setHasSpawned(boolean bool) {
-        this.dataTracker.set(HAS_SPAWNED, bool);
-    }
     public void setSwinging(boolean swinging) { this.dataTracker.set(SWINGING, swinging); }
     public boolean isSwinging() { return this.dataTracker.get(SWINGING); }
+
     public void setAttackName(String attackName) { this.dataTracker.set(ATTACK_NAME, attackName); }
     public String getAttackName() { return this.dataTracker.get(ATTACK_NAME); }
+
     @Override
-    public void playSound(SoundEvent sound, float volume, float pitch) {
-        if (!this.isSilent()) {
-            this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(), sound, this.getSoundCategory(), volume, 0.8f);
-        }
-    }
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(SWINGING, false);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
-        this.dataTracker.startTracking(ATTACK_NAME, "attack");
+        this.dataTracker.startTracking(ATTACK_NAME, "sl_attack_rush");
         this.dataTracker.startTracking(HAS_SPAWNED, true);
         this.dataTracker.startTracking(SPECIAL, false);
-        this.dataTracker.startTracking(SPECIAL_COOLDOWN, 120);
+        this.dataTracker.startTracking(SPECIAL_COOLDOWN, 70);
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
     }
 
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new DraugrOverlordSpecialAttackGoal(this, null));
-        this.goalSelector.add(3, new DraugrOverlordMeleeAttackGoal(this, 0.95f, 25, 16));
+        this.goalSelector.add(2, new DraugrOverlordSpecialAttackGoal(this));
+        this.goalSelector.add(3, new DraugrOverlordMeleeAttackGoal(this, 0.95f));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.85f, 1f));
         this.goalSelector.add(7, new LookAroundGoal(this));
 
@@ -156,178 +145,113 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3D)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 340.0D + ModBonusHealthConfig.draugrBonusHealth)
-                .add(EntityAttributes.GENERIC_ARMOR, 8f)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8.0f)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.7f)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 400.0D + ModBonusHealthConfig.draugrBonusHealth)
+                .add(EntityAttributes.GENERIC_ARMOR, 14f)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12.0f)
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.75f)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5f);
     }
-    private PlayState predicate(AnimationState animationState) {
-        if (!this.getHasSpawned()) {
-            return PlayState.STOP;
-        } else if (animationState.isMoving() && !this.getSpecial() && !this.isSwinging()) {
+
+    // ---- ANIMATION LOGIC ----
+    private PlayState predicate(AnimationState state) {
+        if (!this.getHasSpawned()) return PlayState.STOP;
+
+        if (state.isMoving() && !this.getSpecial() && !this.isSwinging()) {
             spawnSwordDraggingParticles();
-            animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
+            state.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
-        } else if (!animationState.isMoving() && !this.isAttacking() && !this.getSpecial()) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+        } else if (!state.isMoving() && !this.isAttacking() && !this.getSpecial()) {
+            state.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
-        }
-        return PlayState.CONTINUE;
-    }
-
-    private PlayState attackPredicate(AnimationState state) {
-        if (this.isSwinging() && !this.getSpecial() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
-            state.getController().forceAnimationReset();
-            state.getController().setAnimation(RawAnimation.begin().then(this.getAttackName(), Animation.LoopType.PLAY_ONCE));
-        } else if (this.getSpecial()) {
-            return PlayState.STOP;
-        }
-
-        return PlayState.CONTINUE;
-    }
-    private PlayState specialPredicate(AnimationState state) {
-        if (this.getSpecial() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
-            state.getController().forceAnimationReset();
-            state.getController().setAnimation(RawAnimation.begin().then("attack3", Animation.LoopType.PLAY_ONCE));
         }
         return PlayState.CONTINUE;
     }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller",0, this::predicate).setSoundKeyframeHandler(state -> {
-            PlayerEntity player = ClientUtils.getClientPlayer();
-            if (player != null && !this.getSpecial()) {
-                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.DRAUGR_OVERLORD_STEP, this.getSoundCategory(),
-                        0.85f, 1.2f);
-            }
-        }));
-        controllers.add(new AnimationController(this, "attacking", 0, this::attackPredicate).setSoundKeyframeHandler(state -> {
-            PlayerEntity player = ClientUtils.getClientPlayer();
-            if (player != null)
-                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.SWING, this.getSoundCategory(),
-                        0.7f, 0.8f);
-        }));
-        controllers.add(new AnimationController(this, "spawning", 0, this::spawnPredicate).setSoundKeyframeHandler(state -> {
-            PlayerEntity player = ClientUtils.getClientPlayer();
-            if (player != null)
-                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.MUMMY_SPAWN, this.getSoundCategory(), 0.65f, 1f);
-        }));
-        controllers.add(new AnimationController(this, "specialController",0, this::specialPredicate).setSoundKeyframeHandler(state -> {
-            PlayerEntity player = ClientUtils.getClientPlayer();
-            if (player != null)
-                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), SoundEvents.BLOCK_ANVIL_LAND, this.getSoundCategory(), 0.65f, 0.7f);
-        }));
+        controllers.add(new AnimationController<>(this, "controller", 0, this::predicate));
+
+        controllers.add(
+                new AnimationController<>(this, "attacking", 0, state -> PlayState.CONTINUE)
+                        .triggerableAnim("sl_attack_rush", RawAnimation.begin().then("sl_attack_rush", Animation.LoopType.PLAY_ONCE))
+                        .triggerableAnim("sl_attack_double1", RawAnimation.begin().then("sl_attack_double1", Animation.LoopType.PLAY_ONCE))
+                        .triggerableAnim("sl_attack_double2", RawAnimation.begin().then("sl_attack_double2", Animation.LoopType.PLAY_ONCE))
+                        .triggerableAnim("sl_attack_triple", RawAnimation.begin().then("sl_attack_triple", Animation.LoopType.PLAY_ONCE))
+        );
+
+        controllers.add(new AnimationController<>(this, "spawning", 0, this::spawnPredicate)
+                .setSoundKeyframeHandler(state -> {
+                    PlayerEntity player = ClientUtils.getClientPlayer();
+                    if (player != null)
+                        this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(),
+                                ModSounds.MUMMY_SPAWN, this.getSoundCategory(), 0.65f, 1f);
+                }));
+
+        controllers.add(
+                new AnimationController<>(this, "specialController", 0, state -> PlayState.CONTINUE)
+                        .triggerableAnim("sl_attack_quake", RawAnimation.begin().then("sl_attack_quake", Animation.LoopType.PLAY_ONCE))
+        );
     }
 
+    // ---- VARIANT ----
     public DraugrOverlordVariant getOverlordVariant() {
         return DraugrOverlordVariant.byId(this.getTypeVariant() & 255);
     }
 
-    public int getTypeVariant() {
-        return this.dataTracker.get(DATA_ID_TYPE_VARIANT);
-    }
+    public int getTypeVariant() { return this.dataTracker.get(DATA_ID_TYPE_VARIANT); }
 
-    private void setVariant(DraugrOverlordVariant variant) {
-        this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
+    private void setVariant() {
+        this.dataTracker.set(DATA_ID_TYPE_VARIANT, DraugrOverlordVariant.GREATSWORD.getId() & 255);
     }
 
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
-                                 SpawnReason spawnReason, @Nullable EntityData entityData,
-                                 @Nullable NbtCompound entityNbt) {
-        DraugrOverlordVariant variant = DraugrOverlordVariant.GREATSWORD;
-
-        setVariant(variant);
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
+                                 @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        setVariant();
         return entityData;
     }
 
+    // ---- DAMAGE ----
     @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-        rand = random();
-        if (rand < 0.5)
-            return ModSounds.DRAUGR_HURT_1;
-        else
-            return ModSounds.DRAUGR_HURT_2;
-    }
-    @Override
-    protected SoundEvent getDeathSound() {
-        return ModSounds.DRAUGR_DEATH_1;
-    }
-
-    @Override
-    protected SoundEvent getAmbientSound() {
-        rand = random();
-        if (rand < 0.3)
-            return ModSounds.DRAUGR_AMBIENT_1;
-        else if (rand > 0.3 && rand < 0.6)
-            return ModSounds.DRAUGR_AMBIENT_2;
-        else
-            return ModSounds.DRAUGR_AMBIENT_3;
-    }
-    @Override
-    public void playAmbientSound() {
-        SoundEvent soundEvent = this.getAmbientSound();
-        if (soundEvent != null) {
-            this.playSound(soundEvent, 0.8f, 1f);
-        }
-    }
-
-    public int getMinAmbientSoundDelay() {
-        return 240;
-    }
-
     public boolean damage(DamageSource source, float amount) {
-        if (source.isOf(DamageTypes.IN_FIRE) || source.isOf(DamageTypes.ON_FIRE)) {
+        if (source.isOf(DamageTypes.IN_FIRE) || source.isOf(DamageTypes.ON_FIRE))
             return super.damage(source, amount * 2);
-        } else if (source.isOf(DamageTypes.FREEZE)) {
+        else if (source.isOf(DamageTypes.FREEZE))
             return false;
-        }
         return super.damage(source, amount);
     }
+
+    // ---- BOSS BAR ----
     @Override
     public void tick() {
         super.tick();
-
         this.updateBossBar();
-        float healthPercent = this.getHealth() / this.getMaxHealth();
-        this.bossBar.setPercent(healthPercent);
+        this.bossBar.setPercent(this.getHealth() / this.getMaxHealth());
 
-        // Vérifie si le boss doit être retiré (évite un affichage persistant)
-        if (this.isDead() || this.isRemoved()) {
-            this.bossBar.clearPlayers();
-        }
+        if (this.isDead() || this.isRemoved()) this.bossBar.clearPlayers();
     }
 
     private void updateBossBar() {
-        // Créer une boîte autour du boss avec un rayon de 50 blocs pour détecter les joueurs
         Box detectionBox = new Box(this.getBlockPos()).expand(18);
-
-        // Parcours tous les joueurs du monde
         for (PlayerEntity player : this.getWorld().getPlayers()) {
             if (player instanceof ServerPlayerEntity serverPlayer) {
-                // Vérifie si le joueur est dans la zone d'affichage (50 blocs)
                 if (detectionBox.contains(player.getPos())) {
-                    // Si le joueur est dans la zone et n'est pas déjà dans la bossBar, l'ajoute
-                    if (!this.bossBar.getPlayers().contains(serverPlayer)) {
-                        this.bossBar.addPlayer(serverPlayer);
-                    }
+                    if (!this.bossBar.getPlayers().contains(serverPlayer)) this.bossBar.addPlayer(serverPlayer);
                 } else {
-                    // Si le joueur est en dehors de la zone, le retire de la bossBar
-                    if (this.bossBar.getPlayers().contains(serverPlayer)) {
-                        this.bossBar.removePlayer(serverPlayer);
-                    }
+                    if (this.bossBar.getPlayers().contains(serverPlayer)) this.bossBar.removePlayer(serverPlayer);
                 }
             }
         }
     }
 
     @Override
-    public void onDeath(DamageSource damageSource) {
-        super.onDeath(damageSource);
+    public void onStoppedTrackingBy(ServerPlayerEntity player) {
+        super.onStoppedTrackingBy(player);
+        this.bossBar.removePlayer(player);
     }
-    private PlayState spawnPredicate(AnimationState state) {
+
+    // ---- SPAWN PARTICLES ----
+    private <T extends GeoAnimatable> PlayState spawnPredicate(AnimationState<T> state) {
         if (!this.getHasSpawned()) {
             state.getController().setAnimation(RawAnimation.begin().then("spawn", Animation.LoopType.PLAY_ONCE));
             if (state.getController().getAnimationState() != AnimationController.State.STOPPED) {
@@ -338,63 +262,52 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
         }
         return PlayState.CONTINUE;
     }
+
     void spawnHoveringParticles() {
-        // Position de l'entité
         double posX = this.getX();
-        double posY = this.getY() - 0.1; // Légèrement sous les pieds
+        double posY = this.getY() - 0.1;
         double posZ = this.getZ();
 
-        // Récupérer la position du bloc sous l'entité
-        BlockPos blockPos = new BlockPos((int) posX, (int) (this.getY() - 0.5), (int) posZ); // Bloc sous l'entité
+        BlockPos blockPos = new BlockPos((int) posX, (int) (this.getY() - 0.5), (int) posZ);
         BlockState blockState = this.getWorld().getBlockState(blockPos);
 
-        // Si le bloc n'est pas de l'air, générer les particules
         if (!blockState.isAir()) {
-            // Particules basées sur le bloc sous l'entité
-            for (int i = 0; i < 3; i++) { // Nombre de particules
-                double offsetX = (this.random.nextDouble() - 0.5) * 0.1; // Dispersion légère en X
-                double offsetZ = (this.random.nextDouble() - 0.5) * 0.1; // Dispersion légère en Z
-                double velocityY = 0.1; // Légère vélocité verticale (comme de la poussière)
+            for (int i = 0; i < 3; i++) {
+                double offsetX = (this.random.nextDouble() - 0.5) * 0.1;
+                double offsetZ = (this.random.nextDouble() - 0.5) * 0.1;
+                double velocityY = 0.1;
 
-                // Générer des particules basées sur le bloc
                 this.getWorld().addParticle(
-                        new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), // Particules basées sur le bloc
-                        posX + offsetX, posY, posZ + offsetZ, // Position des particules
-                        0.0, velocityY, 0.0 // Vélocité des particules
+                        new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState),
+                        posX + offsetX, posY, posZ + offsetZ,
+                        0.0, velocityY, 0.0
                 );
             }
         }
     }
+
     public void spawnSwordDraggingParticles() {
-        // ✅ Calcul de la rotation du mob
-        double yawRad = Math.toRadians(-this.bodyYaw); // Yaw de l'entité (en radians)
+        double yawRad = Math.toRadians(-this.bodyYaw);
         double cosYaw = Math.cos(yawRad);
         double sinYaw = Math.sin(yawRad);
 
-        // ✅ Décalages derrière et à droite
-        double offsetBackX = -sinYaw; // 1 bloc derrière sur X
-        double offsetBackZ = -cosYaw; // 1 bloc derrière sur Z
-        double offsetRightX = -cosYaw; // 1 bloc à droite sur X
-        double offsetRightZ = sinYaw; // 1 bloc à droite sur Z
+        double offsetBackX = -sinYaw;
+        double offsetBackZ = -cosYaw;
+        double offsetRightX = -cosYaw;
+        double offsetRightZ = sinYaw;
 
-        // ✅ Position finale des particules (un bloc derrière et un bloc à droite)
         double particleX = this.getX() + offsetBackX + offsetRightX;
         double particleZ = this.getZ() + offsetBackZ + offsetRightZ;
-        double particleY = this.getY(); // Hauteur inchangée (les pieds du mob)
+        double particleY = this.getY();
 
-        // ✅ Vérification du bloc sous la position calculée
         BlockPos blockPos = new BlockPos((int) particleX, (int) (particleY - 1), (int) particleZ);
         BlockState blockState = this.getWorld().getBlockState(blockPos);
 
-        if (blockState.isAir()) {
-            return;
-        }
+        if (blockState.isAir()) return;
 
-        // ✅ Générer les particules
         for (int i = 0; i < 1; i++) {
             double randomOffsetX = (this.random.nextDouble() - 0.5) * 0.1;
             double randomOffsetZ = (this.random.nextDouble() - 0.5) * 0.1;
-
             this.getWorld().addParticle(
                     new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState),
                     particleX + randomOffsetX, particleY, particleZ + randomOffsetZ,
@@ -403,52 +316,36 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
         }
     }
 
-
-    @Override
-    public void onStoppedTrackingBy(ServerPlayerEntity player) {
-        super.onStoppedTrackingBy(player);
-        this.bossBar.removePlayer(player); // Retire le joueur de la barre de boss
-    }
-
-        public static void AreaCrackedGround(LivingEntity mob, World world, BlockPos centerPos, int radius) {
-            // On prend le bloc directement sous le mob, sans offset
-            BlockPos startPos = centerPos.down();
-
-            for (int x = -radius; x <= radius; x++) {
-                for (int z = -radius; z <= radius; z++) {
-                    BlockPos targetPos = startPos.add(x, -1, z);
-
-                    // Vérifie si le bloc est dans le rayon circulaire
-                    if (startPos.getSquaredDistance(targetPos) <= radius * radius) {
-                        // Récupère le bloc à la position ciblée
-                        BlockState blockState = world.getBlockState(targetPos);
-
-                        // Fait spawn l'entité block au bon endroit
-                        BlockPos spawnPos = targetPos.up();
-                        spawnBlockScanEntity(world, spawnPos, blockState, mob.getRandom());
-                    }
+    // ---- AREA EFFECT ----
+    public static void AreaCrackedGround(LivingEntity mob, World world, BlockPos centerPos, int radius) {
+        BlockPos startPos = centerPos.down();
+        for (int x = -radius; x <= radius; x++) {
+            for (int z = -radius; z <= radius; z++) {
+                BlockPos targetPos = startPos.add(x, -1, z);
+                if (startPos.getSquaredDistance(targetPos) <= radius * radius) {
+                    BlockState blockState = world.getBlockState(targetPos);
+                    BlockPos spawnPos = targetPos.up();
+                    spawnBlockScanEntity(world, spawnPos, blockState, mob.getRandom());
                 }
             }
         }
+    }
 
+    public static void spawnBlockScanEntity(World world, BlockPos pos, BlockState blockState, Random random) {
+        BlockScanEntity blockScanEntity = new BlockScanEntity(ModEntities.BLOCK_SCAN_ENTITY, world);
+        float randomYOffset = random.nextFloat() * 0.2f + 0.2f;
+        blockScanEntity.setPosition(pos.getX(), pos.getY() - 0.5 + randomYOffset, pos.getZ());
+        blockScanEntity.setBlockState(blockState);
 
-        public static void spawnBlockScanEntity(World world, BlockPos pos, BlockState blockState, Random random) {
-            BlockScanEntity blockScanEntity = new BlockScanEntity(ModEntities.BLOCK_SCAN_ENTITY, world);
+        float randomPitch = random.nextFloat() * 40 - 20;
+        float randomYaw = random.nextFloat() * 40 - 20;
+        blockScanEntity.setPitch(randomPitch);
+        blockScanEntity.setYaw(randomYaw);
+        world.spawnEntity(blockScanEntity);
+    }
 
-            // Add a random Y offset between +0.0 and +0.2
-            float randomYOffset = random.nextFloat() * 0.2f + 0.2f; // Random Y offset between 0.0 and 0.2
-            blockScanEntity.setPosition(pos.getX(), pos.getY() - 0.5 + randomYOffset, pos.getZ()); // Center the entity on the block
-
-            // Set the block state
-            blockScanEntity.setBlockState(blockState);
-
-            // Apply random rotation (up to 20 degrees on X and Z axes)
-            float randomPitch = random.nextFloat() * 40 - 20; // Random pitch between -20 and 20 degrees
-            float randomYaw = random.nextFloat() * 40 - 20; // Random yaw between -20 and 20 degrees
-            blockScanEntity.setPitch(randomPitch);
-            blockScanEntity.setYaw(randomYaw);
-
-            // Spawn the entity
-            world.spawnEntity(blockScanEntity);
-        }
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        this.playSound(ModSounds.DRAUGR_WALK_1, 0.65f, 0.7f);
+    }
 }

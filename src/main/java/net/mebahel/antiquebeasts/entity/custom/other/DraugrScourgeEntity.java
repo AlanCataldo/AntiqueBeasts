@@ -43,7 +43,7 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import static java.lang.Math.random;
 
@@ -228,32 +228,7 @@ public class DraugrScourgeEntity extends DraugrEntity implements GeoEntity {
         else
             return ModSounds.DRAUGR_HURT_2;
     }
-    @Override
-    protected SoundEvent getDeathSound() {
-        return ModSounds.DRAUGR_DEATH_1;
-    }
 
-    @Override
-    protected SoundEvent getAmbientSound() {
-        rand = random();
-        if (rand < 0.3)
-            return ModSounds.DRAUGR_AMBIENT_1;
-        else if (rand > 0.3 && rand < 0.6)
-            return ModSounds.DRAUGR_AMBIENT_2;
-        else
-            return ModSounds.DRAUGR_AMBIENT_3;
-    }
-    @Override
-    public void playAmbientSound() {
-        SoundEvent soundEvent = this.getAmbientSound();
-        if (soundEvent != null) {
-            this.playSound(soundEvent, 0.8f, 1f);
-        }
-    }
-
-    public int getMinAmbientSoundDelay() {
-        return 240;
-    }
     @Override
     public void tick() {
         super.tick();

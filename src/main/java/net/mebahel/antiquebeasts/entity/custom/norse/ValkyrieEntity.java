@@ -50,7 +50,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
 import static java.lang.Math.random;
-
+import org.jetbrains.annotations.Nullable;
 
 public class ValkyrieEntity extends NorseEntity implements GeoEntity {
     private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
@@ -220,8 +220,8 @@ public class ValkyrieEntity extends NorseEntity implements GeoEntity {
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
-                                 SpawnReason spawnReason, @javax.annotation.Nullable EntityData entityData,
-                                 @javax.annotation.Nullable NbtCompound entityNbt) {
+                                 SpawnReason spawnReason, @Nullable EntityData entityData,
+                                 @Nullable NbtCompound entityNbt) {
         ValkyrieVariant variant = Util.getRandom(ValkyrieVariant.values(), this.random);
         setVariant(variant);
 

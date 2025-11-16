@@ -19,7 +19,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 import static net.minecraft.registry.tag.InstrumentTags.SCREAMING_GOAT_HORNS;

@@ -1,6 +1,5 @@
 package net.mebahel.antiquebeasts.util;
 
-import com.eliotlash.mclib.math.functions.classic.Mod;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.item.Item;

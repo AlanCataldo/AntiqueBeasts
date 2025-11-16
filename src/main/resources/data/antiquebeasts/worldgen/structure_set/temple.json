@@ -7,7 +7,7 @@
   ],
   "placement": {
     "type": "minecraft:random_spread",
-    "salt": 96321488,
+    "salt": 33321488,
     "exclusion_zone":
     {
       "other_set":"antiquebeasts:hoplite_barrack",

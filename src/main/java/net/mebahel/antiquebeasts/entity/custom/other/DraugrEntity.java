@@ -42,6 +42,7 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -49,7 +50,6 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 
-import javax.annotation.Nullable;
 import java.util.Objects;
 
 import static java.lang.Math.random;
@@ -60,6 +60,7 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
         this.speed = Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getValue();
     }
+
     private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
@@ -112,7 +113,8 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new DraugrMeleeAttackGoal(this, 1f, 20, 10));
+        this.goalSelector.add(2, new DraugrMeleeAttackGoal(this, 1f,
+                25, 15, 10));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.85f, 1f));
         this.goalSelector.add(7, new LookAroundGoal(this));
 
@@ -213,12 +215,18 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        rand = random();
-        if (rand < 0.5)
+        double rand = random();
+
+        if (rand < 0.25)
             return ModSounds.DRAUGR_HURT_1;
-        else
+        else if (rand < 0.5)
             return ModSounds.DRAUGR_HURT_2;
+        else if (rand < 0.75)
+            return ModSounds.DRAUGR_HURT_3;
+        else
+            return ModSounds.DRAUGR_HURT_4;
     }
+
     @Override
     protected SoundEvent getDeathSound() {
         return ModSounds.DRAUGR_DEATH_1;
@@ -226,14 +234,21 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        rand = random();
-        if (rand < 0.3)
+        double rand = random();
+
+        if (rand < 0.2) {
             return ModSounds.DRAUGR_AMBIENT_1;
-        else if (rand > 0.3 && rand < 0.6)
+        } else if (rand < 0.4) {
             return ModSounds.DRAUGR_AMBIENT_2;
-        else
+        } else if (rand < 0.6) {
             return ModSounds.DRAUGR_AMBIENT_3;
+        } else if (rand < 0.8) {
+            return ModSounds.DRAUGR_AMBIENT_4;
+        } else {
+            return ModSounds.DRAUGR_AMBIENT_5;
+        }
     }
+
     @Override
     public void playAmbientSound() {
         SoundEvent soundEvent = this.getAmbientSound();
@@ -243,7 +258,7 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
     }
 
     public int getMinAmbientSoundDelay() {
-        return 240;
+        return 160 + this.getRandom().nextInt(60);
     }
 
     public boolean damage(DamageSource source, float amount) {
@@ -331,6 +346,7 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
         }
         return false;
     }
+
     void spawnHoveringParticles() {
         double posX = this.getX();
         double posY = this.getY() - 0.1;

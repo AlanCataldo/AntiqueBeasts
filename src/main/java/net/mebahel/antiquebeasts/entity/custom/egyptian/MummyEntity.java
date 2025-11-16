@@ -53,6 +53,7 @@ import software.bernie.geckolib.util.ClientUtils;
 import java.util.Objects;
 
 import static java.lang.Math.random;
+import org.jetbrains.annotations.Nullable;
 
 
 public class MummyEntity extends EgyptianEntity implements GeoEntity {
@@ -249,8 +250,8 @@ public class MummyEntity extends EgyptianEntity implements GeoEntity {
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
-                                 SpawnReason spawnReason, @javax.annotation.Nullable EntityData entityData,
-                                 @javax.annotation.Nullable NbtCompound entityNbt) {
+                                 SpawnReason spawnReason, @Nullable EntityData entityData,
+                                 @Nullable NbtCompound entityNbt) {
         EgyptiantVariant variant = Util.getRandom(EgyptiantVariant.values(), this.random);
         setVariant(variant);
 

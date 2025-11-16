@@ -131,11 +131,13 @@ public class DwarvenCenturionMeleeAttackGoal extends Goal {
             this.mob.tryAttack(target);
             dealAreaDamage(target, 4.0f);
         } else if (squaredDistance <= d && this.cooldown == this.max_cooldown - 4) {
-            PlayerEntity player = ClientUtils.getClientPlayer();
-            if (player != null) {
-                if (Objects.equals(this.attackName, "attack"))
-                    this.mob.getWorld().playSound(player, this.mob.getX(), this.mob.getY(),
-                            this.mob.getZ(), ModSounds.DWARVEN_CENTURION_ATTACK_1, this.mob.getSoundCategory(), 0.5f, 1f);
+            if (this.mob.getWorld().isClient()) {
+                PlayerEntity player = ClientUtils.getClientPlayer();
+                if (player != null) {
+                    if (Objects.equals(this.attackName, "attack"))
+                        this.mob.getWorld().playSound(player, this.mob.getX(), this.mob.getY(),
+                                this.mob.getZ(), ModSounds.DWARVEN_CENTURION_ATTACK_1, this.mob.getSoundCategory(), 0.5f, 1f);
+                }
             }
         } else if (squaredDistance > d + 1) {
             this.cooldown = this.max_cooldown + 6;
@@ -171,11 +173,12 @@ public class DwarvenCenturionMeleeAttackGoal extends Goal {
             this.mob.tryAttack(target);
             dealAreaDamage(target, 4.0f);
         } else if (squaredDistance <= d && this.cooldown == this.max_cooldown - 4) {
-            PlayerEntity player = ClientUtils.getClientPlayer();
-            if (player != null) {
-                if (Objects.equals(this.attackName, "attack2"))
+            if (this.mob.getWorld().isClient()) {
+                PlayerEntity player = ClientUtils.getClientPlayer();
+                if (player != null && Objects.equals(this.attackName, "attack2")) {
                     this.mob.getWorld().playSound(player, this.mob.getX(), this.mob.getY(),
                             this.mob.getZ(), ModSounds.DWARVEN_CENTURION_ATTACK_2, this.mob.getSoundCategory(), 0.5f, 1f);
+                }
             }
         } else if (squaredDistance > d + 1) {
             this.cooldown = this.max_cooldown + 6;
@@ -214,12 +217,15 @@ public class DwarvenCenturionMeleeAttackGoal extends Goal {
             dealAreaDamage(target, 8.0f);
             breakShield(target);
         } else if (squaredDistance <= d && this.cooldown == this.max_cooldown - 8) {
-            PlayerEntity player = ClientUtils.getClientPlayer();
-            if (player != null) {
-                if (Objects.equals(this.attackName, "power_attack"))
-                    this.mob.getWorld().playSound(player, this.mob.getX(), this.mob.getY(),
-                            this.mob.getZ(), ModSounds.DWARVEN_CENTURION_POWER_ATTACK, this.mob.getSoundCategory(), 0.5f, 1f);
+            if (this.mob.getWorld().isClient()) {
+                PlayerEntity player = ClientUtils.getClientPlayer();
+                if (player != null) {
+                    if (Objects.equals(this.attackName, "power_attack"))
+                        this.mob.getWorld().playSound(player, this.mob.getX(), this.mob.getY(),
+                                this.mob.getZ(), ModSounds.DWARVEN_CENTURION_POWER_ATTACK, this.mob.getSoundCategory(), 0.5f, 1f);
+                }
             }
+
         } else if (squaredDistance > d + 1) {
             this.cooldown = this.max_cooldown + 6;
             this.mob.setSwinging(false);

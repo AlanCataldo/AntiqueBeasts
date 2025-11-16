@@ -2,10 +2,12 @@ package net.mebahel.antiquebeasts.entity.ai.other;
 
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrWightEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.DraugrWightProjectileEntity;
+import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.entity.ProjectileUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -84,6 +86,7 @@ public class DraugrSpellGoal extends Goal {
         // Le tir commence à partir du tick 60 et continue jusqu'à 10
         if (cooldown <= SHOOT_START - 10 && cooldown >= SHOOT_END && cooldown % SHOOT_INTERVAL == 0) {
             projectileUtil.shootFrostBiteProjectile(target, this.draugr, this.damage, new Vec3d(0.3, 0.3, -0.6));
+            this.draugr.playSound(ModSounds.FROST_SPELL_3, 1.0F, 1.0F);
         }
 
         // Activation de l'état "isShooting" à 60 ticks

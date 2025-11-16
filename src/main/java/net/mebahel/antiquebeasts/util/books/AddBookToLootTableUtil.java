@@ -78,21 +78,23 @@ public class AddBookToLootTableUtil {
             LootPool.Builder poolBuilder = LootPool.builder();
 
             // ⚖️ Entrée factice pour réduire la proba
-            LootPoolEntry emptyEntry = ItemEntry.builder(Items.IRON_INGOT)
-                    .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(0)))
-                    .weight(3 + (matchingBooks.size() * 3))
-                    .build();
-            poolBuilder.with(emptyEntry);
+            poolBuilder.with(
+                    ItemEntry.builder(Items.IRON_INGOT)
+                            .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(0)))
+                            .weight(3 + (matchingBooks.size() * 3))
+            );
 
+            // 📚 Ajoute chaque livre
             for (BookLootData book : matchingBooks) {
-                LootPoolEntry bookEntry = ItemEntry.builder(Items.WRITTEN_BOOK)
-                        .apply(SetNbtLootFunction.builder(book.nbt))
-                        .weight(1)
-                        .build();
-                poolBuilder.with(bookEntry);
+                poolBuilder.with(
+                        ItemEntry.builder(Items.WRITTEN_BOOK)
+                                .apply(SetNbtLootFunction.builder(book.nbt))
+                                .weight(1)
+                );
             }
 
-            tableBuilder.pool(poolBuilder.build());
+            // ✅ Nouveau comportement 1.21
+            tableBuilder.pool(poolBuilder);
         });
     }
 

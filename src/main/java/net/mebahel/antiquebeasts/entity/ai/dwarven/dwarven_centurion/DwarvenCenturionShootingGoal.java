@@ -90,11 +90,16 @@ public class DwarvenCenturionShootingGoal extends Goal {
             this.centurion.headYaw = (float) yaw;
             this.centurion.setBodyYaw((float) yaw);
 
-            PlayerEntity player = ClientUtils.getClientPlayer();
-            if (player != null) {
-                this.centurion.getWorld().playSound(player, this.centurion.getX(), this.centurion.getY(),
-                        this.centurion.getZ(), ModSounds.DWARVEN_CENTURION_SHOOTING, this.centurion.getSoundCategory(), 1f, 1f);
-            }
+            this.centurion.getWorld().playSound(
+                    null,
+                    this.centurion.getX(),
+                    this.centurion.getY(),
+                    this.centurion.getZ(),
+                    ModSounds.DWARVEN_CENTURION_SHOOTING,
+                    this.centurion.getSoundCategory(),
+                    1.0F,
+                    1.0F
+            );
         }
 
 

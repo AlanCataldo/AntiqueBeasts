@@ -4,6 +4,7 @@ import mod.azure.azurelib.AzureLib;
 import mod.azure.azurelib.rewrite.render.armor.AzArmorRendererRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.mebahel.antiquebeasts.block.ModBlockEntities;
@@ -41,9 +42,12 @@ import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.particle.custom.*;
 import net.mebahel.antiquebeasts.util.*;
+import net.mebahel.antiquebeasts.util.packet.ChestOpenSync;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
+import net.minecraft.client.util.ModelIdentifier;
 import software.bernie.geckolib.GeckoLib;
+import software.bernie.geckolib.network.GeckoLibNetwork;
 
 public class AntiqueBeastsClient implements ClientModInitializer {
     private boolean initialized = false;
@@ -56,6 +60,7 @@ public class AntiqueBeastsClient implements ClientModInitializer {
                 initialized = true;
             }
         });
+        GeckoLibNetwork.registerClientReceiverPackets();
         EntityRendererRegistry.register(ModEntities.STEAM_PROJECTILE, SteamProjectileRenderer::new);
         EntityRendererRegistry.register(ModEntities.DWEMER_CENTURION, DwemerCenturionRenderer::new);
         EntityRendererRegistry.register(ModEntities.DWEMER_SPIDER, DwemerSpiderRenderer::new);
@@ -126,6 +131,7 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         BlockEntityRendererFactories.register(ModBlockEntities.GREEK_CHEST_ENTITY, GreekChestRenderer::new);
         BlockEntityRendererFactories.register(ModBlockEntities.DWEMER_CHEST_ENTITY, DwemerChestRenderer::new);
         BlockEntityRendererFactories.register(ModBlockEntities.DWARVEN_METAL_PIPE_GEAR, DwarvenMetalPipeGearRenderer::new);
+        ChestOpenSync.registerClientReceiver();
 
         AzArmorRendererRegistry.register(AzGoldScaleArmorRenderer::new, ModItems.GOLD_SCALE_HELMET,
                 ModItems.GOLD_SCALE_CHESTPLATE,
@@ -175,5 +181,20 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         ShieldModelPredicate.registerShieldModels();
         SpearModelPredicate.registerSpearModels();
         HornModelPredicate.registerHornModels();
+
+        ModelLoadingRegistry.INSTANCE.registerModelProvider((manager, out) -> {
+            out.accept(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/egyptian_halberd/inv_iron_egyptian_halberd", "inventory"));
+            out.accept(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/egyptian_halberd/inv_gold_egyptian_halberd", "inventory"));
+            out.accept(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/egyptian_halberd/inv_diamond_egyptian_halberd", "inventory"));
+            out.accept(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/egyptian_halberd/inv_netherite_egyptian_halberd", "inventory"));
+            out.accept(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/spear/inv_iron_hoplite_spear", "inventory"));
+            out.accept(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/spear/inv_gold_hoplite_spear", "inventory"));
+            out.accept(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/spear/inv_diamond_hoplite_spear", "inventory"));
+            out.accept(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/spear/inv_netherite_hoplite_spear", "inventory"));
+            out.accept(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/inv_hersir_axe", "inventory"));
+            out.accept(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/inv_pharaoh_scepter", "inventory"));
+            out.accept(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/inv_valkyrie_spear", "inventory"));
+            out.accept(new ModelIdentifier(AntiqueBeasts.MOD_ID, "weapon/ebony/inv_ebony_greatsword", "inventory"));
+        });
     }
 }

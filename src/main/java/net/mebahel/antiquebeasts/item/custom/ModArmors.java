@@ -1,29 +1,7 @@
 package net.mebahel.antiquebeasts.item.custom;
 
 import mod.azure.azurelib.rewrite.animation.cache.AzIdentityRegistry;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
-import net.mebahel.antiquebeasts.block.ModBlocks;
-import net.mebahel.antiquebeasts.entity.ModEntities;
-import net.mebahel.antiquebeasts.item.*;
-import net.mebahel.antiquebeasts.item.staff.FrostBiteStaff;
-import net.mebahel.antiquebeasts.item.staff.IceSpikeStaff;
-import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.item.*;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
-
-import javax.annotation.Nullable;
-import java.util.List;
-
-import static net.minecraft.registry.tag.InstrumentTags.SCREAMING_GOAT_HORNS;
 
 public class ModArmors {
     public static void registerModArmors() {

@@ -7,7 +7,7 @@
   ],
   "placement": {
     "type": "minecraft:random_spread",
-    "salt": 36331488,
+    "salt": 55531488,
     "exclusion_zone":
     {
       "other_set":"minecraft:villages",

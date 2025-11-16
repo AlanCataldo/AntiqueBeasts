@@ -123,9 +123,16 @@ public class ModSounds {
     public static SoundEvent DRAUGR_AMBIENT_1 = registerSoundEvent("draugr_ambient_1");
     public static SoundEvent DRAUGR_AMBIENT_2 = registerSoundEvent("draugr_ambient_2");
     public static SoundEvent DRAUGR_AMBIENT_3 = registerSoundEvent("draugr_ambient_3");
+    public static SoundEvent DRAUGR_AMBIENT_4 = registerSoundEvent("draugr_ambient_4");
+    public static SoundEvent DRAUGR_AMBIENT_5 = registerSoundEvent("draugr_ambient_5");
+    public static SoundEvent DRAUGR_TAUNT_1 = registerSoundEvent("draugr_taunt_1");
+    public static SoundEvent DRAUGR_TAUNT_2 = registerSoundEvent("draugr_taunt_2");
     public static SoundEvent DRAUGR_DEATH_1 = registerSoundEvent("draugr_death_1");
     public static SoundEvent DRAUGR_HURT_1 = registerSoundEvent("draugr_hurt_1");
     public static SoundEvent DRAUGR_HURT_2 = registerSoundEvent("draugr_hurt_2");
+    public static SoundEvent DRAUGR_HURT_3 = registerSoundEvent("draugr_hurt_3");
+    public static SoundEvent DRAUGR_HURT_4 = registerSoundEvent("draugr_hurt_4");
+    public static SoundEvent DRAUGR_WALK_1 = registerSoundEvent("draugr_walk_1");
     public static SoundEvent HARPY_DEATH_1 = registerSoundEvent("harpy_death_1");
     public static SoundEvent HARPY_HURT_1 = registerSoundEvent("harpy_hurt_1");
     public static SoundEvent HARPY_HURT_2 = registerSoundEvent("harpy_hurt_2");
@@ -157,6 +164,13 @@ public class ModSounds {
     public static SoundEvent DWARVEN_GEAR_MULTIPLE = registerSoundEvent("dwarven_gear_multiple");
     public static SoundEvent DWARVEN_CHEST_OPEN = registerSoundEvent("dwarven_chest_open");
     public static SoundEvent DWARVEN_CHEST_CLOSE = registerSoundEvent("dwarven_chest_close");
+
+    public static SoundEvent WEAPON_CRACKED_GROUND = registerSoundEvent("cracked_ground");
+    public static SoundEvent WEAPON_GROUND_IMPACT = registerSoundEvent("ground_impact");
+    public static SoundEvent WEAPON_SWORD_IMPACT = registerSoundEvent("sword_impact");
+    public static SoundEvent WEAPON_SWORD_SLASH = registerSoundEvent("sword_slash");
+    public static SoundEvent WEAPON_SWORD_SLASH_RING = registerSoundEvent("sword_slash_ring");
+
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
