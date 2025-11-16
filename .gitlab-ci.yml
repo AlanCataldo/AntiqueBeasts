@@ -88,8 +88,9 @@ upload_to_google_drive:
       curl -s -X POST
       -H "Authorization: Bearer $GDRIVE_ACCESS_TOKEN"
       -H "Content-Type: application/json"
-      -d '{"role":"reader","type":"user","emailAddress":"jamesharris1703@gmail.com"}'
+      -d '{"role":"writer","type":"user","emailAddress":"jamesharris1703@gmail.com"}'
       "https://www.googleapis.com/drive/v3/files/$FILE_ID/permissions"
+      | tee curl_permissions.log
 
     - echo "=== Partage Drive OK ==="
 
