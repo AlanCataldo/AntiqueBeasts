@@ -17,9 +17,6 @@ cache:
     - .gradle/wrapper
     - .gradle/caches
 
-# ------------------------------
-# 1) BUILD DU MOD
-# ------------------------------
 build_mod:
   stage: build
   script:
@@ -33,43 +30,34 @@ build_mod:
   only:
     - "1.20"
 
-# ------------------------------
-# 2) UPLOAD VERS GOOGLE DRIVE
-# ------------------------------
 upload_to_drive:
   stage: upload
   needs:
     - build_mod
   image: alpine:latest
-
   before_script:
-    # Recréer config rclone
     - mkdir -p /root/.config/rclone
     - echo "$RCLONE_CONF_BASE64" | base64 -d > /root/.config/rclone/rclone.conf
-
-    # Installer rclone
     - apk add --no-cache curl unzip grep coreutils
     - curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
     - unzip rclone-current-linux-amd64.zip
     - cp rclone-*-linux-amd64/rclone /usr/bin/
 
   script:
-    - echo "=== Lecture de mod_version dans gradle.properties ==="
+    - echo "=== Lecture mod_version ==="
     - VERSION=$(grep "^mod_version" gradle.properties | sed 's/mod_version *= *//')
-    - echo "Version détectée : $VERSION"
+    - echo "Version détectée: $VERSION"
 
-    # Le nom du jar complet = <basename>-<mod_version>.jar
-    # Adapte ARCHIVE_NAME si ton build.gradle configure un autre nom de base
+    # IMPORTANT : adapte ici si ton archiveBaseName est différent
     - ARCHIVE_NAME="antiquebeasts-${VERSION}.jar"
     - FULL_PATH="build/libs/${ARCHIVE_NAME}"
 
-    - echo "=== Nom du JAR attendu : $ARCHIVE_NAME ==="
-    - echo "=== Chemin complet : $FULL_PATH ==="
+    - echo "Archive générée attendue: $ARCHIVE_NAME"
+    - echo "Chemin complet: $FULL_PATH"
 
-    # Vérification
-    - if [ ! -f "$FULL_PATH" ]; then echo "ERREUR : fichier introuvable -> $FULL_PATH"; ls -R build/libs; exit 1; fi
+    - if [ ! -f "$FULL_PATH" ]; then echo "ERREUR: fichier introuvable -> $FULL_PATH"; ls -R build/libs; exit 1; fi
 
-    - echo "=== Upload vers Drive ==="
+    - echo "=== Upload vers Google Drive ==="
     - rclone copy "$FULL_PATH" "$RCLONE_REMOTE:$RCLONE_DEST_PATH/" -v
 
   only:
