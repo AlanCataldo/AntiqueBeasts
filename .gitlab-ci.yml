@@ -64,35 +64,34 @@ upload_to_google_drive:
     - echo "=== Remotes detectes par rclone ==="
     - rclone listremotes || echo "Aucun remote detecte"
 
-script:
-  - echo "Liste des fichiers dans build/libs"
-  - ls -R build/libs || true
+  script:
+    - echo "Liste des fichiers dans build/libs"
+    - ls -R build/libs || true
 
-  # Trouver le bon jar (pas le sources)
-  - JAR=$(ls build/libs/*.jar | grep -v 'sources' | head -n 1 || true)
-  - if [ -z "$JAR" ]; then echo "Aucun jar valide trouve"; exit 1; fi
+    # On prend le premier .jar non "-sources"
+    - JAR=$(ls build/libs/*.jar | grep -v 'sources' | head -n 1 || true)
+    - if [ -z "$JAR" ]; then echo "Aucun jar valide trouve"; exit 1; fi
 
-  - echo "Jar selectionne $JAR"
+    - echo "Jar selectionne $JAR"
 
-  # Upload vers Google Drive + récupérer metadata JSON (dont fileId)
-  - echo "=== Upload Drive ==="
-  - UPLOAD_JSON=$(rclone copy "$JAR" "$RCLONE_REMOTE:$RCLONE_DEST_PATH/" --drive-upload-cutoff=0 --dump bodies 2>&1 | tee upload.log)
+    # Upload + dump de la réponse pour récupérer l'ID
+    - echo "=== Upload Drive ==="
+    - rclone copy "$JAR" "$RCLONE_REMOTE:$RCLONE_DEST_PATH/" --drive-upload-cutoff=0 --dump bodies 2>&1 | tee upload.log
 
-  # Extraire fileId Google Drive depuis le JSON envoyé par l’API
-  - FILE_ID=$(grep -oP '"id":\s*"\K[^"]+' upload.log | head -n 1)
-  - echo "FILE_ID=$FILE_ID"
+    # Extraction du fileId dans le JSON
+    - FILE_ID=$(grep -o '"id":[[:space:]]*"[^"]*"' upload.log | head -n 1 | sed 's/.*"id":[[:space:]]*"\([^"]*\)".*/\1/')
+    - echo "FILE_ID=$FILE_ID"
+    - if [ -z "$FILE_ID" ]; then echo "Impossible de recuperer le fileId"; exit 1; fi
 
-  - if [ -z "$FILE_ID" ]; then echo "Impossible de récupérer le fileId"; exit 1; fi
-
-  # Ajouter la permission lecteur pour l'email demandé
-  - echo "=== Ajout permission pour jamesharris1703@gmail.com ==="
-  - curl -s -X POST \
-      -H "Authorization\: Bearer $GDRIVE_ACCESS_TOKEN" \
-      -H "Content-Type\: application/json" \
-      -d '{"role":"reader","type":"user","emailAddress":"jamesharris1703@gmail.com"}' \
+    # Ajout permission lecteur pour jamesharris1703@gmail.com
+    - >
+      curl -s -X POST
+      -H "Authorization: Bearer $GDRIVE_ACCESS_TOKEN"
+      -H "Content-Type: application/json"
+      -d '{"role":"reader","type":"user","emailAddress":"jamesharris1703@gmail.com"}'
       "https://www.googleapis.com/drive/v3/files/$FILE_ID/permissions"
 
-  - echo "=== Partage Drive OK ==="
+    - echo "=== Partage Drive OK ==="
 
   only:
     - "1.20"
