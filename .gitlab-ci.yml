@@ -24,7 +24,7 @@ build_mod:
   artifacts:
     paths:
       - build/libs/
-      - gradle.properties
+      - ./gradle.properties
     expire_in: 1 week
   only:
     - "1.20"
