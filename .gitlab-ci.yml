@@ -42,12 +42,27 @@ upload_to_drive:
   image: alpine:latest
 
   before_script:
-    - mkdir -p /root/.config/rclone
-    - echo "$RCLONE_CONF_BASE64" | base64 -d > /root/.config/rclone/rclone.conf
+    # 1) Installer ce qu'il faut
     - apk add --no-cache curl unzip grep coreutils
+
+    # 2) Installer rclone
     - curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
     - unzip rclone-current-linux-amd64.zip
     - cp rclone-*-linux-amd64/rclone /usr/bin/
+
+    # 3) Créer le dossier de config dans le HOME VRAI du container
+    - echo "HOME=$HOME"
+    - mkdir -p "$HOME/.config/rclone"
+
+    # 4) Reconstruire rclone.conf depuis la variable base64
+    - echo "$RCLONE_CONF_BASE64" | base64 -d > "$HOME/.config/rclone/rclone.conf"
+
+    # 5) Debug : voir le fichier que rclone pense utiliser + les remotes
+    - rclone config file
+    - echo "=== Contenu de rclone.conf ==="
+    - cat "$HOME/.config/rclone/rclone.conf" || echo "rclone.conf introuvable"
+    - echo "=== Remotes detectes par rclone ==="
+    - rclone listremotes || echo "Aucun remote detecte"
 
   script:
     - echo "Liste des fichiers dans build/libs"
@@ -55,7 +70,6 @@ upload_to_drive:
 
     # On prend le premier .jar qui n'est pas un -sources.jar
     - JAR=$(ls build/libs/*.jar | grep -v 'sources' | head -n 1 || true)
-
     - if [ -z "$JAR" ]; then echo "Aucun jar valide trouve dans build/libs"; exit 1; fi
 
     - echo "Jar selectionne $JAR"
