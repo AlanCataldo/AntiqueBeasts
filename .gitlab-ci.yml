@@ -44,12 +44,12 @@ upload_to_drive:
   script:
     - echo "=== Lecture mod_version ==="
     - VERSION=$(grep "^mod_version" gradle.properties | sed 's/mod_version *= *//')
-    - echo "Version détectée: $VERSION"
+    - echo "Version détectée = $VERSION"
     - ARCHIVE_NAME="antiquebeasts-${VERSION}.jar"
     - FULL_PATH="build/libs/${ARCHIVE_NAME}"
-    - echo "Archive générée attendue: $ARCHIVE_NAME"
-    - echo "Chemin complet: $FULL_PATH"
-    - if [ ! -f "$FULL_PATH" ]; then echo "ERREUR: $FULL_PATH introuvable"; ls -R build/libs; exit 1; fi
+    - echo "Archive générée attendue = $ARCHIVE_NAME"
+    - echo "Chemin complet = $FULL_PATH"
+    - if [ ! -f "$FULL_PATH" ]; then echo "ERREUR= $FULL_PATH introuvable"; ls -R build/libs; exit 1; fi
     - echo "=== Upload vers Google Drive ==="
     - rclone copy "$FULL_PATH" "$RCLONE_REMOTE:$RCLONE_DEST_PATH/" -v
   only:
