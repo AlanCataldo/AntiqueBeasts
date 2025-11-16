@@ -1,0 +1,65 @@
+image: eclipse-temurin:21-jdk
+
+stages:
+  - build
+  - upload
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+
+  RCLONE_REMOTE: "MebahelModding"
+  RCLONE_DEST_PATH: "ModsBuilds"
+
+cache:
+  key: "${CI_COMMIT_REF_SLUG}"
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+build_mod:
+  stage: build
+  script:
+    - chmod +x ./gradlew
+    - ./gradlew clean build
+  artifacts:
+    paths:
+      - build/libs/
+      - gradle.properties
+    expire_in: 1 week
+  only:
+    - "1.20"
+
+upload_to_drive:
+  stage: upload
+  needs:
+    - build_mod
+  image: alpine:latest
+  before_script:
+    - mkdir -p /root/.config/rclone
+    - echo "$RCLONE_CONF_BASE64" | base64 -d > /root/.config/rclone/rclone.conf
+    - apk add --no-cache curl unzip grep coreutils
+    - curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
+    - unzip rclone-current-linux-amd64.zip
+    - cp rclone-*-linux-amd64/rclone /usr/bin/
+  script: |
+    echo "=== Lecture mod_version ==="
+    VERSION=$(grep "^mod_version" gradle.properties | sed 's/mod_version *= *//')
+    echo "Version détectée: $VERSION"
+
+    ARCHIVE_NAME="antiquebeasts-${VERSION}.jar"
+    FULL_PATH="build/libs/${ARCHIVE_NAME}"
+
+    echo "Archive générée attendue: $ARCHIVE_NAME"
+    echo "Chemin complet: $FULL_PATH"
+
+    if [ ! -f "$FULL_PATH" ]; then
+      echo "ERREUR: fichier introuvable -> $FULL_PATH"
+      ls -R build/libs
+      exit 1
+    fi
+
+    echo "=== Upload vers Google Drive ==="
+    rclone copy "$FULL_PATH" "$RCLONE_REMOTE:$RCLONE_DEST_PATH/" -v
+  only:
+    - "1.20"
