@@ -78,21 +78,31 @@ upload_to_google_drive:
     - echo "=== Upload Drive ==="
     - rclone copy "$JAR" "$RCLONE_REMOTE:$RCLONE_DEST_PATH/" --drive-upload-cutoff=0 --dump bodies 2>&1 | tee upload.log
 
-    # Extraction du fileId dans le JSON
+    # Extraction du fileId dans le JSON renvoyé
     - FILE_ID=$(grep -o '"id":[[:space:]]*"[^"]*"' upload.log | head -n 1 | sed 's/.*"id":[[:space:]]*"\([^"]*\)".*/\1/')
     - echo "FILE_ID=$FILE_ID"
     - if [ -z "$FILE_ID" ]; then echo "Impossible de recuperer le fileId"; exit 1; fi
 
-    # Ajout permission lecteur pour jamesharris1703@gmail.com
+    # Récupérer le token ACTUEL utilisé par rclone dans rclone.conf
+    - TOKEN_JSON=$(grep '^token =' "$HOME/.config/rclone/rclone.conf" | sed 's/token = //')
+    - ACCESS_TOKEN=$(echo "$TOKEN_JSON" | sed -E 's/.*"access_token":"([^"]+)".*/\1/')
+    - echo "Access token recupere (tronque) ${ACCESS_TOKEN:0:10}..."
+
+    - if [ -z "$ACCESS_TOKEN" ]; then echo "Impossible de recuperer l access_token"; exit 1; fi
+
+    # Ajout permission EDITEUR pour jamesharris1703@gmail.com
     - >
       curl -s -X POST
-      -H "Authorization: Bearer $GDRIVE_ACCESS_TOKEN"
+      -H "Authorization: Bearer $ACCESS_TOKEN"
       -H "Content-Type: application/json"
       -d '{"role":"writer","type":"user","emailAddress":"jamesharris1703@gmail.com"}'
       "https://www.googleapis.com/drive/v3/files/$FILE_ID/permissions"
       | tee curl_permissions.log
 
-    - echo "=== Partage Drive OK ==="
+    - echo "=== Reponse Drive permissions ==="
+    - cat curl_permissions.log || true
+
+    - echo "=== Partage Drive OK (si pas d'erreur ci-dessus) ==="
 
   only:
     - "1.20"
