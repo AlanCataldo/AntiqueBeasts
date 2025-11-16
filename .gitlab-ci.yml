@@ -7,6 +7,7 @@ stages:
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
   GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+
   RCLONE_REMOTE: "MebahelModding"
   RCLONE_DEST_PATH: "ModsBuilds"
 
@@ -16,6 +17,9 @@ cache:
     - .gradle/wrapper
     - .gradle/caches
 
+# ---------------------------
+# 1) BUILD DU MOD
+# ---------------------------
 build_mod:
   stage: build
   script:
@@ -24,16 +28,19 @@ build_mod:
   artifacts:
     paths:
       - build/libs/
-      - ./gradle.properties
     expire_in: 1 week
   only:
     - "1.20"
 
+# ---------------------------
+# 2) UPLOAD VERS GOOGLE DRIVE
+# ---------------------------
 upload_to_drive:
   stage: upload
   needs:
     - build_mod
   image: alpine:latest
+
   before_script:
     - mkdir -p /root/.config/rclone
     - echo "$RCLONE_CONF_BASE64" | base64 -d > /root/.config/rclone/rclone.conf
@@ -41,16 +48,18 @@ upload_to_drive:
     - curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
     - unzip rclone-current-linux-amd64.zip
     - cp rclone-*-linux-amd64/rclone /usr/bin/
+
   script:
-    - echo "=== Lecture mod_version ==="
-    - VERSION=$(grep "^mod_version" gradle.properties | sed 's/mod_version *= *//')
-    - echo "Version détectée = $VERSION"
-    - ARCHIVE_NAME="antiquebeasts-${VERSION}.jar"
-    - FULL_PATH="build/libs/${ARCHIVE_NAME}"
-    - echo "Archive générée attendue = $ARCHIVE_NAME"
-    - echo "Chemin complet = $FULL_PATH"
-    - if [ ! -f "$FULL_PATH" ]; then echo "ERREUR= $FULL_PATH introuvable"; ls -R build/libs; exit 1; fi
-    - echo "=== Upload vers Google Drive ==="
-    - rclone copy "$FULL_PATH" "$RCLONE_REMOTE:$RCLONE_DEST_PATH/" -v
+    - echo "Liste des fichiers dans build/libs"
+    - ls -R build/libs || true
+
+    # On prend le premier .jar qui n'est pas un -sources.jar
+    - JAR=$(ls build/libs/*.jar | grep -v 'sources' | head -n 1 || true)
+
+    - if [ -z "$JAR" ]; then echo "Aucun jar valide trouve dans build/libs"; exit 1; fi
+
+    - echo "Jar selectionne $JAR"
+    - rclone copy "$JAR" "$RCLONE_REMOTE:$RCLONE_DEST_PATH/" -v
+
   only:
     - "1.20"
