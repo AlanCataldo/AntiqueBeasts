@@ -107,33 +107,19 @@ share_on_drive:
     - echo "$RCLONE_CONF_BASE64" | base64 -d > "$HOME/.config/rclone/rclone.conf"
 
   script:
-    # Récupérer l'ID du fichier Drive depuis l'artifact
     - FILE_ID=$(cat drive_file_id.txt)
     - echo "FILE_ID=$FILE_ID"
     - if [ -z "$FILE_ID" ]; then echo "FILE_ID manquant"; exit 1; fi
 
-    # Récupérer le token ACTUEL utilisé par rclone
+    # Récupérer token rclone
     - TOKEN_JSON=$(grep '^token =' "$HOME/.config/rclone/rclone.conf" | sed 's/token = //')
     - ACCESS_TOKEN=$(echo "$TOKEN_JSON" | sed -E 's/.*"access_token":"([^"]+)".*/\1/')
     - echo "Access token recupere (tronque) ${ACCESS_TOKEN:0:10}..."
     - if [ -z "$ACCESS_TOKEN" ]; then echo "Impossible de recuperer l access_token"; exit 1; fi
 
-    # Vérifier que le fichier de liste existe
-    - if [ ! -f google_drive_share_list.txt ]; then echo "google_drive_share_list.txt introuvable"; exit 1; fi
-
-    # Boucle sur chaque email du fichier (ignore lignes vides et commentaires)
-    - >
-      while IFS= read -r EMAIL; do
-        [ -z "$EMAIL" ] && continue;
-        case "$EMAIL" in \#*) continue;; esac;
-        echo "Ajout de $EMAIL comme editeur...";
-        curl -s -X POST \
-          -H "Authorization: Bearer $ACCESS_TOKEN" \
-          -H "Content-Type: application/json" \
-          -d "{\"role\":\"writer\",\"type\":\"user\",\"emailAddress\":\"$EMAIL\"}" \
-          "https://www.googleapis.com/drive/v3/files/$FILE_ID/permissions" \
-          | tee -a curl_permissions.log;
-      done < google_drive_share_list.txt
+    # Exécuter le while en une seule commande "safe"
+    - |
+      while IFS= read -r EMAIL; do [ -z "$EMAIL" ] && continue; case "$EMAIL" in \#*) continue;; esac; echo "Ajout de $EMAIL comme editeur..."; curl -s -X POST -H "Authorization: Bearer $ACCESS_TOKEN" -H "Content-Type: application/json" -d "{\"role\":\"writer\",\"type\":\"user\",\"emailAddress\":\"$EMAIL\"}" "https://www.googleapis.com/drive/v3/files/$FILE_ID/permissions" | tee -a curl_permissions.log; done < google_drive_share_list.txt
 
     - echo "=== Reponse Drive permissions ==="
     - cat curl_permissions.log || true
