@@ -107,6 +107,10 @@ share_on_drive:
     - echo "$RCLONE_CONF_BASE64" | base64 -d > "$HOME/.config/rclone/rclone.conf"
 
   script:
+    - echo "CWD = $(pwd)"
+    - echo "Contenu du repo :"
+    - ls -al .
+
     - FILE_ID=$(cat drive_file_id.txt)
     - echo "FILE_ID=$FILE_ID"
     - if [ -z "$FILE_ID" ]; then echo "FILE_ID manquant"; exit 1; fi
@@ -117,12 +121,19 @@ share_on_drive:
     - echo "Access token recupere (tronque) ${ACCESS_TOKEN:0:10}..."
     - if [ -z "$ACCESS_TOKEN" ]; then echo "Impossible de recuperer l access_token"; exit 1; fi
 
-    # Exécuter le while en une seule commande "safe"
+    # Vérifier que le fichier de liste existe bien ici
+    - if [ ! -f google_drive_share_list.txt ]; then echo "google_drive_share_list.txt introuvable ICI"; exit 1; fi
+
+    - echo "=== Contenu de google_drive_share_list.txt ==="
+    - cat google_drive_share_list.txt
+
+    # Boucle : un email par ligne, ignore vides et commentaires
     - |
       while IFS= read -r EMAIL; do [ -z "$EMAIL" ] && continue; case "$EMAIL" in \#*) continue;; esac; echo "Ajout de $EMAIL comme editeur..."; curl -s -X POST -H "Authorization: Bearer $ACCESS_TOKEN" -H "Content-Type: application/json" -d "{\"role\":\"writer\",\"type\":\"user\",\"emailAddress\":\"$EMAIL\"}" "https://www.googleapis.com/drive/v3/files/$FILE_ID/permissions" | tee -a curl_permissions.log; done < google_drive_share_list.txt
 
     - echo "=== Reponse Drive permissions ==="
     - cat curl_permissions.log || true
+
 
   only:
     - "1.20"
