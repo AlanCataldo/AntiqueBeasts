@@ -3,6 +3,7 @@ image: eclipse-temurin:21-jdk
 stages:
   - build
   - upload
+  - share
 
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
@@ -17,6 +18,9 @@ cache:
     - .gradle/wrapper
     - .gradle/caches
 
+# ---------------------------
+# 1) BUILD DU MOD
+# ---------------------------
 build_mod:
   stage: build
   script:
@@ -25,41 +29,122 @@ build_mod:
   artifacts:
     paths:
       - build/libs/
-      - gradle.properties
     expire_in: 1 week
   only:
     - "1.20"
 
+# ---------------------------
+# 2) UPLOAD VERS GOOGLE DRIVE
+#    + SAUVEGARDE DE L'ID DU FICHIER
+# ---------------------------
 upload_to_drive:
   stage: upload
   needs:
     - build_mod
   image: alpine:latest
+
   before_script:
-    - mkdir -p /root/.config/rclone
-    - echo "$RCLONE_CONF_BASE64" | base64 -d > /root/.config/rclone/rclone.conf
     - apk add --no-cache curl unzip grep coreutils
+    # Installer rclone
     - curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
     - unzip rclone-current-linux-amd64.zip
     - cp rclone-*-linux-amd64/rclone /usr/bin/
-  script: |
-    echo "=== Lecture mod_version ==="
-    VERSION=$(grep "^mod_version" gradle.properties | sed 's/mod_version *= *//')
-    echo "Version détectée: $VERSION"
+    # Config rclone
+    - mkdir -p "$HOME/.config/rclone"
+    - echo "$RCLONE_CONF_BASE64" | base64 -d > "$HOME/.config/rclone/rclone.conf"
+    - rclone config file
 
-    ARCHIVE_NAME="antiquebeasts-${VERSION}.jar"
-    FULL_PATH="build/libs/${ARCHIVE_NAME}"
+  script:
+    - echo "Liste des fichiers dans build/libs"
+    - ls -R build/libs || true
 
-    echo "Archive générée attendue: $ARCHIVE_NAME"
-    echo "Chemin complet: $FULL_PATH"
+    # On prend le premier .jar non "-sources"
+    - JAR=$(ls build/libs/*.jar | grep -v 'sources' | head -n 1 || true)
+    - if [ -z "$JAR" ]; then echo "Aucun jar valide trouve"; exit 1; fi
 
-    if [ ! -f "$FULL_PATH" ]; then
-      echo "ERREUR: fichier introuvable -> $FULL_PATH"
-      ls -R build/libs
-      exit 1
-    fi
+    - echo "Jar selectionne $JAR"
+    - BASENAME=$(basename "$JAR")
+    - echo "Basename $BASENAME"
 
-    echo "=== Upload vers Google Drive ==="
-    rclone copy "$FULL_PATH" "$RCLONE_REMOTE:$RCLONE_DEST_PATH/" -v
+    # Upload du jar vers Drive
+    - echo "=== Upload Drive ==="
+    - rclone copy "$JAR" "$RCLONE_REMOTE:$RCLONE_DEST_PATH/" -v
+
+    # Récupérer la liste JSON des fichiers dans le dossier de destination
+    - echo "=== rclone lsjson sur $RCLONE_REMOTE:$RCLONE_DEST_PATH ==="
+    - JSON=$(rclone lsjson "$RCLONE_REMOTE:$RCLONE_DEST_PATH" --files-only)
+    - echo "$JSON"
+
+    # Extraire l'ID du fichier correspondant à notre JAR (même nom)
+    - FILE_ID=$(echo "$JSON" | tr -d '\n' | sed -E "s/.*\"Path\":\"$BASENAME\"[^\}]*\"ID\":\"([^\"]*)\".*/\1/")
+    - echo "FILE_ID=$FILE_ID"
+    - if [ -z "$FILE_ID" ]; then echo "Impossible de recuperer le fileId pour $BASENAME"; exit 1; fi
+
+    # Sauvegarder l'ID pour le job suivant
+    - echo "$FILE_ID" > drive_file_id.txt
+
+  artifacts:
+    paths:
+      - drive_file_id.txt
+    expire_in: 1 week
+
   only:
     - "1.20"
+
+# ---------------------------
+# 3) PARTAGE DRIVE A PARTIR
+#    DE google_drive_share_list.txt
+# ---------------------------
+share_on_drive:
+  stage: share
+  needs:
+    - upload_to_drive
+  image: alpine:latest
+
+  before_script:
+    - apk add --no-cache curl unzip grep coreutils
+
+    # Installer rclone
+    - curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
+    - unzip rclone-current-linux-amd64.zip
+    - cp rclone-*-linux-amd64/rclone /usr/bin/
+
+    # Recréer la config rclone
+    - mkdir -p "$HOME/.config/rclone"
+    - echo "$RCLONE_CONF_BASE64" | base64 -d > "$HOME/.config/rclone/rclone.conf"
+
+    # On crée le fichier de mails depuis la variable GitLab
+    - echo "$GOOGLE_DRIVE_SHARE_LIST" > google_drive_share_list.txt
+    - echo "=== Liste emails ==="
+    - cat google_drive_share_list.txt
+
+    # ⚠️ Forcer rclone à parler à Drive pour rafraîchir le access_token
+    - rclone lsjson "$RCLONE_REMOTE:$RCLONE_DEST_PATH" --max-depth 1 >/dev/null 2>&1 || true
+
+  script:
+    - FILE_ID=$(cat drive_file_id.txt)
+    - echo "FILE_ID=$FILE_ID"
+    - if [ -z "$FILE_ID" ]; then echo "FILE_ID manquant"; exit 1; fi
+
+    # Récupérer le token ACTUEL (après refresh) depuis rclone.conf
+    - TOKEN_JSON=$(grep '^token =' "$HOME/.config/rclone/rclone.conf" | sed 's/token = //')
+    - ACCESS_TOKEN=$(echo "$TOKEN_JSON" | sed -E 's/.*"access_token":"([^"]+)".*/\1/')
+    - echo "Access token recupere (tronque) ${ACCESS_TOKEN:0:10}..."
+    - if [ -z "$ACCESS_TOKEN" ]; then echo "Impossible de recuperer l access_token"; exit 1; fi
+
+    # Boucle sur les emails (variable GitLab → fichier)
+    - |
+      while IFS= read -r EMAIL; do
+        [ -z "$EMAIL" ] && continue;
+        case "$EMAIL" in \#*) continue;; esac;
+        echo "Ajout de $EMAIL comme editeur...";
+        curl -s -X POST \
+          -H "Authorization: Bearer $ACCESS_TOKEN" \
+          -H "Content-Type: application/json" \
+          -d "{\"role\":\"writer\",\"type\":\"user\",\"emailAddress\":\"$EMAIL\"}" \
+          "https://www.googleapis.com/drive/v3/files/$FILE_ID/permissions" \
+          | tee -a curl_permissions.log;
+      done < google_drive_share_list.txt
+
+    - echo "=== Réponse Drive ==="
+    - cat curl_permissions.log || true
