@@ -1,19 +1,15 @@
 package net.mebahel.antiquebeasts.block.screenhandlers;
 
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
-import net.mebahel.antiquebeasts.block.entity.DraugrChestBlockEntity;
+import net.mebahel.antiquebeasts.block.entity.base.BaseChestBlockEntity;
 import net.mebahel.antiquebeasts.block.util.SyncedInventoryWrapper;
-import net.mebahel.antiquebeasts.util.packet.ChestOpenSync;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -76,7 +72,7 @@ public class DraugrChestScreenHandler extends ScreenHandler {
     public void onClosed(PlayerEntity player) {
         super.onClosed(player);
 
-        if (this.world.getBlockEntity(this.chestPos) instanceof DraugrChestBlockEntity chest) {
+        if (this.world.getBlockEntity(this.chestPos) instanceof BaseChestBlockEntity chest) {
             chest.onClose(player);
         }
     }

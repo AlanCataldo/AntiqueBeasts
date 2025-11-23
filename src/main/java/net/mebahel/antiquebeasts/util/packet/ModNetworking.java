@@ -1,7 +1,7 @@
 package net.mebahel.antiquebeasts.util.packet;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.mebahel.antiquebeasts.block.entity.DraugrChestBlockEntity;
+import net.mebahel.antiquebeasts.block.entity.base.BaseChestBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -15,7 +15,7 @@ public class ModNetworking {
 
                     server.execute(() -> {
                         BlockEntity be = player.getServerWorld().getBlockEntity(pos);
-                        if (be instanceof DraugrChestBlockEntity chest) {
+                        if (be instanceof BaseChestBlockEntity chest) {
                             chest.shouldDoSpawnAnimation = shouldDoSpawnAnimation;
                             chest.markDirty(); // ✅ Enregistre la mise à jour côté serveur
                             chest.sync(); // ✅ Synchronisation avec le client

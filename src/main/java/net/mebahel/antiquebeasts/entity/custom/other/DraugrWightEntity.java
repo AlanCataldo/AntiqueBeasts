@@ -164,7 +164,7 @@ public class DraugrWightEntity extends DraugrEntity implements GeoEntity {
     private PlayState shootingPredicate(AnimationState state) {
         if (this.isShooting() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
             state.getController().forceAnimationReset();
-            state.getController().setAnimation(RawAnimation.begin().then("spell", Animation.LoopType.PLAY_ONCE));
+            state.getController().setAnimation(RawAnimation.begin().then("frostbite", Animation.LoopType.PLAY_ONCE));
             return PlayState.CONTINUE;
         }
         return PlayState.CONTINUE;

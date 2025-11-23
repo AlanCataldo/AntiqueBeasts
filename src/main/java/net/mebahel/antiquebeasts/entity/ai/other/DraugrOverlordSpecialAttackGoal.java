@@ -79,7 +79,7 @@ public class DraugrOverlordSpecialAttackGoal extends Goal {
                 AreaCrackedGround(this.overlord, this.overlord.getWorld(), this.overlord.getBlockPos(), 12);
                 this.overlord.playSound(ModSounds.WEAPON_GROUND_IMPACT, 1.0f, 0.8f);
             }
-            case 18 -> {
+            case 17 -> {
                 this.executeSpecialAttack(6,0.3f);
                 AreaCrackedGround(this.overlord, this.overlord.getWorld(), this.overlord.getBlockPos(), 6);
                 this.overlord.playSound(ModSounds.WEAPON_CRACKED_GROUND, 1.0f, 0.8f);

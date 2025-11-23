@@ -5,7 +5,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.mebahel.antiquebeasts.block.entity.DraugrChestBlockEntity;
+import net.mebahel.antiquebeasts.block.entity.base.BaseChestBlockEntity;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -36,15 +37,16 @@ public class ChestOpenSync {
 
             client.execute(() -> {
                 if (client.world == null) return;
-                if (!(client.world.getBlockEntity(pos) instanceof DraugrChestBlockEntity chest)) return;
 
-                // ⚠️ ne plus changer d’état localement ailleurs que par ce packet !
-                chest.isOpened = open;
-                chest.hasBeenOpened = true;
-                chest.markDirty();
+                BlockEntity be = client.world.getBlockEntity(pos);
+                if (be instanceof BaseChestBlockEntity draugr) {
+                    draugr.isOpened = open;
+                    draugr.hasBeenOpened = true;
+                    draugr.markDirty();
 
-                if (open) chest.playOpenSound();
-                else chest.playCloseSound();
+                    if (open) draugr.playOpenSound();
+                    else draugr.playCloseSound();
+                }
             });
         });
     }

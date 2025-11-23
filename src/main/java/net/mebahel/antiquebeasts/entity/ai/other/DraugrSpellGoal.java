@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public class DraugrSpellGoal extends Goal {
     private float damage;
     private final DraugrWightEntity draugr;
-    private static final int COOLDOWN_TICKS = 200;
+    private static final int COOLDOWN_TICKS = 220;
     private static final int SHOOT_START = 60;
     private static final int SHOOT_END = 10;
     private static final int SHOOT_INTERVAL = 5;
@@ -86,7 +86,6 @@ public class DraugrSpellGoal extends Goal {
         // Le tir commence à partir du tick 60 et continue jusqu'à 10
         if (cooldown <= SHOOT_START - 10 && cooldown >= SHOOT_END && cooldown % SHOOT_INTERVAL == 0) {
             projectileUtil.shootFrostBiteProjectile(target, this.draugr, this.damage, new Vec3d(0.3, 0.3, -0.6));
-            this.draugr.playSound(ModSounds.FROST_SPELL_3, 1.0F, 1.0F);
         }
 
         // Activation de l'état "isShooting" à 60 ticks
