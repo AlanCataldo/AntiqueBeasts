@@ -12,7 +12,7 @@ public enum ModToolMaterial implements ToolMaterial {
         return Ingredient.ofItems(Items.IRON_INGOT);
     }),
     FROST_WEAPON(4, 1550, 4.0F, 0.5F, 17, () -> {
-        return Ingredient.ofItems(Items.DIAMOND);
+        return Ingredient.ofItems(ModItems.FROST_SHARD);
     }),
 
     PHARAOH_SCEPTER(4, 1550, 4.0F, 0.5F, 25, () -> {

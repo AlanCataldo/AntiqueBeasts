@@ -1,8 +1,8 @@
 package net.mebahel.antiquebeasts.entity.armor.IronPlateArmor;
 
-import mod.azure.azurelib.rewrite.animation.controller.AzAnimationController;
-import mod.azure.azurelib.rewrite.animation.controller.AzAnimationControllerContainer;
-import mod.azure.azurelib.rewrite.animation.impl.AzItemAnimator;
+import mod.azure.azurelib.animation.controller.AzAnimationController;
+import mod.azure.azurelib.animation.controller.AzAnimationControllerContainer;
+import mod.azure.azurelib.animation.impl.AzItemAnimator;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;

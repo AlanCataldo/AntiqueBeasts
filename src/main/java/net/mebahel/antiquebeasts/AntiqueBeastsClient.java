@@ -1,7 +1,7 @@
 package net.mebahel.antiquebeasts;
 
 import mod.azure.azurelib.AzureLib;
-import mod.azure.azurelib.rewrite.render.armor.AzArmorRendererRegistry;
+import mod.azure.azurelib.render.armor.AzArmorRendererRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
@@ -47,7 +47,6 @@ import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.util.ModelIdentifier;
 import software.bernie.geckolib.GeckoLib;
-import software.bernie.geckolib.network.GeckoLibNetwork;
 
 public class AntiqueBeastsClient implements ClientModInitializer {
     private boolean initialized = false;
@@ -60,7 +59,6 @@ public class AntiqueBeastsClient implements ClientModInitializer {
                 initialized = true;
             }
         });
-        GeckoLibNetwork.registerClientReceiverPackets();
         EntityRendererRegistry.register(ModEntities.STEAM_PROJECTILE, SteamProjectileRenderer::new);
         EntityRendererRegistry.register(ModEntities.DWEMER_CENTURION, DwemerCenturionRenderer::new);
         EntityRendererRegistry.register(ModEntities.DWEMER_SPIDER, DwemerSpiderRenderer::new);

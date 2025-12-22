@@ -142,7 +142,6 @@ public class ModSounds {
     public static SoundEvent DRAUGR_FROST_SPELL = registerSoundEvent("draugr_frost_spell");
     public static SoundEvent DRAUGR_ICE_SPIKE = registerSoundEvent("draugr_ice_spike");
     public static SoundEvent WINNING_RAID_1 = registerSoundEvent("winning_raid_1");
-    public static SoundEvent DRAUGR_OVERLORD_STEP = registerSoundEvent("draugr_overlord_step");
     public static SoundEvent FROST_CHARGE = registerSoundEvent("frost_charge");
     public static SoundEvent FROST_SPIKE_BREAK = registerSoundEvent("frost_spike_break");
     public static SoundEvent FROST_SPELL_3 = registerSoundEvent("frost_spell_3");

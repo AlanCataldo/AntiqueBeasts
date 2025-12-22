@@ -135,7 +135,6 @@ public class AntiqueBeasts implements ModInitializer {
 		RaidManager.registerEvents();
 		ModNetworking.registerReceivers();
 		AddBookToLootTableUtil bookUtil = new AddBookToLootTableUtil();
-		ChestOpenSync.registerServerReceiver();
 
 		bookUtil.addBookFromString(
 				"villager_entry_2",

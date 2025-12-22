@@ -2,7 +2,6 @@ package net.mebahel.antiquebeasts.block;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
-import net.mebahel.antiquebeasts.block.custom.DwemerSpiderBlock;
 import net.mebahel.antiquebeasts.block.entity.*;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
@@ -14,6 +13,7 @@ public class ModBlockEntities {
             Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "dwemer_chest"),
                     FabricBlockEntityTypeBuilder.create(DwemerChestBlockEntity::new,
                             ModBlocks.DWEMER_CHEST).build());
+
     public static final BlockEntityType<DraugrChestBlockEntity> DRAUGR_CHEST_ENTITY =
             Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "draugr_chest"),
                     FabricBlockEntityTypeBuilder.create(DraugrChestBlockEntity::new,

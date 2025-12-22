@@ -1,7 +1,7 @@
 package net.mebahel.antiquebeasts.entity.armor.GoldScaleArmor;
 
-import mod.azure.azurelib.rewrite.animation.dispatch.command.AzCommand;
-import mod.azure.azurelib.rewrite.animation.play_behavior.AzPlayBehaviors;
+import mod.azure.azurelib.animation.dispatch.command.AzCommand;
+import mod.azure.azurelib.animation.play_behavior.AzPlayBehaviors;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 

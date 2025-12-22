@@ -1,6 +1,6 @@
 package net.mebahel.antiquebeasts.item.custom;
 
-import mod.azure.azurelib.rewrite.animation.cache.AzIdentityRegistry;
+import mod.azure.azurelib.animation.cache.AzIdentityRegistry;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 
 public class ModArmors {

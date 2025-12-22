@@ -376,6 +376,7 @@ public class DraugrRaidTest {
     public ServerWorld getWorld() {
         return this.world;
     }
+
     private void spawnRewardChest() {
         if (!world.isClient) {
             BlockPos playerPos = targetPlayer.getBlockPos();
@@ -395,13 +396,12 @@ public class DraugrRaidTest {
 
                 // ✅ Active l'animation et force la synchronisation
                 draugrChest.setShouldDoSpawnAnimation(true);
-                //System.out.println("[DEBUG] Chest spawn animation activated: " + draugrChest.shouldDoSpawnAnimation);
+                System.out.println("[DEBUG] Chest spawn animation activated: " + draugrChest.shouldDoSpawnAnimation);
             }
 
             AntiqueBeasts.getTickScheduler().schedule(world, 15, this::enRaidSound);
         }
     }
-
 
     private void enRaidSound(ServerWorld world) {
         world.playSound(null, chestPos, ModSounds.WINNING_RAID_1, targetPlayer.getSoundCategory(), 0.55F, 1.0F);

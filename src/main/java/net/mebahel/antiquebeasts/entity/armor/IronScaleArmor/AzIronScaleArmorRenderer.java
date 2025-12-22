@@ -1,8 +1,8 @@
 package net.mebahel.antiquebeasts.entity.armor.IronScaleArmor;
 
-import mod.azure.azurelib.rewrite.render.armor.AzArmorRenderer;
-import mod.azure.azurelib.rewrite.render.armor.AzArmorRendererConfig;
-import mod.azure.azurelib.rewrite.render.armor.bone.AzDefaultArmorBoneProvider;
+import mod.azure.azurelib.render.armor.AzArmorRenderer;
+import mod.azure.azurelib.render.armor.AzArmorRendererConfig;
+import mod.azure.azurelib.render.armor.bone.AzDefaultArmorBoneProvider;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.minecraft.util.Identifier;
 

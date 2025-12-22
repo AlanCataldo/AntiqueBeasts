@@ -2,11 +2,10 @@ package net.mebahel.antiquebeasts.block.entity.base;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.mebahel.antiquebeasts.block.screenhandlers.DraugrChestScreenHandler;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -52,7 +51,7 @@ public abstract class BaseChestBlockEntity extends ChestBlockEntity
 
     // === Geckolib ===
     protected final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
-
+    private boolean spawnAnimationPlaying = false;
     // === état d’anim / ouverture ===
     public boolean isOpened = false;
     public boolean hasBeenOpened = false;
@@ -105,29 +104,18 @@ public abstract class BaseChestBlockEntity extends ChestBlockEntity
         UUID id = player.getUuid();
 
         if (this.baseLootTableId == null && this.lootTableId == null) {
-            System.out.println(getLogPrefix() + " Player-placed chest detected -> shared inventory only");
             // inventaire commun
             this.personalLoots.put(id, this.getInvStackList());
             return;
         }
 
-        System.out.println(getLogPrefix() + " Player " + player.getName().getString() + " (" + id + ") interacting with chest at " + this.pos);
-
         if (!generatedLootPlayers.contains(id)) {
-            System.out.println(getLogPrefix() + " -> No loot yet for this player. Generating new loot...");
             generateLootFor(player);
             generatedLootPlayers.add(id);
             this.markDirty();
-        } else {
-            System.out.println(getLogPrefix() + " -> Existing loot found for player.");
         }
 
         DefaultedList<ItemStack> loot = personalLoots.get(id);
-        if (loot != null) {
-            System.out.println(getLogPrefix() + " -> Loaded loot inventory for player with " + loot.size() + " slots.");
-        } else {
-            System.out.println(getLogPrefix() + " -> WARNING: No loot found for this player, something went wrong!");
-        }
     }
 
     private void generateLootFor(PlayerEntity player) {
@@ -138,16 +126,11 @@ public abstract class BaseChestBlockEntity extends ChestBlockEntity
             if (this.lootTableId != null) {
                 this.baseLootTableId = this.lootTableId;
                 this.lootTableId = null; // évite la génération vanilla globale
-                System.out.println(getLogPrefix() + " Stored structure loot_table_id: " + this.baseLootTableId);
             } else {
-                System.out.println(getLogPrefix() + " No lootTableId found — shared chest only.");
                 return;
             }
             this.markDirty();
         }
-
-        System.out.println(getLogPrefix() + " Generating loot for " + player.getName().getString()
-                + " using table: " + this.baseLootTableId);
 
         LootTable lootTable = serverWorld.getServer().getLootManager().getLootTable(this.baseLootTableId);
 
@@ -174,13 +157,7 @@ public abstract class BaseChestBlockEntity extends ChestBlockEntity
         }
 
         personalLoots.put(player.getUuid(), loot);
-
-        System.out.println(getLogPrefix() + " ✅ Loot generated for " + player.getName().getString());
     }
-
-    // =====================================================
-    //                      GECKOLIB
-    // =====================================================
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
@@ -212,17 +189,38 @@ public abstract class BaseChestBlockEntity extends ChestBlockEntity
 
     private <T extends GeoAnimatable> PlayState spawnPredicate(AnimationState<T> event) {
         AnimationController<?> controller = event.getController();
-        if (controller.getAnimationState() != AnimationController.State.STOPPED) spawnChestParticles();
-        if (this.shouldDoSpawnAnimation) {
-            controller.setAnimation(RawAnimation.begin().then("spawn", Animation.LoopType.PLAY_ONCE));
-            if (controller.hasAnimationFinished()) {
-                this.setShouldDoSpawnAnimation(false);
-                syncToServer();
+
+        // 1) Le serveur a demandé un spawn => on démarre l'anim UNE SEULE FOIS
+        if (this.shouldDoSpawnAnimation && !this.spawnAnimationPlaying) {
+            this.spawnAnimationPlaying = true;
+
+            controller.forceAnimationReset();
+            controller.setAnimation(
+                    RawAnimation.begin()
+                            .then("spawn", Animation.LoopType.PLAY_ONCE)
+            );
+        }
+
+        // 2) Tant que l'anim de spawn est en cours, on reste dans ce controller
+        if (this.spawnAnimationPlaying) {
+            // Tant que l'anim n'est pas à l'arrêt, on balance les particules
+            if (controller.getAnimationState() != AnimationController.State.STOPPED) {
+                spawnChestParticles();
             }
+
+            // Quand Geckolib signale que l'anim est finie, on coupe tout côté client
+            if (controller.hasAnimationFinished()) {
+                this.spawnAnimationPlaying = false;
+                this.shouldDoSpawnAnimation = false; // ⚠️ client-side uniquement
+            }
+
             return PlayState.CONTINUE;
         }
+
+        // 3) Si rien n'est en cours et le flag n'est pas posé, ce controller ne fait rien
         return PlayState.STOP;
     }
+
 
     @Override
     public double getTick(Object blockEntity) {
@@ -234,11 +232,8 @@ public abstract class BaseChestBlockEntity extends ChestBlockEntity
         return cache;
     }
 
-    // =====================================================
-    //                  TICK / OUVERTURE
-    // =====================================================
-
     public void serverTick() {
+        // Gestion fermeture auto
         if (viewerCount <= 0 && isOpened) {
             closeCooldown--;
             if (closeCooldown <= 0) {
@@ -246,6 +241,12 @@ public abstract class BaseChestBlockEntity extends ChestBlockEntity
                 hasBeenOpened = false;
                 markDirty();
             }
+        }
+
+        // 🔽 AJOUT : le spawn est one-shot côté serveur aussi
+        if (this.shouldDoSpawnAnimation) {
+            this.shouldDoSpawnAnimation = false;
+            this.markDirty(); // on persiste l'état "plus de spawn" pour les prochains joueurs/reco
         }
     }
 
@@ -306,10 +307,6 @@ public abstract class BaseChestBlockEntity extends ChestBlockEntity
         if (this.viewers < 0) this.viewers = 0;
     }
 
-    // =====================================================
-    //                       NBT
-    // =====================================================
-
     @Override
     public void readNbt(NbtCompound tag) {
         super.readNbt(tag);
@@ -318,13 +315,11 @@ public abstract class BaseChestBlockEntity extends ChestBlockEntity
             Identifier vanillaLoot = new Identifier(tag.getString("LootTable"));
             if (this.customLootTableId == null) {
                 this.customLootTableId = vanillaLoot;
-                System.out.println(getLogPrefix() + " Copied vanilla loot table to custom: " + vanillaLoot);
             }
         }
 
         if (tag.contains("CustomLootTable", 8)) {
             this.customLootTableId = new Identifier(tag.getString("CustomLootTable"));
-            System.out.println(getLogPrefix() + " Restored saved custom loot table: " + this.customLootTableId);
         }
 
         this.isOpened = tag.getBoolean("isOpened");
@@ -340,7 +335,6 @@ public abstract class BaseChestBlockEntity extends ChestBlockEntity
 
         if (tag.contains("BaseLootTable", 8)) {
             this.baseLootTableId = new Identifier(tag.getString("BaseLootTable"));
-            System.out.println(getLogPrefix() + " Restored baseLootTableId: " + this.baseLootTableId);
         }
         if (tag.contains("PersonalLoots", 9)) {
             NbtList lootsList = tag.getList("PersonalLoots", 10);
@@ -393,10 +387,6 @@ public abstract class BaseChestBlockEntity extends ChestBlockEntity
         tag.put("PersonalLoots", lootsList);
     }
 
-    // =====================================================
-    //                 DIVERS / UTILITAIRES
-    // =====================================================
-
     public void setShouldDoSpawnAnimation(boolean value) {
         this.shouldDoSpawnAnimation = value;
         this.markDirty();
@@ -405,15 +395,6 @@ public abstract class BaseChestBlockEntity extends ChestBlockEntity
 
     public DefaultedList<ItemStack> getInternalInventory() {
         return this.getInvStackList();
-    }
-
-    private void syncToServer() {
-        if (this.world != null && this.world.isClient) {
-            PacketByteBuf buf = PacketByteBufs.create();
-            buf.writeBlockPos(this.pos);
-            buf.writeBoolean(this.shouldDoSpawnAnimation);
-            ClientPlayNetworking.send(new Identifier("antiquebeasts", "update_chest"), buf);
-        }
     }
 
     @Environment(EnvType.CLIENT)
@@ -496,7 +477,6 @@ public abstract class BaseChestBlockEntity extends ChestBlockEntity
             @Override
             public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
                 if (isSharedChest()) {
-                    System.out.println(getLogPrefix() + " Opening shared chest for " + playerEntity.getName().getString());
                     return new DraugrChestScreenHandler(syncId, playerInventory, BaseChestBlockEntity.this);
                 }
 
@@ -511,8 +491,15 @@ public abstract class BaseChestBlockEntity extends ChestBlockEntity
     }
 
     @Override
+    public NbtCompound toInitialChunkDataNbt() {
+        return this.createNbt();
+    }
+
+    // 🔁 Utilisé quand tu fais sync() / markForUpdate()
+    @Override
     public Packet<ClientPlayPacketListener> toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.create(this);
+        // on force l'utilisation de toInitialChunkDataNbt pour écrire tout le NBT
+        return BlockEntityUpdateS2CPacket.create(this, BlockEntity::toInitialChunkDataNbt);
     }
 
     @Override
