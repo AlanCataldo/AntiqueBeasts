@@ -390,7 +390,9 @@
             },
             {
               "function": "minecraft:set_name",
-              "name": "Greek Temple Map"
+              "name": {
+                "translate": "antiquebeasts.map.greek_temple_map"
+              }
             },
             {
               "add": false,

@@ -1,23 +1,22 @@
 package net.mebahel.antiquebeasts.entity.ai.other;
 
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrWightEntity;
-import net.mebahel.antiquebeasts.entity.projectiles.DraugrWightProjectileEntity;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.entity.ProjectileUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 
 public class DraugrSpellGoal extends Goal {
-    private float damage;
     private final DraugrWightEntity draugr;
+    private final float damage;
+
     private static final int COOLDOWN_TICKS = 220;
     private static final int SHOOT_START = 60;
     private static final int SHOOT_END = 10;
     private static final int SHOOT_INTERVAL = 5;
+
     private final ProjectileUtil projectileUtil;
 
     public DraugrSpellGoal(DraugrWightEntity draugr, float damage) {
@@ -26,88 +25,128 @@ public class DraugrSpellGoal extends Goal {
         this.projectileUtil = new ProjectileUtil();
     }
 
+    @Override
     public boolean canStart() {
-        LivingEntity livingEntity = this.draugr.getTarget();
+        LivingEntity target = this.draugr.getTarget();
 
-        if (livingEntity instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+        if (target instanceof PlayerEntity playerEntity) {
             if (playerEntity.isCreative() || playerEntity.isSpectator()) {
                 return false;
             }
         }
-        return livingEntity != null && livingEntity.isAlive();
+
+        return target != null
+                && target.isAlive()
+                && !this.draugr.isBlocking()
+                && !this.draugr.isUsingPotion();
     }
 
+    @Override
     public void start() {
-        this.draugr.setCooldown(COOLDOWN_TICKS); // Initial cooldown set to 180 ticks
+        this.draugr.setCooldown(COOLDOWN_TICKS + this.draugr.getRandom().nextInt(60));
+        this.draugr.setShooting(false);
     }
 
+    @Override
     public boolean shouldContinue() {
-        LivingEntity livingEntity = this.draugr.getTarget();
+        LivingEntity target = this.draugr.getTarget();
 
-        if (livingEntity instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+        if (target instanceof PlayerEntity playerEntity) {
             if (playerEntity.isCreative() || playerEntity.isSpectator()) {
                 return false;
             }
         }
-        return livingEntity != null && livingEntity.isAlive();
+
+        return target != null
+                && target.isAlive()
+                && !this.draugr.isBlocking()
+                && !this.draugr.isUsingPotion();
     }
 
+    @Override
     public void stop() {
         this.draugr.setShooting(false);
-        this.draugr.setCooldown(COOLDOWN_TICKS); // Reset cooldown after spell
+        this.draugr.setCooldown(COOLDOWN_TICKS + this.draugr.getRandom().nextInt(60));
+        draugr.getNavigation().stop();
+        draugr.getMoveControl().strafeTo(0, 0);
+        var vel = draugr.getVelocity();
+        draugr.setVelocity(vel.x * 0.2, vel.y, vel.z * 0.2);
     }
 
+    @Override
     public boolean shouldRunEveryTick() {
         return true;
     }
 
+    @Override
     public void tick() {
+        // Sécu : si blocage / potion commence pendant le cast
+        if (this.draugr.isBlocking() || this.draugr.isUsingPotion()) {
+            this.stop();
+            return;
+        }
+
         LivingEntity target = this.draugr.getTarget();
         if (target == null || !target.isAlive() || !this.draugr.canSee(target)) {
             this.stop();
             return;
         }
 
-        // Réduire le cooldown chaque tick
-        if (this.draugr.getCooldown() > 0) {
-            this.draugr.setCooldown(this.draugr.getCooldown() - 1);
+        // Cooldown
+        int cd = this.draugr.getCooldown();
+        if (cd > 0) {
+            this.draugr.setCooldown(cd - 1);
+            cd = cd - 1;
         }
 
-        // Reculer lorsque le mob est en mode "shooting"
+        // Pendant le shooting : recule tout en restant face à la cible
         if (this.draugr.isShooting()) {
             this.draugr.getNavigation().stop();
             moveBackwardFromTarget(target);
         }
 
-        float cooldown = this.draugr.getCooldown();
-
-        // Le tir commence à partir du tick 60 et continue jusqu'à 10
-        if (cooldown <= SHOOT_START - 10 && cooldown >= SHOOT_END && cooldown % SHOOT_INTERVAL == 0) {
-            projectileUtil.shootFrostBiteProjectile(target, this.draugr, this.damage, new Vec3d(0.3, 0.3, -0.6));
+        // Fenêtre de tirs : 50 -> 10, toutes les 5 ticks
+        if (cd <= SHOOT_START - 10 && cd >= SHOOT_END && cd % SHOOT_INTERVAL == 0) {
+            projectileUtil.shootFrostBiteProjectile(
+                    target,
+                    this.draugr,
+                    this.damage,
+                    new Vec3d(0.3, 0.3, -0.6)
+            );
         }
 
-        // Activation de l'état "isShooting" à 60 ticks
-        if (cooldown == SHOOT_START) {
+        // Début d'incantation : anim + flag shooting
+        if (cd == SHOOT_START) {
+            this.draugr.setAttackName("frostbite"); // nom d’anim dans ton .geo.json
             this.draugr.setShooting(true);
+            this.draugr.triggerAnim("attacking", this.draugr.getAttackName());
         }
-
-        // Désactivation de l'état "isShooting" et réinitialisation du cooldown à 0
-        if (cooldown == 0) {
+        if (cd == SHOOT_START - 10)
+            this.draugr.getWorld().playSound(null, this.draugr.getX(), this.draugr.getY(), this.draugr.getZ(),
+                    ModSounds.DRAUGR_FROST_SPELL,
+                    this.draugr.getSoundCategory(),
+                    0.75F + this.draugr.getRandom().nextFloat() * 0.2F,
+                    0.8F + this.draugr.getRandom().nextFloat() * 0.4F
+            );
+        // Fin du cycle : reset shooting + cooldown
+        if (cd == 0) {
             this.draugr.setShooting(false);
-            this.draugr.setCooldown(COOLDOWN_TICKS); // Reset to 180 ticks cooldown
+            this.draugr.setCooldown(COOLDOWN_TICKS);
         }
     }
+
     private void moveBackwardFromTarget(LivingEntity target) {
-        // Calculer le vecteur de direction opposé à la cible
+        // vecteur du wight -> opposé à la cible
         Vec3d directionToTarget = this.draugr.getPos().subtract(target.getPos()).normalize();
 
-        // Appliquer un mouvement en recul (vers l'opposé de la cible)
-        Vec3d backwardMovement = directionToTarget.multiply(0.065); // Modifier la valeur pour ajuster la vitesse
-        this.draugr.setVelocity(backwardMovement.x, this.draugr.getVelocity().y, backwardMovement.z);
+        Vec3d backwardMovement = directionToTarget.multiply(0.065);
+        this.draugr.setVelocity(
+                backwardMovement.x,
+                this.draugr.getVelocity().y,
+                backwardMovement.z
+        );
 
-        // Ajuster l'orientation pour rester face au joueur
+        // toujours regarder la cible
         this.draugr.lookAtEntity(target, 30.0F, 30.0F);
     }
 }

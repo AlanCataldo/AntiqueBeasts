@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ADA",
+    "DSD",
+    "ADA"
+  ],
+  "key" : {
+    "D": {
+      "item" : "minecraft:diamond"
+    },
+    "A": {
+      "item" : "minecraft:amethyst_shard"
+    },
+    "S": {
+      "item" : "antiquebeasts:stalhrim"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:draugr_awakening_soul_gem"
+  }
+}

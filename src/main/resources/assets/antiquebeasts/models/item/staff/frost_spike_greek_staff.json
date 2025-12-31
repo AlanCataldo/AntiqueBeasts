@@ -1,6 +1,0 @@
-{
-  "parent": "item/handheld",
-  "textures": {
-    "layer0": "antiquebeasts:item/staff/frost_spike_greek_staff"
-  }
-}

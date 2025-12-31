@@ -7,8 +7,17 @@ import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.block.ModBlocks;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.item.*;
+import net.mebahel.antiquebeasts.item.bow.DraugrBow;
+import net.mebahel.antiquebeasts.item.bow.EbonyBow;
+import net.mebahel.antiquebeasts.item.bow.EgyptianRecurveBow;
+import net.mebahel.antiquebeasts.item.bow.StalhrimBow;
+import net.mebahel.antiquebeasts.item.soul_gem.DraugrAwakeningSoulGem;
+import net.mebahel.antiquebeasts.item.soul_gem.FilledDraugrAwakeningSoulGem;
 import net.mebahel.antiquebeasts.item.staff.FrostBiteStaff;
 import net.mebahel.antiquebeasts.item.staff.IceSpikeStaff;
+import net.mebahel.antiquebeasts.item.weapon.BloodStainedFrostSword;
+import net.mebahel.antiquebeasts.item.weapon.HersirAxe;
+import net.mebahel.antiquebeasts.item.weapon.StalhrimSword;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.*;
@@ -18,13 +27,42 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-
 import org.jetbrains.annotations.Nullable;
+
 import java.util.List;
 
 import static net.minecraft.registry.tag.InstrumentTags.SCREAMING_GOAT_HORNS;
 
 public class ModItems {
+    public static final Item ANCIENT_NORD_BOW = registerItem("bow/ancient_nord/ancient_nord_bow",
+            new DraugrBow(new FabricItemSettings().maxDamage(640)));
+
+    public static final Item STALHRIM_SWORD = registerItem("weapon/stalhrim_sword",
+            new StalhrimSword(ModToolMaterial.STALHRIM,6, -2.8f,
+                    new FabricItemSettings()));
+
+    public static final Item STALHRIM_BOW = registerItem("bow/stalhrim/stalhrim_bow",
+            new StalhrimBow(new FabricItemSettings().maxDamage(1280)));
+
+    public static final Item ANCIENT_NORD_SWORD = registerItem("weapon/ancient_nord/ancient_nord_sword",
+            new SwordItem(ModToolMaterial.ANCIENT_WEAPON,4, -2.4f,
+                    new FabricItemSettings()));
+
+    public static final Item STALHRIM = registerItem("stalhrim",
+            new Item(new FabricItemSettings()));
+
+    public static final Item DRAUGR_AWAKENING_SOUL_GEM = registerItem("draugr_awakening_soul_gem",
+            new DraugrAwakeningSoulGem(new FabricItemSettings().maxDamage(1)));
+
+    public static final Item FILLED_DRAUGR_AWAKENING_SOUL_GEM = registerItem("filled_draugr_awakening_soul_gem",
+            new FilledDraugrAwakeningSoulGem(new FabricItemSettings().maxDamage(1)));
+
+    public static final Item DRAGON_PRIEST_FROST_SPIKE_STAFF = registerItem("staff/dragon_priest_frost_spike_staff",
+            new IceSpikeStaff(new FabricItemSettings().maxDamage(248)));
+
+    public static final Item DRAGON_PRIEST_FROST_BITE_STAFF = registerItem("staff/dragon_priest_frost_bite_staff",
+            new FrostBiteStaff(new FabricItemSettings().maxDamage(248)));
+
     public static final Item DWEMER_WAR_AXE = registerItem("weapon/dwemer/dwemer_war_axe",
             new AxeItem(ModToolMaterial.DWARVEN_2,7, -2.9f,
                     new FabricItemSettings()));
@@ -49,45 +87,33 @@ public class ModItems {
             new Item(new FabricItemSettings()));
     public static final Item DWEMER_METAL_GEAR = registerItem("dwemer_metal_gear",
             new Item(new FabricItemSettings()));
-    public static final Item FROST_BOW = registerItem("bow/frost_bow",
-            new FrostBow(new FabricItemSettings().maxDamage(1280)));
+
     public static final Item EBONY_BOW = registerItem("bow/ebony_bow",
             new EbonyBow(new FabricItemSettings().maxDamage(1280)));
+
     public static final Item EBONY_GREATSWORD = registerItem("weapon/ebony/ebony_greatsword",
+            new AxeItem(ModToolMaterial.EBONY,10, -3f,
+                    new FabricItemSettings()));
+
+    public static final Item EBONY_AXE = registerItem("weapon/ebony/ebony_axe",
             new SwordItem(ModToolMaterial.EBONY,9, -3f,
                     new FabricItemSettings()));
-    public static final Item THURISAZ_RUNE = registerItem("thurisaz_rune",
-            new ThurisazRune(new FabricItemSettings().maxDamage(1)));
+
+    public static final Item EBONY_DAGGER= registerItem("weapon/ebony/ebony_dagger",
+            new SwordItem(ModToolMaterial.EBONY,6, -2f,
+                    new FabricItemSettings()));
+
     public static final Item N_D_NILE_MUSIC_DISC = registerItem("music_disc/n_d_nile_music_disc",
             new MusicDiscItem(7, ModSounds.N_D_NILE_MUSIC,
                     new FabricItemSettings().maxCount(1), 62));
     public static final Item BEHOLD_THE_GREAT_SCIENCE_FI_MUSIC_DISC = registerItem("music_disc/behold_the_great_science_fi_music_disc",
             new MusicDiscItem(7, ModSounds.BEHOLD_THE_GREAT_SCIENCE_FI_MUSIC,
                     new FabricItemSettings().maxCount(1), 149));
-    public static final Item SKELETON_WARRIOR = registerItem("spawn_egg/skeleton_warrior_spawn_egg",
-            new SpawnEggItem(ModEntities.SKELETON_WARRIOR,4399360, 1526344,
-                    new FabricItemSettings()));
-    public static final Item SKELETON_WARRIOR_HEAD = registerItem("spawn_egg/skeleton_warrior_head_spawn_egg",
-            new SpawnEggItem(ModEntities.SKELETON_WARRIOR_HEAD,4399360, 1526344,
-                    new FabricItemSettings()));
-    public static final Item DRAUGR_SCOURGE_SPAWN_EGG = registerItem("spawn_egg/draugr_scourge_spawn_egg",
-            new SpawnEggItem(ModEntities.DRAUGR_SCOURGE,4399360, 1526344,
-                    new FabricItemSettings()));
-    public static final Item DRAUGR_ARCHER_SPAWN_EGG = registerItem("spawn_egg/draugr_archer_spawn_egg",
-            new SpawnEggItem(ModEntities.DRAUGR_ARCHER,4399360, 1926344,
-                    new FabricItemSettings()));
-    public static final Item DRAUGR_WIGHT_SPAWN_EGG = registerItem("spawn_egg/draugr_wight_spawn_egg",
-            new SpawnEggItem(ModEntities.DRAUGR_WIGHT,4399360, 2926344,
-                    new FabricItemSettings()));
+
     public static final Item HARPY_SPAWN_EGG = registerItem("spawn_egg/harpy_spawn_egg",
             new SpawnEggItem(ModEntities.HARPY,2699360, 866344,
                     new FabricItemSettings()));
-    public static final Item DRAUGR_SPAWN_EGG = registerItem("spawn_egg/draugr_spawn_egg",
-            new SpawnEggItem(ModEntities.DRAUGR,4399360, 526344,
-                    new FabricItemSettings()));
-    public static final Item DRAUGR_OVERLORD_SPAWN_EGG = registerItem("spawn_egg/draugr_overlord_spawn_egg",
-            new SpawnEggItem(ModEntities.DRAUGR_OVERLORD,4399360, 526344,
-                    new FabricItemSettings()));
+
     public static final Item CENTAUR_SPAWN_EGG = registerItem("spawn_egg/centaur_spawn_egg",
             new SpawnEggItem(ModEntities.CENTAUR,13342315, 15789267,
                     new FabricItemSettings()));
@@ -157,17 +183,14 @@ public class ModItems {
     public static final Item VALKYRIE_SPAWN_EGG = registerItem("spawn_egg/valkyrie_spawn_egg",
             new SpawnEggItem(ModEntities.VALKYRIE,16449021, 16506719,
                     new FabricItemSettings()));
-    public static final Item FROST_SWORD = registerItem("frost_sword",
-            new FrostSword(ModToolMaterial.FROST_WEAPON,6, -2.8f,
-                    new FabricItemSettings()));
+
     public static final Item BLOOD_STAINED_FROST_SWORD = registerItem("blood_stained_frost_sword",
             new BloodStainedFrostSword(ModToolMaterial.FROST_WEAPON,7, -3f,
                     new FabricItemSettings()));
 
     public static final Item EINHERJAR_HORN = registerItem("einherjar_horn",
             new EinherjarHorn(new FabricItemSettings().maxDamage(7), SCREAMING_GOAT_HORNS));
-    public static final Item FROST_SHARD = registerItem("frost_shard",
-            new Item(new FabricItemSettings()));
+
     public static final Item CYCLOPS_BLOOD = registerItem("cyclops_blood",
             new CyclopsBloodItem(new FabricItemSettings()));
     public static final Item CONCENTRATED_CYCLOPS_BLOOD = registerItem("concentrated_cyclops_blood",
@@ -265,6 +288,7 @@ public class ModItems {
             new GoldPlateArmorItem(ModArmorMaterials.GOLD_PLATE, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
     public static final GoldPlateArmorItem GOLD_PLATE_BOOTS = registerItem("gold_plate_boots",
             new GoldPlateArmorItem(ModArmorMaterials.GOLD_PLATE, ArmorItem.Type.BOOTS, new FabricItemSettings()));
+
     public static final DiamondPlateArmorItem DIAMOND_PLATE_HELMET = registerItem("diamond_plate_helmet",
             new DiamondPlateArmorItem(ModArmorMaterials.DIAMOND_PLATE, ArmorItem.Type.HELMET, new FabricItemSettings()));
     public static final DiamondPlateArmorItem DIAMOND_PLATE_CHESTPLATE = registerItem("diamond_plate_chestplate",
@@ -273,6 +297,7 @@ public class ModItems {
             new DiamondPlateArmorItem(ModArmorMaterials.DIAMOND_PLATE, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
     public static final DiamondPlateArmorItem DIAMOND_PLATE_BOOTS = registerItem("diamond_plate_boots",
             new DiamondPlateArmorItem(ModArmorMaterials.DIAMOND_PLATE, ArmorItem.Type.BOOTS, new FabricItemSettings()));
+
     public static final NetheritePlateArmorItem NETHERITE_PLATE_HELMET = registerItem("netherite_plate_helmet",
             new NetheritePlateArmorItem(ModArmorMaterials.NETHERITE_PLATE, ArmorItem.Type.HELMET, new FabricItemSettings()));
     public static final NetheritePlateArmorItem NETHERITE_PLATE_CHESTPLATE = registerItem("netherite_plate_chestplate",
@@ -311,9 +336,6 @@ public class ModItems {
             new HersirAxe(ModToolMaterial.HERSIR_AXE,8, -3.1f,
                     new FabricItemSettings()));
 
-    public static final Item HIGH_IRON_SWORD = registerItem("weapon/high_iron_sword",
-            new SwordItem(ModToolMaterial.HIGH_IRON,4, -2.4f,
-                    new FabricItemSettings()));
     public static final Item WOOD_KHOPESH = registerItem("weapon/khopesh/wood_khopesh_sickle",
             new SwordItem(ToolMaterials.WOOD,3, -2.2f,
                     new FabricItemSettings()));
@@ -357,26 +379,22 @@ public class ModItems {
     public static final Item GREEK_COMPOSITE_BOW = registerItem("bow/greek_composite_bow",
             new GreekCompositeBow(new FabricItemSettings().maxDamage(640)));
 
-    public static final Item DRAUGR_BOW = registerItem("bow/draugr_bow",
-            new DraugrBow(new FabricItemSettings().maxDamage(640)));
     public static final Item CHIMERA_HAIR = registerItem("chimera_hair",
             new Item(new FabricItemSettings()));
     public static final Item VALKYRIE_SPEAR = registerItem("weapon/valkyrie_spear",
             new ValkyrieSpear(new FabricItemSettings().maxDamage(600)));
-    public static final Item FROST_SPIKE_GREEK_STAFF = registerItem("staff/frost_spike_greek_staff",
-            new IceSpikeStaff(new FabricItemSettings().maxDamage(248)));
-    public static final Item FROST_BITE_GREEK_STAFF = registerItem("staff/frost_bite_greek_staff",
-            new FrostBiteStaff(new FabricItemSettings().maxDamage(248)));
+
 
     public static final Item IRON_CENTAUR_SWORD = registerItem("weapon/iron_centaur_sword",
             new SwordItem(ModToolMaterial.IRON_CENTAUR,3, -2.4f,
                     new FabricItemSettings()));
+
     public static final Item FROST_BITE_MAGICAL_STONE = registerItem("magical_stone/frost_bite_magical_stone",
             new Item(new FabricItemSettings()));
+
     public static final Item FROST_SPIKE_MAGICAL_STONE = registerItem("magical_stone/frost_spike_magical_stone",
             new Item(new FabricItemSettings()));
-    public static final Item GREEK_STAFF_HANDLE = registerItem("staff/greek_staff_handle",
-            new Item(new FabricItemSettings().fireproof()));
+
 
     public static <I extends Item> I registerItem(String name, I item) {
         return Registry.register(Registries.ITEM, new Identifier(AntiqueBeasts.MOD_ID, name), item);
@@ -407,20 +425,13 @@ public class ModItems {
         entries.add(EINHERJAR_SPAWN_EGG);
         entries.add(VALKYRIE_SPAWN_EGG);
 
-        entries.add(SKELETON_WARRIOR);
-        entries.add(SKELETON_WARRIOR_HEAD);
-        entries.add(DRAUGR_SPAWN_EGG);
-        entries.add(DRAUGR_OVERLORD_SPAWN_EGG);
-        entries.add(DRAUGR_WIGHT_SPAWN_EGG);
-        entries.add(DRAUGR_SCOURGE_SPAWN_EGG);
-        entries.add(DRAUGR_ARCHER_SPAWN_EGG);
         entries.add(HARPY_SPAWN_EGG);
     }
     public static void addItemToIngredientItemGroup(FabricItemGroupEntries entries) {
         entries.add(IRON_PLATE);
         entries.add(GOLD_PLATE);
         entries.add(DIAMOND_PLATE);
-        entries.add(FROST_SHARD);
+        entries.add(STALHRIM);
         entries.add(HIGH_IRON_SCRAP);
         entries.add(HIGH_IRON_INGOT);
         entries.add(EBONY_SCRAP);
@@ -457,6 +468,8 @@ public class ModItems {
         entries.add(ModBlocks.DWEMER_METAL_PIPE);
         entries.add(ModBlocks.DWEMER_METAL_PIPE_GEAR);
         entries.add(ModBlocks.DWEMER_CHEST);
+        entries.add(ModItems.DRAUGR_AWAKENING_SOUL_GEM);
+        entries.add(ModItems.FILLED_DRAUGR_AWAKENING_SOUL_GEM);
     }
     public static void addItemToCombatItemGroup(FabricItemGroupEntries entries) {
         entries.add(VALKYRIE_HELMET);
@@ -493,7 +506,7 @@ public class ModItems {
         entries.add(NETHERITE_PLATE_LEGGINGS);
         entries.add(NETHERITE_PLATE_BOOTS);
 
-        entries.add(FROST_SWORD);
+        entries.add(STALHRIM_SWORD);
         entries.add(BLOOD_STAINED_FROST_SWORD);
 
         entries.add(IRON_EGYPTIAN_SHIELD);
@@ -503,18 +516,12 @@ public class ModItems {
         entries.add(DIAMOND_PLATE_SHIELD);
         entries.add(NETHERITE_PLATE_SHIELD);
 
-        entries.add(HIGH_IRON_SWORD);
+        entries.add(ANCIENT_NORD_SWORD);
         entries.add(HIGH_IRON_SHIELD);
         entries.add(VALKYRIE_SPEAR);
         entries.add(HERSIR_AXE);
         entries.add(THROWING_AXE_ITEM);
         entries.add(EINHERJAR_HORN);
-
-        entries.add(GREEK_STAFF_HANDLE);
-        entries.add(FROST_BITE_MAGICAL_STONE);
-        entries.add(FROST_SPIKE_MAGICAL_STONE);
-        entries.add(FROST_BITE_GREEK_STAFF);
-        entries.add(FROST_SPIKE_GREEK_STAFF);
 
         entries.add(HARPY_FEATHER);
 
@@ -536,17 +543,14 @@ public class ModItems {
         entries.add(NETHERITE_EGYPTIAN_HALBERD);
         entries.add(GREEK_COMPOSITE_BOW);
         entries.add(EGYPTIAN_RECURVE_BOW);
-        entries.add(DRAUGR_BOW);
+        entries.add(ANCIENT_NORD_BOW);
+        entries.add(EBONY_AXE);
+        entries.add(EBONY_DAGGER);
         entries.add(EBONY_GREATSWORD);
         entries.add(EBONY_BOW);
-        entries.add(FROST_BOW);
+        entries.add(STALHRIM_BOW);
         entries.add(PHARAOH_SCEPTER);
         entries.add(ANKH);
-        entries.add(THURISAZ_RUNE);
-
-        entries.add(GREEK_STAFF_HANDLE);
-        entries.add(FROST_BITE_MAGICAL_STONE);
-        entries.add(FROST_SPIKE_MAGICAL_STONE);
 
         entries.add(DWEMER_DAGGER);
         entries.add(DWEMER_SWORD);
@@ -554,6 +558,11 @@ public class ModItems {
         entries.add(DWEMER_WARHAMMER);
         entries.add(DWEMER_AXE);
         entries.add(DWEMER_WAR_AXE);
+
+        entries.add(FROST_BITE_MAGICAL_STONE);
+        entries.add(DRAGON_PRIEST_FROST_BITE_STAFF);
+        entries.add(FROST_SPIKE_MAGICAL_STONE);
+        entries.add(DRAGON_PRIEST_FROST_SPIKE_STAFF);
     }
 
     public static void registerModItems() {

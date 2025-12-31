@@ -16,7 +16,7 @@ public class MovementUtil {
     public int jumpCooldown = 0;
     public int jumpDuration = 0;
     public int targetSeeingTicker;
-    private final double strafeDistance = 8;
+    private double strafeDistance = 8;
     private Vec3d lastPosition;
     private int stuckTicks = 0;
     private static final int MAX_STUCK_TICKS = 20;
@@ -29,6 +29,11 @@ public class MovementUtil {
         actor.setVelocity(direction);
         actor.velocityDirty = true;
     }
+
+    public void setStrafeDistance(int strafeDistance) {
+        this.strafeDistance = strafeDistance;
+    }
+
     public void lookAtTarget(LivingEntity target, LivingEntity actor) {
         double dx = target.getX() - actor.getX();
         double dz = target.getZ() - actor.getZ();

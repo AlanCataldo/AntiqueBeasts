@@ -27,7 +27,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "antiquebeasts:weapon/high_iron_sword",
+          "name": "antiquebeasts:weapon/ancient_nord/ancient_nord_sword",
           "weight": 1,
           "functions": [
             {

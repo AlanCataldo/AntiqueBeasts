@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smithing_transform",
   "base": {
-    "item": "antiquebeasts:frost_sword"
+    "item": "antiquebeasts:weapon/stalhrim_sword"
   },
   "addition": {
   "item": "antiquebeasts:concentrated_cyclops_blood"

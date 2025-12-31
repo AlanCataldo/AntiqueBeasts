@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " S ",
+    " S ",
+    " D "
+  ],
+  "key" : {
+    "S": {
+      "item" : "antiquebeasts:stalhrim"
+    },
+    "D": {
+      "item" : "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:weapon/stalhrim_sword"
+  }
+}

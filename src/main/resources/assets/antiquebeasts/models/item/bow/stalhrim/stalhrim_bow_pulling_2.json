@@ -1,0 +1,6 @@
+{
+  "parent": "antiquebeasts:item/bow/stalhrim/stalhrim_bow",
+  "textures": {
+    "layer0": "antiquebeasts:item/bow/stalhrim/stalhrim_bow_pulling_2"
+  }
+}

@@ -74,6 +74,12 @@ public abstract class BaseChestBlockEntity extends ChestBlockEntity
 
     private final int chestSize;
 
+    private DefaultedList<ItemStack> copyInv(DefaultedList<ItemStack> src) {
+        DefaultedList<ItemStack> out = DefaultedList.ofSize(src.size(), ItemStack.EMPTY);
+        for (int i = 0; i < src.size(); i++) out.set(i, src.get(i).copy());
+        return out;
+    }
+
     protected BaseChestBlockEntity(net.minecraft.block.entity.BlockEntityType<?> type,
                                    BlockPos pos,
                                    BlockState state,
@@ -121,42 +127,52 @@ public abstract class BaseChestBlockEntity extends ChestBlockEntity
     private void generateLootFor(PlayerEntity player) {
         if (!(world instanceof ServerWorld serverWorld)) return;
 
-        // Détermine la loot_table à utiliser
+        // Détermine la loot_table à utiliser et la fixe en "base"
         if (this.baseLootTableId == null) {
             if (this.lootTableId != null) {
                 this.baseLootTableId = this.lootTableId;
-                this.lootTableId = null; // évite la génération vanilla globale
+                this.lootTableId = null; // évite génération globale vanilla sur le coffre "commun"
             } else {
                 return;
             }
             this.markDirty();
         }
 
-        LootTable lootTable = serverWorld.getServer().getLootManager().getLootTable(this.baseLootTableId);
-
+        // Seed perso (comme tu faisais)
         long seed = world.getTime()
                 ^ player.getUuid().getMostSignificantBits()
                 ^ pos.asLong()
                 ^ world.random.nextLong();
 
-        LootContextParameterSet.Builder paramBuilder = new LootContextParameterSet.Builder(serverWorld)
-                .add(LootContextParameters.ORIGIN, Vec3d.ofCenter(this.pos))
-                .add(LootContextParameters.THIS_ENTITY, player);
+        // --- Génération robuste via pipeline vanilla ---
+        // 1) backup de l'inventaire actuel de la BE
+        DefaultedList<ItemStack> backup = copyInv(this.getInvStackList());
 
-        LootContextParameterSet lootContext = paramBuilder.build(LootContextTypes.CHEST);
+        // 2) on remplace l'inventaire par un inventaire vide
+        DefaultedList<ItemStack> temp = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
+        this.setInvStackList(temp);
 
-        net.minecraft.inventory.SimpleInventory tempInventory = new net.minecraft.inventory.SimpleInventory(this.size());
-        lootTable.supplyInventory(tempInventory, lootContext, seed);
+        // 3) on arme temporairement la loot table vanilla sur la BE
+        Identifier prevLootId = this.lootTableId;
+        long prevSeed = this.lootTableSeed;
 
-        DefaultedList<ItemStack> loot = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
-        for (int i = 0; i < this.size(); i++) {
-            ItemStack stack = tempInventory.getStack(i);
-            if (!stack.isEmpty()) {
-                loot.set(i, stack.copy());
-            }
+        this.lootTableId = this.baseLootTableId;
+        this.lootTableSeed = seed;
+
+        try {
+            // Méthode vanilla de dépack : remplir l'inventaire de la BE à partir de lootTableId/seed.
+            // ChestBlockEntity hérite d'un container lootable, donc ça existe côté vanilla.
+            this.checkLootInteraction(player);
+        } finally {
+            // 4) copie le résultat dans ton loot perso
+            DefaultedList<ItemStack> loot = copyInv(this.getInvStackList());
+            this.personalLoots.put(player.getUuid(), loot);
+
+            // 5) restore état BE (inventaire + loot table)
+            this.setInvStackList(backup);
+            this.lootTableId = prevLootId;
+            this.lootTableSeed = prevSeed;
         }
-
-        personalLoots.put(player.getUuid(), loot);
     }
 
     @Override
@@ -510,11 +526,5 @@ public abstract class BaseChestBlockEntity extends ChestBlockEntity
 
     public boolean hasLootTable() {
         return this.baseLootTableId != null || this.lootTableId != null;
-    }
-
-    @Nullable
-    public Identifier getBaseLootTableId() {
-        if (this.baseLootTableId != null) return this.baseLootTableId;
-        return this.lootTableId;
     }
 }

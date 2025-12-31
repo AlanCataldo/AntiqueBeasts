@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrArcherEntity;
 import net.mebahel.antiquebeasts.entity.variant.DraugrArcherVariant;
-import net.mebahel.antiquebeasts.entity.variant.DraugrVariant;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import software.bernie.geckolib.constant.DataTickets;
@@ -52,5 +51,4 @@ public class DraugrArcherModel extends GeoModel<DraugrArcherEntity> {
             head.setRotX(7.0F * pitchAngle);
         }
     }
-
 }

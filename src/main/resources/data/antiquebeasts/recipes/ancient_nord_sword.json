@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  I",
+    "LI ",
+    "SL "
+  ],
+  "key" : {
+    "I": {
+      "item" : "minecraft:iron_ingot"
+    },
+    "S": {
+      "item" : "minecraft:stick"
+    },
+    "L": {
+      "item" : "minecraft:leather"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:weapon/ancient_nord/ancient_nord_sword"
+  }
+}

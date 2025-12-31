@@ -1,16 +1,12 @@
 package net.mebahel.antiquebeasts.entity.custom.other;
 
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
+import net.mebahel.antiquebeasts.config.draugr.DraugrBonusHealthConfig;
+import net.mebahel.antiquebeasts.config.draugr.DraugrSpawnRateConfig;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
 import net.mebahel.antiquebeasts.entity.ai.util.FleeTargetGoal;
-import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
-import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
-import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.variant.DraugrVariant;
-import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
-import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
@@ -33,18 +29,16 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
-import software.bernie.geckolib.util.ClientUtils;
 
-import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 
 public class SkeletonWarriorHeadEntity extends DraugrEntity implements GeoEntity {
@@ -61,10 +55,6 @@ public class SkeletonWarriorHeadEntity extends DraugrEntity implements GeoEntity
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
-    }
-
-    public boolean shouldDespawnInPeaceful() {
-        return this.getWorld().getDifficulty() == Difficulty.PEACEFUL;
     }
 
     public static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
@@ -124,16 +114,13 @@ public class SkeletonWarriorHeadEntity extends DraugrEntity implements GeoEntity
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, RaiderEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, GreekEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, EgyptianEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, NorseEntity.class, true));
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.72f)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 8.0D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 8.0D + DraugrBonusHealthConfig.skeletonWarriorHeadBonusHealth)
                 .add(EntityAttributes.GENERIC_ARMOR, 2f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5.0f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.2f)
@@ -161,32 +148,12 @@ public class SkeletonWarriorHeadEntity extends DraugrEntity implements GeoEntity
         return PlayState.CONTINUE;
     }
 
-    private PlayState respawnPredicate(AnimationState state) {
-        if (this.stoppedMoving) {
-            state.getController().setAnimation(RawAnimation.begin().then("respawn", Animation.LoopType.PLAY_ONCE));
-        }
-        return PlayState.CONTINUE;
-    }
-
-    private PlayState attackPredicate(AnimationState state) {
-        if (this.isSwinging() && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
-            state.getController().forceAnimationReset();
-            state.getController().setAnimation(RawAnimation.begin().then(this.getAttackName(), Animation.LoopType.PLAY_ONCE));
-        }
-
-        return PlayState.CONTINUE;
-    }
-
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller", 0, this::predicate));
-        controllers.add(new AnimationController(this, "spawning", 0, this::spawnPredicate));
-        controllers.add(new AnimationController(this, "respawning", 0, this::respawnPredicate));
-        controllers.add(new AnimationController(this, "attacking", 0, this::attackPredicate).setSoundKeyframeHandler(state -> {
-            PlayerEntity player = ClientUtils.getClientPlayer();
-            if (player != null)
-                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.SWING, this.getSoundCategory(), 0.7f, 1.1f);
-        }));
+        controllers.add(new AnimationController<>(this, "controller", 0, this::predicate));
+        controllers.add(new AnimationController<>(this, "spawning", 0, this::spawnPredicate));
+        controllers.add(new AnimationController<>(this, "respawning", 0, state -> PlayState.CONTINUE)
+                .triggerableAnim("respawn", RawAnimation.begin().then("respawn", Animation.LoopType.PLAY_ONCE)));
     }
 
     public DraugrVariant getVariant() {
@@ -210,7 +177,7 @@ public class SkeletonWarriorHeadEntity extends DraugrEntity implements GeoEntity
         if (spawnReason != SpawnReason.SPAWN_EGG && spawnReason != SpawnReason.COMMAND && spawnReason != SpawnReason.SPAWNER
                 && spawnReason != SpawnReason.EVENT) {
             int randomValue = this.random.nextInt(10);
-            if (randomValue >= ModSpawnRateConfig.draugrSpawnRate) {
+            if (randomValue >= DraugrSpawnRateConfig.skeletonWarriorSpawnRate) {
                 this.remove(RemovalReason.DISCARDED);
             }
         }
@@ -279,7 +246,11 @@ public class SkeletonWarriorHeadEntity extends DraugrEntity implements GeoEntity
 
         if (lifeTickCounter == 80 && !stoppedMoving) {
             stoppedMoving = true;
-            Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0);
+            Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED))
+                    .setBaseValue(0);
+
+            // 🔥 Trigger de l’anim de respawn UNE SEULE FOIS
+            this.triggerAnim("respawning", "respawn");
         }
         if (lifeTickCounter >= 92) {
             spawnSkeletonWarrior(this.getWorld());
@@ -297,4 +268,3 @@ public class SkeletonWarriorHeadEntity extends DraugrEntity implements GeoEntity
         this.remove(RemovalReason.DISCARDED);
     }
 }
-

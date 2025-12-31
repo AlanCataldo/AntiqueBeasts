@@ -32,10 +32,6 @@ public class ModBonusHealthConfig {
     public static int mummyBonusHealth = 0;
     public static int servantBonusHealth = 0;
     public static int egyptianCaravanBonusHealth = 0;
-    public static int draugrBonusHealth = 0;
-    public static int draugrArcherBonusHealth = 0;
-    public static int draugrWightBonusHealth = 0;
-    public static int draugrScourgeBonusHealth = 0;
     public static int harpyBonusHealth = 0;
     public static int mummifiedPharaohBonusHealth = 0;
     public static int axemanBonusHealth = 0;
@@ -141,22 +137,6 @@ public class ModBonusHealthConfig {
                     data.egyptianCaravanBonusHealth = 0;
                     updated = true;
                 }
-                if (data.draugrBonusHealth == null || data.draugrBonusHealth > 100 || data.draugrBonusHealth < 0) {
-                    data.draugrBonusHealth = 0;
-                    updated = true;
-                }
-                if (data.draugrArcherBonusHealth == null || data.draugrArcherBonusHealth > 100 || data.draugrArcherBonusHealth < 0) {
-                    data.draugrArcherBonusHealth = 0;
-                    updated = true;
-                }
-                if (data.draugrWightBonusHealth == null || data.draugrWightBonusHealth > 100 || data.draugrWightBonusHealth < 0) {
-                    data.draugrWightBonusHealth = 0;
-                    updated = true;
-                }
-                if (data.draugrScourgeBonusHealth == null || data.draugrScourgeBonusHealth > 100 || data.draugrScourgeBonusHealth < 0) {
-                    data.draugrScourgeBonusHealth = 0;
-                    updated = true;
-                }
                 if (data.harpyBonusHealth == null || data.harpyBonusHealth > 100 || data.harpyBonusHealth < 0) {
                     data.harpyBonusHealth = 0;
                     updated = true;
@@ -209,10 +189,6 @@ public class ModBonusHealthConfig {
                 mummyBonusHealth = data.mummyBonusHealth;
                 servantBonusHealth = data.servantBonusHealth;
                 egyptianCaravanBonusHealth = data.egyptianCaravanBonusHealth;
-                draugrBonusHealth = data.draugrBonusHealth;
-                draugrArcherBonusHealth = data.draugrArcherBonusHealth;
-                draugrWightBonusHealth = data.draugrWightBonusHealth;
-                draugrScourgeBonusHealth = data.draugrScourgeBonusHealth;
                 harpyBonusHealth = data.harpyBonusHealth;
                 mummifiedPharaohBonusHealth= data.mummifiedPharaohBonusHealth;
                 axemanBonusHealth = data.axemanBonusHealth;
@@ -239,8 +215,7 @@ public class ModBonusHealthConfig {
         ConfigData data = new ConfigData(eliteHopliteBonusHealth, championHopliteBonusHealth, heroHopliteBonusHealth, hadesChosenBonusHealth, chimeraBonusHealth,
                 cyclopsBonusHealth, frostCyclopsBonusHealth, pegasusBonusHealth, centaurBonusHealth, hadesShadeBonusHealth,
                 throwingAxemanBonusHealth, hersirBonusHealth, huskarlBonusHealth, einherjarBonusHealth, valkyrieBonusHealth,
-                wadjetBonusHealth, mummyBonusHealth, servantBonusHealth, egyptianCaravanBonusHealth, draugrBonusHealth, draugrArcherBonusHealth, draugrWightBonusHealth,
-                draugrScourgeBonusHealth,
+                wadjetBonusHealth, mummyBonusHealth, servantBonusHealth, egyptianCaravanBonusHealth,
                 harpyBonusHealth, mummifiedPharaohBonusHealth, axemanBonusHealth, camleryBonusHealth, elephantRiderBonusHealth,
                 dwemerSpiderBonusHealth, dwemerSpiderGuardianBonusHealth, dwemerCenturionBonusHealth);
         try (FileWriter writer = new FileWriter(configFile)) {
@@ -271,10 +246,6 @@ public class ModBonusHealthConfig {
         Integer mummyBonusHealth;
         Integer servantBonusHealth;
         Integer egyptianCaravanBonusHealth;
-        Integer draugrBonusHealth;
-        Integer draugrArcherBonusHealth;
-        Integer draugrWightBonusHealth;
-        Integer draugrScourgeBonusHealth;
         Integer harpyBonusHealth;
         Integer mummifiedPharaohBonusHealth;
         Integer axemanBonusHealth;
@@ -288,8 +259,7 @@ public class ModBonusHealthConfig {
                    int chimeraBonusHealth, int cyclopsBonusHealth, int frostCyclopsBonusHealth, int pegasusBonusHealth, int centaurBonusHealth,
                    int hadesShadeBonusHealth, int throwingAxemanBonusHealth, int hersirBonusHealth, int huskarlBonusHealth, int einherjarBonusHealth,
                    int valkyrieBonusHealth, int wadjetBonusHealth, int mummyBonusHealth, int servantBonusHealth, int egyptianCaravanBonusHealth,
-                   int draugrBonusHealth, int draugrArcherBonusHealth, int draugrWightBonusHealth,
-                   int draugrScourgeBonusHealth, int harpyBonusHealth, int mummifiedPharaohBonusHealth,int axemanBonusHealth,
+                   int harpyBonusHealth, int mummifiedPharaohBonusHealth,int axemanBonusHealth,
                    int camleryBonusHealth, int elephantRiderBonusHealth,
                    int dwemerSpiderBonusHealth, int dwemerSpiderGuardianBonusHealth, int dwemerCenturionBonusHealth) {
 
@@ -312,10 +282,6 @@ public class ModBonusHealthConfig {
             this.mummyBonusHealth = mummyBonusHealth;
             this.servantBonusHealth = servantBonusHealth;
             this.egyptianCaravanBonusHealth = egyptianCaravanBonusHealth;
-            this.draugrBonusHealth = draugrBonusHealth;
-            this.draugrArcherBonusHealth = draugrArcherBonusHealth;
-            this.draugrWightBonusHealth = draugrWightBonusHealth;
-            this.draugrScourgeBonusHealth = draugrScourgeBonusHealth;
             this.harpyBonusHealth = harpyBonusHealth;
             this.mummifiedPharaohBonusHealth = mummifiedPharaohBonusHealth;
             this.axemanBonusHealth = axemanBonusHealth;

@@ -56,9 +56,7 @@ import software.bernie.geckolib.util.ClientUtils;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
-import static java.lang.Math.random;
 import org.jetbrains.annotations.Nullable;
 
 public class MummyBossEntity extends EgyptianEntity implements GeoEntity {
@@ -69,7 +67,8 @@ public class MummyBossEntity extends EgyptianEntity implements GeoEntity {
         this.bossBar.setPercent(this.getHealth() / this.getMaxHealth());
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
     }
-
+    @Nullable private String bossNameKey;
+    @Nullable private String bossSuffixKey;
     private final ServerBossBar bossBar;
     public boolean secondPhase = false;
     public boolean thirdPhase = false;
@@ -523,7 +522,7 @@ public class MummyBossEntity extends EgyptianEntity implements GeoEntity {
     }
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        rand = random();
+        rand = this.random.nextDouble();
         if (rand < 0.5)
             return ModSounds.MUMMY_HURT_1;
         else
@@ -564,7 +563,7 @@ public class MummyBossEntity extends EgyptianEntity implements GeoEntity {
     }
     @Override
     protected SoundEvent getAmbientSound() {
-        rand = random();
+        rand = this.random.nextDouble();
         if (rand < 0.5)
             return ModSounds.MUMMY_AMBIENT_1;
         else
@@ -577,12 +576,20 @@ public class MummyBossEntity extends EgyptianEntity implements GeoEntity {
                                  @Nullable NbtCompound entityNbt) {
         EgyptiantVariant variant = Util.getRandom(EgyptiantVariant.values(), this.random);
         setVariant(variant);
-        if (this.bossBarName == null || this.bossBarName.isEmpty()) {
-            this.bossBarName = generateRandomBossName();
-            this.bossBar.setName(Text.of(this.bossBarName));
+
+        if (this.bossNameKey == null || this.bossNameKey.isEmpty()) {
+
+            this.bossNameKey = NAME_KEYS[this.random.nextInt(NAME_KEYS.length)];
+            this.bossSuffixKey = SUFFIX_KEYS[this.random.nextInt(SUFFIX_KEYS.length)];
+            this.bossBar.setName(buildBossNameText());
+
+            this.bossBar.setName(buildBossNameText());
         }
+
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
+
+
     public EgyptiantVariant getVariant() {
         return EgyptiantVariant.byId(this.getTypeVariant() & 255);
     }
@@ -593,32 +600,61 @@ public class MummyBossEntity extends EgyptianEntity implements GeoEntity {
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putBoolean("HasSpawned", true);
-        nbt.putString("BossBarName", this.bossBarName);
+
+        nbt.putBoolean("HasSpawned", this.getHasSpawned());
+
+        if (this.bossNameKey != null) nbt.putString("BossNameKey", this.bossNameKey);
+        if (this.bossSuffixKey != null) nbt.putString("BossSuffixKey", this.bossSuffixKey);
     }
 
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
+
         this.setHasSpawned(nbt.getBoolean("HasSpawned"));
-        if (nbt.contains("BossBarName")) {
-            this.bossBarName = nbt.getString("BossBarName");
-            this.bossBar.setName(Text.of(this.bossBarName)); // Restaure le nom depuis le NBT
-        } else {
-            // Si le nom n'est pas présent, on en génère un aléatoire
-            this.bossBarName = generateRandomBossName();
-            this.bossBar.setName(Text.of(this.bossBarName));
-        }
+
+        if (nbt.contains("BossNameKey")) this.bossNameKey = nbt.getString("BossNameKey");
+        if (nbt.contains("BossSuffixKey")) this.bossSuffixKey = nbt.getString("BossSuffixKey");
+
+        // Re-applique le texte au bossbar
+        this.bossBar.setName(buildBossNameText());
     }
 
-    private String generateRandomBossName() {
-        String[] names = {"Khendjer", "Djedkare", "Seti", "Raneferef", "Hatshepsut", "Taharka", "Sheshonq", "Sobekhotep", "Hakor", "Menes", "Thoutmosis"};
-        String[] suffixes = {"", "II", "III", "IV", "V"};
+    private static final String[] NAME_KEYS = {
+            "boss.name.khendjer",
+            "boss.name.djedkare",
+            "boss.name.seti",
+            "boss.name.raneferef",
+            "boss.name.hatshepsut",
+            "boss.name.taharka",
+            "boss.name.sheshonq",
+            "boss.name.sobekhotep",
+            "boss.name.hakor",
+            "boss.name.menes",
+            "boss.name.thoutmosis"
+    };
 
-        Random random = new Random();
-        String randomName = names[random.nextInt(names.length)];
-        String randomSuffix = suffixes[random.nextInt(suffixes.length)];
+    private static final String[] SUFFIX_KEYS = {
+            "boss.suffix.none",
+            "boss.suffix.2",
+            "boss.suffix.3",
+            "boss.suffix.4",
+            "boss.suffix.5"
+    };
 
-        return randomName + " " + randomSuffix;
+    private Text buildBossNameText() {
+        if (this.bossNameKey == null || this.bossNameKey.isEmpty()) {
+            return Text.of("Mummy"); // fallback
+        }
+
+        Text base = Text.translatable(this.bossNameKey);
+
+        if (this.bossSuffixKey == null
+                || this.bossSuffixKey.isEmpty()
+                || "boss.suffix.none".equals(this.bossSuffixKey)) {
+            return base;
+        }
+
+        return base.copy().append(" ").append(Text.translatable(this.bossSuffixKey));
     }
 }

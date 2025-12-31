@@ -1,5 +1,7 @@
 package net.mebahel.antiquebeasts.entity.ai.other;
 
+import net.mebahel.antiquebeasts.config.draugr.DraugrCombatBalancingConfig;
+import net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrOverlordEntity;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.LivingEntity;
@@ -15,7 +17,6 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.EnumSet;
 import java.util.Objects;
-import java.util.Random;
 
 import static java.lang.Math.random;
 
@@ -42,14 +43,13 @@ public class DraugrOverlordMeleeAttackGoal extends Goal {
     private static final int DOUBLE_HIT_T2 = 40;
 
     private static final int TRIPLE_HIT_T1 = 16;
-    private static final int TRIPLE_HIT_T2 = 41;
+    private static final int TRIPLE_HIT_T2 = 38;
     private static final int TRIPLE_HIT_T3 = 60;
 
     private int distanceTickCounter = 0;
-    private static final int RUSH_TRIGGER_TICKS = 90;
+    private static final int RUSH_TRIGGER_TICKS = 70;
     private static final double RUSH_MIN_RANGE = 5;  // un peu plus loin que la portée normale
     private static final double RUSH_MAX_RANGE = 16;  // pas trop loin non plus
-
 
     private enum AttackType {
         NONE, RUSH, DOUBLE1, DOUBLE2, TRIPLE
@@ -69,7 +69,7 @@ public class DraugrOverlordMeleeAttackGoal extends Goal {
         if (target instanceof PlayerEntity player && (player.isCreative() || player.isSpectator()))
             return false;
 
-        return target != null && target.isAlive();
+        return target != null && target.isAlive() && !mob.isSpinning();
     }
 
     @Override
@@ -80,12 +80,15 @@ public class DraugrOverlordMeleeAttackGoal extends Goal {
         if (target instanceof PlayerEntity player && (player.isCreative() || player.isSpectator()))
             return false;
 
-        return target != null && target.isAlive();
+        return target != null && target.isAlive() && !mob.isSpinning();
     }
 
     @Override
     public void start() {
         mob.setAttacking(true);
+        currentAttack = AttackType.NONE;
+        mob.setBlocking(false);
+        mob.clearBlockRequest();
         hasDashed = false;
         cooldown = 0;
         mob.getNavigation().startMovingTo(this.mob.getTarget(), speed);
@@ -95,6 +98,8 @@ public class DraugrOverlordMeleeAttackGoal extends Goal {
     public void stop() {
         mob.setAttacking(false);
         mob.setSwinging(false);
+        mob.setBlocking(false);
+        mob.clearBlockRequest();
         hasDashed = false;
         currentAttack = AttackType.NONE;
         nextAttack = AttackType.NONE;
@@ -111,7 +116,6 @@ public class DraugrOverlordMeleeAttackGoal extends Goal {
     public void tick() {
         LivingEntity target = mob.getTarget();
         if (target != null && target.isAlive()) {
-            mob.getLookControl().lookAt(target, 20.0F, 20.0F);
             handleAttack(target);
         } else {
             stop();
@@ -119,6 +123,11 @@ public class DraugrOverlordMeleeAttackGoal extends Goal {
     }
 
     private void handleAttack(LivingEntity target) {
+        if (mob.isBlocking()) {
+            mob.setSwinging(false);
+            return;
+        }
+
         cooldown = Math.max(cooldown - 1, 0);
         double distSq = mob.squaredDistanceTo(target.getX(), target.getY(), target.getZ());
 
@@ -128,6 +137,17 @@ public class DraugrOverlordMeleeAttackGoal extends Goal {
             distanceTickCounter++;
             mob.getWorld().sendEntityStatus(mob, (byte) 14); // debug visuel facultatif (petit effet cœur/critique)
             if (distanceTickCounter >= RUSH_TRIGGER_TICKS && !mob.isSwinging() && cooldown == 0) {
+                float hpRatio = mob.getHealth() / mob.getMaxHealth();
+                if (hpRatio < 0.5f) {
+                    if (mob.getRandom().nextFloat() < 0.35f) {
+                        // On demande un SPIN au lieu du RUSH
+                        mob.requestSpin();
+                        distanceTickCounter = 0;
+                        return; // SpinGoal prendra la main au tick suivant
+                    }
+                }
+
+                // Sinon RUSH normal
                 currentAttack = AttackType.RUSH;
                 startAttackAnimation();
                 distanceTickCounter = 0;
@@ -160,6 +180,35 @@ public class DraugrOverlordMeleeAttackGoal extends Goal {
         }
     }
 
+    private void tryStartBlockAfterAttack(LivingEntity target) {
+        // Si la cible est low HP (<30%), il ne bloque pas : full aggro
+        if (target.getMaxHealth() > 0) {
+            float targetHpRatio = target.getHealth() / target.getMaxHealth();
+            if (targetHpRatio < 0.3f) return;
+        }
+
+        // Chance dépendante des HP du Draugr
+        float hpRatio = mob.getHealth() / mob.getMaxHealth();
+        hpRatio = MathHelper.clamp(hpRatio, 0.3f, 1.0f);
+
+        float t = (1.0f - hpRatio) / (1.0f - 0.3f);
+
+        float minChance = DraugrCombatBalancingConfig.draugrOverlordMinBlockProbability / 100f;
+        float maxChance = DraugrCombatBalancingConfig.draugrOverlordMaxBlockProbability / 100f;
+
+        float chance = minChance + t * (maxChance - minChance);
+        float roll = mob.getRandom().nextFloat();
+
+        if (roll < chance) {
+            mob.requestBlock();
+
+            mob.setSwinging(false);
+            hasDashed = false;
+            currentAttack = AttackType.NONE;
+            Objects.requireNonNull(mob.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED))
+                    .setBaseValue(originalSpeed);
+        }
+    }
 
     // --- Attaque 1 : RUSH (1 dash + 1 coup)
     private void attackRush(LivingEntity target) {
@@ -298,7 +347,10 @@ public class DraugrOverlordMeleeAttackGoal extends Goal {
             nextAttack = pickRandomAttack();
         }
 
-        cooldown = 20;
+        assert this.mob.getTarget() != null;
+        tryStartBlockAfterAttack(this.mob.getTarget());
+
+        cooldown = 2 + mob.getRandom().nextInt(4);
         currentAttack = AttackType.NONE;
     }
 
@@ -359,7 +411,7 @@ public class DraugrOverlordMeleeAttackGoal extends Goal {
                         && le.isAlive()
                         && le != mob
                         && le != mainTarget
-                        && !(e instanceof net.mebahel.antiquebeasts.entity.custom.other.DraugrEntity) // <-- exclut les Draugr
+                        && !(e instanceof DraugrEntity) // <-- exclut les Draugr
         ).forEach(entity -> {
             LivingEntity nearby = (LivingEntity) entity;
 

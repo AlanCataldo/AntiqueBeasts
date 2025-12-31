@@ -94,6 +94,6 @@ public class IceSpikeStaff extends TridentItem {
     }
     @Override
     public boolean canRepair(ItemStack stack, ItemStack ingredient) {
-        return ingredient.isOf(ModItems.FROST_SHARD);
+        return ingredient.isOf(ModItems.STALHRIM);
     }
 }

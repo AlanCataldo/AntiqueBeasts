@@ -150,28 +150,19 @@ public class BaseChestBlock extends ChestBlock {
                 List<DefaultedList<ItemStack>> allLoots = new ArrayList<>(chestEntity.personalLoots.values());
                 itemsToDrop = allLoots.get(world.random.nextInt(allLoots.size()));
 
-            } else if (chestEntity.hasLootTable()) {
-                // Coffre structurel jamais ouvert → on génère un loot temporaire
-                if (world instanceof ServerWorld serverWorld) {
-                    Identifier lootId = chestEntity.getBaseLootTableId();
-                    if (lootId != null) {
-                        LootTable table = serverWorld.getServer().getLootManager().getLootTable(lootId);
-                        LootContextParameterSet lootContext = new LootContextParameterSet.Builder(serverWorld)
-                                .add(LootContextParameters.ORIGIN, Vec3d.ofCenter(pos))
-                                .build(LootContextTypes.CHEST);
+            } else if (chestEntity.hasLootTable() && player != null) {
+                // ✅ Coffre structurel jamais ouvert → on génère le loot perso POUR CE JOUEUR (robuste, pas de LootManager)
+                chestEntity.handlePlayerLoot(player);
 
-                        net.minecraft.inventory.SimpleInventory tempInv =
-                                new net.minecraft.inventory.SimpleInventory(chestEntity.size());
-                        table.supplyInventory(tempInv, lootContext, world.random.nextLong());
-
-                        for (int i = 0; i < chestEntity.size(); i++) {
-                            itemsToDrop.set(i, tempInv.getStack(i).copy());
-                        }
-                    }
+                DefaultedList<ItemStack> pLoot = chestEntity.personalLoots.get(player.getUuid());
+                if (pLoot != null) {
+                    itemsToDrop = pLoot;
+                } else {
+                    // fallback safe : inventaire interne (souvent vide)
+                    itemsToDrop = chestEntity.getInternalInventory();
                 }
 
             } else {
-                // Par défaut : inventaire interne
                 itemsToDrop = chestEntity.getInternalInventory();
             }
 

@@ -51,115 +51,12 @@
           ],
           "name": "minecraft:diamond",
           "weight": 6
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 4.0,
-                "min": 2.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "antiquebeasts:high_iron_scrap",
-          "weight": 12
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 1.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "antiquebeasts:high_iron_ingot",
-          "weight": 6
         }
       ],
       "rolls": {
         "type": "minecraft:uniform",
         "max": 4.0,
         "min": 4.0
-      }
-    },
-    {
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 0.0,
-                "min": 0.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "antiquebeasts:weapon/khopesh/gold_khopesh_sickle",
-          "weight": 50
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:enchant_randomly"
-            }
-          ],
-          "name": "antiquebeasts:weapon/high_iron_sword",
-          "weight": 10
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:enchant_randomly"
-            }
-          ],
-          "name": "antiquebeasts:weapon/hersir_axe",
-          "weight": 10
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:enchant_randomly"
-            }
-          ],
-          "name": "antiquebeasts:weapon/throwing_axe_item",
-          "weight": 10
-        },
-        {
-          "type": "minecraft:item",
-          "name": "antiquebeasts:weapon/high_iron_sword",
-          "weight": 15
-        },
-        {
-          "type": "minecraft:item",
-          "name": "antiquebeasts:weapon/hersir_axe",
-          "weight": 15
-        },
-        {
-          "type": "minecraft:item",
-          "name": "antiquebeasts:weapon/throwing_axe_item",
-          "weight": 15
-        }
-      ],
-      "rolls": {
-        "type": "minecraft:uniform",
-        "max": 1.0,
-        "min": 1.0
       }
     },
     {
@@ -372,70 +269,6 @@
               "function": "minecraft:set_count"
             }
           ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "antiquebeasts:valkyrie_boots",
-          "weight": 1,
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 1.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "antiquebeasts:valkyrie_leggings",
-          "weight": 1,
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 1.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "antiquebeasts:valkyrie_chestplate",
-          "weight": 1,
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 1.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "antiquebeasts:valkyrie_helmet",
-          "weight": 1,
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 1.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ]
         }
       ]
     },
@@ -455,7 +288,7 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "antiquebeasts:frost_shard",
+          "name": "antiquebeasts:stalhrim",
           "weight": 10
         }
       ],

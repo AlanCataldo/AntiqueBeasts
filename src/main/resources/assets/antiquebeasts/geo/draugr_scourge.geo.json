@@ -309,6 +309,11 @@
 					]
 				},
 				{
+					"name": "rightItem",
+					"parent": "LeftArm",
+					"pivot": [6.75, 13.5, -2]
+				},
+				{
 					"name": "RightLeg",
 					"parent": "Hip",
 					"pivot": [-1.9, 12, 0],

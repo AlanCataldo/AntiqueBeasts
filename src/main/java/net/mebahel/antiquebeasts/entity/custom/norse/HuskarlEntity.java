@@ -201,7 +201,7 @@ public class HuskarlEntity extends NorseEntity implements GeoEntity {
                 if (newZombie != null) {
                     newZombie.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
 
-                    newZombie.equipStack(EquipmentSlot.MAINHAND, new ItemStack(ModItems.HIGH_IRON_SWORD));
+                    newZombie.equipStack(EquipmentSlot.MAINHAND, new ItemStack(ModItems.ANCIENT_NORD_SWORD));
                     newZombie.equipStack(EquipmentSlot.OFFHAND, new ItemStack(ModItems.HIGH_IRON_SHIELD));
 
                     for (ItemStack stack : newZombie.getItemsEquipped()) {

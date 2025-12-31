@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " QM",
+    " GQ",
+    "G  "
+  ],
+  "key" : {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "M": {
+      "item": "antiquebeasts:magical_stone/frost_bite_magical_stone"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:staff/dragon_priest_frost_bite_staff"
+  }
+}

@@ -26,11 +26,11 @@ public class DraugrArcherShootingGoal extends Goal {
         this.movementUtil = new MovementUtil(this.actor);
     }
 
+    @Override
     public boolean canStart() {
         LivingEntity livingEntity = this.actor.getTarget();
 
-        if (livingEntity instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+        if (livingEntity instanceof PlayerEntity playerEntity) {
             if (playerEntity.isCreative() || playerEntity.isSpectator()) {
                 return false;
             }
@@ -38,25 +38,29 @@ public class DraugrArcherShootingGoal extends Goal {
         return livingEntity != null && livingEntity.isAlive();
     }
 
+    @Override
     public void start() {
         this.actor.setCooldown(61);
+        this.actor.setShooting(false);
     }
 
+    @Override
     public void stop() {
         this.actor.setCooldown(61);
         this.actor.setShooting(false);
         this.actor.getMoveControl().strafeTo(0, 0);
     }
 
+    @Override
     public boolean shouldRunEveryTick() {
         return true;
     }
 
+    @Override
     public boolean shouldContinue() {
         LivingEntity livingEntity = this.actor.getTarget();
 
-        if (livingEntity instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+        if (livingEntity instanceof PlayerEntity playerEntity) {
             if (playerEntity.isCreative() || playerEntity.isSpectator()) {
                 return false;
             }
@@ -64,12 +68,20 @@ public class DraugrArcherShootingGoal extends Goal {
         return livingEntity != null && livingEntity.isAlive();
     }
 
+    @Override
     public void tick() {
+        if (actor.isUsingPotion() || actor.getHealTicks() > 0) {
+            actor.setShooting(false);
+            actor.getNavigation().stop();
+            return;
+        }
+
         LivingEntity target = this.actor.getTarget();
         if (target == null || !target.isAlive()) {
             this.stop();
             return;
         }
+
         double distanceToTarget = this.actor.distanceTo(target);
         this.movementUtil.lookAtTarget(target, this.actor);
         this.movementUtil.checkIfStuck(target, this.actor);
@@ -85,9 +97,19 @@ public class DraugrArcherShootingGoal extends Goal {
         if (this.actor.getVisibilityCache().canSee(target)) {
             World world = this.actor.getWorld();
             this.actor.setCooldown(Math.max(this.actor.getCooldown() - 1, 0));
+
+            // 🔥 Moment où on joue l’anim de tir
+            if (this.actor.getCooldown() == 25) {
+                this.actor.setShooting(true);
+
+                // 👉 triggerAnim "shoot"
+                this.actor.setAttackName("shoot");
+                this.actor.triggerAnim("attacking", this.actor.getAttackName());
+            }
+
+            // Moment où le projectile part
             if (this.actor.getCooldown() == 9) {
-                ArrowEntity throwingAxeEntity;
-                throwingAxeEntity = new ArrowEntity(world, this.actor);
+                ArrowEntity throwingAxeEntity = new ArrowEntity(world, this.actor);
 
                 double offsetX = -0.7;
                 double offsetZ = -0.7;
@@ -105,6 +127,7 @@ public class DraugrArcherShootingGoal extends Goal {
                 double h = Math.sqrt(e * e + g * g) * 0.20000000298023224;
                 float distance;
                 float speed;
+
                 if (this.actor.distanceTo(target) > 25) {
                     distance = 0.85f;
                     speed = 2.1f;
@@ -115,18 +138,21 @@ public class DraugrArcherShootingGoal extends Goal {
                     distance = 0.75f;
                     speed = 2f;
                 }
+
                 throwingAxeEntity.setVelocity(e, f + h * distance, g, speed, 0.0F);
                 throwingAxeEntity.setPosition(xProjectile, this.actor.getBodyY(1), zProjectile);
                 throwingAxeEntity.addEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 60, 0, false, false));
                 world.spawnEntity(throwingAxeEntity);
-            } else if (this.actor.getCooldown() == 25) {
-                this.actor.setShooting(true);
+
             } else if (this.actor.getCooldown() == 0) {
+                // reset cycle
                 this.actor.setCooldown(61);
                 this.actor.setShooting(false);
+
             } else if (this.actor.getCooldown() > 25 && this.actor.getCooldown() < 61) {
                 this.actor.setShooting(false);
             }
+
         } else {
             this.actor.setShooting(false);
             this.actor.setCooldown(61);

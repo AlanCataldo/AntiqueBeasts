@@ -169,6 +169,7 @@ public class ModSounds {
     public static SoundEvent WEAPON_SWORD_IMPACT = registerSoundEvent("sword_impact");
     public static SoundEvent WEAPON_SWORD_SLASH = registerSoundEvent("sword_slash");
     public static SoundEvent WEAPON_SWORD_SLASH_RING = registerSoundEvent("sword_slash_ring");
+    public static SoundEvent WEAPON_SWORD_BLOCK = registerSoundEvent("sword_block");
 
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);

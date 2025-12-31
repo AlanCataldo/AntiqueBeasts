@@ -1,17 +1,19 @@
 package net.mebahel.antiquebeasts.entity.custom.other;
 
 import net.mebahel.antiquebeasts.block.entity.BlockScanEntity;
+import net.mebahel.antiquebeasts.config.draugr.DraugrBonusHealthConfig;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.ai.CustomRevengeGoal;
+import net.mebahel.antiquebeasts.entity.ai.other.DraugrOverlordBlockGoal;
 import net.mebahel.antiquebeasts.entity.ai.other.DraugrOverlordMeleeAttackGoal;
 import net.mebahel.antiquebeasts.entity.ai.other.DraugrOverlordSpecialAttackGoal;
+import net.mebahel.antiquebeasts.entity.ai.other.DraugrOverlordSpinGoal;
 import net.mebahel.antiquebeasts.entity.custom.dwemer.DwemerEntity;
 import net.mebahel.antiquebeasts.entity.custom.egyptian.EgyptianEntity;
 import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.variant.DraugrOverlordVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
-import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
@@ -26,7 +28,6 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.entity.boss.ServerBossBar;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -65,13 +66,32 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
         super(entityType, world);
         this.ambientSoundChance = -this.getMinAmbientSoundDelay();
         this.bossBar = new ServerBossBar(
-                Text.of("Draugr Overlord"),
+                Text.translatable("entity.antiquebeasts.draugr_overlord"),
                 BossBar.Color.RED,
                 BossBar.Style.NOTCHED_10
         );
         this.bossBar.setPercent(1.0f);
         this.setPersistent();
     }
+
+    private boolean wantsSpin = false;
+
+    public boolean wantsSpin() {
+        return wantsSpin;
+    }
+    public void requestSpin() {
+        this.wantsSpin = true;
+    }
+    public void clearSpinRequest() {
+        this.wantsSpin = false;
+    }
+
+    private float damageWindowAmount = 0f;      // cumul des dégâts dans la fenêtre
+    private int damageWindowTicks = 0;         // ticks restants dans la fenêtre
+    private int blockReactionCooldownTicks = 0; // cd pour ne pas re-trigger en boucle
+
+    private static final int DAMAGE_WINDOW_MAX_TICKS = 40;       // 2s à 20tps
+    private static final float DAMAGE_WINDOW_THRESHOLD_FRACTION = 0.15f; // 15% HP max
 
     // ---- TRACKED DATA ----
     public static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
@@ -85,6 +105,8 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
     public static final TrackedData<Integer> SPECIAL_COOLDOWN =
             DataTracker.registerData(DraugrOverlordEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public static final TrackedData<Boolean> SPECIAL =
+            DataTracker.registerData(DraugrOverlordEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    public static final TrackedData<Boolean> SPINNING =
             DataTracker.registerData(DraugrOverlordEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     // ---- BASIC GETTERS / SETTERS ----
@@ -106,6 +128,9 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
     public void setAttackName(String attackName) { this.dataTracker.set(ATTACK_NAME, attackName); }
     public String getAttackName() { return this.dataTracker.get(ATTACK_NAME); }
 
+    public boolean isSpinning() {return this.dataTracker.get(SPINNING);}
+    public void setSpinning(boolean spinning) {this.dataTracker.set(SPINNING, spinning);}
+
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
@@ -115,6 +140,7 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
         this.dataTracker.startTracking(HAS_SPAWNED, true);
         this.dataTracker.startTracking(SPECIAL, false);
         this.dataTracker.startTracking(SPECIAL_COOLDOWN, 70);
+        this.dataTracker.startTracking(SPINNING, false);
     }
 
     @Override
@@ -125,8 +151,10 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new DraugrOverlordSpecialAttackGoal(this));
-        this.goalSelector.add(3, new DraugrOverlordMeleeAttackGoal(this, 0.95f));
+        this.goalSelector.add(2, new DraugrOverlordSpinGoal(this));
+        this.goalSelector.add(3, new DraugrOverlordBlockGoal(this));
+        this.goalSelector.add(4, new DraugrOverlordSpecialAttackGoal(this));
+        this.goalSelector.add(5, new DraugrOverlordMeleeAttackGoal(this, 0.95f));
         this.goalSelector.add(6, new WanderAroundFarGoal(this, 0.85f, 1f));
         this.goalSelector.add(7, new LookAroundGoal(this));
 
@@ -145,10 +173,10 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3D)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 400.0D + ModBonusHealthConfig.draugrBonusHealth)
-                .add(EntityAttributes.GENERIC_ARMOR, 14f)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 400.0D + DraugrBonusHealthConfig.draugrOverlordBonusHealth)
+                .add(EntityAttributes.GENERIC_ARMOR, 15f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12.0f)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.75f)
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.9f)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5f);
     }
 
@@ -156,11 +184,11 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
     private PlayState predicate(AnimationState state) {
         if (!this.getHasSpawned()) return PlayState.STOP;
 
-        if (state.isMoving() && !this.getSpecial() && !this.isSwinging()) {
+        if (state.isMoving() && !this.getSpecial() && !this.isSwinging() && !this.isSpinning()) {
             spawnSwordDraggingParticles();
             state.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
-        } else if (!state.isMoving() && !this.isAttacking() && !this.getSpecial()) {
+        } else if (!state.isMoving() && !this.isAttacking() && !this.getSpecial() && !this.isSpinning()) {
             state.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
@@ -173,6 +201,9 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
 
         controllers.add(
                 new AnimationController<>(this, "attacking", 0, state -> PlayState.CONTINUE)
+                        .triggerableAnim("block_attack", RawAnimation.begin().then("block_attack", Animation.LoopType.PLAY_ONCE))
+                        .triggerableAnim("sl_attack_quake", RawAnimation.begin().then("sl_attack_quake", Animation.LoopType.PLAY_ONCE))
+                        .triggerableAnim("sl_block_spin2", RawAnimation.begin().then("sl_block_spin2", Animation.LoopType.PLAY_ONCE))
                         .triggerableAnim("sl_attack_rush", RawAnimation.begin().then("sl_attack_rush", Animation.LoopType.PLAY_ONCE))
                         .triggerableAnim("sl_attack_double1", RawAnimation.begin().then("sl_attack_double1", Animation.LoopType.PLAY_ONCE))
                         .triggerableAnim("sl_attack_double2", RawAnimation.begin().then("sl_attack_double2", Animation.LoopType.PLAY_ONCE))
@@ -186,11 +217,6 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
                         this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(),
                                 ModSounds.MUMMY_SPAWN, this.getSoundCategory(), 0.65f, 1f);
                 }));
-
-        controllers.add(
-                new AnimationController<>(this, "specialController", 0, state -> PlayState.CONTINUE)
-                        .triggerableAnim("sl_attack_quake", RawAnimation.begin().then("sl_attack_quake", Animation.LoopType.PLAY_ONCE))
-        );
     }
 
     // ---- VARIANT ----
@@ -211,23 +237,20 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
         return entityData;
     }
 
-    // ---- DAMAGE ----
-    @Override
-    public boolean damage(DamageSource source, float amount) {
-        if (source.isOf(DamageTypes.IN_FIRE) || source.isOf(DamageTypes.ON_FIRE))
-            return super.damage(source, amount * 2);
-        else if (source.isOf(DamageTypes.FREEZE))
-            return false;
-        return super.damage(source, amount);
-    }
-
     // ---- BOSS BAR ----
     @Override
     public void tick() {
         super.tick();
+
         this.updateBossBar();
         this.bossBar.setPercent(this.getHealth() / this.getMaxHealth());
 
+        if (damageWindowTicks > 0) {
+            damageWindowTicks--;
+            if (damageWindowTicks == 0) {
+                damageWindowAmount = 0f;
+            }
+        }
         if (this.isDead() || this.isRemoved()) this.bossBar.clearPlayers();
     }
 
@@ -287,32 +310,34 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
     }
 
     public void spawnSwordDraggingParticles() {
-        double yawRad = Math.toRadians(-this.bodyYaw);
-        double cosYaw = Math.cos(yawRad);
-        double sinYaw = Math.sin(yawRad);
+        if (!this.isBlocking()) {
+            double yawRad = Math.toRadians(-this.bodyYaw);
+            double cosYaw = Math.cos(yawRad);
+            double sinYaw = Math.sin(yawRad);
 
-        double offsetBackX = -sinYaw;
-        double offsetBackZ = -cosYaw;
-        double offsetRightX = -cosYaw;
-        double offsetRightZ = sinYaw;
+            double offsetBackX = -sinYaw;
+            double offsetBackZ = -cosYaw;
+            double offsetRightX = -cosYaw;
+            double offsetRightZ = sinYaw;
 
-        double particleX = this.getX() + offsetBackX + offsetRightX;
-        double particleZ = this.getZ() + offsetBackZ + offsetRightZ;
-        double particleY = this.getY();
+            double particleX = this.getX() + offsetBackX + offsetRightX;
+            double particleZ = this.getZ() + offsetBackZ + offsetRightZ;
+            double particleY = this.getY();
 
-        BlockPos blockPos = new BlockPos((int) particleX, (int) (particleY - 1), (int) particleZ);
-        BlockState blockState = this.getWorld().getBlockState(blockPos);
+            BlockPos blockPos = new BlockPos((int) particleX, (int) (particleY - 1), (int) particleZ);
+            BlockState blockState = this.getWorld().getBlockState(blockPos);
 
-        if (blockState.isAir()) return;
+            if (blockState.isAir()) return;
 
-        for (int i = 0; i < 1; i++) {
-            double randomOffsetX = (this.random.nextDouble() - 0.5) * 0.1;
-            double randomOffsetZ = (this.random.nextDouble() - 0.5) * 0.1;
-            this.getWorld().addParticle(
-                    new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState),
-                    particleX + randomOffsetX, particleY, particleZ + randomOffsetZ,
-                    0.0, 0.05, 0.0
-            );
+            for (int i = 0; i < 1; i++) {
+                double randomOffsetX = (this.random.nextDouble() - 0.5) * 0.1;
+                double randomOffsetZ = (this.random.nextDouble() - 0.5) * 0.1;
+                this.getWorld().addParticle(
+                        new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState),
+                        particleX + randomOffsetX, particleY, particleZ + randomOffsetZ,
+                        0.0, 0.05, 0.0
+                );
+            }
         }
     }
 
@@ -348,4 +373,51 @@ public class DraugrOverlordEntity extends DraugrEntity implements GeoEntity {
     protected void playStepSound(BlockPos pos, BlockState state) {
         this.playSound(ModSounds.DRAUGR_WALK_1, 0.65f, 0.7f);
     }
+
+    @Override
+    public boolean damage(DamageSource source, float amount) {
+        boolean result = super.damage(source, amount);
+
+        if (!this.getWorld().isClient && result && amount > 0 && !this.isDead()) {
+            handleBurstDamage(source, amount);
+        }
+
+        return result;
+    }
+
+    private void handleBurstDamage(DamageSource source, float amount) {
+        // Optionnel : ignorer certains types de dégâts si tu veux (feu, void, etc.)
+        // if (source.isOf(DamageTypes.FALL)) return;
+
+        // Si déjà en block / spin / special, on ne déclenche pas
+        if (this.isBlocking() || this.wantsToBlock() || this.isSpinning() || this.getSpecial()) {
+            return;
+        }
+
+        // Cooldown pour ne pas spammer la réaction
+        if (blockReactionCooldownTicks > 0) {
+            return;
+        }
+
+        // Si la fenêtre est expirée, on la réinitialise
+        if (damageWindowTicks <= 0) {
+            damageWindowTicks = DAMAGE_WINDOW_MAX_TICKS;
+            damageWindowAmount = 0f;
+        }
+
+        damageWindowAmount += amount;
+
+        float threshold = this.getMaxHealth() * DAMAGE_WINDOW_THRESHOLD_FRACTION;
+
+        if (damageWindowAmount >= threshold) {
+            // On a pris >= 15% HP max dans la fenêtre → demande de block
+            this.requestBlock();
+
+            // Reset de la fenêtre et cooldown interne (ex : 4s)
+            damageWindowAmount = 0f;
+            damageWindowTicks = 0;
+            blockReactionCooldownTicks = 80; // 4s à 20tps
+        }
+    }
+
 }

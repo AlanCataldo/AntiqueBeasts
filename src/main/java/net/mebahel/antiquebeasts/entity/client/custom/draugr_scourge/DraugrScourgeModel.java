@@ -3,9 +3,7 @@ package net.mebahel.antiquebeasts.entity.client.custom.draugr_scourge;
 import com.google.common.collect.Maps;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrScourgeEntity;
-import net.mebahel.antiquebeasts.entity.custom.other.DraugrWightEntity;
 import net.mebahel.antiquebeasts.entity.variant.DraugrScourgeVariant;
-import net.mebahel.antiquebeasts.entity.variant.DraugrWightVariant;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import software.bernie.geckolib.constant.DataTickets;
@@ -53,5 +51,4 @@ public class DraugrScourgeModel extends GeoModel<DraugrScourgeEntity> {
             head.setRotX(7.0F * pitchAngle);
         }
     }
-
 }

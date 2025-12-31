@@ -1,0 +1,27 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "antiquebeasts:item/weapon/ancient_nord/ancient_nord_sword"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, 90, 45],
+			"translation": [0, 6, 2],
+			"scale": [1.1, 1.1, 1]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, -90, -45],
+			"translation": [0, 6, 2],
+			"scale": [1.1, 1.1, 1]
+		},
+		"firstperson_righthand": {
+			"rotation": [-15, -85, 15],
+			"translation": [0, 4, 0]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-15, 95, -15],
+			"translation": [0, 4, 0]
+		}
+	}
+}

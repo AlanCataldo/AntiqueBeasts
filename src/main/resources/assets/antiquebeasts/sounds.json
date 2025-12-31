@@ -1006,5 +1006,13 @@
         "stream": false
       }
     ]
+  },
+  "sword_block": {
+    "sounds": [
+      {
+        "name": "antiquebeasts:weapon/sword_block_1",
+        "stream": false
+      }
+    ]
   }
 }

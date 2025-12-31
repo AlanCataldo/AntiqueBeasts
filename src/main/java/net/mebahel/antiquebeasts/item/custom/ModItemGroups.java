@@ -54,23 +54,25 @@ public class ModItemGroups {
                         entries.add(ModItems.DIAMOND_HOPLITE_SPEAR);
                         entries.add(ModItems.NETHERITE_HOPLITE_SPEAR);
                         entries.add(ModItems.IRON_CENTAUR_SWORD);
-                        entries.add(ModItems.HIGH_IRON_SWORD);
+                        entries.add(ModItems.ANCIENT_NORD_SWORD);
                         entries.add(ModItems.THROWING_AXE_ITEM);
                         entries.add(ModItems.HERSIR_AXE);
                         entries.add(ModItems.VALKYRIE_SPEAR);
-                        entries.add(ModItems.FROST_SWORD);
-                        entries.add(ModItems.FROST_BOW);
+                        entries.add(ModItems.STALHRIM_SWORD);
+                        entries.add(ModItems.STALHRIM_BOW);
                         entries.add(ModItems.BLOOD_STAINED_FROST_SWORD);
                         entries.add(ModItems.EGYPTIAN_RECURVE_BOW);
                         entries.add(ModItems.GREEK_COMPOSITE_BOW);
-                        entries.add(ModItems.DRAUGR_BOW);
+                        entries.add(ModItems.ANCIENT_NORD_BOW);
                         entries.add(ModItems.EBONY_BOW);
+                        entries.add(ModItems.EBONY_AXE);
+                        entries.add(ModItems.EBONY_DAGGER);
                         entries.add(ModItems.EBONY_GREATSWORD);
-                        entries.add(ModItems.GREEK_STAFF_HANDLE);
-                        entries.add(ModItems.FROST_BITE_GREEK_STAFF);
-                        entries.add(ModItems.FROST_SPIKE_GREEK_STAFF);
+
                         entries.add(ModItems.FROST_BITE_MAGICAL_STONE);
+                        entries.add(ModItems.DRAGON_PRIEST_FROST_BITE_STAFF);
                         entries.add(ModItems.FROST_SPIKE_MAGICAL_STONE);
+                        entries.add(ModItems.DRAGON_PRIEST_FROST_SPIKE_STAFF);
 
                         entries.add(ModItems.VALKYRIE_HELMET);
                         entries.add(ModItems.VALKYRIE_CHESTPLATE);
@@ -123,15 +125,15 @@ public class ModItemGroups {
                         entries.add(ModItems.EBONY_SCRAP);
                         entries.add(ModItems.EBONY_INGOT);
                         entries.add(ModItems.CHIMERA_HAIR);
-                        entries.add(ModItems.FROST_SHARD);
+                        entries.add(ModItems.STALHRIM);
                         entries.add(ModItems.CYCLOPS_BLOOD);
                         entries.add(ModItems.CONCENTRATED_CYCLOPS_BLOOD);
                         entries.add(ModItems.RAW_CYCLOPS_MEAT);
                         entries.add(ModItems.COOKED_CYCLOPS_MEAT);
                         entries.add(ModItems.ANKH);
                         entries.add(ModItems.ANKH_FRAGMENT);
-                        entries.add(ModItems.THURISAZ_RUNE);
-
+                        entries.add(ModItems.DRAUGR_AWAKENING_SOUL_GEM);
+                        entries.add(ModItems.FILLED_DRAUGR_AWAKENING_SOUL_GEM);
                         entries.add(ModItems.HARPY_FEATHER);
 
                         entries.add(ModItems.N_D_NILE_MUSIC_DISC);
@@ -162,13 +164,14 @@ public class ModItemGroups {
                         entries.add(ModItems.EINHERJAR_SPAWN_EGG);
                         entries.add(ModItems.VALKYRIE_SPAWN_EGG);
 
-                        entries.add(ModItems.SKELETON_WARRIOR);
-                        entries.add(ModItems.SKELETON_WARRIOR_HEAD);
-                        entries.add(ModItems.DRAUGR_SPAWN_EGG);
-                        entries.add(ModItems.DRAUGR_OVERLORD_SPAWN_EGG);
-                        entries.add(ModItems.DRAUGR_WIGHT_SPAWN_EGG);
-                        entries.add(ModItems.DRAUGR_SCOURGE_SPAWN_EGG);
-                        entries.add(ModItems.DRAUGR_ARCHER_SPAWN_EGG);
+                        entries.add(ModSpawnEggs.SKELETON_WARRIOR_SPAWN_EGG);
+                        entries.add(ModSpawnEggs.SKELETON_WARRIOR_HEAD_SPAWN_EGG);
+                        entries.add(ModSpawnEggs.DRAUGR_SPAWN_EGG);
+                        entries.add(ModSpawnEggs.DRAUGR_OVERLORD_SPAWN_EGG);
+                        entries.add(ModSpawnEggs.DRAUGR_WIGHT_SPAWN_EGG);
+                        entries.add(ModSpawnEggs.DRAUGR_SCOURGE_SPAWN_EGG);
+                        entries.add(ModSpawnEggs.DRAUGR_ARCHER_SPAWN_EGG);
+
                         entries.add(ModItems.HARPY_SPAWN_EGG);
 
                         entries.add(ModSpawnEggs.DWEMER_SPIDER_SPAWN_EGG);

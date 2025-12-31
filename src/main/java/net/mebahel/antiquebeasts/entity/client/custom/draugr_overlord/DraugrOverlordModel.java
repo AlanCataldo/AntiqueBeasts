@@ -6,7 +6,6 @@ import net.mebahel.antiquebeasts.entity.custom.other.DraugrOverlordEntity;
 import net.mebahel.antiquebeasts.entity.variant.DraugrOverlordVariant;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
-import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
 import software.bernie.geckolib.core.animation.AnimationState;
@@ -47,8 +46,5 @@ public class DraugrOverlordModel extends GeoModel<DraugrOverlordEntity> {
             head.setRotY(4.0F * yawAngle);
             head.setRotX(4.0F * pitchAngle);
         }
-    }
-    public CoreGeoBone getSwordBone(DraugrOverlordEntity entity) {
-        return this.getAnimationProcessor().getBone("bone");
     }
 }

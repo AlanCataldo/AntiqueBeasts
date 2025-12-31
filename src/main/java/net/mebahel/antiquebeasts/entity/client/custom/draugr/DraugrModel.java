@@ -57,5 +57,4 @@ public class DraugrModel extends GeoModel<DraugrEntity> {
             head.setRotX(7.0F * pitchAngle);
         }
     }
-
 }

@@ -9,6 +9,10 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.mebahel.antiquebeasts.block.ModBlockEntities;
 import net.mebahel.antiquebeasts.block.ModBlocks;
 import net.mebahel.antiquebeasts.block.screenhandlers.ModScreenHandlers;
+import net.mebahel.antiquebeasts.config.draugr.DraugrBonusHealthConfig;
+import net.mebahel.antiquebeasts.config.draugr.DraugrCombatBalancingConfig;
+import net.mebahel.antiquebeasts.config.draugr.DraugrConfigReadmeGenerator;
+import net.mebahel.antiquebeasts.config.draugr.DraugrSpawnRateConfig;
 import net.mebahel.antiquebeasts.entity.ModEntities;
 import net.mebahel.antiquebeasts.entity.custom.*;
 import net.mebahel.antiquebeasts.entity.custom.dwemer.DwemerCenturionEntity;
@@ -22,7 +26,6 @@ import net.mebahel.antiquebeasts.entity.custom.greek.HeroHopliteEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.*;
 import net.mebahel.antiquebeasts.entity.custom.other.*;
 import net.mebahel.antiquebeasts.item.TickScheduler;
-import net.mebahel.antiquebeasts.item.custom.ModArmors;
 import net.mebahel.antiquebeasts.item.custom.ModItemGroups;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.item.custom.ModSpawnEggs;
@@ -38,12 +41,11 @@ import net.mebahel.antiquebeasts.util.config.ModArmorValueConfig;
 import net.mebahel.antiquebeasts.util.config.ModBonusHealthConfig;
 import net.mebahel.antiquebeasts.util.config.ModConfig;
 import net.mebahel.antiquebeasts.util.config.ModSpawnRateConfig;
-import net.mebahel.antiquebeasts.util.packet.ChestOpenSync;
 import net.mebahel.antiquebeasts.util.packet.ModNetworking;
-import net.mebahel.antiquebeasts.util.raid.AntiquebeastsDifficultyState;
-import net.mebahel.antiquebeasts.util.raid.DraugrRaidTest;
-import net.mebahel.antiquebeasts.util.raid.PersistentRaidData;
-import net.mebahel.antiquebeasts.util.raid.RaidManager;
+import net.mebahel.antiquebeasts.util.raid.DraugrRaid;
+import net.mebahel.antiquebeasts.util.raid.DraugrRaidDifficultyState;
+import net.mebahel.antiquebeasts.util.raid.DraugrRaidManager;
+import net.mebahel.antiquebeasts.util.raid.DraugrRaidPersistentData;
 import net.mebahel.antiquebeasts.world.gen.ModWorldGen;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementProgress;
@@ -53,22 +55,22 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import software.bernie.geckolib.network.GeckoLibNetwork;
 
 import java.io.File;
 import java.util.*;
 
 public class AntiqueBeasts implements ModInitializer {
 	public static final String MOD_ID = "antiquebeasts";
-
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static final Map<ServerWorld, Integer> worldDifficultyLevels = new HashMap<>();
+	private static final DraugrRaidDifficultyState draugrRaidDifficultyState = new DraugrRaidDifficultyState(1);
+	public static final List<DraugrRaid> ongoingRaids = new ArrayList<>();
+
 	private static final TickScheduler tickScheduler = new TickScheduler();
-	private static final AntiquebeastsDifficultyState antiquebeastsDifficultyState = new AntiquebeastsDifficultyState(1);
 	private static final WaterRemovalScheduler waterRemovalScheduler = new WaterRemovalScheduler();
 	private static final Map<ServerWorld, ServerTickEvents.EndTick> registeredListeners = new HashMap<>();
 	private static final Map<ServerWorld, ServerPlayConnectionEvents.Join> registeredJoinEventListeners = new HashMap<>();
-	public static final Map<ServerWorld, Integer> worldDifficultyLevels = new HashMap<>();
-	public static final List<DraugrRaidTest> ongoingRaids = new ArrayList<>();
+
 	private boolean playerHasArrived = false;
 	private boolean shouldEnableLoad = true;
 	private static final int ACHIEVEMENT_CHECK_INTERVAL = 20;
@@ -82,6 +84,13 @@ public class AntiqueBeasts implements ModInitializer {
 		ModArmorValueConfig.loadConfig(configDir);
 		ModSpawnRateConfig.loadConfig(configDir);
 		ModBonusHealthConfig.loadConfig(configDir);
+
+		File draugrConfigDir = new File(configDir, "draugr");
+		DraugrSpawnRateConfig.loadConfig(draugrConfigDir);
+		DraugrCombatBalancingConfig.loadConfig(draugrConfigDir);
+		DraugrBonusHealthConfig.loadConfig(draugrConfigDir);
+		DraugrConfigReadmeGenerator.generate(draugrConfigDir);
+
 		ModItemGroups.registerItemGroups();
 
 		FabricDefaultAttributeRegistry.register(ModEntities.DWEMER_CENTURION, DwemerCenturionEntity.setAttributes());
@@ -119,7 +128,6 @@ public class AntiqueBeasts implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ModEntities.EINHERJAR, EinherjarEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.VALKYRIE, ValkyrieEntity.setAttributes());
 
-		ModArmors.registerModArmors();
 		ModSounds.registerSounds();
 		ModBlocks.registerModBlocks();
 		ModBlockEntities.registerModBlockEntities();
@@ -132,7 +140,9 @@ public class AntiqueBeasts implements ModInitializer {
 		PatrolManager.register();
 		ModScreenHandlers.registerScreenHandlers();
 		MyProcessors.init();
-		RaidManager.registerEvents();
+
+		DraugrRaidManager.registerEvents();
+
 		ModNetworking.registerReceivers();
 		AddBookToLootTableUtil bookUtil = new AddBookToLootTableUtil();
 
@@ -164,7 +174,7 @@ public class AntiqueBeasts implements ModInitializer {
 
 		ServerWorldEvents.LOAD.register((server, world) -> {
 			waterRemovalScheduler.addWorld(world);
-			antiquebeastsDifficultyState.registerDifficultyState(world);
+			draugrRaidDifficultyState.registerDifficultyState(world);
 			ServerPlayConnectionEvents.Join joinEventListener = (handler, sender, server2) -> {
 				if (world.getRegistryKey().equals(World.OVERWORLD)) {
 					playerHasArrived = true;
@@ -176,7 +186,7 @@ public class AntiqueBeasts implements ModInitializer {
 				if (serverTick.getWorld(World.OVERWORLD) == world) {
 					if (playerHasArrived && shouldEnableLoad) {
 						tickScheduler.schedule(world, 20, w -> {
-							PersistentRaidData.get(world);
+							DraugrRaidPersistentData.get(world);
 						});
 						shouldEnableLoad = false;
 						playerHasArrived = false;
@@ -184,7 +194,7 @@ public class AntiqueBeasts implements ModInitializer {
 					waterRemovalScheduler.tick();
 				}
 				checkMummyBossAchievement(world);
-				antiquebeastsDifficultyState.updateDifficultyState(world);
+				draugrRaidDifficultyState.updateDifficultyState(world);
 				tickScheduler.tick();
 			};
 

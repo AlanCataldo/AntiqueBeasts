@@ -12,7 +12,7 @@ public enum ModToolMaterial implements ToolMaterial {
         return Ingredient.ofItems(Items.IRON_INGOT);
     }),
     FROST_WEAPON(4, 1550, 4.0F, 0.5F, 17, () -> {
-        return Ingredient.ofItems(ModItems.FROST_SHARD);
+        return Ingredient.ofItems(ModItems.STALHRIM);
     }),
 
     PHARAOH_SCEPTER(4, 1550, 4.0F, 0.5F, 25, () -> {
@@ -31,13 +31,11 @@ public enum ModToolMaterial implements ToolMaterial {
     DIAMOND_KHOPESH(4, 1280, 7F, 1F, 17, () -> {
         return Ingredient.ofItems(ModItems.DIAMOND_SCARAB);
     }),
+
     NETHERITE_KHOPESH(4, 1580, 7F, 1F, 20, () -> {
         return Ingredient.ofItems(Items.NETHERITE_INGOT);
     }),
 
-    EBONY(4, 2048, 7F, 0.5F, 22, () -> {
-        return Ingredient.ofItems(ModItems.EBONY_INGOT);
-    }),
     DWARVEN_1(4, 1380, 7F, 0F, 20, () -> {
         return Ingredient.ofItems(ModItems.EBONY_INGOT);
     }),
@@ -51,6 +49,18 @@ public enum ModToolMaterial implements ToolMaterial {
 
     THROWING_AXE(2, 680, 6.0F, 0.5F, 15, () -> {
         return Ingredient.ofItems(ModItems.HIGH_IRON_INGOT);
+    }),
+
+    ANCIENT_WEAPON(4, 680, 7.0F, 1.5F, 19, () -> {
+        return Ingredient.ofItems(Items.IRON_INGOT);
+    }),
+
+    EBONY(4, 2048, 7F, 0F, 22, () -> {
+        return Ingredient.ofItems(ModItems.EBONY_INGOT);
+    }),
+
+    STALHRIM(4, 1550, 4.0F, 0.5F, 18, () -> {
+        return Ingredient.ofItems(ModItems.STALHRIM);
     });
 
     private final int miningLevel;

@@ -1,0 +1,6 @@
+{
+  "parent": "antiquebeasts:item/bow/ancient_nord/ancient_nord_bow",
+  "textures": {
+    "layer0": "antiquebeasts:item/bow/ancient_nord/ancient_nord_bow_pulling_0"
+  }
+}

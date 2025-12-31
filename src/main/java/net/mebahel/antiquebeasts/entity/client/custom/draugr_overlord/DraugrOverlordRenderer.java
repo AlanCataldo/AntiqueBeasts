@@ -22,24 +22,6 @@ public class DraugrOverlordRenderer extends GeoEntityRenderer<DraugrOverlordEnti
         // Ajout de la couche de rendu émissif
         this.addRenderLayer(new AutoGlowingGeoLayer<>(this));
     }
-    public Vec3d getSwordPosition(DraugrOverlordEntity entity) {
-        DraugrOverlordModel model = (DraugrOverlordModel) this.getGeoModel();
-        CoreGeoBone swordBone = model.getSwordBone(entity);
-
-        if (swordBone == null) {
-            System.out.println("[ERROR] Sword bone not found!");
-            return entity.getPos();
-        }
-
-        // 🔹 Utiliser getPivotX(), getPivotY(), getPivotZ() pour la position fixe de l'épée
-        double swordX = swordBone.getPivotX() / 16.0;
-        double swordY = swordBone.getPivotY() / 16.0;
-        double swordZ = swordBone.getPivotZ() / 16.0;
-
-        // 🔹 Convertir en position globale en ajoutant la position de l'entité
-        return new Vec3d(entity.getX() + swordX, entity.getY() + swordY, entity.getZ() + swordZ);
-    }
-
 
     @Override
     public RenderLayer getRenderType(DraugrOverlordEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource, float partialTick) {

@@ -52,6 +52,15 @@ public class EgyptianCaravanEntity extends EgyptianEntity implements GeoEntity {
     }
     private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
 
+    // --- Escort spawn (thread-safe / C2ME-safe) ---
+    private boolean escortsPending = false;
+    private boolean escortsSpawned = false;
+
+    private int pendingAxemen = 0;
+    private boolean pendingElephant = false;
+    private boolean pendingCamelry = false;
+
+
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
@@ -157,32 +166,22 @@ public class EgyptianCaravanEntity extends EgyptianEntity implements GeoEntity {
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
                                  SpawnReason spawnReason, @Nullable EntityData entityData,
                                  @Nullable NbtCompound entityNbt) {
-        int numAxemen = 2 + this.random.nextInt(2);
 
+        // Variant
         EgyptiantVariant variant = Util.getRandom(EgyptiantVariant.values(), this.random);
         setVariant(variant);
 
-        for (int i = 0; i < numAxemen; i++) {
-            AxemanEntity newAxeman = new AxemanEntity(ModEntities.AXEMAN, this.getWorld(), true, this);
-            Vec3d offsetPosition = getOffsetPosition(4 * this.random.nextDouble(), 4 * this.random.nextDouble());
-            newAxeman.refreshPositionAndAngles(offsetPosition.x, offsetPosition.y, offsetPosition.z, this.getYaw(), this.getPitch());
-            this.getWorld().spawnEntity(newAxeman);
-        }
-        if (this.random.nextInt(3) == 0) {
-            ElephantRiderEntity newElephantRider = new ElephantRiderEntity(ModEntities.ELEPHANT_RIDER, this.getWorld(), true, this);
-            Vec3d offsetPosition = getOffsetPosition(4 * this.random.nextDouble(), 4 * this.random.nextDouble());
-            newElephantRider.refreshPositionAndAngles(offsetPosition.x, offsetPosition.y, offsetPosition.z, this.getYaw(), this.getPitch());
-            this.getWorld().spawnEntity(newElephantRider);
-        }
-        if (this.random.nextInt(2) == 0) {
-            CamelryEntity newCamelryRider = new CamelryEntity(ModEntities.CAMELRY, this.getWorld(), true, this);
-            Vec3d offsetPosition = getOffsetPosition(4 * this.random.nextDouble(), 4 * this.random.nextDouble());
-            newCamelryRider.refreshPositionAndAngles(offsetPosition.x, offsetPosition.y, offsetPosition.z, this.getYaw(), this.getPitch());
-            this.getWorld().spawnEntity(newCamelryRider);
-        }
+        // Prépare escortes (mais ne spawn pas ici)
+        this.pendingAxemen = 2 + this.random.nextInt(2);
+        this.pendingElephant = (this.random.nextInt(3) == 0);
+        this.pendingCamelry = (this.random.nextInt(2) == 0);
 
-        return entityData;
+        this.escortsPending = true;
+        this.escortsSpawned = false;
+
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
+
 
     private Vec3d getOffsetPosition(double offsetX, double offsetZ) {
         double x = this.getX() + offsetX;
@@ -202,8 +201,14 @@ public class EgyptianCaravanEntity extends EgyptianEntity implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
+
         if (this.shouldDespawnInPeaceful()) {
             this.remove(RemovalReason.DISCARDED);
+            return;
+        }
+
+        if (!this.getWorld().isClient) {
+            trySpawnEscortsServer();
         }
     }
 
@@ -214,6 +219,7 @@ public class EgyptianCaravanEntity extends EgyptianEntity implements GeoEntity {
             this.playSound(SoundEvents.ENTITY_CAMEL_STEP, 1.0F, 1.0F);
         }
     }
+
     public static boolean canMobSpawnWithRate(EntityType<? extends AnimalEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, net.minecraft.util.math.random.Random random) {
         if (spawnReason == SpawnReason.SPAWNER || spawnReason == SpawnReason.SPAWN_EGG
                 || spawnReason == SpawnReason.COMMAND || spawnReason == SpawnReason.EVENT) {
@@ -245,5 +251,80 @@ public class EgyptianCaravanEntity extends EgyptianEntity implements GeoEntity {
 
         int randomValue = random.nextInt(10);
         return randomValue < ModSpawnRateConfig.egyptianCaravanSpawnRate;
+    }
+
+    private void trySpawnEscortsServer() {
+        if (!this.escortsPending || this.escortsSpawned) return;
+        if (!this.isAlive()) return;
+
+        // évite spawn pendant qu'on n'est pas “stable” dans le monde
+        if (this.age < 1) return;
+
+        // IMPORTANT: ne pas dépendre du thread courant; on pousse sur le thread serveur
+        if (!(this.getWorld() instanceof net.minecraft.server.world.ServerWorld sw)) return;
+
+        this.escortsSpawned = true;
+        this.escortsPending = false;
+
+        sw.getServer().execute(() -> {
+            // Re-checks une fois sur le thread serveur
+            if (!this.isAlive()) return;
+            if (this.isRemoved()) return;
+            if (this.getWorld() != sw) return;
+
+            // Axemen
+            for (int i = 0; i < this.pendingAxemen; i++) {
+                AxemanEntity axeman = new AxemanEntity(ModEntities.AXEMAN, sw, true, this);
+                Vec3d p = getOffsetPosition(4 * this.random.nextDouble(), 4 * this.random.nextDouble());
+                axeman.refreshPositionAndAngles(p.x, p.y, p.z, this.getYaw(), this.getPitch());
+                sw.spawnEntity(axeman);
+            }
+
+            // Elephant rider
+            if (this.pendingElephant) {
+                ElephantRiderEntity er = new ElephantRiderEntity(ModEntities.ELEPHANT_RIDER, sw, true, this);
+                Vec3d p = getOffsetPosition(4 * this.random.nextDouble(), 4 * this.random.nextDouble());
+                er.refreshPositionAndAngles(p.x, p.y, p.z, this.getYaw(), this.getPitch());
+                sw.spawnEntity(er);
+            }
+
+            // Camelry
+            if (this.pendingCamelry) {
+                CamelryEntity cr = new CamelryEntity(ModEntities.CAMELRY, sw, true, this);
+                Vec3d p = getOffsetPosition(4 * this.random.nextDouble(), 4 * this.random.nextDouble());
+                cr.refreshPositionAndAngles(p.x, p.y, p.z, this.getYaw(), this.getPitch());
+                sw.spawnEntity(cr);
+            }
+
+            // Nettoyage
+            this.pendingAxemen = 0;
+            this.pendingElephant = false;
+            this.pendingCamelry = false;
+        });
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+
+        this.escortsSpawned = nbt.getBoolean("EscortsSpawned");
+        this.escortsPending = nbt.getBoolean("EscortsPending");
+
+        this.pendingAxemen = nbt.getInt("PendingAxemen");
+        this.pendingElephant = nbt.getBoolean("PendingElephant");
+        this.pendingCamelry = nbt.getBoolean("PendingCamelry");
+    }
+
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+
+        nbt.putBoolean("EscortsSpawned", this.escortsSpawned);
+        nbt.putBoolean("EscortsPending", this.escortsPending);
+
+        nbt.putInt("PendingAxemen", this.pendingAxemen);
+        nbt.putBoolean("PendingElephant", this.pendingElephant);
+        nbt.putBoolean("PendingCamelry", this.pendingCamelry);
     }
 }

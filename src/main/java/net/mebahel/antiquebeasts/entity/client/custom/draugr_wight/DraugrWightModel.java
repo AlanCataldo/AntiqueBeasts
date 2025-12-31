@@ -3,7 +3,6 @@ package net.mebahel.antiquebeasts.entity.client.custom.draugr_wight;
 import com.google.common.collect.Maps;
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrWightEntity;
-import net.mebahel.antiquebeasts.entity.variant.DraugrVariant;
 import net.mebahel.antiquebeasts.entity.variant.DraugrWightVariant;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;

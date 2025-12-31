@@ -40,7 +40,12 @@
           "type": "minecraft:item",
           "name": "antiquebeasts:ebony_ingot",
           "weight": 1
-        },
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
         {
           "functions": [
             {
@@ -55,7 +60,17 @@
           ],
           "type": "minecraft:item",
           "name": "antiquebeasts:ebony_ingot",
-          "weight": 9
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "antiquebeasts:weapon/ebony/ebony_greatsword",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
         }
       ]
     }

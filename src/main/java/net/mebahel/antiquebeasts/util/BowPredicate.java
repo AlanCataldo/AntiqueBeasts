@@ -18,9 +18,9 @@ public class BowPredicate {
     public static void registerBowModels() {
         registerSafe(ModItems.EGYPTIAN_RECURVE_BOW);
         registerSafe(ModItems.GREEK_COMPOSITE_BOW);
-        registerSafe(ModItems.DRAUGR_BOW);
+        registerSafe(ModItems.ANCIENT_NORD_BOW);
         registerSafe(ModItems.EBONY_BOW);
-        registerSafe(ModItems.FROST_BOW);
+        registerSafe(ModItems.STALHRIM_BOW);
     }
 
     private static void registerSafe(Item bow) {

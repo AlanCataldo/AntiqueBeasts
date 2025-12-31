@@ -237,7 +237,9 @@
             },
             {
               "function": "minecraft:set_name",
-              "name": "Hoplite Barrack Map"
+              "name": {
+                "translate": "antiquebeasts.map.hoplite_barrack_map"
+              }
             },
             {
               "add": false,

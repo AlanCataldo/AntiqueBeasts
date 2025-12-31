@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "antiquebeasts:item/magical_stone/frost"
+    "layer0": "antiquebeasts:item/magical_stone/frost_spike_magical_stone"
   }
 }

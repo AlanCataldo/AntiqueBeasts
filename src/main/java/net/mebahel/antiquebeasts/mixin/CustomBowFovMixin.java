@@ -20,11 +20,11 @@ public abstract class CustomBowFovMixin {
         ItemStack active = player.getActiveItem();
 
         // ✅ Limité à TES arcs uniquement
-        if (!(active.isOf(ModItems.DRAUGR_BOW)
+        if (!(active.isOf(ModItems.ANCIENT_NORD_BOW)
                 || active.isOf(ModItems.EGYPTIAN_RECURVE_BOW)
                 || active.isOf(ModItems.GREEK_COMPOSITE_BOW)
                 || active.isOf(ModItems.EBONY_BOW)
-                || active.isOf(ModItems.FROST_BOW))) {
+                || active.isOf(ModItems.STALHRIM_BOW))) {
             return;
         }
 
