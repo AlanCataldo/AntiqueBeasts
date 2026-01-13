@@ -348,5 +348,6 @@
   "_comment13": "=== Maps ===",
 
   "antiquebeasts.map.hoplite_barrack_map": "Hoplite Barrack Map",
-  "antiquebeasts.map.greek_temple_map": "Greek Temple Map"
+  "antiquebeasts.map.greek_temple_map": "Greek Temple Map",
+  "antiquebeasts.map.dwemer_map": "Dwemer City Map"
 }

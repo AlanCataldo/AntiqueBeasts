@@ -292,5 +292,6 @@
   "_comment13": "=== Maps ===",
 
   "antiquebeasts.map.hoplite_barrack_map": "Carte de Caserne Hoplite",
-  "antiquebeasts.map.greek_temple_map": "Carte de Temple Grec"
+  "antiquebeasts.map.greek_temple_map": "Carte de Temple Grec",
+  "antiquebeasts.map.dwemer_map": "Carte de Ville Dwemer"
 }

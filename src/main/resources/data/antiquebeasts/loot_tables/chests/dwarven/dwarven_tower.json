@@ -238,7 +238,9 @@
             },
             {
               "function": "minecraft:set_name",
-              "name": "Dwemer City Map"
+              "name": {
+                "translate": "antiquebeasts.map.dwemer_map"
+              }
             },
             {
               "add": false,

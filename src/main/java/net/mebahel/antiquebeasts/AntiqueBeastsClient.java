@@ -30,8 +30,11 @@ import net.mebahel.antiquebeasts.entity.client.projectiles.dwemer_centurion.Stea
 import net.mebahel.antiquebeasts.entity.client.projectiles.harpy.HarpyFeatherRenderer;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.particle.custom.*;
-import net.mebahel.antiquebeasts.util.*;
 import net.mebahel.antiquebeasts.util.packet.ChestOpenSync;
+import net.mebahel.antiquebeasts.util.predicate.BowPredicate;
+import net.mebahel.antiquebeasts.util.predicate.HornModelPredicate;
+import net.mebahel.antiquebeasts.util.predicate.ShieldModelPredicate;
+import net.mebahel.antiquebeasts.util.predicate.SpearModelPredicate;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.util.ModelIdentifier;
@@ -124,8 +127,6 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         HandledScreens.register(ModScreenHandlers.DRAUGR_CHEST_SCREEN_HANDLER, DraugrChestScreen::new);
 
         BowPredicate.registerBowModels();
-
-        ModModelPredicate.registerStaffModels();
         ShieldModelPredicate.registerShieldModels();
         SpearModelPredicate.registerSpearModels();
         HornModelPredicate.registerHornModels();

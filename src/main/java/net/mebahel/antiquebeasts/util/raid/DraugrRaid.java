@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import static net.mebahel.antiquebeasts.AntiqueBeasts.MOD_ID;
 import static net.mebahel.antiquebeasts.AntiqueBeasts.worldDifficultyLevels;
 import static net.mebahel.antiquebeasts.util.raid.DraugrRaidHelper.chooseEntityType;
 import static net.mebahel.antiquebeasts.util.raid.DraugrRaidHelper.findGroundPosition;
@@ -401,7 +402,7 @@ public class DraugrRaid {
 
             BlockEntity blockEntity = world.getBlockEntity(chestPos);
             if (blockEntity instanceof DraugrChestBlockEntity draugrChest) {
-                draugrChest.setLootTable(new Identifier("AntiqueBeasts", "chests/raid/draugr_raid"), world.getRandom().nextLong());
+                draugrChest.setLootTable(new Identifier(MOD_ID, "chests/raid/draugr_raid"), world.getRandom().nextLong());
 
                 draugrChest.setShouldDoSpawnAnimation(true);
             }

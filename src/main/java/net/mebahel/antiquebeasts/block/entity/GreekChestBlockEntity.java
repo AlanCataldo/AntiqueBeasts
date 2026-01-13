@@ -13,7 +13,7 @@ public class GreekChestBlockEntity extends BaseChestBlockEntity {
 
     @Override
     protected Text getChestTitle() {
-        return Text.translatable("Greek Chest");
+        return Text.translatable("block.antiquebeasts.greek_chest");
     }
 
     @Override

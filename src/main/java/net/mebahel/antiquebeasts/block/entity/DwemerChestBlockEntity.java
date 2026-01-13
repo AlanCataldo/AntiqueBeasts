@@ -16,7 +16,7 @@ public class DwemerChestBlockEntity extends BaseChestBlockEntity {
 
     @Override
     protected Text getChestTitle() {
-        return Text.translatable("Dwemer Chest");
+        return Text.translatable("block.antiquebeasts.dwemer_chest");
     }
 
     @Override

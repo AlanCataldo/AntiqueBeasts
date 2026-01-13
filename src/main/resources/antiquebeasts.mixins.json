@@ -16,6 +16,7 @@
     "PoisonImmunityMixin",
     "ShieldDurabilityMixin",
     "ShieldSoundMixin",
+    "VillagerAvoidAntiqueBeastsMixin",
     "WitherDamageMixin"
   ],
   "client": [

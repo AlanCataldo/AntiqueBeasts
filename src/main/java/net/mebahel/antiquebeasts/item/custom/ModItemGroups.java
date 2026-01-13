@@ -113,6 +113,8 @@ public class ModItemGroups {
                         entries.add(ModItems.NETHERITE_PLATE_SHIELD);
                         entries.add(ModItems.HIGH_IRON_SHIELD);
 
+                        entries.add(ModItems.EINHERJAR_HORN);
+
                         entries.add(ModItems.IRON_PLATE);
                         entries.add(ModItems.GOLD_PLATE);
                         entries.add(ModItems.DIAMOND_PLATE);

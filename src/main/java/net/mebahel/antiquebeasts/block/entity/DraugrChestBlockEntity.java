@@ -13,7 +13,7 @@ public class DraugrChestBlockEntity extends BaseChestBlockEntity {
 
     @Override
     protected Text getChestTitle() {
-        return Text.translatable("Draugr Chest");
+        return Text.translatable("block.antiquebeasts.draugr_chest");
     }
 
     @Override

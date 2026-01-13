@@ -1,9 +1,8 @@
-package net.mebahel.antiquebeasts.util;
+package net.mebahel.antiquebeasts.util.predicate;
 
 import net.mebahel.antiquebeasts.AntiqueBeasts;
 import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.minecraft.client.item.ClampedModelPredicateProvider;
-import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
@@ -11,7 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
-public class BowPredicate {
+public final class BowPredicate {
+    private BowPredicate() {}
+
     private static final Identifier PULL = new Identifier("minecraft", "pull");
     private static final Identifier PULLING = new Identifier("minecraft", "pulling");
 
@@ -25,39 +26,25 @@ public class BowPredicate {
 
     private static void registerSafe(Item bow) {
         try {
-            register(bow);
+            PredicateBridge.register(bow, PULL, new PullPredicate());
+            PredicateBridge.register(bow, PULLING, new PullingPredicate());
         } catch (Throwable t) {
-            AntiqueBeasts.LOGGER.warn(
-                    "Bow predicates disabled for {} (Connector compatibility).",
-                    bow, t
-            );
+            AntiqueBeasts.LOGGER.warn("Bow predicates disabled for {} (Connector compatibility).", bow, t);
         }
-    }
-
-    private static void register(Item bow) {
-        ModelPredicateProviderRegistry.register(bow, PULL, new PullPredicate());
-        ModelPredicateProviderRegistry.register(bow, PULLING, new PullingPredicate());
     }
 
     private static final class PullPredicate implements ClampedModelPredicateProvider {
         @Override
-        public float unclampedCall(ItemStack stack,
-                                   @Nullable ClientWorld world,
-                                   @Nullable LivingEntity entity,
-                                   int seed) {
+        public float unclampedCall(ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity, int seed) {
             if (entity == null) return 0.0F;
             if (entity.getActiveItem() != stack) return 0.0F;
-
             return (float) (stack.getMaxUseTime() - entity.getItemUseTimeLeft()) / 20.0F;
         }
     }
 
     private static final class PullingPredicate implements ClampedModelPredicateProvider {
         @Override
-        public float unclampedCall(ItemStack stack,
-                                   @Nullable ClientWorld world,
-                                   @Nullable LivingEntity entity,
-                                   int seed) {
+        public float unclampedCall(ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity, int seed) {
             if (entity == null) return 0.0F;
             return (entity.isUsingItem() && entity.getActiveItem() == stack) ? 1.0F : 0.0F;
         }
