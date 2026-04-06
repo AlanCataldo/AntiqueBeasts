@@ -157,7 +157,7 @@ public class ModEntitySpawn {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 BiomeKeys.DESERT, BiomeKeys.BADLANDS)
                         .or(BiomeSelectors.tag(ConventionalBiomeTags.DESERT)).or(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS)),
-                SpawnGroup.CREATURE, ModEntities.EGYPTIAN_CARAVAN, 3, 1, 1);
+                SpawnGroup.CREATURE, ModEntities.EGYPTIAN_CARAVAN, 1, 1, 1);
         SpawnRestriction.register(ModEntities.EGYPTIAN_CARAVAN, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
@@ -431,7 +431,8 @@ public class ModEntitySpawn {
                                 TerralithBiomeKeys.SKYLANDS, TerralithBiomeKeys. SKYLANDS_AUTUMN, TerralithBiomeKeys.SKYLANDS_SPRING,
                                 TerralithBiomeKeys.SKYLANDS_SUMMER, TerralithBiomeKeys.WARM_RIVER, TerralithBiomeKeys.VOLCANIC_PEAKS,
                                 TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS)
-                        .or(BiomeSelectors.tag(ConventionalBiomeTags.PLAINS)).or(BiomeSelectors.tag(ConventionalBiomeTags.FOREST))
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.PLAINS))
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.FOREST))
                         .or(BiomeSelectors.tag(ConventionalBiomeTags.CLIMATE_TEMPERATE)),
                 SpawnGroup.CREATURE, ModEntities.CENTAUR, 7, 1, 2);
         SpawnRestriction.register(ModEntities.CENTAUR, SpawnRestriction.Location.ON_GROUND,
@@ -453,7 +454,8 @@ public class ModEntitySpawn {
                                 TerralithBiomeKeys.SKYLANDS, TerralithBiomeKeys. SKYLANDS_AUTUMN, TerralithBiomeKeys.SKYLANDS_SPRING,
                                 TerralithBiomeKeys.SKYLANDS_SUMMER, TerralithBiomeKeys.WARM_RIVER, TerralithBiomeKeys.VOLCANIC_PEAKS,
                                 TerralithBiomeKeys.STONY_SPIRES, TerralithBiomeKeys.BASALT_CLIFFS)
-                        .or(BiomeSelectors.tag(ConventionalBiomeTags.PLAINS)).or(BiomeSelectors.tag(ConventionalBiomeTags.FOREST))
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.PLAINS))
+                        .or(BiomeSelectors.tag(ConventionalBiomeTags.FOREST))
                         .or(BiomeSelectors.tag(ConventionalBiomeTags.CLIMATE_TEMPERATE)),
                 SpawnGroup.CREATURE, ModEntities.ELITE_HOPLITE, 10, 1, 2);
         SpawnRestriction.register(ModEntities.ELITE_HOPLITE, SpawnRestriction.Location.ON_GROUND,

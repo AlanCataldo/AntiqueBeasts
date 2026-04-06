@@ -52,7 +52,7 @@ import software.bernie.geckolib.util.ClientUtils;
 
 import org.jetbrains.annotations.Nullable;
 
-public class    HeroHopliteEntity extends GreekEntity implements GeoEntity {
+public class HeroHopliteEntity extends GreekEntity implements GeoEntity {
     private int idleCondition = 0;
     private boolean shouldRandomIdle = true;
 
@@ -261,15 +261,6 @@ public class    HeroHopliteEntity extends GreekEntity implements GeoEntity {
 
         long time = world.getLevelProperties().getTimeOfDay();
         if (time % 24000L >= 13000L) {
-            return false;
-        }
-
-        BlockPos blockPos = pos.down();
-        BlockState blockBelow = world.getBlockState(blockPos);
-
-        boolean isGrassyGround = blockBelow.isOf(Blocks.GRASS);
-
-        if (!isGrassyGround) {
             return false;
         }
 

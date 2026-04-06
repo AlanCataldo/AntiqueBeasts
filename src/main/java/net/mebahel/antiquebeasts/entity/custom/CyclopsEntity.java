@@ -388,15 +388,6 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
             return false;
         }
 
-        BlockPos blockPos = pos.down();
-        BlockState blockBelow = world.getBlockState(blockPos);
-
-        boolean isGrassyGround = blockBelow.isOf(Blocks.GRASS);
-
-        if (!isGrassyGround) {
-            return false;
-        }
-
         if (world.getLightLevel(pos) < 9) {
             return false;
         }

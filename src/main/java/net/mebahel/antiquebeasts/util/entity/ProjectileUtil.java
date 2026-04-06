@@ -3,7 +3,6 @@ package net.mebahel.antiquebeasts.util.entity;
 import net.mebahel.antiquebeasts.entity.projectiles.DraugrWightProjectileEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.FrostSpikeEntity;
 import net.mebahel.antiquebeasts.entity.projectiles.SteamProjectileEntity;
-import net.mebahel.antiquebeasts.item.custom.ModItems;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.sound.SoundCategory;

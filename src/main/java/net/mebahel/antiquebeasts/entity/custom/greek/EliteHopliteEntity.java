@@ -247,6 +247,7 @@ public class EliteHopliteEntity extends GreekEntity implements GeoEntity {
             }
         }
     }
+
     public static boolean canMobSpawnWithRate(EntityType<? extends AnimalEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, net.minecraft.util.math.random.Random random) {
         if (spawnReason == SpawnReason.SPAWNER || spawnReason == SpawnReason.SPAWN_EGG
                 || spawnReason == SpawnReason.COMMAND || spawnReason == SpawnReason.EVENT) {
@@ -255,15 +256,6 @@ public class EliteHopliteEntity extends GreekEntity implements GeoEntity {
 
         long time = world.getLevelProperties().getTimeOfDay();
         if (time % 24000L >= 13000L) {
-            return false;
-        }
-
-        BlockPos blockPos = pos.down();
-        BlockState blockBelow = world.getBlockState(blockPos);
-
-        boolean isGrassyGround = blockBelow.isOf(Blocks.GRASS);
-
-        if (!isGrassyGround) {
             return false;
         }
 
