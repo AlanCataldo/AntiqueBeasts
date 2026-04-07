@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.LivingEntity;
@@ -57,13 +58,18 @@ public class HopliteSpearEntity extends ThrownItemEntity implements GeoEntity {
             this.discard();
         }
     }
+
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
+
         this.playSound(SoundEvents.ITEM_TRIDENT_HIT, 0.7f, 0.9f);
-        LivingEntity target = (LivingEntity) entityHitResult.getEntity();
-        target.damage(this.getDamageSources().thrown(this, this.getOwner()), (float)10);
+
+        Entity target = entityHitResult.getEntity();
+
+        target.damage(this.getDamageSources().thrown(this, this.getOwner()), 10.0F);
         target.damage(this.getDamageSources().lightningBolt(), 2.0F);
+
         if (target.getWorld().isSkyVisible(target.getBlockPos())) {
             Vec3d lightningSpawnPos = target.getPos();
             LightningEntity lightningEntity = new LightningEntity(EntityType.LIGHTNING_BOLT, this.getWorld());
@@ -71,6 +77,7 @@ public class HopliteSpearEntity extends ThrownItemEntity implements GeoEntity {
             this.getWorld().spawnEntity(lightningEntity);
         }
     }
+
     @Override
     protected void onBlockHit(BlockHitResult blockHitResult) {
         this.playSound(SoundEvents.ITEM_TRIDENT_HIT, 0.7f, 0.9f);
