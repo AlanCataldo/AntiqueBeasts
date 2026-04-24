@@ -221,13 +221,9 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
     }
 
     private <E extends GeoAnimatable> PlayState shootingPredicate(AnimationState<E> state) {
-        if (!this.isSwinging() && this.isShooting()) {
-            state.getController().forceAnimationReset();
-            state.getController().setAnimation(RawAnimation.begin().then("ranged_attack", Animation.LoopType.PLAY_ONCE));
-        }
-
         return PlayState.CONTINUE;
     }
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController(this, "controller", 0, this::predicate));
@@ -236,11 +232,8 @@ public class CyclopsEntity extends AnimalEntity implements GeoEntity {
             if (player != null)
                 this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.SWING, this.getSoundCategory(), 0.5f, 0.6f);
         }));
-        controllers.add(new AnimationController(this, "shooting", 0, this::shootingPredicate).setSoundKeyframeHandler(state -> {
-            PlayerEntity player = ClientUtils.getClientPlayer();
-            if (player != null)
-                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), ModSounds.SWING, this.getSoundCategory(), 0.5f, 0.6f);
-        }));
+        controllers.add(new AnimationController<>(this, "shooting", 0, this::shootingPredicate)
+                .triggerableAnim("ranged_attack", RawAnimation.begin().then("ranged_attack", Animation.LoopType.PLAY_ONCE)));
     }
 
     @Override

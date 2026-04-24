@@ -14,6 +14,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.hit.BlockHitResult;
@@ -56,8 +57,9 @@ public class ThrowingRockEntity extends ThrownItemEntity implements GeoEntity {
         super(THROWINGROCK, owner, world);
     }
 
+    @Override
     protected Item getDefaultItem() {
-        return null;
+        return Items.SNOWBALL;
     }
 
     public void handleStatus(byte status) {
@@ -82,23 +84,19 @@ public class ThrowingRockEntity extends ThrownItemEntity implements GeoEntity {
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
-        LivingEntity target = (LivingEntity) entityHitResult.getEntity();
-        target.damage(this.getDamageSources().thrown(this, this.getOwner()), (float)15);
-        playSound(ModSounds.CYCLOPS_FLESHCRUSH3, 1f, 1f);
-        Entity entity = this.getEffectCause();
 
-        ArrayList<StatusEffectInstance> effectList = new ArrayList<>();
-        effectList.add(new StatusEffectInstance(StatusEffects.NAUSEA, 140, 2));
-        effectList.add(new StatusEffectInstance(StatusEffects.SLOWNESS, 140, 2));
-
-        Iterator<StatusEffectInstance> effectIterator = effectList.iterator();
-        StatusEffectInstance statusEffectInstance;
-        while(effectIterator.hasNext()) {
-            statusEffectInstance = effectIterator.next();
-            target.addStatusEffect(new StatusEffectInstance(statusEffectInstance.getEffectType(),
-                    statusEffectInstance.getDuration(), statusEffectInstance.getAmplifier(),
-                    statusEffectInstance.isAmbient(), statusEffectInstance.shouldShowParticles()), entity);
+        Entity hitEntity = entityHitResult.getEntity();
+        if (!(hitEntity instanceof LivingEntity target)) {
+            return;
         }
+
+        target.damage(this.getDamageSources().thrown(this, this.getOwner()), 15.0F);
+        playSound(ModSounds.CYCLOPS_FLESHCRUSH3, 1f, 1f);
+
+        Entity cause = this.getEffectCause();
+
+        target.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 140, 2), cause);
+        target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 140, 2), cause);
     }
 
     @Override
@@ -106,53 +104,5 @@ public class ThrowingRockEntity extends ThrownItemEntity implements GeoEntity {
         BlockState blockState = this.getWorld().getBlockState(blockHitResult.getBlockPos());
         blockState.onProjectileHit(this.getWorld(), blockState, blockHitResult, this);
         playSound(ModSounds.CYCLOPS_ROCKCRUSH1, 1f, 1f);
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-        HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
-        boolean bl = false;
-        if (hitResult.getType() == HitResult.Type.BLOCK) {
-            BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-            BlockState blockState = this.getWorld().getBlockState(blockPos);
-            if (blockState.isOf(Blocks.NETHER_PORTAL)) {
-                this.setInNetherPortal(blockPos);
-                bl = true;
-            } else if (blockState.isOf(Blocks.END_GATEWAY)) {
-                BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
-                if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-                    EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
-                }
-                bl = true;
-            }
-        }
-
-        if (hitResult.getType() != HitResult.Type.MISS && !bl) {
-            this.onCollision(hitResult);
-        }
-
-        this.checkBlockCollision();
-        Vec3d vec3d = this.getVelocity();
-        double d = this.getX() + vec3d.x;
-        double e = this.getY() + vec3d.y;
-        double f = this.getZ() + vec3d.z;
-        this.updateRotation();
-        float h;
-        if (this.isTouchingWater()) {
-            for(int i = 0; i < 4; ++i) {
-                this.getWorld().addParticle(ParticleTypes.BUBBLE, d - vec3d.x * 0.25, e - vec3d.y * 0.25, f - vec3d.z * 0.25, vec3d.x, vec3d.y, vec3d.z);
-            }
-
-            h = 0.8F;
-        } else {
-            h = 0.99F;
-        }
-        this.setVelocity(vec3d.multiply(h));
-        if (!this.hasNoGravity()) {
-            Vec3d vec3d2 = this.getVelocity();
-            this.setVelocity(vec3d2.x, vec3d2.y, vec3d2.z);
-        }
-        this.setPosition(d, e, f);
     }
 }
