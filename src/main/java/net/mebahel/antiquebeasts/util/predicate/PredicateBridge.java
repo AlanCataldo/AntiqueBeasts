@@ -20,7 +20,8 @@ public final class PredicateBridge {
     public enum RuntimePlatform {
         FABRIC,
         FORGE,
-        NEOFORGE
+        NEOFORGE,
+        CONNECTOR
     }
 
     @FunctionalInterface
@@ -28,24 +29,41 @@ public final class PredicateBridge {
         float call(@Nullable Object stack, @Nullable Object world, @Nullable Object entity, int seed) throws Throwable;
     }
 
+    private static final ClassLoader CL = PredicateBridge.class.getClassLoader();
     private static final RuntimePlatform PLATFORM = detectPlatform();
 
     public static void register(Item item, Identifier id, UniversalPredicate predicate) {
-        if (item == null) return;
-
-        if (PLATFORM == RuntimePlatform.FORGE || PLATFORM == RuntimePlatform.NEOFORGE) {
-            try {
-                registerVanillaItemProperty(item, id, predicate);
-            } catch (Throwable t) {
-                throw (t instanceof RuntimeException re) ? re : new RuntimeException(t);
-            }
+        if (item == null || id == null || predicate == null) {
             return;
         }
 
-        ModelPredicateProviderRegistry.register(item, id,
+        if (shouldUseVanillaItemProperties()) {
+            try {
+                registerVanillaItemProperty(item, id, predicate);
+                return;
+            } catch (Throwable t) {
+                throw t instanceof RuntimeException re ? re : new RuntimeException(t);
+            }
+        }
+
+        ModelPredicateProviderRegistry.register(
+                item,
+                id,
                 (ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity, int seed) ->
                         safeCall(predicate, stack, world, entity, seed)
         );
+    }
+
+    private static boolean shouldUseVanillaItemProperties() {
+        if (PLATFORM == RuntimePlatform.FORGE
+                || PLATFORM == RuntimePlatform.NEOFORGE
+                || PLATFORM == RuntimePlatform.CONNECTOR) {
+            return true;
+        }
+
+        return classExists("net.minecraft.client.renderer.item.ItemProperties", CL)
+                && classExists("net.minecraft.client.renderer.item.ClampedItemPropertyFunction", CL)
+                && classExists("net.minecraft.resources.ResourceLocation", CL);
     }
 
     private static float safeCall(UniversalPredicate predicate, Object stack, Object world, Object entity, int seed) {
@@ -57,13 +75,18 @@ public final class PredicateBridge {
     }
 
     private static RuntimePlatform detectPlatform() {
-        ClassLoader cl = PredicateBridge.class.getClassLoader();
+        if (classExists("org.sinytra.connector.mod.ConnectorMod", CL)
+                || classExists("org.sinytra.connector.Connector", CL)
+                || classExists("org.sinytra.connector.service.ConnectorService", CL)
+                || classExists("org.sinytra.connector.loader.ConnectorLoader", CL)) {
+            return RuntimePlatform.CONNECTOR;
+        }
 
-        if (classExists("net.neoforged.fml.ModList", cl)) {
+        if (classExists("net.neoforged.fml.ModList", CL)) {
             return RuntimePlatform.NEOFORGE;
         }
 
-        if (classExists("net.minecraftforge.fml.ModList", cl)) {
+        if (classExists("net.minecraftforge.fml.ModList", CL)) {
             return RuntimePlatform.FORGE;
         }
 
@@ -80,7 +103,9 @@ public final class PredicateBridge {
     }
 
     public static boolean isUsingSameItem(@Nullable Object stackObj, @Nullable Object entityObj) {
-        if (stackObj == null || entityObj == null) return false;
+        if (stackObj == null || entityObj == null) {
+            return false;
+        }
 
         try {
             if (stackObj instanceof ItemStack stack && entityObj instanceof LivingEntity entity) {
@@ -91,10 +116,14 @@ public final class PredicateBridge {
 
         try {
             boolean using = invokeNoArgBoolean(entityObj, "isUsingItem");
-            if (!using) return false;
+            if (!using) {
+                return false;
+            }
 
-            Object active = invokeNoArg(entityObj, "getUseItem");
-            if (active == null) return false;
+            Object active = invokeAnyNoArg(entityObj, "getUseItem", "getActiveItem");
+            if (active == null) {
+                return false;
+            }
 
             return active == stackObj || active.equals(stackObj);
         } catch (Throwable ignored) {
@@ -103,11 +132,16 @@ public final class PredicateBridge {
     }
 
     public static float computeBowPull(@Nullable Object stackObj, @Nullable Object entityObj) {
-        if (stackObj == null || entityObj == null) return 0.0F;
+        if (stackObj == null || entityObj == null) {
+            return 0.0F;
+        }
 
         try {
             if (stackObj instanceof ItemStack stack && entityObj instanceof LivingEntity entity) {
-                if (entity.getActiveItem() != stack) return 0.0F;
+                if (entity.getActiveItem() != stack) {
+                    return 0.0F;
+                }
+
                 return (float) (stack.getMaxUseTime() - entity.getItemUseTimeLeft()) / 20.0F;
             }
         } catch (Throwable ignored) {
@@ -115,17 +149,21 @@ public final class PredicateBridge {
 
         try {
             boolean using = invokeNoArgBoolean(entityObj, "isUsingItem");
-            if (!using) return 0.0F;
+            if (!using) {
+                return 0.0F;
+            }
 
-            Object active = invokeNoArg(entityObj, "getUseItem");
-            if (active == null) return 0.0F;
+            Object active = invokeAnyNoArg(entityObj, "getUseItem", "getActiveItem");
+            if (active == null) {
+                return 0.0F;
+            }
 
             if (!(active == stackObj || active.equals(stackObj))) {
                 return 0.0F;
             }
 
-            int remaining = invokeNoArgInt(entityObj, "getUseItemRemainingTicks");
-            int duration = invokeNoArgInt(stackObj, "getUseDuration");
+            int remaining = invokeAnyNoArgInt(entityObj, "getUseItemRemainingTicks", "getItemUseTimeLeft");
+            int duration = invokeAnyNoArgInt(stackObj, "getUseDuration", "getMaxUseTime");
 
             return (float) (duration - remaining) / 20.0F;
         } catch (Throwable ignored) {
@@ -133,8 +171,32 @@ public final class PredicateBridge {
         }
     }
 
+    private static Object invokeAnyNoArg(Object target, String... methodNames) throws Throwable {
+        Throwable last = null;
+
+        for (String methodName : methodNames) {
+            try {
+                return invokeNoArg(target, methodName);
+            } catch (Throwable t) {
+                last = t;
+            }
+        }
+
+        if (last != null) {
+            throw last;
+        }
+
+        throw new NoSuchMethodException(target.getClass().getName() + "#" + Arrays.toString(methodNames));
+    }
+
+    private static int invokeAnyNoArgInt(Object target, String... methodNames) throws Throwable {
+        Object value = invokeAnyNoArg(target, methodNames);
+        return value instanceof Integer i ? i : (int) value;
+    }
+
     private static Object invokeNoArg(Object target, String methodName) throws Throwable {
         Method m = findNoArgMethod(target.getClass(), methodName);
+
         if (m == null) {
             throw new NoSuchMethodException(target.getClass().getName() + "#" + methodName + "()");
         }
@@ -145,12 +207,12 @@ public final class PredicateBridge {
 
     private static int invokeNoArgInt(Object target, String methodName) throws Throwable {
         Object v = invokeNoArg(target, methodName);
-        return (v instanceof Integer i) ? i : (int) v;
+        return v instanceof Integer i ? i : (int) v;
     }
 
     private static boolean invokeNoArgBoolean(Object target, String methodName) throws Throwable {
         Object v = invokeNoArg(target, methodName);
-        return (v instanceof Boolean b) ? b : (boolean) v;
+        return v instanceof Boolean b ? b : (boolean) v;
     }
 
     private static Method findNoArgMethod(Class<?> clz, String name) {
@@ -180,35 +242,37 @@ public final class PredicateBridge {
     }
 
     private static void registerVanillaItemProperty(Item item, Identifier id, UniversalPredicate fn) throws Throwable {
-        ClassLoader cl = PredicateBridge.class.getClassLoader();
-
         Class<?> itemPropertiesClz =
-                Class.forName("net.minecraft.client.renderer.item.ItemProperties", false, cl);
+                Class.forName("net.minecraft.client.renderer.item.ItemProperties", false, CL);
         Class<?> resourceLocationClz =
-                Class.forName("net.minecraft.resources.ResourceLocation", false, cl);
+                Class.forName("net.minecraft.resources.ResourceLocation", false, CL);
         Class<?> clampedFnClz =
-                Class.forName("net.minecraft.client.renderer.item.ClampedItemPropertyFunction", false, cl);
+                Class.forName("net.minecraft.client.renderer.item.ClampedItemPropertyFunction", false, CL);
 
-        Object rl = createResourceLocation(resourceLocationClz, id.getNamespace(), id.getPath());
+        Object resourceLocation = createResourceLocation(resourceLocationClz, id.getNamespace(), id.getPath());
 
         Object proxy = Proxy.newProxyInstance(
-                cl,
+                CL,
                 new Class<?>[]{clampedFnClz},
-                (p, method, args) -> {
+                (proxyObj, method, args) -> {
                     if (method.getDeclaringClass() == Object.class) {
                         return switch (method.getName()) {
                             case "toString" -> "PredicateBridgeProxy[" + id + "]";
-                            case "hashCode" -> System.identityHashCode(p);
-                            case "equals" -> p == args[0];
+                            case "hashCode" -> System.identityHashCode(proxyObj);
+                            case "equals" -> proxyObj == args[0];
                             default -> null;
                         };
                     }
 
                     if (method.getReturnType() == float.class && method.getParameterCount() == 4) {
-                        Object stack = args[0];
-                        Object level = args[1];
-                        Object entity = args[2];
-                        int seed = (int) args[3];
+                        Object stack = args != null && args.length > 0 ? args[0] : null;
+                        Object level = args != null && args.length > 1 ? args[1] : null;
+                        Object entity = args != null && args.length > 2 ? args[2] : null;
+                        int seed = 0;
+
+                        if (args != null && args.length > 3 && args[3] instanceof Integer i) {
+                            seed = i;
+                        }
 
                         return safeCall(fn, stack, level, entity, seed);
                     }
@@ -230,48 +294,78 @@ public final class PredicateBridge {
                 ));
 
         register.setAccessible(true);
-        register.invoke(null, item, rl, proxy);
+        register.invoke(null, item, resourceLocation, proxy);
     }
 
     private static Object createResourceLocation(Class<?> resourceLocationClz, String namespace, String path) throws Throwable {
         try {
-            Constructor<?> c = resourceLocationClz.getConstructor(String.class, String.class);
-            c.setAccessible(true);
-            return c.newInstance(namespace, path);
+            Constructor<?> constructor = resourceLocationClz.getConstructor(String.class, String.class);
+            constructor.setAccessible(true);
+            return constructor.newInstance(namespace, path);
         } catch (NoSuchMethodException ignored) {
         }
 
         String combined = namespace + ":" + path;
 
         try {
-            Constructor<?> c = resourceLocationClz.getConstructor(String.class);
-            c.setAccessible(true);
-            return c.newInstance(combined);
+            Constructor<?> constructor = resourceLocationClz.getConstructor(String.class);
+            constructor.setAccessible(true);
+            return constructor.newInstance(combined);
         } catch (NoSuchMethodException ignored) {
         }
 
-        for (String methodName : new String[]{"tryParse", "parse", "of", "fromString"}) {
-            Method m = findStaticMethod(resourceLocationClz, methodName, String.class);
-            if (m != null) {
-                m.setAccessible(true);
-                Object out = m.invoke(null, combined);
-                if (out != null) return out;
+        for (String methodName : new String[]{"tryParse", "parse", "of", "fromString", "fromNamespaceAndPath"}) {
+            Object out = tryInvokeResourceLocationFactory(resourceLocationClz, methodName, namespace, path, combined);
+            if (out != null) {
+                return out;
             }
         }
 
         throw new NoSuchMethodException("Could not construct ResourceLocation for " + combined);
     }
 
+    private static Object tryInvokeResourceLocationFactory(
+            Class<?> resourceLocationClz,
+            String methodName,
+            String namespace,
+            String path,
+            String combined
+    ) throws Throwable {
+        Method oneArg = findStaticMethod(resourceLocationClz, methodName, String.class);
+        if (oneArg != null) {
+            oneArg.setAccessible(true);
+            Object out = oneArg.invoke(null, combined);
+            if (out != null) {
+                return out;
+            }
+        }
+
+        Method twoArg = findStaticMethod(resourceLocationClz, methodName, String.class, String.class);
+        if (twoArg != null) {
+            twoArg.setAccessible(true);
+            Object out = twoArg.invoke(null, namespace, path);
+            if (out != null) {
+                return out;
+            }
+        }
+
+        return null;
+    }
+
     private static Method findStaticMethod(Class<?> clz, String name, Class<?>... params) {
         try {
             Method m = clz.getDeclaredMethod(name, params);
-            if (Modifier.isStatic(m.getModifiers())) return m;
+            if (Modifier.isStatic(m.getModifiers())) {
+                return m;
+            }
         } catch (NoSuchMethodException ignored) {
         }
 
         try {
             Method m = clz.getMethod(name, params);
-            if (Modifier.isStatic(m.getModifiers())) return m;
+            if (Modifier.isStatic(m.getModifiers())) {
+                return m;
+            }
         } catch (NoSuchMethodException ignored) {
         }
 

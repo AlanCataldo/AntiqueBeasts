@@ -171,7 +171,7 @@ public class PegasusEntity extends HorseEntity implements GeoEntity {
 
     @Override
     public EntityView method_48926() {
-        return null;
+        return this.getWorld();
     }
 
     @Override
