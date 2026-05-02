@@ -1068,5 +1068,40 @@
   "firebolt_impact": {
     "subtitle": "subtitles.antiquebeasts.firebolt_impact",
     "sounds": [{"name": "antiquebeasts:firebolt/firebolt_impact"}]
+  },
+
+  "skeleton_warrior_ambient_1": {
+    "subtitle": "subtitles.antiquebeasts.skeleton_warrior_ambient_1",
+    "sounds": [{"name": "antiquebeasts:skeleton_warrior/skeleton_warrior_ambient_1"}]
+  },
+
+  "skeleton_warrior_ambient_2": {
+    "subtitle": "subtitles.antiquebeasts.skeleton_warrior_ambient_2",
+    "sounds": [{"name": "antiquebeasts:skeleton_warrior/skeleton_warrior_ambient_2"}]
+  },
+
+  "skeleton_warrior_death_1": {
+    "subtitle": "subtitles.antiquebeasts.skeleton_warrior_death_1",
+    "sounds": [{"name": "antiquebeasts:skeleton_warrior/skeleton_warrior_death_1"}]
+  },
+
+  "skeleton_warrior_death_2": {
+    "subtitle": "subtitles.antiquebeasts.skeleton_warrior_death_2",
+    "sounds": [{"name": "antiquebeasts:skeleton_warrior/skeleton_warrior_death_2"}]
+  },
+
+  "skeleton_warrior_hurt_2": {
+    "subtitle": "subtitles.antiquebeasts.skeleton_warrior_hurt_2",
+    "sounds": [{"name": "antiquebeasts:skeleton_warrior/skeleton_warrior_hurt_2"}]
+  },
+
+  "skeleton_warrior_hurt_3": {
+    "subtitle": "subtitles.antiquebeasts.skeleton_warrior_hurt_3",
+    "sounds": [{"name": "antiquebeasts:skeleton_warrior/skeleton_warrior_hurt_3"}]
+  },
+
+  "skeleton_warrior_walk_1": {
+    "subtitle": "subtitles.antiquebeasts.skeleton_warrior_walk_1",
+    "sounds": [{"name": "antiquebeasts:skeleton_warrior/skeleton_warrior_walk_1"}]
   }
 }
