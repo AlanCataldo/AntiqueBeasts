@@ -25,8 +25,7 @@ public class DraugrDrinkPotionGoal extends Goal {
 
     public DraugrDrinkPotionGoal(DraugrEntity mob) {
         this.mob = mob;
-        this.movementUtil = new MovementUtil(this.mob);
-        this.movementUtil.setStrafeDistance(STRAFE_DISTANCE);
+        this.movementUtil = new MovementUtil(this.mob, 3);
 
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
     }
@@ -37,6 +36,8 @@ public class DraugrDrinkPotionGoal extends Goal {
 
     @Override
     public boolean canStart() {
+        if (mob.isInSpawnIntro()) return false;
+
         LivingEntity target = mob.getTarget();
         if (target == null || !target.isAlive()) return false;
 
@@ -81,6 +82,8 @@ public class DraugrDrinkPotionGoal extends Goal {
 
     @Override
     public boolean shouldContinue() {
+        if (mob.isInSpawnIntro()) return false;
+
         LivingEntity target = mob.getTarget();
         if (target == null || !target.isAlive()) return false;
 
@@ -90,7 +93,8 @@ public class DraugrDrinkPotionGoal extends Goal {
 
     @Override
     public void start() {
-        // On verrouille le mouvement "normal"
+        if (mob.isInSpawnIntro()) return;
+
         mob.getNavigation().stop();
         mob.getMoveControl().strafeTo(0, 0);
 
@@ -172,19 +176,7 @@ public class DraugrDrinkPotionGoal extends Goal {
         } else if (t == 15)
             applyPotionEffect();
 
-        // 🔸 Mouvements défensifs pendant qu’il boit (comme block)
-        double distanceToTarget = this.mob.distanceTo(target);
-
-        this.movementUtil.lookAtTarget(target, this.mob);
-        this.movementUtil.checkIfStuck(target, this.mob);
-
-        if (!this.movementUtil.isSkyVisibleAbove(this.mob)) {
-            this.movementUtil.strafeUnderground(target, this.mob);
-        } else if (distanceToTarget <= STRAFE_DISTANCE) {
-            this.movementUtil.moveBackward(target, this.mob);
-        } else {
-            this.movementUtil.strafeAroundTarget(target, this.mob);
-        }
+        this.movementUtil.maintainRangedPosition(target);
     }
 
     private void applyPotionEffect() {

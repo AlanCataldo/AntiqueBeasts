@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " GH",
+    " BG",
+    "B  "
+  ],
+  "key" : {
+    "H": {
+      "item" : "antiquebeasts:ingredient/flame_atronach_heart"
+    },
+    "G": {
+      "item" : "minecraft:gold_ingot"
+    },
+    "B": {
+      "item" : "minecraft:blaze_rod"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:staff/flame_atronach_summoning_staff"
+  }
+}

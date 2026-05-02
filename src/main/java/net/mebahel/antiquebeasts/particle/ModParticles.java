@@ -18,8 +18,14 @@ public class ModParticles {
     public static final DefaultParticleType MUMMY_HOVERING_PARTICLE = FabricParticleTypes.simple();
     public static final DefaultParticleType HEALING_PARTICLE = FabricParticleTypes.simple();
     public static final DefaultParticleType STEAM_PARTICLE = FabricParticleTypes.simple();
+    public static final DefaultParticleType FLAME_ATRONACH_HAND_PARTICLE = FabricParticleTypes.simple();
+    public static final DefaultParticleType GROUND_FLAME_PARTICLE = FabricParticleTypes.simple();
 
     public static void registerParticles() {
+        Registry.register(Registries.PARTICLE_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "flame_atronach_particle"),
+                FLAME_ATRONACH_HAND_PARTICLE);
+        Registry.register(Registries.PARTICLE_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "ground_flame_particle"),
+                GROUND_FLAME_PARTICLE);
         Registry.register(Registries.PARTICLE_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "steam_particle"),
                 STEAM_PARTICLE);
         Registry.register(Registries.PARTICLE_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "rocksplash_particle"),

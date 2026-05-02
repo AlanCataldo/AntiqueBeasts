@@ -1014,5 +1014,59 @@
         "stream": false
       }
     ]
+  },
+  "flame_atronach_attack_1": {
+    "subtitle": "subtitles.antiquebeasts.flame_atronach_attack",
+    "sounds": [{"name": "antiquebeasts:flame_atronach/flame_atronach_attack_1"}]
+  },
+
+  "flame_atronach_injured_1": {
+    "subtitle": "subtitles.antiquebeasts.flame_atronach_injured",
+    "sounds": [{"name": "antiquebeasts:flame_atronach/flame_atronach_injured_1"}]
+  },
+
+  "flame_atronach_injured_2": {
+    "subtitle": "subtitles.antiquebeasts.flame_atronach_injured",
+    "sounds": [{"name": "antiquebeasts:flame_atronach/flame_atronach_injured_2"}]
+  },
+
+  "flame_atronach_idle_1": {
+    "subtitle": "subtitles.antiquebeasts.flame_atronach_idle",
+    "sounds": [{"name": "antiquebeasts:flame_atronach/flame_atronach_idle_1"}]
+  },
+
+  "flame_atronach_death_1": {
+    "subtitle": "subtitles.antiquebeasts.flame_atronach_death",
+    "sounds": [{"name": "antiquebeasts:flame_atronach/flame_atronach_death_1"}]
+  },
+
+  "flame_atronach_walk_1": {
+    "subtitle": "subtitles.antiquebeasts.flame_atronach_walk",
+    "sounds": [{"name": "antiquebeasts:flame_atronach/flame_atronach_walk_1"}]
+  },
+
+  "flame_atronach_summon": {
+    "subtitle": "subtitles.antiquebeasts.flame_atronach_summon",
+    "sounds": [{"name": "antiquebeasts:flame_atronach/flame_atronach_summon"}]
+  },
+
+  "flame_atronach_summon_charge": {
+    "subtitle": "subtitles.antiquebeasts.flame_atronach_summon_charge",
+    "sounds": [{"name": "antiquebeasts:flame_atronach/flame_atronach_summon_charge"}]
+  },
+
+  "flame_atronach_summon_charged": {
+    "subtitle": "subtitles.antiquebeasts.flame_atronach_summon_charged",
+    "sounds": [{"name": "antiquebeasts:flame_atronach/flame_atronach_summon_charged"}]
+  },
+
+  "firebolt_fire": {
+    "subtitle": "subtitles.antiquebeasts.firebolt_fire",
+    "sounds": [{"name": "antiquebeasts:firebolt/firebolt_fire"}]
+  },
+
+  "firebolt_impact": {
+    "subtitle": "subtitles.antiquebeasts.firebolt_impact",
+    "sounds": [{"name": "antiquebeasts:firebolt/firebolt_impact"}]
   }
 }

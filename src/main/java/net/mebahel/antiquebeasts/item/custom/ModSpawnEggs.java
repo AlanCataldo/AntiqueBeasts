@@ -12,6 +12,14 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModSpawnEggs {
+    public static final Item INFERNAL_DRAUGR_SPAWN_EGG = registerSpawnEgg("spawn_egg/infernal_draugr_spawn_egg",
+            new SpawnEggItem(ModEntities.INFERNAL_DRAUGR,0xFFFFFF, 0xFFFFFF,
+                    new FabricItemSettings()));
+
+    public static final Item FLAME_ATRONACH_SPAWN_EGG = registerSpawnEgg("spawn_egg/flame_atronach_spawn_egg",
+            new SpawnEggItem(ModEntities.FLAME_ATRONACH,0xFFFFFF, 0xFFFFFF,
+                    new FabricItemSettings()));
+
     public static final Item SKELETON_WARRIOR_SPAWN_EGG = registerSpawnEgg("spawn_egg/skeleton_warrior_spawn_egg",
             new SpawnEggItem(ModEntities.SKELETON_WARRIOR,0xFFFFFF, 0xFFFFFF,
                     new FabricItemSettings()));
@@ -68,6 +76,8 @@ public class ModSpawnEggs {
             entries.add(ModSpawnEggs.DRAUGR_WIGHT_SPAWN_EGG);
             entries.add(ModSpawnEggs.DRAUGR_SPAWN_EGG);
             entries.add(ModSpawnEggs.DRAUGR_OVERLORD_SPAWN_EGG);
+            entries.add(ModSpawnEggs.INFERNAL_DRAUGR_SPAWN_EGG);
+            entries.add(ModSpawnEggs.FLAME_ATRONACH_SPAWN_EGG);
         });
     }
 }

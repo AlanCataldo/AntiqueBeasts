@@ -11,8 +11,10 @@ import net.mebahel.antiquebeasts.item.bow.DraugrBow;
 import net.mebahel.antiquebeasts.item.bow.EbonyBow;
 import net.mebahel.antiquebeasts.item.bow.EgyptianRecurveBow;
 import net.mebahel.antiquebeasts.item.bow.StalhrimBow;
+import net.mebahel.antiquebeasts.item.food.MagmaSoupItem;
 import net.mebahel.antiquebeasts.item.soul_gem.DraugrAwakeningSoulGem;
 import net.mebahel.antiquebeasts.item.soul_gem.FilledDraugrAwakeningSoulGem;
+import net.mebahel.antiquebeasts.item.staff.FlameAtronachSummoningStaff;
 import net.mebahel.antiquebeasts.item.staff.FrostBiteStaff;
 import net.mebahel.antiquebeasts.item.staff.IceSpikeStaff;
 import net.mebahel.antiquebeasts.item.weapon.BloodStainedFrostSword;
@@ -34,6 +36,20 @@ import java.util.List;
 import static net.minecraft.registry.tag.InstrumentTags.SCREAMING_GOAT_HORNS;
 
 public class ModItems {
+    public static final Item MAGMA_SOUP = registerItem("food/magma_soup",
+            new MagmaSoupItem(new FabricItemSettings().maxCount(16)
+                    .food(new FoodComponent.Builder()
+                            .hunger(12)
+                            .saturationModifier(0.6f)
+                            .build()
+                    )));
+
+    public static final Item FLAME_ATRONACH_HEART = registerItem("ingredient/flame_atronach_heart",
+            new Item(new FabricItemSettings()));
+
+    public static final Item FLAME_ATRONACH_SOMMONING_STAFF = registerItem("staff/flame_atronach_summoning_staff",
+            new FlameAtronachSummoningStaff(new FabricItemSettings().maxDamage(64)));
+
     public static final Item ANCIENT_NORD_BOW = registerItem("bow/ancient_nord/ancient_nord_bow",
             new DraugrBow(new FabricItemSettings().maxDamage(640)));
 
@@ -445,12 +461,14 @@ public class ModItems {
         entries.add(DWEMER_METAL_GEAR);
         entries.add(DWEMER_METAL_SCRAP);
         entries.add(DWEMER_METAL_INGOT);
+        entries.add(FLAME_ATRONACH_HEART);
     }
     public static void addItemToFoodItemGroup(FabricItemGroupEntries entries) {
         entries.add(RAW_CYCLOPS_MEAT);
         entries.add(COOKED_CYCLOPS_MEAT);
         entries.add(CYCLOPS_BLOOD);
         entries.add(CONCENTRATED_CYCLOPS_BLOOD);
+        entries.add(MAGMA_SOUP);
     }
 
     public static void addItemToToolsAndUtilitiesGroup(FabricItemGroupEntries entries) {
@@ -471,6 +489,7 @@ public class ModItems {
         entries.add(ModItems.DRAUGR_AWAKENING_SOUL_GEM);
         entries.add(ModItems.FILLED_DRAUGR_AWAKENING_SOUL_GEM);
     }
+
     public static void addItemToCombatItemGroup(FabricItemGroupEntries entries) {
         entries.add(VALKYRIE_HELMET);
         entries.add(VALKYRIE_CHESTPLATE);
@@ -563,6 +582,7 @@ public class ModItems {
         entries.add(DRAGON_PRIEST_FROST_BITE_STAFF);
         entries.add(FROST_SPIKE_MAGICAL_STONE);
         entries.add(DRAGON_PRIEST_FROST_SPIKE_STAFF);
+        entries.add(FLAME_ATRONACH_SOMMONING_STAFF);
     }
 
     public static void registerModItems() {

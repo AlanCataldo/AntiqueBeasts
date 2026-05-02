@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "antiquebeasts:item/staff/flame_atronach_summoning_staff"
+  }
+}

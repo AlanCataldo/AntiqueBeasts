@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    " H ",
+    " B "
+  ],
+  "key" : {
+    "H": {
+      "item" : "antiquebeasts:ingredient/flame_atronach_heart"
+    },
+    "B": {
+      "item" : "minecraft:bowl"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:food/magma_soup"
+  }
+}

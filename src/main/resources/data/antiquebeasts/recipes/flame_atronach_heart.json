@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BMB",
+    "MCM",
+    "BMB"
+  ],
+  "key" : {
+    "C": {
+      "item" : "minecraft:magma_cream"
+    },
+    "M": {
+      "item" : "minecraft:magma_block"
+    },
+    "B": {
+      "item" : "minecraft:blaze_powder"
+    }
+  },
+  "result": {
+    "item": "antiquebeasts:ingredient/flame_atronach_heart"
+  }
+}

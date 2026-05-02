@@ -1,8 +1,6 @@
 {
   "itemgroup.antiquebeasts": "上古神兽",
-
   "_comment1": "=== 物品 ===",
-
   "item.antiquebeasts.stalhrim": "魔冰",
   "item.antiquebeasts.magical_stone.frost_bite_magical_stone": "§9霜噬魔石",
   "item.antiquebeasts.magical_stone.frost_spike_magical_stone": "§5冰刺魔石",
@@ -34,23 +32,19 @@
   "item.antiquebeasts.chimera_hair": "奇美拉毛发",
   "item.antiquebeasts.iron_plate": "铁板",
   "item.antiquebeasts.diamond_plate": "钻石板",
-
+  "item.antiquebeasts.ingredient.flame_atronach_heart": "火焰侍灵之心",
+  "item.antiquebeasts.food.magma_soup": "岩浆汤",
   "_comment2": "=== 盾牌 ===",
-
   "item.antiquebeasts.shield.iron_egyptian_shield": "铁埃及盾",
   "item.antiquebeasts.shield.gold_egyptian_shield": "金埃及盾",
   "item.antiquebeasts.shield.iron_plate_shield": "铁板盾",
   "item.antiquebeasts.shield.gold_plate_shield": "金板盾",
   "item.antiquebeasts.shield.high_iron_shield": "精铁盾",
-
   "item.antiquebeasts.shield.diamond_plate_shield": "钻石板盾",
   "item.antiquebeasts.diamond_plate_shield.tooltip": "持握此盾牌将减少火焰伤害",
-
   "item.antiquebeasts.shield.netherite_plate_shield": "下界合金板盾",
   "item.antiquebeasts.netherite_plate_shield.tooltip": "持握此盾牌将减少凋零伤害",
-
   "_comment3": "=== 武器 ===",
-
   "item.antiquebeasts.weapon.iron_centaur_sword": "半人马铁剑",
   "item.antiquebeasts.weapon.khopesh.wood_khopesh_sickle": "木镰形剑",
   "item.antiquebeasts.weapon.khopesh.stone_khopesh_sickle": "石镰形剑",
@@ -79,35 +73,27 @@
   "item.antiquebeasts.weapon.dwemer.dwemer_warhammer": "锻莫战锤",
   "item.antiquebeasts.weapon.dwemer.dwemer_axe": "锻莫斧",
   "item.antiquebeasts.weapon.dwemer.dwemer_war_axe": "锻莫战斧",
-
   "item.antiquebeasts.weapon.spear.netherite_hoplite_spear": "§5下界合金投掷长矛",
   "item.antiquebeasts.netherite_hoplite_spear.tooltip": "此长矛每次攻击都会施加凋零效果。",
-
   "item.antiquebeasts.weapon.stalhrim_sword": "§5魔冰之剑",
   "item.antiquebeasts.stalhrim_sword.tooltip1": "此剑赋予持有者每次攻击",
   "item.antiquebeasts.stalhrim_sword.tooltip2": "冻结敌人的能力。",
-
   "item.antiquebeasts.blood_stained_frost_sword": "浸血魔冰之剑",
   "item.antiquebeasts.blood_stained_frost_sword.tooltip1": "持握此武器，你将拥有独眼巨人的力量，",
   "item.antiquebeasts.blood_stained_frost_sword.tooltip2": "并能冻结你的敌人。",
-
   "item.antiquebeasts.weapon.pharaoh_scepter_staff": "§5法老权杖",
   "item.antiquebeasts.pharaoh_scepter_staff.tooltip": "此权杖让你能够使用",
   "item.antiquebeasts.pharaoh_scepter_staff.tooltip2": "木乃伊法老的暗影魔法",
-
   "item.antiquebeasts.staff.dragon_priest_frost_bite_staff": "§9霜噬龙祭司法杖",
   "item.antiquebeasts.staff.dragon_priest_frost_spike_staff": "§5冰刺龙祭司法杖",
-
+  "item.antiquebeasts.staff.flame_atronach_summoning_staff": "§9火焰侍灵召唤法杖",
   "_comment4": "=== 弓 ===",
-
   "item.antiquebeasts.bow.egyptian_recurve_bow": "埃及反曲弓",
   "item.antiquebeasts.bow.greek_composite_bow": "希腊复合弓",
   "item.antiquebeasts.bow.ancient_nord.ancient_nord_bow": "古诺德弓",
   "item.antiquebeasts.bow.ebony_bow": "乌木弓",
   "item.antiquebeasts.bow.stalhrim.stalhrim_bow": "§5魔冰之弓",
-
   "_comment5": "=== 盔甲 ===",
-
   "item.antiquebeasts.gold_plate_helmet": "金板头盔",
   "item.antiquebeasts.gold_plate_chestplate": "金板胸甲",
   "item.antiquebeasts.gold_plate_leggings": "金板护腿",
@@ -125,7 +111,6 @@
   "item.antiquebeasts.netherite_plate_chestplate": "下界合金板胸甲",
   "item.antiquebeasts.netherite_plate_leggings": "下界合金板护腿",
   "item.antiquebeasts.netherite_plate_boots": "下界合金板靴子",
-
   "item.antiquebeasts.iron_scale_helmet": "铁鳞头盔",
   "item.antiquebeasts.iron_scale_chestplate": "铁鳞胸甲",
   "item.antiquebeasts.iron_scale_leggings": "铁鳞护腿",
@@ -140,16 +125,13 @@
   "item.antiquebeasts.diamond_scale_boots": "钻石鳞靴子",
   "item.antiquebeasts.scale_armor.tooltip": "穿戴全套此类盔甲将使你",
   "item.antiquebeasts.scale_armor.tooltip2": "免疫中毒伤害。",
-
   "item.antiquebeasts.valkyrie_helmet": "瓦尔基里头盔",
   "item.antiquebeasts.valkyrie_chestplate": "瓦尔基里胸甲",
   "item.antiquebeasts.valkyrie_leggings": "瓦尔基里护腿",
   "item.antiquebeasts.valkyrie_boots": "瓦尔基里靴子",
   "item.antiquebeasts.valkyrie.tooltip": "穿戴全套瓦尔基里盔甲将",
   "item.antiquebeasts.valkyrie.tooltip2": "在你受到伤害时赋予抗性提升效果。",
-
   "_comment6": "=== 生物实体 ===",
-
   "entity.antiquebeasts.dwemer_spider": "锻莫蜘蛛",
   "entity.antiquebeasts.dwemer_spider_guardian": "锻莫蜘蛛守卫",
   "entity.antiquebeasts.dwemer_centurion": "锻莫百夫长",
@@ -184,9 +166,9 @@
   "entity.antiquebeasts.draugr_scourge": "尸鬼灾厄",
   "entity.antiquebeasts.skeleton_warrior": "骷髅战士",
   "entity.antiquebeasts.skeleton_warrior_head": "骷髅战士之首",
-
+  "entity.antiquebeasts.flame_atronach": "火焰侍灵",
+  "entity.antiquebeasts.infernal_draugr": "炼狱尸鬼",
   "_comment7": "=== 投掷物实体 ===",
-
   "entity.antiquebeasts.throwing_axe": "飞斧",
   "entity.antiquebeasts.steam_projectile": "高压蒸汽",
   "entity.antiquebeasts.harpy_feather": "鹰身女妖之羽",
@@ -206,9 +188,8 @@
   "entity.antiquebeasts.netherite_throwing_hoplite_spear": "下界合金步兵长矛",
   "entity.antiquebeasts.draugr_wight_projectile": "霜噬法术",
   "entity.antiquebeasts.frost_spike": "冰刺法术",
-
+  "entity.antiquebeasts.firebolt_projectile": "火焰箭",
   "_comment8": "=== 方块 ===",
-
   "block.antiquebeasts.dwemer_chest": "锻莫宝箱",
   "block.antiquebeasts.dwemer_spider_block": "锻莫蜘蛛方块",
   "block.antiquebeasts.dwemer_metal_block": "锻莫金属块",
@@ -219,9 +200,7 @@
   "block.antiquebeasts.greek_chest": "希腊宝箱",
   "block.antiquebeasts.cursed_gold_block": "诅咒金块",
   "block.antiquebeasts.mummy_boss_altar": "法老祭坛",
-
   "_comment9": "=== 刷怪蛋 ===",
-
   "item.antiquebeasts.spawn_egg.dwarven_centurion_spawn_egg": "锻莫百夫长刷怪蛋",
   "item.antiquebeasts.spawn_egg.dwarven_spider_spawn_egg": "锻莫蜘蛛刷怪蛋",
   "item.antiquebeasts.spawn_egg.dwarven_spider_guardian_spawn_egg": "锻莫蜘蛛守卫刷怪蛋",
@@ -255,56 +234,40 @@
   "item.antiquebeasts.spawn_egg.chimera_spawn_egg": "奇美拉刷怪蛋",
   "item.antiquebeasts.spawn_egg.pegasus_spawn_egg": "天马刷怪蛋",
   "item.antiquebeasts.spawn_egg.mummy_boss_spawn_egg": "木乃伊法老刷怪蛋",
-
+  "item.antiquebeasts.spawn_egg.infernal_draugr_spawn_egg": "炼狱尸鬼刷怪蛋",
+  "item.antiquebeasts.spawn_egg.flame_atronach_spawn_egg": "火焰侍灵刷怪蛋",
   "_comment10": "=== 进度 ===",
-
   "advancement.antiquebeasts.root.title": "Mebahel的上古神兽",
   "advancement.antiquebeasts.root.description": "探索古老生物的神秘世界。",
-
   "advancement.antiquebeasts.kill_valkyrie.title": "通往英灵殿之路",
   "advancement.antiquebeasts.kill_valkyrie.description": "首次击杀一名瓦尔基里。",
-
   "advancement.antiquebeasts.kill_hades_shade.title": "捉鬼敢死队！",
   "advancement.antiquebeasts.kill_hades_shade.description": "首次击杀一个幽灵实体。",
-
   "advancement.antiquebeasts.kill_draugr.title": "是什么惊醒了它们？",
   "advancement.antiquebeasts.kill_draugr.description": "首次击杀一个尸鬼。",
-
   "advancement.antiquebeasts.kill_draugr_archer.title": "神射手",
   "advancement.antiquebeasts.kill_draugr_archer.description": "首次击杀一个尸鬼弓手。",
-
   "advancement.antiquebeasts.kill_draugr_wight.title": "霜噬",
   "advancement.antiquebeasts.kill_draugr_wight.description": "首次击杀一个尸鬼寒灵。",
-
   "advancement.antiquebeasts.kill_draugr_scourge.title": "冰与骰子？",
   "advancement.antiquebeasts.kill_draugr_scourge.description": "首次击杀一个尸鬼灾厄。",
-
   "advancement.antiquebeasts.see_mummy_boss.title": "我唤醒了什么？",
   "advancement.antiquebeasts.see_mummy_boss.description": "唤醒一个木乃伊法老。",
-
   "advancement.antiquebeasts.kill_mummy.title": "你是我的木乃伊吗？",
   "advancement.antiquebeasts.kill_mummy.description": "首次击杀一个木乃伊。",
-
   "advancement.antiquebeasts.kill_mummy_boss.title": "法老与方块",
   "advancement.antiquebeasts.kill_mummy_boss.description": "击败一个木乃伊法老。",
-
   "advancement.antiquebeasts.kill_harpy.title": "飞天鸡？",
   "advancement.antiquebeasts.kill_harpy.description": "首次击杀一个鹰身女妖。",
-
   "advancement.antiquebeasts.kill_with_harpy_feather.title": "现在谁是鹰身女妖？",
   "advancement.antiquebeasts.kill_with_harpy_feather.description": "用鹰身女妖之羽击杀一个鹰身女妖。",
-
   "advancement.antiquebeasts.find_greek_temple.title": "我们在奥林匹斯吗？",
   "advancement.antiquebeasts.find_greek_temple.description": "找到一座希腊神庙。",
-
   "advancement.antiquebeasts.find_egyptian_pyramid.title": "荒野中的金字塔",
   "advancement.antiquebeasts.find_egyptian_pyramid.description": "找到一座埃及金字塔。",
-
   "advancement.antiquebeasts.find_hoplite_barrack.title": "这里有个排？",
   "advancement.antiquebeasts.find_hoplite_barrack.description": "找到一座重装步兵营房。",
-
   "_comment11": "=== 木乃伊法老 ===",
-
   "boss.name.khendjer": "汗杰",
   "boss.name.djedkare": "杰德卡拉",
   "boss.name.seti": "塞提",
@@ -316,15 +279,12 @@
   "boss.name.hakor": "哈科尔",
   "boss.name.menes": "美尼斯",
   "boss.name.thoutmosis": "图特摩斯",
-
   "boss.suffix.none": "",
   "boss.suffix.2": "二世",
   "boss.suffix.3": "三世",
   "boss.suffix.4": "四世",
   "boss.suffix.5": "五世",
-
   "_comment12": "=== 尸鬼突袭 ===",
-
   "item.antiquebeasts.filled_draugr_awakening_soul_gem.tooltip1": "充满了尸鬼的灵魂",
   "item.antiquebeasts.filled_draugr_awakening_soul_gem.tooltip2": "在地表右键以唤醒古老的邪恶。",
   "item.antiquebeasts.filled_draugr_awakening_soul_gem.msg.surface_required": "你必须在地表才能使用这颗宝石！",
@@ -334,9 +294,7 @@
   "item.antiquebeasts.filled_draugr_awakening_soul_gem.msg.absorbing": "吸收尸鬼的灵魂...",
   "item.antiquebeasts.filled_draugr_awakening_soul_gem.tooltip.kills": "已击杀尸鬼：",
   "antiquebeasts.draugr_raid.wave_msg": "尸鬼突袭 - 第%s波",
-
   "_comment13": "=== 地图 ===",
-
   "antiquebeasts.map.hoplite_barrack_map": "希腊重装步兵营地图",
   "antiquebeasts.map.greek_temple_map": "希腊神庙地图",
   "antiquebeasts.map.dwemer_map": "锻莫城市地图"

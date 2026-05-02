@@ -171,6 +171,29 @@ public class ModSounds {
     public static SoundEvent WEAPON_SWORD_SLASH_RING = registerSoundEvent("sword_slash_ring");
     public static SoundEvent WEAPON_SWORD_BLOCK = registerSoundEvent("sword_block");
 
+    public static SoundEvent STARTING_RAID_1 = registerSoundEvent("starting_raid_1");
+
+    public static SoundEvent FLAME_ATRONACH_ATTACK_1 = registerSoundEvent("flame_atronach_attack_1");
+    public static SoundEvent FLAME_ATRONACH_INJURED_1 = registerSoundEvent("flame_atronach_injured_1");
+    public static SoundEvent FLAME_ATRONACH_INJURED_2 = registerSoundEvent("flame_atronach_injured_2");
+    public static SoundEvent FLAME_ATRONACH_IDLE_1 = registerSoundEvent("flame_atronach_idle_1");
+    public static SoundEvent FLAME_ATRONACH_DEATH_1 = registerSoundEvent("flame_atronach_death_1");
+    public static SoundEvent FLAME_ATRONACH_WALK_1 = registerSoundEvent("flame_atronach_walk_1");
+    public static SoundEvent FLAME_ATRONACH_SUMMON = registerSoundEvent("flame_atronach_summon");
+    public static SoundEvent FLAME_ATRONACH_SUMMON_CHARGE = registerSoundEvent("flame_atronach_summon_charge");
+    public static SoundEvent FLAME_ATRONACH_SUMMON_CHARGED = registerSoundEvent("flame_atronach_summon_charged");
+
+    public static SoundEvent FIREBOLT_FIRE = registerSoundEvent("firebolt_fire");
+    public static SoundEvent FIREBOLT_IMPACT = registerSoundEvent("firebolt_impact");
+
+    public static SoundEvent SKELETON_WARRIOR_AMBIENT_1 = registerSoundEvent("skeleton_warrior_ambient_1");
+    public static SoundEvent SKELETON_WARRIOR_AMBIENT_2 = registerSoundEvent("skeleton_warrior_ambient_2");
+    public static SoundEvent SKELETON_WARRIOR_DEATH_1 = registerSoundEvent("skeleton_warrior_death_1");
+    public static SoundEvent SKELETON_WARRIOR_DEATH_2 = registerSoundEvent("skeleton_warrior_death_2");
+    public static SoundEvent SKELETON_WARRIOR_HURT_2 = registerSoundEvent("skeleton_warrior_hurt_2");
+    public static SoundEvent SKELETON_WARRIOR_HURT_3 = registerSoundEvent("skeleton_warrior_hurt_3");
+    public static SoundEvent SKELETON_WARRIOR_WALK_1 = registerSoundEvent("skeleton_warrior_walk_1");
+
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(AntiqueBeasts.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));

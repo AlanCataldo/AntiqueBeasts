@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "antiquebeasts:item/spawn_egg/flame_atronach_spawn_egg"
+  }
+}

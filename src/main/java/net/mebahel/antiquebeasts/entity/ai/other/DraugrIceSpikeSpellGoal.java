@@ -1,9 +1,9 @@
 package net.mebahel.antiquebeasts.entity.ai.other;
 
+import net.mebahel.antiquebeasts.entity.ai.util.ProjectileUtil;
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrScourgeEntity;
 import net.mebahel.antiquebeasts.sound.ModSounds;
 import net.mebahel.antiquebeasts.util.entity.MovementUtil;
-import net.mebahel.antiquebeasts.util.entity.ProjectileUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,7 +27,7 @@ public class DraugrIceSpikeSpellGoal extends Goal {
         this.actor = actor;
         this.frostBiteDamage = frostbiteDamage;
         this.iceSpikeDamage = iceSpikeDamage;
-        this.movementUtil = new MovementUtil(this.actor);
+        this.movementUtil = new MovementUtil(this.actor, 6);
         this.projectileUtil = new ProjectileUtil();
     }
 
@@ -87,17 +87,7 @@ public class DraugrIceSpikeSpellGoal extends Goal {
             return;
         }
 
-        double distanceToTarget = this.actor.distanceTo(target);
-        this.movementUtil.lookAtTarget(target, this.actor);
-        this.movementUtil.checkIfStuck(target, this.actor);
-
-        if (!this.movementUtil.isSkyVisibleAbove(this.actor)) {
-            this.movementUtil.strafeUnderground(target, this.actor);
-        } else if (distanceToTarget <= 8) {
-            this.movementUtil.moveBackward(target, this.actor);
-        } else {
-            this.movementUtil.strafeAroundTarget(target, this.actor);
-        }
+        this.movementUtil.maintainRangedPosition(target);
 
         if (!this.actor.getVisibilityCache().canSee(target)) {
             this.actor.setShooting(false);

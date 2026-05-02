@@ -19,7 +19,9 @@ import net.mebahel.antiquebeasts.entity.client.custom.draugr_wight.DraugrWightRe
 import net.mebahel.antiquebeasts.entity.client.custom.dwemer_centurion.DwemerCenturionRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.dwemer_spider.DwemerSpiderRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.dwemer_spider_guardian.DwemerSpiderGuardianRenderer;
+import net.mebahel.antiquebeasts.entity.client.custom.flame_atronach.FlameAtronachRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.harpy.HarpyRenderer;
+import net.mebahel.antiquebeasts.entity.client.custom.infernal_draugr.InfernalDraugrRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.mummy_boss.MummyBossRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.skeleton_warrior.SkeletonWarriorHeadRenderer;
 import net.mebahel.antiquebeasts.entity.client.custom.skeleton_warrior.SkeletonWarriorRenderer;
@@ -27,6 +29,7 @@ import net.mebahel.antiquebeasts.entity.client.projectiles.*;
 import net.mebahel.antiquebeasts.entity.client.projectiles.draugr.DraugrWightProjectileRenderer;
 import net.mebahel.antiquebeasts.entity.client.projectiles.draugr.FrostSpikeProjectileRenderer;
 import net.mebahel.antiquebeasts.entity.client.projectiles.dwemer_centurion.SteamProjectileRenderer;
+import net.mebahel.antiquebeasts.entity.client.projectiles.firebolt_projectile.FireBoltProjectileRenderer;
 import net.mebahel.antiquebeasts.entity.client.projectiles.harpy.HarpyFeatherRenderer;
 import net.mebahel.antiquebeasts.particle.ModParticles;
 import net.mebahel.antiquebeasts.particle.custom.*;
@@ -51,6 +54,9 @@ public class AntiqueBeastsClient implements ClientModInitializer {
             }
         });
 
+        EntityRendererRegistry.register(ModEntities.FLAME_ATRONACH, FlameAtronachRenderer::new);
+        EntityRendererRegistry.register(ModEntities.INFERNAL_DRAUGR, InfernalDraugrRenderer::new);
+        EntityRendererRegistry.register(ModEntities.FIREBOLT_PROJECTILE, FireBoltProjectileRenderer::new);
         EntityRendererRegistry.register(ModEntities.STEAM_PROJECTILE, SteamProjectileRenderer::new);
         EntityRendererRegistry.register(ModEntities.DWEMER_CENTURION, DwemerCenturionRenderer::new);
         EntityRendererRegistry.register(ModEntities.DWEMER_SPIDER, DwemerSpiderRenderer::new);
@@ -114,6 +120,8 @@ public class AntiqueBeastsClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(ModParticles.MUMMY_PROJECTILE_PARTICLE, MummyProjectileParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.MUMMY_HOVERING_PARTICLE, MummyHoveringParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.HEALING_PARTICLE, HealingParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ModParticles.FLAME_ATRONACH_HAND_PARTICLE, FallingFlameParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ModParticles.GROUND_FLAME_PARTICLE, GroundFlameBurstParticle.Factory::new);
         EntityRendererRegistry.register(ModEntities.BLOCK_SCAN_ENTITY, BlockScanRenderer::new);
 
         BlockEntityRendererFactories.register(ModBlockEntities.DWEMER_SPIDER_BLOCK_ENTITY, DwemerSpiderBlockRenderer::new);

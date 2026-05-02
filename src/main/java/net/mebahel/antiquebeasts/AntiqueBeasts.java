@@ -127,6 +127,14 @@ public class AntiqueBeasts implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ModEntities.THROWING_AXEMAN, ThrowingAxeManEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.EINHERJAR, EinherjarEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.VALKYRIE, ValkyrieEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(
+				ModEntities.INFERNAL_DRAUGR,
+				InfernalDraugrEntity.setAttributes()
+		);
+		FabricDefaultAttributeRegistry.register(
+				ModEntities.FLAME_ATRONACH,
+				FlameAtronachEntity.setAttributes()
+		);
 
 		ModSounds.registerSounds();
 		ModBlocks.registerModBlocks();

@@ -23,6 +23,21 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModEntities {
+    public static final EntityType<InfernalDraugrEntity> INFERNAL_DRAUGR = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "infernal_draugr"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, InfernalDraugrEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.65f, 1.99f)).build());
+
+    public static final EntityType<FlameAtronachEntity> FLAME_ATRONACH = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "flame_atronach"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, FlameAtronachEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.8f, 2f)).build());
+
+    public static final EntityType<FireboltEntity> FIREBOLT_PROJECTILE = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(AntiqueBeasts.MOD_ID, "firebolt_projectile"),
+            FabricEntityTypeBuilder.<FireboltEntity>create(SpawnGroup.MISC, FireboltEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+
     public static final EntityType<BlockScanEntity> BLOCK_SCAN_ENTITY = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(AntiqueBeasts.MOD_ID, "block_scan_entity"),

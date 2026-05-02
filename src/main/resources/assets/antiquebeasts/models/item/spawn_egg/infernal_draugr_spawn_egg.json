@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "antiquebeasts:item/spawn_egg/infernal_draugr_spawn_egg"
+  }
+}

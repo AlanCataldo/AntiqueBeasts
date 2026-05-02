@@ -16,8 +16,10 @@
     "PoisonImmunityMixin",
     "ShieldDurabilityMixin",
     "ShieldSoundMixin",
+    "SkeletonWarriorWolfMixin",
     "VillagerAvoidAntiqueBeastsMixin",
-    "WitherDamageMixin"
+    "WitherDamageMixin",
+    "accessor.MobEntityAccessor"
   ],
   "client": [
     "AnkhTotemClientMixin",

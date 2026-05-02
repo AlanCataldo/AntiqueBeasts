@@ -28,11 +28,16 @@ public class ModSpawnRateConfig {
     public static int huskarlSpawnRate = 5;
     public static int einherjarSpawnRate = 5;
     public static int valkyrieSpawnRate = 5;
-    public static int wadjetSpawnRate = 3;
-    public static int mummySpawnRate = 3;
-    public static int servantSpawnRate = 3;
-    public static int egyptianCaravanSpawnRate = 2;
+    public static int wadjetSpawnRate = 2;
+    public static int mummySpawnRate = 2;
+    public static int servantSpawnRate = 2;
+    public static int egyptianCaravanSpawnRate = 1;
     public static int harpySpawnRate = 3;
+    public static int camelrySpawnRate = 1;
+    public static int elephantRiderSpawnRate = 1;
+    public static int axemanSpawnRate = 1;
+    public static int flameAtronachSpawnRate = 10;
+    public static int infernalDraugrSpawnRate = 10;
 
     public static void loadConfig(File configDir) {
         if (!configDir.exists()) {
@@ -113,25 +118,45 @@ public class ModSpawnRateConfig {
                 }
 
                 if (data.wadjetSpawnRate == null || data.wadjetSpawnRate > 10 || data.wadjetSpawnRate < 0) {
-                    data.wadjetSpawnRate = 3;
+                    data.wadjetSpawnRate = 2;
                     updated = true;
                 }
 
                 if (data.mummySpawnRate == null || data.mummySpawnRate > 10 || data.mummySpawnRate < 0) {
-                    data.mummySpawnRate = 3;
+                    data.mummySpawnRate = 2;
                     updated = true;
                 }
 
                 if (data.servantSpawnRate == null || data.servantSpawnRate > 10 || data.servantSpawnRate < 0) {
-                    data.servantSpawnRate = 3;
+                    data.servantSpawnRate = 2;
                     updated = true;
                 }
                 if (data.egyptianCaravanSpawnRate == null || data.egyptianCaravanSpawnRate > 10 || data.egyptianCaravanSpawnRate < 0) {
-                    data.egyptianCaravanSpawnRate = 2;
+                    data.egyptianCaravanSpawnRate = 1;
                     updated = true;
                 }
                 if (data.harpySpawnRate == null || data.harpySpawnRate > 10 || data.harpySpawnRate < 0) {
                     data.harpySpawnRate = 3;
+                    updated = true;
+                }
+                if (data.camelrySpawnRate == null || data.camelrySpawnRate > 10 || data.camelrySpawnRate < 0) {
+                    data.camelrySpawnRate = 1;
+                    updated = true;
+                }
+                if (data.elephantRiderSpawnRate == null || data.elephantRiderSpawnRate > 10 || data.elephantRiderSpawnRate < 0) {
+                    data.elephantRiderSpawnRate = 1;
+                    updated = true;
+                }
+                if (data.axemanSpawnRate == null || data.axemanSpawnRate > 10 || data.axemanSpawnRate < 0) {
+                    data.axemanSpawnRate = 1;
+                    updated = true;
+                }
+                if (data.flameAtronachSpawnRate == null || data.flameAtronachSpawnRate > 10 || data.flameAtronachSpawnRate < 0) {
+                    data.flameAtronachSpawnRate = 10;
+                    updated = true;
+                }
+                if (data.infernalDraugrSpawnRate == null || data.infernalDraugrSpawnRate > 10 || data.infernalDraugrSpawnRate < 0) {
+                    data.infernalDraugrSpawnRate = 10;
                     updated = true;
                 }
 
@@ -155,6 +180,11 @@ public class ModSpawnRateConfig {
                 servantSpawnRate = data.servantSpawnRate;
                 egyptianCaravanSpawnRate = data.egyptianCaravanSpawnRate;
                 harpySpawnRate = data.harpySpawnRate;
+                camelrySpawnRate = data.camelrySpawnRate;
+                elephantRiderSpawnRate = data.elephantRiderSpawnRate;
+                axemanSpawnRate = data.axemanSpawnRate;
+                flameAtronachSpawnRate = data.flameAtronachSpawnRate;
+                infernalDraugrSpawnRate = data.infernalDraugrSpawnRate;
 
                 if (updated) {
                     saveConfig(configDir);
@@ -172,7 +202,9 @@ public class ModSpawnRateConfig {
         ConfigData data = new ConfigData(eliteHopliteSpawnRate, championHopliteSpawnRate, heroHopliteSpawnRate, hadesChosenSpawnRate, chimeraSpawnRate,
                 cyclopsSpawnRate, frostCyclopsSpawnRate, pegasusSpawnRate, centaurSpawnRate, hadesShadeSpawnRate,
                 throwingAxemanSpawnRate, hersirSpawnRate, huskarlSpawnRate, einherjarSpawnRate, valkyrieSpawnRate,
-                wadjetSpawnRate, mummySpawnRate, servantSpawnRate, egyptianCaravanSpawnRate, harpySpawnRate);
+                wadjetSpawnRate, mummySpawnRate, servantSpawnRate, egyptianCaravanSpawnRate, harpySpawnRate, camelrySpawnRate, elephantRiderSpawnRate,
+                axemanSpawnRate,
+                flameAtronachSpawnRate, infernalDraugrSpawnRate);
         try (FileWriter writer = new FileWriter(configFile)) {
             GSON.toJson(data, writer);
         } catch (IOException e) {
@@ -201,12 +233,18 @@ public class ModSpawnRateConfig {
         Integer servantSpawnRate;
         Integer egyptianCaravanSpawnRate;
         Integer harpySpawnRate;
+        Integer camelrySpawnRate;
+        Integer elephantRiderSpawnRate;
+        Integer axemanSpawnRate;
+        Integer flameAtronachSpawnRate;
+        Integer infernalDraugrSpawnRate;
 
         ConfigData(int eliteHopliteSpawnRate, int championHopliteSpawnRate, int heroHopliteSpawnRate, int hadesChosenSpawnRate,
                    int chimeraSpawnRate, int cyclopsSpawnRate, int frostCyclopsSpawnRate, int pegasusSpawnRate, int centaurSpawnRate,
                    int hadesShadeSpawnRate, int throwingAxemanSpawnRate, int hersirSpawnRate, int huskarlSpawnRate, int einherjarSpawnRate,
                    int valkyrieSpawnRate, int wadjetSpawnRate, int mummySpawnRate, int servantSpawnRate, int egyptianCaravanSpawnRate,
-                   int harpySpawnRate) {
+                   int harpySpawnRate, int camelrySpawnRate, int elephantRiderSpawnRate,int axemanSpawnRate,
+                   int flameAtronachSpawnRate, int infernalDraugrSpawnRate) {
 
             this.eliteHopliteSpawnRate = eliteHopliteSpawnRate;
             this.championHopliteSpawnRate = championHopliteSpawnRate;
@@ -228,6 +266,11 @@ public class ModSpawnRateConfig {
             this.servantSpawnRate = servantSpawnRate;
             this.egyptianCaravanSpawnRate = egyptianCaravanSpawnRate;
             this.harpySpawnRate = harpySpawnRate;
+            this.camelrySpawnRate = camelrySpawnRate;
+            this.elephantRiderSpawnRate = elephantRiderSpawnRate;
+            this.axemanSpawnRate = axemanSpawnRate;
+            this.flameAtronachSpawnRate = flameAtronachSpawnRate;
+            this.infernalDraugrSpawnRate = infernalDraugrSpawnRate;
         }
     }
 }

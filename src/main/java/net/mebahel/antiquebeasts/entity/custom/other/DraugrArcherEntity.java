@@ -77,6 +77,19 @@ public class DraugrArcherEntity extends DraugrEntity implements GeoEntity {
         return DraugrArcherVariant.byId(this.getTypeVariant() & 255);
     }
 
+    // =========================
+    // ✅ BODY/HEAD LOCK (THE FIX)
+    // =========================
+    private boolean lockYawToTarget = false;
+
+    public void setLockYawToTarget(boolean lock) {
+        this.lockYawToTarget = lock;
+    }
+
+    public boolean isLockYawToTarget() {
+        return lockYawToTarget;
+    }
+
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);

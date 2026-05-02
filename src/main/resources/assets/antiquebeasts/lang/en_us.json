@@ -34,7 +34,8 @@
   "item.antiquebeasts.chimera_hair": "Chimera Hair",
   "item.antiquebeasts.iron_plate": "Iron Plate",
   "item.antiquebeasts.diamond_plate": "Diamond Plate",
-
+  "item.antiquebeasts.ingredient.flame_atronach_heart": "Flame Atronach Heart",
+  "item.antiquebeasts.food.magma_soup": "Magma Soup",
 
   "_comment2": "=== Shields ===",
 
@@ -49,7 +50,6 @@
 
   "item.antiquebeasts.shield.netherite_plate_shield": "Netherite Plate Shield",
   "item.antiquebeasts.netherite_plate_shield.tooltip": "Wielding this shield will reduce wither damage",
-
 
   "_comment3": "=== Weapons ===",
 
@@ -99,6 +99,7 @@
 
   "item.antiquebeasts.staff.dragon_priest_frost_bite_staff": "§9Frost Bite Dragon Priest Staff",
   "item.antiquebeasts.staff.dragon_priest_frost_spike_staff": "§5Frost Spike Dragon Priest Staff",
+  "item.antiquebeasts.staff.flame_atronach_summoning_staff": "§9Flame Atronach Summoning Staff",
 
   "_comment4": "=== Bows ===",
 
@@ -188,6 +189,8 @@
   "entity.antiquebeasts.draugr_scourge": "Draugr Scourge",
   "entity.antiquebeasts.skeleton_warrior": "Skeleton Warrior",
   "entity.antiquebeasts.skeleton_warrior_head": "Skeleton Warrior Head",
+  "entity.antiquebeasts.flame_atronach": "Flame Atronach",
+  "entity.antiquebeasts.infernal_draugr": "Infernal Draugr",
 
 
   "_comment7": "=== Projectile Entities ===",
@@ -211,6 +214,7 @@
   "entity.antiquebeasts.netherite_throwing_hoplite_spear": "Hoplite Spear",
   "entity.antiquebeasts.draugr_wight_projectile": "Frost Bite Spell",
   "entity.antiquebeasts.frost_spike": "Ice Spike Spell",
+  "entity.antiquebeasts.firebolt_projectile": "Firebolt",
 
 
   "_comment8": "=== Blocks ===",
@@ -262,7 +266,8 @@
   "item.antiquebeasts.spawn_egg.chimera_spawn_egg": "Chimera Spawn Egg",
   "item.antiquebeasts.spawn_egg.pegasus_spawn_egg": "Pegasus Spawn Egg",
   "item.antiquebeasts.spawn_egg.mummy_boss_spawn_egg": "Mummified Pharaoh Spawn Egg",
-
+  "item.antiquebeasts.spawn_egg.infernal_draugr_spawn_egg": "Infernal Draugr Spawn Egg",
+  "item.antiquebeasts.spawn_egg.flame_atronach_spawn_egg": "Flame Atronach Spawn Egg",
 
   "_comment10": "=== Advancements ===",
 

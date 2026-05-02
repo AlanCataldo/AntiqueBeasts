@@ -23,6 +23,22 @@ import static net.minecraft.entity.mob.HostileEntity.canSpawnInDark;
 
 public class ModEntitySpawn {
     public static void addEntitySpawn() {
+        BiomeModifications.addSpawn(BiomeSelectors.foundInTheNether()
+                        .and(BiomeSelectors.excludeByKey(BiomeKeys.SOUL_SAND_VALLEY)
+                                .and(BiomeSelectors.excludeByKey(BiomeKeys.WARPED_FOREST))
+                                .and(BiomeSelectors.excludeByKey(BiomeKeys.CRIMSON_FOREST))),
+                SpawnGroup.MONSTER, ModEntities.FLAME_ATRONACH, 25, 1, 1);
+        SpawnRestriction.register(ModEntities.FLAME_ATRONACH, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, FlameAtronachEntity::canMobSpawnWithRate);
+
+        BiomeModifications.addSpawn(BiomeSelectors.foundInTheNether()
+                        .and(BiomeSelectors.excludeByKey(BiomeKeys.SOUL_SAND_VALLEY)
+                                .and(BiomeSelectors.excludeByKey(BiomeKeys.WARPED_FOREST))
+                                .and(BiomeSelectors.excludeByKey(BiomeKeys.CRIMSON_FOREST))),
+                SpawnGroup.MONSTER, ModEntities.INFERNAL_DRAUGR, 20, 1, 1);
+        SpawnRestriction.register(ModEntities.INFERNAL_DRAUGR, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, InfernalDraugrEntity::canMobSpawnWithRate);
+
         BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(),
                 SpawnGroup.MONSTER, ModEntities.SKELETON_WARRIOR, 10, 1, 1);
         SpawnRestriction.register(ModEntities.SKELETON_WARRIOR, SpawnRestriction.Location.ON_GROUND,
@@ -106,7 +122,7 @@ public class ModEntitySpawn {
                     return PegasusEntity.canMobSpawnWithRate(type, world, spawnReason, pos, random);
                 });
 
-        /*BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 BiomeKeys.DESERT, BiomeKeys.BADLANDS)
                         .or(BiomeSelectors.tag(ConventionalBiomeTags.DESERT)).or(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS)),
                 SpawnGroup.CREATURE, ModEntities.ELEPHANT_RIDER, 4, 1, 1);
@@ -115,8 +131,8 @@ public class ModEntitySpawn {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
                     }
-                    return ElephantRiderEntity.canMobSpawn(type, world, spawnReason, pos, random);
-                });*/
+                    return ElephantRiderEntity.canMobSpawnWithRate(type, world, spawnReason, pos, random);
+                });
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 BiomeKeys.DESERT, BiomeKeys.BADLANDS)
@@ -142,17 +158,17 @@ public class ModEntitySpawn {
                     return MummyEntity.canMobSpawnWithRate(type, world, spawnReason, pos, random);
                 });
 
-        /*BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 BiomeKeys.DESERT, BiomeKeys.BADLANDS)
                         .or(BiomeSelectors.tag(ConventionalBiomeTags.DESERT)).or(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS)),
-                SpawnGroup.CREATURE, ModEntities.CAMELRY, 10, 1, 2);
+                SpawnGroup.CREATURE, ModEntities.CAMELRY, 6, 1, 1);
         SpawnRestriction.register(ModEntities.CAMELRY, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
                     }
-                    return CamelryEntity.canMobSpawn(type, world, spawnReason, pos, random);
-                });*/
+                    return CamelryEntity.canMobSpawnWithRate(type, world, spawnReason, pos, random);
+                });
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 BiomeKeys.DESERT, BiomeKeys.BADLANDS)
@@ -166,17 +182,17 @@ public class ModEntitySpawn {
                     return EgyptianCaravanEntity.canMobSpawnWithRate(type, world, spawnReason, pos, random);
                 });
 
-        /*BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 BiomeKeys.DESERT, BiomeKeys.BADLANDS)
                         .or(BiomeSelectors.tag(ConventionalBiomeTags.DESERT)).or(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS)),
-                SpawnGroup.CREATURE, ModEntities.AXEMAN, 12, 1, 2);
+                SpawnGroup.CREATURE, ModEntities.AXEMAN, 10, 1, 2);
         SpawnRestriction.register(ModEntities.AXEMAN, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, world, spawnReason, pos, random) -> {
                     if (world.getDifficulty() == Difficulty.PEACEFUL) {
                         return false;
                     }
-                    return AxemanEntity.canMobSpawn(type, world, spawnReason, pos, random);
-                });*/
+                    return AxemanEntity.canMobSpawnWithRate(type, world, spawnReason, pos, random);
+                });
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 BiomeKeys.DESERT, BiomeKeys.BADLANDS)

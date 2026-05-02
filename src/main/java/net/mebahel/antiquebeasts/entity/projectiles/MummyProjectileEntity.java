@@ -35,7 +35,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import static net.mebahel.antiquebeasts.entity.ModEntities.MUMMY_PROJECTILE;
 
 public class MummyProjectileEntity extends ThrownItemEntity implements GeoEntity {
-    private static final int MAX_LIFETIME_TICKS = 120; // 7 secondes (1 seconde = 20 ticks)
+    private static final int MAX_LIFETIME_TICKS = 80; // 7 secondes (1 seconde = 20 ticks)
     private int lifetime; // Compteur pour la durée de vie
 
     float damage;

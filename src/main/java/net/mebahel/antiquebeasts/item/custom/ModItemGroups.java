@@ -73,6 +73,7 @@ public class ModItemGroups {
                         entries.add(ModItems.DRAGON_PRIEST_FROST_BITE_STAFF);
                         entries.add(ModItems.FROST_SPIKE_MAGICAL_STONE);
                         entries.add(ModItems.DRAGON_PRIEST_FROST_SPIKE_STAFF);
+                        entries.add(ModItems.FLAME_ATRONACH_SOMMONING_STAFF);
 
                         entries.add(ModItems.VALKYRIE_HELMET);
                         entries.add(ModItems.VALKYRIE_CHESTPLATE);
@@ -137,6 +138,8 @@ public class ModItemGroups {
                         entries.add(ModItems.DRAUGR_AWAKENING_SOUL_GEM);
                         entries.add(ModItems.FILLED_DRAUGR_AWAKENING_SOUL_GEM);
                         entries.add(ModItems.HARPY_FEATHER);
+                        entries.add(ModItems.FLAME_ATRONACH_HEART);
+                        entries.add(ModItems.MAGMA_SOUP);
 
                         entries.add(ModItems.N_D_NILE_MUSIC_DISC);
                         entries.add(ModItems.BEHOLD_THE_GREAT_SCIENCE_FI_MUSIC_DISC);
@@ -173,6 +176,8 @@ public class ModItemGroups {
                         entries.add(ModSpawnEggs.DRAUGR_WIGHT_SPAWN_EGG);
                         entries.add(ModSpawnEggs.DRAUGR_SCOURGE_SPAWN_EGG);
                         entries.add(ModSpawnEggs.DRAUGR_ARCHER_SPAWN_EGG);
+                        entries.add(ModSpawnEggs.INFERNAL_DRAUGR_SPAWN_EGG);
+                        entries.add(ModSpawnEggs.FLAME_ATRONACH_SPAWN_EGG);
 
                         entries.add(ModItems.HARPY_SPAWN_EGG);
 

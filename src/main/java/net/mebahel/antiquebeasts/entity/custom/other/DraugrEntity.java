@@ -14,11 +14,10 @@ import net.mebahel.antiquebeasts.entity.custom.greek.GreekEntity;
 import net.mebahel.antiquebeasts.entity.custom.norse.NorseEntity;
 import net.mebahel.antiquebeasts.entity.variant.DraugrVariant;
 import net.mebahel.antiquebeasts.sound.ModSounds;
+import net.mebahel.antiquebeasts.util.DamageElementUtil;
+import net.mebahel.antiquebeasts.util.PreDamageResult;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityGroup;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -34,6 +33,7 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.BlockStateParticleEffect;
@@ -52,6 +52,7 @@ import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.Objects;
@@ -98,6 +99,17 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
     public boolean wantsToBlock() {return wantsToBlock;}
     public void requestBlock() {this.wantsToBlock = true;}
     public void clearBlockRequest() {this.wantsToBlock = false;}
+
+
+    boolean raidSpawnIntro = false;
+
+    public void setRaidSpawnIntro(boolean value) {
+        this.raidSpawnIntro = value;
+    }
+
+    public boolean isInSpawnIntro() {
+        return this.raidSpawnIntro && !this.getHasSpawned();
+    }
 
     public boolean shouldDespawnInPeaceful() {
         return this.getWorld().getDifficulty() == Difficulty.PEACEFUL;
@@ -504,5 +516,43 @@ public class DraugrEntity extends HostileEntity implements GeoEntity {
         this.playSound(ModSounds.DRAUGR_WALK_1,
                 0.4F + this.getRandom().nextFloat() * 0.2F,
                 0.9F + this.getRandom().nextFloat() * 0.4F);
+    }
+
+    protected PreDamageResult preDamage(DamageSource source, float amount,
+                                        @Nullable Entity direct, @Nullable Entity attacker) {
+
+        boolean isProjectile = direct instanceof ProjectileEntity;
+        boolean isMelee = !isProjectile && attacker instanceof LivingEntity;
+
+        if (this.isBlocking() && isMelee) {
+            if (!this.getWorld().isClient) {
+                ServerWorld sw = (ServerWorld) this.getWorld();
+                sw.spawnParticles(
+                        ParticleTypes.CRIT,
+                        this.getX(), this.getBodyY(0.5D), this.getZ(),
+                        8,
+                        0.5D, 0.8D, 0.5D,
+                        0.2D
+                );
+            }
+
+            this.playSound(
+                    ModSounds.WEAPON_SWORD_BLOCK,
+                    0.75F + this.getRandom().nextFloat() * 0.2F,
+                    0.8F + this.getRandom().nextFloat() * 0.4F
+            );
+            return PreDamageResult.cancel();
+        }
+
+        DamageElementUtil.ElementResult r = DamageElementUtil.compute(source, direct,
+                DamageElementUtil.ElementConfig.defaultPriority(1.5f, 0.75f, 1f));
+        float finalAmount = DamageElementUtil.apply(amount, r);
+
+        if (!this.getWorld().isClient && r != null && r.frostLike) {
+            int add = 40;
+            this.setFrozenTicks(Math.min(this.getFrozenTicks() + add, 200));
+        }
+
+        return new PreDamageResult(false, finalAmount, r);
     }
 }

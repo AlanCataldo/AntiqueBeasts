@@ -1,16 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "SSS",
+    "LSL",
     "SCS",
-    "SSS"
+    "LSL"
   ],
-  "key" : {
+  "key": {
     "C": {
-      "item" : "minecraft:chest"
+      "item": "minecraft:chest"
+    },
+    "L": {
+      "item": "minecraft:iron_ingot"
     },
     "S": {
-      "item" : "antiquebeasts:high_iron_scrap"
+      "tag": "minecraft:logs"
     }
   },
   "result": {

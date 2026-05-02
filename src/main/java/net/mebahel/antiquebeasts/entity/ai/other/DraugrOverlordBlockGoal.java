@@ -1,9 +1,11 @@
 package net.mebahel.antiquebeasts.entity.ai.other;
 
+
 import net.mebahel.antiquebeasts.entity.custom.other.DraugrOverlordEntity;
 import net.mebahel.antiquebeasts.util.entity.MovementUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.passive.VillagerEntity;
 
 import java.util.EnumSet;
 
@@ -21,8 +23,7 @@ public class DraugrOverlordBlockGoal extends Goal {
 
     public DraugrOverlordBlockGoal(DraugrOverlordEntity mob) {
         this.mob = mob;
-        this.movementUtil = new MovementUtil(this.mob);
-        this.movementUtil.setStrafeDistance(STRAFE_DISTANCE);
+        this.movementUtil = new MovementUtil(this.mob, 3);
 
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
     }
@@ -31,9 +32,9 @@ public class DraugrOverlordBlockGoal extends Goal {
     public boolean canStart() {
         LivingEntity target = mob.getTarget();
         if (target == null || !target.isAlive()) return false;
+        if (target instanceof VillagerEntity) return false;
         if (mob.isUsingPotion()) return false;
 
-        // Le melee a demandé un block ?
         return mob.wantsToBlock();
     }
 
@@ -41,6 +42,7 @@ public class DraugrOverlordBlockGoal extends Goal {
     public boolean shouldContinue() {
         LivingEntity target = mob.getTarget();
         if (target == null || !target.isAlive()) return false;
+        if (target instanceof VillagerEntity) return false;
         if (mob.isUsingPotion()) return false;
 
         return blockTicks > 0 && !mob.isSpinning();
@@ -131,21 +133,6 @@ public class DraugrOverlordBlockGoal extends Goal {
 
             return;
         }
-
-        // --------------------------------------------------------------------
-        // 🔄 COMPORTEMENT NORMAL DE BLOCK
-        // --------------------------------------------------------------------
-        double distanceToTarget = this.mob.distanceTo(target);
-
-        this.movementUtil.lookAtTarget(target, this.mob);
-        this.movementUtil.checkIfStuck(target, this.mob);
-
-        if (!this.movementUtil.isSkyVisibleAbove(this.mob)) {
-            this.movementUtil.strafeUnderground(target, this.mob);
-        } else if (distanceToTarget <= STRAFE_DISTANCE) {
-            this.movementUtil.moveBackward(target, this.mob);
-        } else {
-            this.movementUtil.strafeAroundTarget(target, this.mob);
-        }
+        this.movementUtil.maintainRangedPosition(target);
     }
 }

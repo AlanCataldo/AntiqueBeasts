@@ -19,8 +19,7 @@ public class DraugrBlockGoal extends Goal {
 
     public DraugrBlockGoal(DraugrEntity mob) {
         this.mob = mob;
-        this.movementUtil = new MovementUtil(this.mob);
-        this.movementUtil.setStrafeDistance(STRAFE_DISTANCE);
+        this.movementUtil = new MovementUtil(this.mob, 4);
 
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
     }
@@ -112,17 +111,6 @@ public class DraugrBlockGoal extends Goal {
         }
 
         // Sinon, logique de mouvement de blocage
-        double distanceToTarget = this.mob.distanceTo(target);
-
-        this.movementUtil.lookAtTarget(target, this.mob);
-        this.movementUtil.checkIfStuck(target, this.mob);
-
-        if (!this.movementUtil.isSkyVisibleAbove(this.mob)) {
-            this.movementUtil.strafeUnderground(target, this.mob);
-        } else if (distanceToTarget <= STRAFE_DISTANCE) {
-            this.movementUtil.moveBackward(target, this.mob);
-        } else {
-            this.movementUtil.strafeAroundTarget(target, this.mob);
-        }
+        this.movementUtil.maintainRangedPosition(target);
     }
 }
