@@ -75,11 +75,6 @@ public class HarpyEntity extends AnimalEntity implements GeoEntity {
         this.setPathfindingPenalty(PathNodeType.DAMAGE_FIRE, 0.0F);
     }
 
-    @Override
-    public boolean isOnFire() {
-        return false;
-    }
-
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
@@ -203,14 +198,6 @@ public class HarpyEntity extends AnimalEntity implements GeoEntity {
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return ModSounds.HARPY_HURT_2;
-    }
-
-    @Override
-    public boolean damage(DamageSource source, float amount) {
-        if (source.isOf(DamageTypes.IN_FIRE) || source.isOf(DamageTypes.ON_FIRE)) {
-            return false;
-        }
-        return super.damage(source, amount);
     }
 
     @Override

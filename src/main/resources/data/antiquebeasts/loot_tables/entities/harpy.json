@@ -37,14 +37,20 @@
           "type": "minecraft:item",
           "functions": [
             {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
               "conditions": [
                 {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
+                  "condition": "minecraft:damage_source_properties",
                   "predicate": {
-                    "flags": {
-                      "is_on_fire": true
-                    }
+                    "is_fire": true
                   }
                 }
               ],
@@ -65,5 +71,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "minecraft:entities/chicken"
+  "random_sequence": "antiquebeasts:entities/harpy"
 }
